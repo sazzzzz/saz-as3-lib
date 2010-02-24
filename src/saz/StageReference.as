@@ -3,7 +3,7 @@
 	
 	/**
 	 * stage参照クラス。
-	 * addChildしたDisplayObject以外からでもstageを参照できるように。	 * 
+	 * addChildしたDisplayObject以外からでもstageを参照できるように。
 	 * http://fladdict.net/blog/2007/02/as3_stage.html
 	 * @author saz
 	 */
