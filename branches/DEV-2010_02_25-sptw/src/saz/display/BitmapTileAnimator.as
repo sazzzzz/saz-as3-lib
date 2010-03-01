@@ -1,0 +1,196 @@
+﻿package saz.display {
+	import flash.display.BitmapData;
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
+	import flash.geom.*;
+	import saz.events.LoopEvent;
+	
+	/**
+	 * 昔のゲーム風のタイルアニメ
+	 * @author saz
+	 */
+	public class BitmapTileAnimator extends EventDispatcher {
+		
+		private var $isLoop:Boolean;
+		
+		private var $src:BitmapData;
+		private var $dst:BitmapData;
+		private var $tileWidth:uint;
+		private var $tileHeight:uint;
+		private var $triggerObj:IEventDispatcher;
+		private var $eventType:String;
+		private var $frames:uint;
+		
+		private var $dstPoint:Point;
+		
+		//内部メンバ
+		private var $frameCount:int;
+		private var $srcRect:Rectangle;
+		private var $colSize:uint;
+		private var $rowSize:uint;
+		
+		/**
+		 * 
+		 * [Event(name = "complete", type = "flash.events.Event")];
+		 * [LoopEvent(name = "loop", type = "saz.events.LoopEvent")];
+		 * 
+		 * @example
+		 * <pre>
+		 * var src:BitmapData = new TileBmp(0,0);
+		 * addChild(new Bitmap(src));
+		 * var dst:BitmapData = new BitmapData(500,200,false,0);
+		 * addChild(new Bitmap(dst));
+		 * 
+		 * var anm:BitmapTileAnimator = new BitmapTileAnimator(src,dst,100,100);
+		 * anm.setTrigger(this.stage, Event.ENTER_FRAME);
+		 * anm.setFrames(10);
+		 * anm.isLoop = true;
+		 * 
+		 * anm.start();
+		 * </pre>
+		 * 
+		 * @param	srcBmp
+		 * @param	dstBmp
+		 * @param	width
+		 * @param	height
+		 */
+		function BitmapTileAnimator(srcBmp:BitmapData, dstBmp:BitmapData, width:uint, height:uint) {
+			setSrcBitmap(srcBmp);
+			setDstBitmap(dstBmp);
+			setTileSize(width, height);
+			
+			$isLoop = false;
+			$frameCount = -1;
+		}
+		
+		public function start():void {
+			//if (null == $src || null == $dst || null == $tileWidth || null == $tileHeight ) {
+			//if (null == $src || null == $dst || null == $tileWidth || null == $tileHeight || null == $triggerObj || null == $eventType || null == $frames) {
+			if (null == $src || null == $dst || isNaN($tileWidth) || isNaN($tileHeight) || null == $triggerObj || null == $eventType || isNaN($frames)) {
+				throw new Error("必要なデータがセットされてません");
+			}
+			if (null == $dstPoint) {
+				$dstPoint = new Point(0,0);
+			}
+			//if (null == $frameCount) {
+			if (isNaN($frameCount)) {
+				$frameCount = -1;
+			}
+			if (null == $srcRect) {
+				$srcRect = new Rectangle(0,0,$tileWidth,$tileHeight);
+			}
+			
+			$readySrcPosition();
+			$startLoop();
+			$loop(new Event(""));
+		}
+		
+		public function stop():void {
+			$stopLoop();
+		}
+		
+		/**
+		 * トリガーとなるイベントを登録。ふつうはonEnterFrameだろうね。
+		 * @param	obj	イベント配信者。
+		 * @param	type	イベントタイプ。ふつうはonEnterFrameだろうね。
+		 */
+		public function setTrigger(obj:IEventDispatcher, type:String):void {
+			$triggerObj = obj;
+			$eventType = type;
+		}
+		
+		/**
+		 * ソースビットマップ
+		 * @param	bmp
+		 */
+		public function setSrcBitmap(bmp:BitmapData):void {
+			$src = bmp;
+		}
+		
+		/**
+		 * 出力先ビットマップ
+		 * @param	bmp
+		 */
+		public function setDstBitmap(bmp:BitmapData):void {
+			$dst = bmp;
+		}
+		
+		/**
+		 * コマのサイズを決定
+		 * @param	width
+		 * @param	height
+		 */
+		public function setTileSize(width:uint, height:uint):void {
+			$tileWidth = width;
+			$tileHeight = height;
+		}
+		
+		/**
+		 * 出力先の位置を決定
+		 * @param	x
+		 * @param	y
+		 */
+		public function setDstPoint(x:uint = 0, y:uint = 0):void {
+			if (null == $dstPoint) {
+				$dstPoint = new Point(0,0);
+			}
+			$dstPoint.x = x;
+			$dstPoint.y = y;
+		}
+		
+		public function setFrames(value:uint):void {
+			$frames = value;
+		}
+		
+		
+		public function get isLoop():Boolean { return $isLoop; }
+		
+		public function set isLoop(value:Boolean):void {
+			$isLoop = value;
+		}
+		
+		private function $startLoop():void {
+			$triggerObj.addEventListener($eventType, $loop);
+		}
+		
+		private function $readySrcPosition():void {
+			$colSize = Math.floor($src.width / $tileWidth);
+			$rowSize = Math.floor($src.height / $tileHeight);
+		}
+		
+		private function $detectSrcPosition():void {
+			//var col:uint = $frameCount % $colSize;
+			//var row:uint = Math.floor($frameCount / $colSize);
+			$srcRect.x = $tileWidth * ($frameCount % $colSize);
+			$srcRect.y = $tileHeight * (Math.floor($frameCount / $colSize));
+		}
+		
+		private function $loop(e:Event):void {
+			$frameCount++;
+			$detectSrcPosition();
+			
+			//trace($frameCount, $srcRect);
+			
+			//draw
+			$dst.copyPixels($src, $srcRect, $dstPoint);
+			if ($frames <= $frameCount + 1) {
+				//終了
+				if ($isLoop) {
+					//ループする
+					dispatchEvent(new LoopEvent(LoopEvent.LOOP));
+					$frameCount = -1;
+				}else {
+					$stopLoop();
+				}
+			}
+		}
+		
+		private function $stopLoop():void {
+			$triggerObj.removeEventListener($eventType, $loop);
+			dispatchEvent(new Event(Event.COMPLETE));
+		}
+		
+	}
+	
+}
