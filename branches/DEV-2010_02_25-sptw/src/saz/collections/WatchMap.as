@@ -3,6 +3,12 @@
 	import saz.events.WatchEvent;
 	
 	/**
+	 * いずれかのプロパティに変化があった場合に、送出されます。
+	 * @eventType saz.events.WatchEvent.CHANGE
+	 */
+	[Event(name = "change", type = "saz.events.WatchEvent")]
+	
+	/**
 	 * 変更されたらイベント発行するMap
 	 * @author saz
 	 */
@@ -13,9 +19,6 @@
 		
 		private var $ed:EventDispatcher;
 		
-		/**
-		 * [Event(name = "CHANGE", type = "saz.events.WatchEvent")];  
-		 */
 		function WatchMap() {
 			super();
 			$initEventDispatcher();
@@ -28,7 +31,7 @@
 			
 			super.put(key, value);
 			//dispatchEvent(new Event(Event.CHANGE, oldValue, value));
-			dispatchEvent(new WatchEvent(Event.CHANGE, key, oldValue, value));
+			dispatchEvent(new WatchEvent(WatchEvent.CHANGE, key, oldValue, value));
 			dispatchEvent(new WatchEvent(key, key, oldValue, value));
 		}
 		

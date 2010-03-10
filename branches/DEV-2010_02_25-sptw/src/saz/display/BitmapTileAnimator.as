@@ -6,9 +6,47 @@
 	import flash.geom.*;
 	import saz.events.LoopEvent;
 	
+	
+	/**
+	 * ループする時。
+	 * @eventType	saz.events.LoopEvent.LOOP
+	 */
+	[LoopEvent(name = "loop", type = "saz.events.LoopEvent")];
+	
+	/**
+	 * isLoop=falseの場合、アニメーション完了時に。
+	 * 
+	 * @eventType	flash.events.Event.COMPLETE
+	 */
+	[Event(name = "complete", type = "flash.events.Event")];
+	
+	
 	/**
 	 * 昔のゲーム風のタイルアニメ
 	 * @author saz
+	 * 
+	 * @example <listing version="3.0" >
+	 * // 元となると出力先のBitmapDataを用意。
+	 * var src:BitmapData = new TileBmp(0,0);
+	 * // addChild(new Bitmap(src));
+	 * var dst:BitmapData = new BitmapData(500,200,false,0);
+	 * addChild(new Bitmap(dst));
+	 * 
+	 * // BitmapTileAnimatorインスタンスを生成。
+	 * var anm:BitmapTileAnimator = new BitmapTileAnimator(src,dst,100,100);
+	 * 
+	 * // トリガーとなるイベントを設定。（通常ENTER_FRAMEです）
+	 * anm.setTrigger(this.stage, Event.ENTER_FRAME);
+	 * 
+	 * // アニメーションのコマ数を設定。
+	 * anm.setFrames(10);
+	 * 
+	 * // ループするかどうか。
+	 * anm.isLoop = true;
+	 * 
+	 * // アニメーション開始。
+	 * anm.start();
+	 * </listing>
 	 */
 	public class BitmapTileAnimator extends EventDispatcher {
 		
@@ -32,8 +70,6 @@
 		
 		/**
 		 * 
-		 * [Event(name = "complete", type = "flash.events.Event")];
-		 * [LoopEvent(name = "loop", type = "saz.events.LoopEvent")];
 		 * 
 		 * @example
 		 * <pre>

@@ -7,7 +7,7 @@
 	 */
 	public class WatchEvent extends Event {
 		
-		//public static const CHANGE:String = "change";
+		public static const CHANGE:String = "change";
 		
 		public var key:String;
 		public var oldValue:*;
