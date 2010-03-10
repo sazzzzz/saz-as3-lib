@@ -3,10 +3,9 @@
 	import saz.events.GroupEvent;
 	import saz.IteratorBreakError;
 	import saz.util.ArrayUtil;
-	import saz.util.ObjectUtil;
 	
 	/**
-	 * ...
+	 * 子の中から1つだけ選択。as2から移植。
 	 * @author saz
 	 */
 	public class SelectableGroup extends EventDispatcher {
@@ -151,10 +150,7 @@
 		 */
 		//public function add(item:IEventDispatcher, eventName:String, selectClosure:Function, unselectClosure:Function, id:String):void {
 		public function add(item:IEventDispatcher, eventName:String, selectHandle:String, unselectHandle:String, id:String = ""):int {
-			//trace("SelectableGroup.add(" + arguments);
 			var newItem:Object = { target:item, event:eventName, select:selectHandle, unselect:unselectHandle, id:id };
-			//trace(newItem);
-			//trace(ObjectUtil.dump(newItem));
 			this.$items.push( newItem );
 			return this.$items.length - 1;
 		}
@@ -170,7 +166,7 @@
 			if (this.$isRunning == false) return;
 			
 			if (this.$selectedEntry != null) {
-				var oldItem = this.$selectedEntry.target;
+				var oldItem:* = this.$selectedEntry.target;
 				if (item == oldItem) return;		//変わってないので処理中止
 				//unselect
 				oldItem[this.$selectedEntry.unselect]();
@@ -188,7 +184,7 @@
 			if (this.$isRunning == false) return;
 			
 			if (this.$selectedEntry != null) {
-				var oldItem = this.$selectedEntry.target;
+				var oldItem:* = this.$selectedEntry.target;
 				//unselect
 				oldItem[this.$selectedEntry.unselect]();
 				this.$selectedEntry = null;

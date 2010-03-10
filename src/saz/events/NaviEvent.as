@@ -7,8 +7,8 @@
 	 */
 	//public class NaviEvent extends MouseEvent {
 	public class NaviEvent {
-		public static var SELECTED:String = "selected";
-		public static var UNSELECTED:String = "unselected";
+		public static const SELECTED:String = "selected";
+		public static const UNSELECTED:String = "unselected";
 	}
 	
 }

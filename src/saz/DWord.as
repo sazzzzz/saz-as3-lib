@@ -14,18 +14,18 @@
 		/**
 		 * 最小値
 		 */
-		static var MIN:Number = 0;
+		public static var MIN:Number = 0;
 		/**
 		 * 最大値
 		 */
-		static var MAX:Number = Math.pow(2, 32);
-		
-		private var $value:Number = 0;
-		
+		public static var MAX:Number = Math.pow(2, 32);
 		/**
 		 * ビット桁数
 		 */
 		public var length:Number = 32;
+		
+		private var $value:Number = 0;
+		
 		
 		
 		/**
@@ -133,7 +133,7 @@
 		 * @param	num
 		 * @return
 		 */
-		static function getBitPattern(num:Number):String {
+		public static function getBitPattern(num:Number):String {
 			//trace("getBitPattern(" + arguments);
 			var rs:String = "";
 			for (var i:Number = 0, l:Number = 32; i < l; i++) {
