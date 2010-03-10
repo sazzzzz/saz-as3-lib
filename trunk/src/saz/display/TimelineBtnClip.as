@@ -3,8 +3,9 @@
 	import flash.events.*;
 	
 	/**
-	 * ...
+	 * ボタン。as2から移植。
 	 * @author saz
+	 * @deprecated	as2から移植したけど不要かな…。
 	 */
 	public class TimelineBtnClip extends BtnClip {
 		

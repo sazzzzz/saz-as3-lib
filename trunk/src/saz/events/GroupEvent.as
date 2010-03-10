@@ -7,7 +7,7 @@
 	 */
 	public class GroupEvent extends Event {
 	//public class GroupEvent {
-		public static var CHANGED:String = "changed";
+		public static const CHANGED:String = "changed";
 		
 		public var oldValue:*;
 		public var newValue:*;

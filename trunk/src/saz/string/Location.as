@@ -4,14 +4,14 @@
 	 * URL操作。
 	 * プロパティ名はJSのwindow.locationのまね。<br/>
 	 * TODO:	ローカルパスへの対応が中途半端。<br/>
-	 * @see <a href="http://pzxa85.hp.infoseek.co.jp/www/js/location.htm">http://pzxa85.hp.infoseek.co.jp/www/js/location.htm</a><br/>
+	 * @see http://pzxa85.hp.infoseek.co.jp/www/js/location.htm
 	 * @author saz
 	 */
 	public class Location {
 		
-		static var PROTOCOL_HTTP:String = "http:";
-		static var PROTOCOL_HTTPS:String = "https:";
-		static var PROTOCOL_FILE:String = "file:";
+		public static const PROTOCOL_HTTP:String = "http:";
+		public static const PROTOCOL_HTTPS:String = "https:";
+		public static const PROTOCOL_FILE:String = "file:";
 		
 		private var $url:String;
 		

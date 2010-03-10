@@ -15,29 +15,45 @@
 		static private var $newColorTransform:ColorTransform;
 		
 		
-		
-		static function getNewPoint():Point {
+		/**
+		 * デフォルトPointインスタンスの参照を返す。値をいじらないこと！
+		 * @return
+		 */
+		public static function getNewPoint():Point {
 			if ($newPoint == null)$newPoint = new Point();
 			return $newPoint;
 		}
 		
-		static function getNewRectangle():Rectangle {
+		/**
+		 * デフォルトRectangleインスタンスの参照を返す。値をいじらないこと！
+		 * @return
+		 */
+		public static function getNewRectangle():Rectangle {
 			if ($newRectangle == null)$newRectangle = new Rectangle();
 			return $newRectangle;
 		}
 		
-		static function getNewMatrix():Matrix {
+		/**
+		 * デフォルトMatrixインスタンスの参照を返す。値をいじらないこと！
+		 * @return
+		 */
+		public static function getNewMatrix():Matrix {
 			if ($newMatrix == null)$newMatrix = new Matrix();
 			return $newMatrix;
 		}
 		
-		static function getNewColorTransform():ColorTransform {
+		/**
+		 * デフォルトColorTransformインスタンスの参照を返す。値をいじらないこと！
+		 * @return
+		 */
+		public static function getNewColorTransform():ColorTransform {
 			if ($newColorTransform == null)$newColorTransform = new ColorTransform();
 			return $newColorTransform;
 		}
 			
 		/**
-		 * MovieClipからBitmapDataに変換。出力bmpサイズを自動で取得してくれるよ。いらなくね。
+		 * MovieClipからBitmapDataに変換。
+		 * 出力bmpサイズを自動で取得してくれるけど、いらなくね。
 		 * @param	target	対象DisplayObject。
 		 * @return
 		 */
@@ -46,9 +62,11 @@
 			return $mcToBmp(target, clipRect);
 		}
 		
+		
+		
+		//FIXME	開発中
 		/**
 		 * MovieClipからBitmapDataに変換。
-		 * 開発中
 		 * @param	target
 		 * @param	clipRect	（オプション）切り取る範囲を指定するRectangleインスタンス。省略した場合、範囲は自動で決定。開発中！
 		 * @return
@@ -59,6 +77,8 @@
 			}
 			return $mcToBmpClip(target, clipRect);
 		}*/
+		
+		
 		
 		private static function $detectDisplayRect(target:DisplayObject):Rectangle{
 			return target.getBounds(target.parent);

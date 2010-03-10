@@ -2,9 +2,9 @@
 	import flash.display.Stage;
 	
 	/**
-	 * stage参照クラス。
-	 * addChildしたDisplayObject以外からでもstageを参照できるように。
-	 * http://fladdict.net/blog/2007/02/as3_stage.html
+	 * stage参照クラス。<br/>
+	 * addChildしたDisplayObject以外からでもstageを参照できるように。<br/>
+	 * @see	http://fladdict.net/blog/2007/02/as3_stage.html
 	 * @author saz
 	 */
 	public class StageReference {
@@ -14,7 +14,10 @@
 		static private var DEFAULT_STAGE_WIDTH:Number = 450;
 		static private var DEFAULT_STAGE_HEIGHT:Number = 400;
 		
-		
+		/**
+		 * 初期化。
+		 * @param	theStage	stageを渡す。
+		 */
 		public static function init(theStage:Stage):void {
 			stage = theStage;
 		}

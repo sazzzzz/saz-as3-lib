@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<docProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <pageTitle>sazAS3 - Reference</pageTitle>
+  <classPaths>E:\_saz\LIB\saz\as3\work\src\saz</classPaths>
+  <sourcesList>sample.display.SampleBtnClip caurina.* sample.*</sourcesList>
+  <outputDirectory>E:\_saz\LIB\saz\as3\work\doc</outputDirectory>
+  <activeCompiler>1</activeCompiler>
+  <extraOptions>-compiler.strict=false</extraOptions>
+</docProject>

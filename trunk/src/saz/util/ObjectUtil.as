@@ -1,11 +1,20 @@
 ﻿package saz.util {
 	
 	/**
-	 * ...
+	 * Objectユーティリティ
 	 * @author saz
 	 */
 	public class ObjectUtil {
 		
+		/**
+		 * Object　の中身をStringにして返す。ダンプ用。
+		 * @param	target
+		 * @return
+		 * 
+		 * @example <listing version="3.0" >
+		 * trace(ObjectUtil.dump(obj));
+		 * </listing>
+		 */
 		static public function dump(target:*):String {
 			return $dump(target,"");
 		}
