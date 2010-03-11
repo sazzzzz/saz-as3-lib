@@ -69,7 +69,7 @@
 		private var $rowSize:uint;
 		
 		/**
-		 * 
+		 * コンストラクタ。
 		 * 
 		 * @example
 		 * <pre>
@@ -101,15 +101,12 @@
 		}
 		
 		public function start():void {
-			//if (null == $src || null == $dst || null == $tileWidth || null == $tileHeight ) {
-			//if (null == $src || null == $dst || null == $tileWidth || null == $tileHeight || null == $triggerObj || null == $eventType || null == $frames) {
 			if (null == $src || null == $dst || isNaN($tileWidth) || isNaN($tileHeight) || null == $triggerObj || null == $eventType || isNaN($frames)) {
 				throw new Error("必要なデータがセットされてません");
 			}
 			if (null == $dstPoint) {
 				$dstPoint = new Point(0,0);
 			}
-			//if (null == $frameCount) {
 			if (isNaN($frameCount)) {
 				$frameCount = -1;
 			}
@@ -186,6 +183,11 @@
 			$isLoop = value;
 		}
 		
+		
+		//--------------------------------------
+		// PRIVATE
+		//--------------------------------------
+		
 		private function $startLoop():void {
 			$triggerObj.addEventListener($eventType, $loop);
 		}
@@ -196,8 +198,6 @@
 		}
 		
 		private function $detectSrcPosition():void {
-			//var col:uint = $frameCount % $colSize;
-			//var row:uint = Math.floor($frameCount / $colSize);
 			$srcRect.x = $tileWidth * ($frameCount % $colSize);
 			$srcRect.y = $tileHeight * (Math.floor($frameCount / $colSize));
 		}
@@ -206,12 +206,10 @@
 			$frameCount++;
 			$detectSrcPosition();
 			
-			//trace($frameCount, $srcRect);
-			
 			//draw
 			$dst.copyPixels($src, $srcRect, $dstPoint);
 			if ($frames <= $frameCount + 1) {
-				//終了
+				//終了処理
 				if ($isLoop) {
 					//ループする
 					dispatchEvent(new LoopEvent(LoopEvent.LOOP));
