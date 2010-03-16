@@ -36,7 +36,7 @@
 		}
 		
 		public override function toString():String {
-			return formatToString("MyEvent", "type", "bubbles", "cancelable", "eventPhase", "key", "oldValue", "newValue"); 
+			return formatToString("WatchEvent", "type", "bubbles", "cancelable", "eventPhase", "key", "oldValue", "newValue"); 
 		}
 		
 	}

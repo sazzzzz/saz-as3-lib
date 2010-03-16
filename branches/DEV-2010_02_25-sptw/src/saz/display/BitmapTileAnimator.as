@@ -98,20 +98,18 @@
 			
 			$isLoop = false;
 			$frameCount = -1;
+			if (null == $dstPoint)$dstPoint = new Point(0, 0);
+			if (null == $srcRect)$srcRect = new Rectangle(0, 0, $tileWidth, $tileHeight);
 		}
 		
 		public function start():void {
+			$frameCount = -1;
+			resume();
+		}
+		
+		public function resume():void {
 			if (null == $src || null == $dst || isNaN($tileWidth) || isNaN($tileHeight) || null == $triggerObj || null == $eventType || isNaN($frames)) {
 				throw new Error("必要なデータがセットされてません");
-			}
-			if (null == $dstPoint) {
-				$dstPoint = new Point(0,0);
-			}
-			if (isNaN($frameCount)) {
-				$frameCount = -1;
-			}
-			if (null == $srcRect) {
-				$srcRect = new Rectangle(0,0,$tileWidth,$tileHeight);
 			}
 			
 			$readySrcPosition();
@@ -192,14 +190,9 @@
 			$triggerObj.addEventListener($eventType, $loop);
 		}
 		
-		private function $readySrcPosition():void {
-			$colSize = Math.floor($src.width / $tileWidth);
-			$rowSize = Math.floor($src.height / $tileHeight);
-		}
-		
-		private function $detectSrcPosition():void {
-			$srcRect.x = $tileWidth * ($frameCount % $colSize);
-			$srcRect.y = $tileHeight * (Math.floor($frameCount / $colSize));
+		private function $stopLoop():void {
+			$triggerObj.removeEventListener($eventType, $loop);
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		private function $loop(e:Event):void {
@@ -213,16 +206,21 @@
 				if ($isLoop) {
 					//ループする
 					dispatchEvent(new LoopEvent(LoopEvent.LOOP));
-					$frameCount = -1;
 				}else {
 					$stopLoop();
 				}
+				$frameCount = -1;
 			}
 		}
 		
-		private function $stopLoop():void {
-			$triggerObj.removeEventListener($eventType, $loop);
-			dispatchEvent(new Event(Event.COMPLETE));
+		private function $readySrcPosition():void {
+			$colSize = Math.floor($src.width / $tileWidth);
+			$rowSize = Math.floor($src.height / $tileHeight);
+		}
+		
+		private function $detectSrcPosition():void {
+			$srcRect.x = $tileWidth * ($frameCount % $colSize);
+			$srcRect.y = $tileHeight * (Math.floor($frameCount / $colSize));
 		}
 		
 	}
