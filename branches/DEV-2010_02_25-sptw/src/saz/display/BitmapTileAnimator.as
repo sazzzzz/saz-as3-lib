@@ -60,19 +60,17 @@
 		private var $eventType:String;
 		private var $frames:uint;
 		
-		private var $dstPoint:Point;
-		
 		//内部メンバ
-		private var $frameCount:int;
 		private var $srcRect:Rectangle;
+		private var $dstPoint:Point;
+		private var $frameCount:int;
 		private var $colSize:uint;
 		private var $rowSize:uint;
 		
 		/**
 		 * コンストラクタ。
 		 * 
-		 * @example
-		 * <pre>
+		 * @example <listing version="3.0" >
 		 * var src:BitmapData = new TileBmp(0,0);
 		 * addChild(new Bitmap(src));
 		 * var dst:BitmapData = new BitmapData(500,200,false,0);
@@ -84,7 +82,7 @@
 		 * anm.isLoop = true;
 		 * 
 		 * anm.start();
-		 * </pre>
+		 * </listing>
 		 * 
 		 * @param	srcBmp
 		 * @param	dstBmp
@@ -102,11 +100,25 @@
 			if (null == $srcRect)$srcRect = new Rectangle(0, 0, $tileWidth, $tileHeight);
 		}
 		
+		public function destroy():void {
+			$src = null;
+			$dst = null;
+			$triggerObj = null;
+			$dstPoint = null;
+			$srcRect = null;
+		}
+		
+		/**
+		 * 最初のコマからアニメを開始。
+		 */
 		public function start():void {
 			$frameCount = -1;
 			resume();
 		}
 		
+		/**
+		 * 続きのコマからアニメを開始。
+		 */
 		public function resume():void {
 			if (null == $src || null == $dst || isNaN($tileWidth) || isNaN($tileHeight) || null == $triggerObj || null == $eventType || isNaN($frames)) {
 				throw new Error("必要なデータがセットされてません");
@@ -117,6 +129,9 @@
 			$loop(new Event(""));
 		}
 		
+		/**
+		 * アニメ停止。
+		 */
 		public function stop():void {
 			$stopLoop();
 		}
