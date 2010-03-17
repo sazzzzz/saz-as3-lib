@@ -20,6 +20,7 @@
 	
 	/**
 	 * WatchMapの特定のプロパティをトィーンする。
+	 * @deprecated	汎用性がないのでTweenerNumberに移行。廃止予定。
 	 * @author saz
 	 */
 	public class TweenedMapValue extends EventDispatcher {
