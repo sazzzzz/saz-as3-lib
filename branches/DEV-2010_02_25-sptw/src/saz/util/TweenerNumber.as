@@ -6,7 +6,7 @@
 	import saz.events.WatchEvent;
 	
 	/**
-	 * トィーン中に、ターゲットのプロパティが更新されるごとに、送出されます。
+	 * トィーン中に、ターゲットのプロパティが更新されるごとに、送出されます。変化がなかったらイベントは発行しない。
 	 * @eventType saz.events.WatchEvent.UPDATE
 	 */
 	[Event(name = "update", type = "saz.events.WatchEvent")]
@@ -29,9 +29,6 @@
 		private var $oldVal:Number;
 		private var $prevVal:Number;
 		
-		/**
-		 * トゥイーンするかどうか。falseにしても、進行中のトゥイーンは止まらないよ。
-		 */
 		public var time:Number = 0;
 		public var transition:String = "easeOutExpo";
 		
@@ -61,7 +58,9 @@
 			Tweener.addTween(this, { $value:value, time:time, transition:transition, onUpdate:$onUpdate, onComplete:$onComplete } );
 		}
 		
-		private function $onUpdate():void{
+		private function $onUpdate():void {
+			//変化がなかったらイベントは発行しない。
+			if ($prevVal == value) return;
 			dispatchEvent(new WatchEvent(WatchEvent.UPDATE, "value", $prevVal, value));
 			$prevVal = value;
 		}
