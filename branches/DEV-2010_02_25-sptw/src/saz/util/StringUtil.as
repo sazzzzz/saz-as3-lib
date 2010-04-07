@@ -7,6 +7,15 @@
 	public class StringUtil {
 		
 		/**
+		 * 0x0D
+		 */
+		public static var CR:String = String.fromCharCode(13);	//0x0D
+		/**
+		 * 0x0A
+		 */
+		public static var LF:String = String.fromCharCode(10);	//0x0A
+		
+		/**
 		 * Dateを文字列表現にして返す
 		 * @param	date	Dateインスタンス。
 		 * @param	sep	セパレータ。省略すると空文字。
