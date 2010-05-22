@@ -15,42 +15,25 @@
 		static private var $newColorTransform:ColorTransform;
 		
 		
-		/**
-		 * デフォルトPointインスタンスの参照を返す。値をいじらないこと！
-		 * @return
-		 */
-		public static function getNewPoint():Point {
-			if ($newPoint == null)$newPoint = new Point();
-			return $newPoint;
+		public static function fillTexture(dst:BitmapData, src:BitmapData):void {
+			var p:Point = new Point(0, 0);
+			var sw:uint = src.width;
+			var sh:uint = src.height;
+			var dw:uint = dst.width;
+			var dh:uint = dst.height;
+			var rSize:uint = Math.floor(dst.height / src.height);
+			var cSize:uint = Math.floor(dst.width / src.width);
+			//if (rSize < 1 || cSize < 1) throw new Error();
+			for (var r:int = 0; r <= rSize; r++) {
+				for (var c:int = 0; c <= cSize; c++) {
+					p.x = c * src.width;
+					p.y = r * src.height;
+					dst.copyPixels(src, src.rect, p);
+				}
+			}
 		}
 		
-		/**
-		 * デフォルトRectangleインスタンスの参照を返す。値をいじらないこと！
-		 * @return
-		 */
-		public static function getNewRectangle():Rectangle {
-			if ($newRectangle == null)$newRectangle = new Rectangle();
-			return $newRectangle;
-		}
 		
-		/**
-		 * デフォルトMatrixインスタンスの参照を返す。値をいじらないこと！
-		 * @return
-		 */
-		public static function getNewMatrix():Matrix {
-			if ($newMatrix == null)$newMatrix = new Matrix();
-			return $newMatrix;
-		}
-		
-		/**
-		 * デフォルトColorTransformインスタンスの参照を返す。値をいじらないこと！
-		 * @return
-		 */
-		public static function getNewColorTransform():ColorTransform {
-			if ($newColorTransform == null)$newColorTransform = new ColorTransform();
-			return $newColorTransform;
-		}
-			
 		/**
 		 * MovieClipからBitmapDataに変換。
 		 * 出力bmpサイズを自動で取得してくれるけど、いらなくね。
@@ -116,6 +99,27 @@
 			var bmp:BitmapData = new BitmapData(clipRect.width, clipRect.height, true, 0);
 			bmp.draw(target);
 			return bmp;
+		}
+		
+		
+		static function getNewPoint():Point {
+			if ($newPoint == null)$newPoint = new Point();
+			return $newPoint;
+		}
+		
+		static function getNewRectangle():Rectangle {
+			if ($newRectangle == null)$newRectangle = new Rectangle();
+			return $newRectangle;
+		}
+		
+		static function getNewMatrix():Matrix {
+			if ($newMatrix == null)$newMatrix = new Matrix();
+			return $newMatrix;
+		}
+		
+		static function getNewColorTransform():ColorTransform {
+			if ($newColorTransform == null)$newColorTransform = new ColorTransform();
+			return $newColorTransform;
 		}
 		
 	}
