@@ -40,6 +40,7 @@
 			return new ColorTransform( k, k, k, 1, red, green, blue );
 		}*/
 		
+		
 		/**
 		 * 着色する
 		 * @deprecated	createColorTransform()を使えや
