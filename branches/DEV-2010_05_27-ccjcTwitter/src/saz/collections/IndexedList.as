@@ -4,70 +4,199 @@ package saz.collections {
 	
 	/**
 	 * 索引つきリスト。<br/>
-	 * ていうか、索引のキャッシュ管理を自動化するのって無理じゃね？要素がObjectだったら、その中身へのアクセスはわからん？
+	 * Decoratorパターン。<br/>
 	 * @author saz
 	 * @see	http://www.techscore.com/tech/DesignPattern/Decorator.html
 	 * @see	http://livedocs.adobe.com/flash/9.0_jp/ActionScriptLangRefV3/flash/utils/Proxy.html#includeExamplesSummary
 	 * @see	http://kozy.heteml.jp/l4l/2008/06/as3proxy.html
 	 */
-	//dynamic public class IndexedList implements IList extends Proxy {		// Proxyにimplements使えないみたい。
-	dynamic public class IndexedList extends Proxy {
+	dynamic public class IndexedList implements IList  {
 		
-		private var $list:List;
+		private var $list:IList;
 		private var $indexMan:ArrayIndexManager;
 		
 		/**
 		 * 
 		 * @param	list
 		 */
-		public function IndexedList(list:List = null) {
+		public function IndexedList(list:IList = null) {
 			$list = (null == list) ? new List() : list;
 			$indexMan = new ArrayIndexManager($list.getArray());
 		}
 		
+		
+		/**
+		 * キー名と値から、要素を探す。
+		 * @param	key
+		 * @param	value
+		 * @return
+		 */
 		public function search(key:String, value:*):*{
 			return $indexMan.search(key, value);
 		}
+		// グチ	このメソッドが実装したかっただけなのに、えらい回り道した。なんか失敗してる気がするし…
+		
+		
+		public function getArray():Array { return $list.getArray(); }
 		
 		//
-		// メソッド
+		// 取得
 		//
-		override flash_proxy function callProperty(methodName:*, ... args):*{
-			var res:*;
-			switch(methodName.toString()) {
-				case 'clone':
-					res = new IndexedList($list.clone());
-					break;
-				//要素が変更される可能性のあるオペレーション。
-				case 'sets':			// 指定インデックスの位置にあるオブジェクトを置き換える。
-				case 'append':			// リストの最後に追加。
-				case 'prepend':			// リストの最初に追加。
-				case 'remove':			// 与えられた要素をリストから削除する。
-				case 'removeFirst':		// リストの最初の要素を削除する。
-				case 'removeLast':		// リストの最後の要素を削除する。
-				case 'removeAll':		// リストの全ての要素を削除する。
-				case 'push':			// スタックに要素をプッシュする。
-				case 'pop':				// スタックから要素をポップする。
-					$indexMan.indexFlush();
-					res = $list[methodName].apply($list, args);
-					break;
-				default:
-					res = $list[methodName].apply($list, args);
-					break;
-			}
-			return res;
+		
+		/**
+		 * リスト内のオブジェクト数を返す。
+		 * @return
+		 */
+		public function count():int {
+			return $list.count();
 		}
 		
-		//
-		// プロパティ
-		//
-		override flash_proxy function getProperty(name:*):*{
-			return $list[name];
+		/**
+		 * 指定したインデックスの位置にあるオブジェクトを返す。
+		 * @param	index	0から始まる整数値。
+		 * @return
+		 */
+		public function gets(index:int):*{
+			return $list.gets(index);
 		}
 		
-		override flash_proxy function setProperty(name:*, value:*):void{
+		/**
+		 * リスト内の最初のオブジェクトを返す。
+		 * @return
+		 */
+		public function first():*{
+			return $list.first();
+		}
+		
+		/**
+		 * リスト内の最後のオブジェクトを返す。
+		 * @return
+		 */
+		public function last():*{
+			return $list.last();
+		}
+		
+		/**
+		 * 指定インデックスの位置にあるオブジェクトを置き換える。
+		 * @param	index	0から始まる整数値。
+		 * @param	item
+		 */
+		public function sets(index:int, item:*):void {
+			trace("IndexedList.sets(" + arguments);
 			$indexMan.indexFlush();
-			$list[name] = value;
+			$list.sets(index, item);
+		}
+		
+		//
+		// 追加
+		//
+		
+		/**
+		 * リストの最後に追加。
+		 * @param	item
+		 */
+		public function append(item:*):void {
+			$indexMan.indexFlush();
+			$list.append(item);
+		}
+		
+		/**
+		 * リストの最初に追加。
+		 * @param	item
+		 */
+		public function prepend(item:*):void {
+			$indexMan.indexFlush();
+			$list.prepend(item);
+		}
+		
+		//
+		// 削除
+		//
+		
+		/**
+		 * 与えられた要素をリストから削除する。
+		 * @param	item
+		 */
+		public function remove(item:*):void {
+			$indexMan.indexFlush();
+			$list.remove(item);
+		}
+		
+		/**
+		 * リストの最初の要素を削除する。
+		 */
+		public function removeFirst():void {
+			$indexMan.indexFlush();
+			$list.removeFirst();
+		}
+		
+		/**
+		 * リストの最後の要素を削除する。
+		 */
+		public function removeLast():void {
+			$indexMan.indexFlush();
+			$list.removeLast();
+		}
+		
+		/**
+		 * リストの全ての要素を削除する。
+		 */
+		public function removeAll():void {
+			$indexMan.indexFlush();
+			$list.removeAll();
+		}
+		
+		
+		//
+		// スタックインタフェース
+		//
+		
+		/**
+		 * （リストをスタックと見たときの）トップ要素を返す。
+		 * @return
+		 */
+		public function top():*{
+			return $list.top();
+		}
+		
+		/**
+		 * スタックに要素をプッシュする。
+		 * @param	item
+		 */
+		public function push(item:*):void {
+			$indexMan.indexFlush();
+			$list.push(item);
+		}
+		
+		/**
+		 * スタックから要素をポップする。
+		 * @return
+		 */
+		public function pop():*{
+			$indexMan.indexFlush();
+			return $list.pop();
+		}
+		
+		
+		
+		/**
+		 * 複製する。
+		 * @return
+		 */
+		public function clone():* {
+			return new IndexedList($list.clone());
+		}
+		
+		/**
+		 * デストラクタ。
+		 */
+		public function destroy():void {
+			$indexMan = null;
+			$list.destroy();
+		}
+		
+		public function toString():String {
+			return $list.toString();
 		}
 		
 	}

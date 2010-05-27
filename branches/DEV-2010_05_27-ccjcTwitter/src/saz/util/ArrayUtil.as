@@ -35,12 +35,15 @@
 			});*/
 			
 			target.forEach(function(item:*, index:int, arr:Array):void {
-				value = item[key];
-				if ("number" == typeof(value)) {
-					// 数値型だとキーにできないので、エラー
-					throw new TypeError("ArrayUtil.createIndexData(): 値が数値型のため、プロパティ名にできません。");
+				// Objectでなかったら無視
+				if ("object" == typeof(item)) {
+					value = item[key];
+					if ("number" == typeof(value)) {
+						// 数値型だとキーにできないので、エラー
+						throw new TypeError("ArrayUtil.createIndexData(): 値が数値型のため、プロパティ名にできません。");
+					}
+					res[value] = index;
 				}
-				res[value] = index;
 			});
 			
 			return res;

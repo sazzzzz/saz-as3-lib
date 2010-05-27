@@ -190,7 +190,7 @@ package saz.collections {
 		 * 複製する。
 		 * @return
 		 */
-		public function clone():List {
+		public function clone():* {
 			var res:List = new List();
 			for (var i:int = 0, len:int = count(), cur:*; i < len; i++) {
 				cur = gets(i);

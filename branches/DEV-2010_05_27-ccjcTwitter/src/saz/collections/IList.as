@@ -1,10 +1,12 @@
 package saz.collections {
+	import saz.IBasic;
 	
 	/**
 	 * Listインターフェース
 	 * @author saz
 	 */
-	public interface IList  {
+	//public interface IList extends IBasic  {
+	public interface IList {
 		
 		/**
 		 * Arrayインスタンスを返す。
@@ -108,6 +110,10 @@ package saz.collections {
 		 */
 		function pop():*;
 		
+		
+		function clone():*;
+		function destroy():void;
+		function toString():String;
 		
 	}
 }
