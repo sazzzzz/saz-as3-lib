@@ -2,10 +2,32 @@
 	import saz.IteratorBreakError;
 	
 	/**
-	 * ...
+	 * Arrayユーティリティークラス。
 	 * @author saz
 	 */
 	public class ArrayUtil {
+		
+		/**
+		 * 配列の内容から、検索用索引Objectを作る。プロパティ名を指定できる。
+		 * @param	taget
+		 * @param	key	プロパティ名。デフォルトは"id"。
+		 * @return
+		 * 入力：[{id:"001"}, {id:"002"}]
+		 * 出力：{001:0, 002:1}
+		 */
+		public static function makeIndexData(target:Array, key:String = "id"):Object {
+			var res:Object = new Object;
+			var value:Object;
+			each(target, function(item:*, index:int) {
+				value = item[key];
+				if ("number" == typeof(value)) {
+					// 数値型だとキーにできないので、エラー
+					throw new TypeError("ArrayUtil.makeIndexData(): 値が数値型のため、プロパティ名にできません。");
+				}
+				res[value] = index;
+			});
+			return res;
+		}
 		
 		/**
 		 * 配列の中から、指定した名前と値を持つ最初の要素を返す
@@ -19,7 +41,7 @@
 			each(target, function(item:*, index:int) {
 				if (value == item[key]) {
 					res = item;
-					throw new IteratorBreakError("ArrayUtil.search: 発見");	//returnじゃ抜けれないよ
+					throw new IteratorBreakError("ArrayUtil.search(): 発見");	//returnじゃ抜けれないよ
 				}
 			});
 			return res;
