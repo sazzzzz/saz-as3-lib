@@ -1,4 +1,5 @@
 package saz.collections {
+	import saz.util.ObjectUtil;
 	
 	/**
 	 * リスト。<br />
@@ -22,9 +23,9 @@ package saz.collections {
 		 * var myList:List = new List(4);
 		 * </listing>
 		 */
-		public function List(arr:Array = new Array()) {
+		/*public function List(arr:Array = new Array()) {
 			$arr = arr;
-		}
+		}*/
 		
 		/**
 		 * シンタックス1： エレメント数 0 個の新しい List インスタンスを作成します。<br />
@@ -36,15 +37,16 @@ package saz.collections {
 		 * var myList:List = new List(4);
 		 * </listing>
 		 */
-		/*public function List(size:int = 0) {
+		public function List(size:int = 0) {
 			$arr = new Array(size);
-		}*/
+		}
 		
 		/**
 		 * Arrayインスタンスを返す。
+		 * げえ！イケてねえ。
 		 * @return
 		 */
-		//public function getArray():Array { return $arr; }
+		public function getArray():Array { return $arr; }
 		
 		//
 		// 取得
@@ -208,7 +210,8 @@ package saz.collections {
 		}
 		
 		public function toString():String {
-			return String($arr);
+			//return String($arr);
+			return ObjectUtil.dump($arr);
 		}
 		
 	}

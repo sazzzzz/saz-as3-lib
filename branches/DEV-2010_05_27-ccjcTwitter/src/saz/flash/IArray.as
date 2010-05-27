@@ -2,6 +2,7 @@ package saz.flash {
 	
 	/**
 	 * Arrayのインターフェース定義
+	 * @deprecated IndexedArrayで使ってたけど、あっちが廃止予定なので、こっちも廃止予定。
 	 * @author saz
 	 */
 	public interface IArray  {

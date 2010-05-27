@@ -10,7 +10,7 @@ package saz.collections {
 		 * Arrayインスタンスを返す。
 		 * @return
 		 */
-		//function getArray():Array;
+		function getArray():Array;
 		
 		/**
 		 * リスト内のオブジェクト数を返す。

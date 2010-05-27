@@ -6,7 +6,7 @@ package saz.collections {
 	/**
 	 * 索引つきArray
 	 * @author saz
-	 * @deprecated	つくりかけたけど、要素の変更を完全にはキャッチできないので、廃止する。
+	 * @deprecated	つくりかけたけど、要素の変更を完全にはキャッチできないので、廃止する。==>できなくはない。arr[0]でのアクセスも補足できる。
 	 * @see	http://www.techscore.com/tech/DesignPattern/Decorator.html
 	 * @see	http://livedocs.adobe.com/flash/9.0_jp/ActionScriptLangRefV3/flash/utils/Proxy.html#includeExamplesSummary
 	 * @see	http://kozy.heteml.jp/l4l/2008/06/as3proxy.html
