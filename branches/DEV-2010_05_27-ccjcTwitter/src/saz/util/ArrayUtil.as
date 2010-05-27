@@ -8,21 +8,27 @@
 	public class ArrayUtil {
 		
 		/**
-		 * 配列の内容から、検索用索引Objectを作る。プロパティ名を指定できる。
+		 * 配列の内容から、検索用索引Objectを作る。プロパティ名を指定できる。<br/>
+		 * 配列内の要素が数値型の場合は、TypeErrorが発生。<br/>
+		 * makeIndexDataから名前変更。<br/>
 		 * @param	taget
 		 * @param	key	プロパティ名。デフォルトは"id"。
 		 * @return
+		 * @example <listing version="3.0" >
 		 * 入力：[{id:"001"}, {id:"002"}]
 		 * 出力：{001:0, 002:1}
+		 * </listing>
 		 */
-		public static function makeIndexData(target:Array, key:String = "id"):Object {
+		public static function createIndexData(target:Array, key:String = "id"):Object {
+		//public static function makeIndexData(target:Array, key:String = "id"):Object {
+		//public static function makeIndex(target:Array, key:String = "id"):Object {
 			var res:Object = new Object;
 			var value:Object;
 			each(target, function(item:*, index:int) {
 				value = item[key];
 				if ("number" == typeof(value)) {
 					// 数値型だとキーにできないので、エラー
-					throw new TypeError("ArrayUtil.makeIndexData(): 値が数値型のため、プロパティ名にできません。");
+					throw new TypeError("ArrayUtil.createIndexData(): 値が数値型のため、プロパティ名にできません。");
 				}
 				res[value] = index;
 			});
@@ -48,7 +54,9 @@
 		}
 		
 		/**
-		 * Array内のすべての要素に何かする。いわゆるeach。
+		 * Array内のすべての要素に何かする。いわゆるeach。<br/>
+		 * ==>Array.forEach()とかあるじゃん！！！これ完全に不要。
+		 * @deprecated	Array.forEach()があるので、廃止予定。
 		 * @param	target	対象とする配列
 		 * @param	iterator
 		 */

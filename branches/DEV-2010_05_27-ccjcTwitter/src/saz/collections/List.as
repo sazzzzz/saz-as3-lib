@@ -63,6 +63,15 @@ package saz.collections {
 			return $list[$list.length - 1];
 		}
 		
+		/**
+		 * 指定インデックスの位置にあるオブジェクトを置き換える。
+		 * @param	index	0から始まる整数値。
+		 * @param	item
+		 */
+		public function sets(index:int, item:*):void {
+			$list[index] = item;
+		}
+		
 		//
 		// 追加
 		//
