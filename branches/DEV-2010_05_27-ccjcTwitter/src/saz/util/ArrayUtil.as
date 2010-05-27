@@ -24,7 +24,17 @@
 		//public static function makeIndex(target:Array, key:String = "id"):Object {
 			var res:Object = new Object;
 			var value:Object;
-			each(target, function(item:*, index:int) {
+			
+			/*each(target, function(item:*, index:int) {
+				value = item[key];
+				if ("number" == typeof(value)) {
+					// 数値型だとキーにできないので、エラー
+					throw new TypeError("ArrayUtil.createIndexData(): 値が数値型のため、プロパティ名にできません。");
+				}
+				res[value] = index;
+			});*/
+			
+			target.forEach(function(item:*, index:int, arr:Array):void {
 				value = item[key];
 				if ("number" == typeof(value)) {
 					// 数値型だとキーにできないので、エラー
@@ -32,6 +42,7 @@
 				}
 				res[value] = index;
 			});
+			
 			return res;
 		}
 		
@@ -44,10 +55,19 @@
 		 */
 		public static function search(target:Array, key:String, value:*):*{
 			var res:*= null;
-			each(target, function(item:*, index:int) {
+			
+			/*each(target, function(item:*, index:int) {
 				if (value == item[key]) {
 					res = item;
 					throw new IteratorBreakError("ArrayUtil.search(): 発見");	//returnじゃ抜けれないよ
+				}
+			});*/
+			
+			// forEachはループの途中で抜けれないみたい…。break [label]でもダメ。
+			target.forEach(function(item:*, index:int, arr:Array):void {
+				//trace(item, index);
+				if (null == res && value == item[key]) {
+					res = item;
 				}
 			});
 			return res;

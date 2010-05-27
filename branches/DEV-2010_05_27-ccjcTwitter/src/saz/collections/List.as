@@ -5,9 +5,9 @@ package saz.collections {
 	 * 仕様はC++のまね。書籍「オブジェクト指向における再利用のためのデザインパターン」巻末より。<br />
 	 * @author saz
 	 */
-	public class List {
+	public class List implements IList {
 		
-		private var $list:Array;
+		private var $arr:Array;
 		
 		/**
 		 * コンストラクタ。<br />
@@ -22,9 +22,29 @@ package saz.collections {
 		 * var myList:List = new List(4);
 		 * </listing>
 		 */
-		public function List(size:int = 0) {
-			$list = new Array(size);
+		public function List(arr:Array = new Array()) {
+			$arr = arr;
 		}
+		
+		/**
+		 * シンタックス1： エレメント数 0 個の新しい List インスタンスを作成します。<br />
+		 * @example <listing version="3.0" >
+		 * var myList:List = new List();
+		 * </listing>
+		 * シンタックス2： エレメント数 4 個の新しい List インスタンスを作成します。<br />
+		 * @example <listing version="3.0" >
+		 * var myList:List = new List(4);
+		 * </listing>
+		 */
+		/*public function List(size:int = 0) {
+			$arr = new Array(size);
+		}*/
+		
+		/**
+		 * Arrayインスタンスを返す。
+		 * @return
+		 */
+		//public function getArray():Array { return $arr; }
 		
 		//
 		// 取得
@@ -35,7 +55,7 @@ package saz.collections {
 		 * @return
 		 */
 		public function count():int {
-			return $list.length;
+			return $arr.length;
 		}
 		
 		/**
@@ -44,7 +64,7 @@ package saz.collections {
 		 * @return
 		 */
 		public function gets(index:int):*{
-			return $list[index];
+			return $arr[index];
 		}
 		
 		/**
@@ -52,7 +72,7 @@ package saz.collections {
 		 * @return
 		 */
 		public function first():*{
-			return $list[0];
+			return $arr[0];
 		}
 		
 		/**
@@ -60,7 +80,7 @@ package saz.collections {
 		 * @return
 		 */
 		public function last():*{
-			return $list[$list.length - 1];
+			return $arr[$arr.length - 1];
 		}
 		
 		/**
@@ -69,7 +89,7 @@ package saz.collections {
 		 * @param	item
 		 */
 		public function sets(index:int, item:*):void {
-			$list[index] = item;
+			$arr[index] = item;
 		}
 		
 		//
@@ -81,7 +101,7 @@ package saz.collections {
 		 * @param	item
 		 */
 		public function append(item:*):void {
-			$list.push(item);
+			$arr.push(item);
 		}
 		
 		/**
@@ -89,7 +109,7 @@ package saz.collections {
 		 * @param	item
 		 */
 		public function prepend(item:*):void {
-			$list.unshift(item);
+			$arr.unshift(item);
 		}
 		
 		//
@@ -104,7 +124,7 @@ package saz.collections {
 			for (var i:int = 0, len:int = count(), cur:*; i < len; i++) {
 				cur = gets(i);
 				if (item == cur) {
-					$list.splice(i, 1);
+					$arr.splice(i, 1);
 					i--;
 				}
 			}
@@ -114,14 +134,14 @@ package saz.collections {
 		 * リストの最初の要素を削除する。
 		 */
 		public function removeFirst():void {
-			$list.shift();
+			$arr.shift();
 		}
 		
 		/**
 		 * リストの最後の要素を削除する。
 		 */
 		public function removeLast():void {
-			$list.pop();
+			$arr.pop();
 		}
 		
 		/**
@@ -129,8 +149,8 @@ package saz.collections {
 		 */
 		public function removeAll():void {
 			do {
-				$list.pop();
-			}while ($list.length > 0)
+				$arr.pop();
+			}while ($arr.length > 0)
 		}
 		
 		
@@ -143,7 +163,7 @@ package saz.collections {
 		 * @return
 		 */
 		public function top():*{
-			return $list[$list.length - 1];
+			return $arr[$arr.length - 1];
 		}
 		
 		/**
@@ -151,7 +171,7 @@ package saz.collections {
 		 * @param	item
 		 */
 		public function push(item:*):void {
-			$list.push(item);
+			$arr.push(item);
 		}
 		
 		/**
@@ -159,7 +179,7 @@ package saz.collections {
 		 * @return
 		 */
 		public function pop():*{
-			return $list.pop();
+			return $arr.pop();
 		}
 		
 		
@@ -182,13 +202,13 @@ package saz.collections {
 		 */
 		public function destroy():void {
 			for (var i:int = 0, len:int = count(), cur:*; i < len; i++) {
-				$list[i] = null;
+				$arr[i] = null;
 			}
-			$list = null;
+			$arr = null;
 		}
 		
 		public function toString():String {
-			return String($list);
+			return String($arr);
 		}
 		
 	}

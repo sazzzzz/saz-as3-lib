@@ -3,10 +3,11 @@ package saz.collections {
 	import saz.util.ObjectUtil;
 	
 	/**
-	 * 配列の索引管理。
+	 * 配列の索引管理。<br/>
+	 * 索引リセットを忘れると危険なので、このクラスを素で使わないように。これと対象Arrayを内包するクラスを作って利用するとか。<br/>
 	 * @author saz
 	 */
-	public class ArrayIndexManager {
+	public class ArrayIndexManager extends Array {
 		
 		private var $target:Array;
 		/**
@@ -24,6 +25,8 @@ package saz.collections {
 		public function ArrayIndexManager(target:Array) {
 			$target = target;
 			$indexDatas = new Object();
+			
+			super();
 		}
 		
 		
@@ -32,6 +35,18 @@ package saz.collections {
 		 */
 		public function indexFlush():void {
 			$needFlush = true;
+		}
+		
+		/**
+		 * 配列の中から、指定キーと値をもつ要素を返す。
+		 * @param	key
+		 * @param	value
+		 * @return	指定キーと値をもつ要素を返す。見つからない場合はnullを返す。
+		 */
+		public function search(key:String, value:*):*{
+			//trace("ArrayIndexManager.search(" + arguments);
+			//trace(ObjectUtil.dump(getIndexData(key)));
+			return $target[getIndexData(key)[value]];
 		}
 		
 		/**
@@ -58,20 +73,10 @@ package saz.collections {
 				res = $createIndexData(key);
 				$indexDatas[key] = res;
 				return res;
+			}else {
+				return $indexDatas[key];
 			}
-			
-			return $indexDatas[key];
 		}
-		
-		/**
-		 * 配列の中から、指定キーと値をもつ要素を返す。
-		 * @param	key
-		 * @param	value
-		 * @return
-		 */
-		/*public function search(key:String, value:*):*{
-			//$indexDatas[key] = ArrayUtil.makeIndex($target, key);
-		}*/
 		
 		/**
 		 * 管理対象のArrayインスタンスを返す。
@@ -96,6 +101,27 @@ package saz.collections {
 			//$indexDatas[key] = ArrayUtil.createIndexData($target, key);
 			return ArrayUtil.createIndexData($target, key);
 		}
+		
+		//--------------------------------------
+		// 以下、Arrayインターフェースを実装しようとしたけど、ここに作るべきじゃない。
+		// ExArrayとか別のクラスとして実装すべき。
+		//--------------------------------------
+		
+		/*public function concat(... args:Array):Array {
+			return $target.concat.apply(null, args);
+		}
+		public function every(callback:Function, thisObject:*= null):Boolean {
+			return $target.every(callback, thisObject);
+		}
+		public function filter(callback:Function, thisObject:*= null):Array {
+			return $target.filter(callback, thisObject);
+		}
+		public function forEach(callback:Function, thisObject:*= null):void {
+			indexFlush();
+			$target.forEach(callback, thisObject);
+		}
+		public */
+		
 		
 	}
 	
