@@ -7,19 +7,19 @@ package saz.twitter {
 	public class TwitterUserData {
 		
 		/**
-		 * id。
+		 * id。例："4149481"。
 		 */
 		public var id:String;
 		/**
-		 * 表示名。
+		 * 表示名。例："たなか"。
 		 */
 		public var name:String;
 		/**
-		 * ユーザー名。
+		 * アカウント名。例："tanaka"。
 		 */
 		public var screen_name:String;
 		/**
-		 * 場所。
+		 * 場所。例："tokyo"。
 		 */
 		public var location:String;
 		/**
@@ -27,11 +27,14 @@ package saz.twitter {
 		 */
 		public var description:String;
 		/**
-		 * アイコン画像のURL。
+		 * アイコン画像のURL。例："http://a1.twimg.com/profile_images/798482026/takashiro1_normal.jpg"。
 		 */
 		public var profile_image_url:String;
 		public var url:String;
-		public var protected:Boolean;
+		/**
+		 * protectedが予約語なので、リネーム。
+		 */
+		public var _protected:Boolean;
 		public var followers_count:int;
 		public var profile_background_color:int;
 		public var profile_text_color:int;
