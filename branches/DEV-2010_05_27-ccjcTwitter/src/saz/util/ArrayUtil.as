@@ -8,6 +8,20 @@
 	public class ArrayUtil {
 		
 		/**
+		 * 配列から指定した名前のプロパティを抜き出した配列を作る。<br/>
+		 * @param	target	対象とする配列
+		 * @param	key	プロパティ名。
+		 * @return
+		 */
+		public static function createPropertyList(target:Array, key:String):Array {
+			var res:Array = new Array(target.length);
+			target.forEach(function(item:*, index:int, arr:Array):void {
+				res[index] = item[key];
+			});
+			return res;
+		}
+		
+		/**
 		 * 配列の内容から、検索用索引Objectを作る。プロパティ名を指定できる。<br/>
 		 * 配列内の要素が数値型の場合は、TypeErrorが発生。<br/>
 		 * makeIndexDataから名前変更。<br/>
@@ -20,19 +34,8 @@
 		 * </listing>
 		 */
 		public static function createIndexData(target:Array, key:String = "id"):Object {
-		//public static function makeIndexData(target:Array, key:String = "id"):Object {
-		//public static function makeIndex(target:Array, key:String = "id"):Object {
 			var res:Object = new Object;
 			var value:Object;
-			
-			/*each(target, function(item:*, index:int) {
-				value = item[key];
-				if ("number" == typeof(value)) {
-					// 数値型だとキーにできないので、エラー
-					throw new TypeError("ArrayUtil.createIndexData(): 値が数値型のため、プロパティ名にできません。");
-				}
-				res[value] = index;
-			});*/
 			
 			target.forEach(function(item:*, index:int, arr:Array):void {
 				// Objectでなかったら無視
