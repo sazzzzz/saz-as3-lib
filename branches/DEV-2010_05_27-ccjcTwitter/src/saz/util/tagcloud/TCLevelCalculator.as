@@ -1,10 +1,10 @@
-package saz.math {
+package saz.util.tagcloud {
 	import saz.util.VarDefault;
 	/**
 	 * タグクラウドレベル計算機。<br/>
 	 * @author saz
 	 */
-	public class CloudLevelCalculator {
+	public class TCLevelCalculator {
 		
 		// 0-24:25steps
 		private var $maxLevel:int;
@@ -13,7 +13,7 @@ package saz.math {
 		private var $maxCount:int;
 		private var $min:Number;
 		
-		public function CloudLevelCalculator(maxLevel:int = 24) {
+		public function TCLevelCalculator(maxLevel:int = 24) {
 			setMaxLevel(maxLevel);
 		}
 		
@@ -23,7 +23,7 @@ package saz.math {
 		 * @return	整数とは限らない。小数点あり。
 		 */
 		public function calcLevel(count:int):Number {
-			if (VarDefault.isNumberDefault($k)) throw new Error("CloudLevelCalculator.calcLevel(): minCountまたはmaxCountが設定されていません。");
+			if (VarDefault.isNumberDefault($k)) throw new Error("TCLevelCalculator.calcLevel(): minCountまたはmaxCountが設定されていません。");
 			return (Math.sqrt(count) - $min) * $k;
 		}
 		
@@ -41,7 +41,7 @@ package saz.math {
 		 * @param	maxCount
 		 */
 		public function setRange(minCount:int, maxCount:int):void {
-			trace("CloudLevelCalculator.setRange(" + arguments);
+			trace("TCLevelCalculator.setRange(" + arguments);
 			$minCount = minCount;
 			$maxCount = maxCount;
 			$updateK();
@@ -60,7 +60,7 @@ package saz.math {
 		 * 係数kを更新。
 		 */
 		private function $updateK():void {
-			if (VarDefault.INT == $minCount || VarDefault.INT == $maxCount) throw new Error("CloudLevelCalculator.$updateK(): minCountまたはmaxCountが設定されていません。");
+			if (VarDefault.INT == $minCount || VarDefault.INT == $maxCount) throw new Error("TCLevelCalculator.$updateK(): minCountまたはmaxCountが設定されていません。");
 			$min = Math.sqrt($minCount);
 			var max:Number = Math.sqrt($maxCount);
 			$k = $maxLevel / (max - $min);

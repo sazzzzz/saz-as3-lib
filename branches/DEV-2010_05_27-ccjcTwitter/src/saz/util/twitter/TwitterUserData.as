@@ -1,4 +1,4 @@
-package saz.twitter {
+package saz.util.twitter {
 	
 	/**
 	 * twitterユーザーデータ保持クラス
