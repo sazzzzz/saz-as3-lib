@@ -26,9 +26,10 @@
 			
 		}
 		
-		//実は、var wm = new Singleton(Singleton.getInstance); で初期化できちゃうよ
+		// AS2とAS3でSingletonクラスを作る（http://feb19.jp/blog/archives/000147.php
+		// 実は、var wm = new Singleton(Singleton.getInstance); で初期化できちゃうよ
 		/**
-		 * @see	http://feb19.jp/blog/archives/000147.php
+		 * インスタンスを生成する。
 		 * @return
 		 */
 		public static function getInstance():Singleton {
