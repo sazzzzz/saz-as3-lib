@@ -18,6 +18,19 @@ package saz.util.tagcloud {
 		}
 		
 		/**
+		 * クラウドレベルをまとめて計算する。
+		 * @param	countList	カウントの配列。
+		 * @return	レベルの配列。
+		 */
+		public function calcLevelList(countList:/*int*/Array):/*Number*/Array {
+			var res:Array = new Array(countList.length);
+			countList.forEach(function(item:*, index:int, array:Array):void{
+				res[index] = calcLevel(item);
+			});
+			return res;
+		}
+		
+		/**
 		 * クラウドレベルを計算する。
 		 * @param	count
 		 * @return	整数とは限らない。小数点あり。

@@ -53,6 +53,51 @@
 		}
 		
 		/**
+		 * インデックス0からの積算を計算し、配列で返す。
+		 * @param	target	数値の配列。
+		 * @return	インデックス1には0-1の積算、インデックス2には0-2の積算。
+		 * @example <listing version="3.0" >
+		 * [2,2,2,2]
+		 * ->[2,4,6,8]
+		 * </listing>
+		 */
+		public static function estimateList(target:Array):Array {
+			var res:/*Number*/Array = new Array(target.length);
+			res[0] = target[0];
+			for (var i:int = 1, len:int = target.length; i < len; i++) {
+				res[i] = res[i - 1] + target[i];
+			}
+			return res;
+		}
+		
+		/**
+		 * 配列から指定されたものを探し、最初に見つかったインデックスを返す。
+		 * @param	targe
+		 * @param	search
+		 * @return	インデックスを返す。見つからなかったら-1を返す。
+		 */
+		public static function find(target:Array, search:*):int {
+			var res:Number = -1;
+			target.forEach(function(item:*, index:int, arr:Array):void {
+				if ( -1 == res && item == search) res = index;
+			});
+			return res;
+		}
+		
+		/**
+		 * 配列の要素の合計を計算。
+		 * @param	target
+		 * @return
+		 */
+		public static function sum(target:Array):Number {
+			var res:Number = 0;
+			target.forEach(function(item:*, index:int, arr:Array):void {
+				res += item;
+			});
+			return res;
+		}
+		
+		/**
 		 * 配列の中から、指定した名前と値を持つ最初の要素を返す
 		 * @param	target	対象とする配列
 		 * @param	key	探す名前
