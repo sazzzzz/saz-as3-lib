@@ -98,6 +98,24 @@
 		}
 		
 		/**
+		 * 配列の要素の最小値を返す。Math.min()のエイリアス。
+		 * @param	target
+		 * @return
+		 */
+		public static function min(target:Array):Number {
+			return Math.min.apply(null, target);
+		}
+		
+		/**
+		 * 配列の要素の最大値を返す。Math.max()のエイリアス。
+		 * @param	target
+		 * @return
+		 */
+		public static function max(target:Array):Number {
+			return Math.max.apply(null, target);
+		}
+		
+		/**
 		 * 配列の中から、指定した名前と値を持つ最初の要素を返す
 		 * @param	target	対象とする配列
 		 * @param	key	探す名前
