@@ -116,6 +116,14 @@
 		}
 		
 		/**
+		 * Array内のすべての要素を削除する。
+		 * @param	target	対象とする配列
+		 */
+		public static function removeAll(target:Array):void {
+			target.splice(0);
+		}
+		
+		/**
 		 * 配列の中から、指定した名前と値を持つ最初の要素を返す
 		 * @param	target	対象とする配列
 		 * @param	key	探す名前
@@ -166,11 +174,16 @@
 		}
 		
 		/**
-		 * Array内のすべての要素を削除する。
-		 * @param	target	対象とする配列
+		 * ソート比較関数 手抜きサンプル。
+		 * @param	a	
+		 * @param	b	
+		 * @return	ソート順により A が B より前に現れる場合は -1<br />
+		 * A = B の場合は 0<br />
+		 * ソート順により A が B より後に現れる場合は 1<br />
 		 */
-		public static function removeAll(target:Array):void {
-			target.splice(0);
+		public static function sortFunc(a:*, b:*):int {
+			return a - b;	// 昇順
+			//return b - a;	// 降順
 		}
 	}
 	
