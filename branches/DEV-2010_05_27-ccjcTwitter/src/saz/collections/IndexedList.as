@@ -82,7 +82,7 @@ package saz.collections {
 		 * @param	item
 		 */
 		public function sets(index:int, item:*):void {
-			trace("IndexedList.sets(" + arguments);
+			//trace("IndexedList.sets(" + arguments);
 			$indexMan.indexFlush();
 			$list.sets(index, item);
 		}
