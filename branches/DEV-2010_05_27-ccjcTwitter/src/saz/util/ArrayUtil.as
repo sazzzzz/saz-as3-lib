@@ -76,8 +76,8 @@
 		 * @param	value
 		 */
 		public static function fill(target:Array, value:*):void {
-			target.map(function(item:*, index:int, arr:Array):void {
-				return value;
+			target.forEach(function(item:*, index:int, arr:Array):void {
+				target[index] = value;
 			});
 		}
 		
