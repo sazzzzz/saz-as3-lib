@@ -71,6 +71,17 @@
 		}
 		
 		/**
+		 * 指定した値で埋める。
+		 * @param	target
+		 * @param	value
+		 */
+		public static function fill(target:Array, value:*):void {
+			target.map(function(item:*, index:int, arr:Array):void {
+				return value;
+			});
+		}
+		
+		/**
 		 * 配列から指定されたものを探し、最初に見つかったインデックスを返す。
 		 * @param	targe
 		 * @param	search
