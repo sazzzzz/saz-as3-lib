@@ -87,10 +87,14 @@ package saz.util.tagcloud {
 			
 			var countList:Array = ArrayUtil.createPropertyList(dataList, "count");
 			$levelCalc.detectRange(countList);
-			dataList.forEach(function(item:TCData, index:int, arr:Array):void {
-				res += $createATag(item, index, $levelCalc.calcLevel(item.count)) + separator;
-				//res += $createATag(item, index, $levelCalc.calcLevel(item.count));
-			});
+			if (0 == $levelCalc.maxCount) {
+				// 0
+			}else {
+				dataList.forEach(function(item:TCData, index:int, arr:Array):void {
+					res += $createATag(item, index, $levelCalc.calcLevel(item.count)) + separator;
+					//res += $createATag(item, index, $levelCalc.calcLevel(item.count));
+				});
+			}
 			return res;
 		}
 		

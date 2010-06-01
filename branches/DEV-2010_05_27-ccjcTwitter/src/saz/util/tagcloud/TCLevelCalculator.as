@@ -45,6 +45,7 @@ package saz.util.tagcloud {
 		 * @param	countList
 		 */
 		public function detectRange(countList:/*int*/Array):void {
+			//trace("TCLevelCalculator.detectRange(" + arguments);
 			setRange(Math.min.apply(null, countList), Math.max.apply(null, countList));
 		}
 		
@@ -54,7 +55,7 @@ package saz.util.tagcloud {
 		 * @param	maxCount
 		 */
 		public function setRange(minCount:int, maxCount:int):void {
-			trace("TCLevelCalculator.setRange(" + arguments);
+			//trace("TCLevelCalculator.setRange(" + arguments);
 			$minCount = minCount;
 			$maxCount = maxCount;
 			$updateK();
@@ -73,11 +74,16 @@ package saz.util.tagcloud {
 		 * 係数kを更新。
 		 */
 		private function $updateK():void {
-			if (VarDefault.INT == $minCount || VarDefault.INT == $maxCount) throw new Error("TCLevelCalculator.$updateK(): minCountまたはmaxCountが設定されていません。");
+			// VarDefault.INT=0 なのでいらないか。
+			//if (VarDefault.INT == $minCount || VarDefault.INT == $maxCount) throw new Error("TCLevelCalculator.$updateK(): minCountまたはmaxCountが設定されていません。");
 			$min = Math.sqrt($minCount);
 			var max:Number = Math.sqrt($maxCount);
 			$k = $maxLevel / (max - $min);
 		}
+		
+		public function get minCount():int { return $minCount; }
+		
+		public function get maxCount():int { return $maxCount; }
 		
 	}
 
