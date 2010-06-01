@@ -16,6 +16,17 @@
 		
 		private var $defParams:Object;
 		
+		
+		/**
+		 * 
+		 * @param	caller
+		 * @example <listing version="3.0" >
+		 * if (!FlashVarsProxy.isReady) {
+		 * 	FlashVarsProxy.getInstance().init(this);
+		 * 	FlashVarsProxy.getInstance().addDefaultParam("configUrl", "./config.xml");
+		 * }
+		 * </listing>
+		 */
 		function FlashVarsProxy(caller:Function = null) {
 			if (FlashVarsProxy.getInstance != caller) {
 				throw new Error("FlashVarsProxyクラスはシングルトンクラスです。getInstance()メソッドを使ってインスタンス化してください。");
