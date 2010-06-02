@@ -13,6 +13,29 @@ package saz.util.tagcloud {
 		private var $maxCount:int;
 		private var $min:Number;
 		
+		/**
+		 * コンストラクタ。
+		 * @param	maxLevel
+		 * @example <listing version="3.0" >
+		 * const DATS:Array = [
+		 * 	{name:"js", count:10}, {name:"ruby", count:5}, {name:"php", count:3}, {name:"html", count:1}
+		 * ];
+		 * // 数字配列をつくる
+		 * var countList3:Array = new Array();
+		 * DATS.forEach(function(item:*, index:int, array:Array):void{
+		 * 	countList3.push(item.count);
+		 * });
+		 * 
+		 * var cCalc3:TCLevelCalculator = new TCLevelCalculator();
+		 * // max,minを自動で決定。
+		 * cCalc3.detectRange(countList3);
+		 * 
+		 * // レベルを計算。
+		 * DATS.forEach(function(item:*, index:int, array:Array):void{
+		 * 	trace(DATS[index].name, cCalc2.calcLevel(DATS[index].count));
+		 * });
+		 * </listing>
+		 */
 		public function TCLevelCalculator(maxLevel:int = 24) {
 			setMaxLevel(maxLevel);
 		}
