@@ -12,6 +12,7 @@ package saz.util.tagcloud {
 		private var $minCount:int;
 		private var $maxCount:int;
 		private var $min:Number;
+		private var $max:Number;
 		
 		/**
 		 * コンストラクタ。
@@ -57,6 +58,7 @@ package saz.util.tagcloud {
 		 */
 		public function calcLevel(count:int):Number {
 			if (VarDefault.isNumberDefault($k)) throw new Error("TCLevelCalculator.calcLevel(): minCountまたはmaxCountが設定されていません。");
+			trace("$k, $min, $max: ", $k, $min, $max);
 			return (Math.sqrt(count) - $min) * $k;
 		}
 		
@@ -97,8 +99,11 @@ package saz.util.tagcloud {
 			// VarDefault.INT=0 なのでいらないか。
 			//if (VarDefault.INT == $minCount || VarDefault.INT == $maxCount) throw new Error("TCLevelCalculator.$updateK(): minCountまたはmaxCountが設定されていません。");
 			$min = Math.sqrt($minCount);
-			var max:Number = Math.sqrt($maxCount);
-			$k = $maxLevel / (max - $min);
+			$max = Math.sqrt($maxCount);
+			if ($min == $max) {		// min=maxのときの例外処理
+				$min = 0;
+			}
+			$k = $maxLevel / ($max - $min);
 		}
 		
 		public function get minCount():int { return $minCount; }
