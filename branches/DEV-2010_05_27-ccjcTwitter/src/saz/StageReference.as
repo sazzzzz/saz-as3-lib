@@ -6,6 +6,11 @@
 	 * addChildしたDisplayObject以外からでもstageを参照できるように。<br/>
 	 * @see	http://fladdict.net/blog/2007/02/as3_stage.html
 	 * @author saz
+	 * @example <listing version="3.0" >
+	 * StageReference.init(stage);
+	 * ...
+	 * trace(StageReference.stage);
+	 * </listing>
 	 */
 	public class StageReference {
 		
