@@ -4,6 +4,7 @@
 	/**
 	 * stage参照クラス。<br/>
 	 * addChildしたDisplayObject以外からでもstageを参照できるように。<br/>
+	 * TODO	saz.display に移動するのが妥当かな
 	 * @see	http://fladdict.net/blog/2007/02/as3_stage.html
 	 * @author saz
 	 * @example <listing version="3.0" >
