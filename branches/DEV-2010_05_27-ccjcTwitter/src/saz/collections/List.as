@@ -211,7 +211,8 @@ package saz.collections {
 		
 		public function toString():String {
 			//return String($arr);
-			return ObjectUtil.dump($arr);
+			//return ObjectUtil.dump($arr);
+			return "[saz.collections.List]";
 		}
 		
 	}
