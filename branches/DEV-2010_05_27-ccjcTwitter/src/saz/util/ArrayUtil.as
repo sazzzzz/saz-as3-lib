@@ -12,6 +12,11 @@
 		 * @param	target	対象とする配列
 		 * @param	key	プロパティ名。
 		 * @return
+		 * @example <listing version="3.0" >
+		 * var dataList:Array = [{name:"田中",count:10},{name:"山田",count:1},{name:"太一",count:3}];
+		 * var countList:Array = ArrayUtil.createPropertyList(dataList, "count");
+		 * trace(countList);
+		 * </listing>
 		 */
 		public static function createPropertyList(target:Array, key:String):Array {
 			var res:Array = new Array(target.length);
