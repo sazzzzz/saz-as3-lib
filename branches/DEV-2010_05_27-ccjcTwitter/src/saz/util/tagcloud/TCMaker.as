@@ -78,21 +78,36 @@ package saz.util.tagcloud {
 		}
 		
 		/**
-		 * HTMLを生成する。
+		 * 自動でレベルを決定し、HTMLを生成する。
 		 * @param	dataList	TCDataの配列。
 		 * @return
 		 */
 		public function createHtml(dataList:/*TCData*/Array):String {
-			var res:String = "";
-			
 			var countList:Array = ArrayUtil.createPropertyList(dataList, "count");
+			detectRange(countList);
+			return buildHtml(dataList);
+		}
+		
+		/**
+		 * カウント数の配列からレベルを決定
+		 * @param	countList
+		 */
+		public function detectRange(countList:/*Number*/Array):void {
 			$levelCalc.detectRange(countList);
+		}
+		
+		/**
+		 * HTMLを生成する。事前にレベルの決定が必要。
+		 * @param	dataList
+		 * @return
+		 */
+		public function buildHtml(dataList:/*TCData*/Array):String {
+			var res:String = "";
 			if (0 == $levelCalc.maxCount) {
 				// 0
 			}else {
 				dataList.forEach(function(item:TCData, index:int, arr:Array):void {
 					res += $createATag(item, index, $levelCalc.calcLevel(item.count)) + separator;
-					//res += $createATag(item, index, $levelCalc.calcLevel(item.count));
 				});
 			}
 			return res;
