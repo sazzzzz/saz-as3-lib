@@ -143,7 +143,7 @@
 		
 		/**
 		 * 配列から指定した名前のプロパティを抜き出した配列を作る。<br/>
-		 * @param	target	対象とする配列
+		 * @param	target	対象とする配列。
 		 * @param	key	プロパティ名。
 		 * @return
 		 * @example <listing version="3.0" >
@@ -159,6 +159,17 @@
 			});
 			return res;
 		}
+		
+		/**
+		 * 指定インデックスで2次元配列に分けて返す。
+		 * @param	target	対象とする配列。
+		 * @param	count	1つ目の配列の長さ。例えば、長さ４の配列、count=1を指定すると、長さ1,3の配列を返す。
+		 * @return	2次元配列。
+		 */
+		//public static function split(target:Array, count:int = 1):/*Array*/Array {
+			//
+			//
+		//}
 		
 		/**
 		 * 指定した値で埋める。
