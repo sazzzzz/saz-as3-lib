@@ -9,13 +9,26 @@
 		
 		public static const UNDEFINED = undefined;
 		
+		/**
+		 * Numberのデフォルト値判定には、isNumberDefault()を使う。
+		 */
+		public static const NUMBER = NaN;
+		
 		public static const BOOLEAN = false;
 		public static const INT = 0;
 		public static const UINT = 0;
-		public static const NUMBER = NaN;
 		public static const STRING = null;
 		public static const OBJECT = null;
 		public static const OTHERS = null;
+		
+		/**
+		 * Numberがデフォルト値かどうかを返す。
+		 * @param	value
+		 * @return
+		 */
+		public static function isNumberDefault(value:Number):Boolean {
+			return isNaN(value);
+		}
 		
 	}
 	

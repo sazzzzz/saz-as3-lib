@@ -7,6 +7,21 @@
 	public class ObjectUtil {
 		
 		/**
+		 * Object内のすべての要素を削除する。
+		 * @param	target	対象とするObject
+		 */
+		public static function removeAll(target:Object):void {
+			// for each じゃダメでした！
+			/*for each(var item:* in target) {
+				item = null;
+			}*/
+			for (var name:String in target) {
+				//target[name] = null;		// null代入だとエントリが残っちゃう！
+				delete target[name];		// for..in で、 delete じゃないとダメみたい。
+			}
+		}
+		
+		/**
 		 * Object　の中身をStringにして返す。ダンプ用。
 		 * @param	target
 		 * @return

@@ -1,4 +1,5 @@
 ﻿package saz.util {
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	
 	/**
@@ -12,10 +13,21 @@
 		public static var isReady:Boolean;
 		
 		private static var $instance:FlashVarsProxy = null;
-		private var $tl:MovieClip;
+		private var $tl:DisplayObject;
 		
 		private var $defParams:Object;
 		
+		
+		/**
+		 * 
+		 * @param	caller
+		 * @example <listing version="3.0" >
+		 * if (!FlashVarsProxy.isReady) {
+		 * 	FlashVarsProxy.getInstance().init(root);
+		 * 	FlashVarsProxy.getInstance().addDefaultParam("configUrl", "./config.xml");
+		 * }
+		 * </listing>
+		 */
 		function FlashVarsProxy(caller:Function = null) {
 			if (FlashVarsProxy.getInstance != caller) {
 				throw new Error("FlashVarsProxyクラスはシングルトンクラスです。getInstance()メソッドを使ってインスタンス化してください。");
@@ -33,7 +45,7 @@
 		 * 初期化。
 		 * @param	mainTimeline	FlashVarsを持っている、メインタイムラインまたはドキュメントクラス。
 		 */
-		public function init(mainTimeline:MovieClip):void {
+		public function init(mainTimeline:DisplayObject):void {
 			if (isReady) return;
 			$tl = mainTimeline;
 			isReady = true;
