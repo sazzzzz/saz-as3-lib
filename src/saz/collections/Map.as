@@ -17,14 +17,37 @@
 			$obj = new Object();
 		}
 		
+		/**
+		 * 要素を取得する。
+		 * @param	key
+		 * @return
+		 */
 		public function gets(key:String):* {
 			return $obj[key];
 		}
 		
+		/**
+		 * 指定した要素を書き換える。
+		 * @param	key
+		 * @param	value
+		 */
 		public function put(key:String, value:*):void {
 			$obj[key] = value;
 		}
 		
+		/**
+		 * putのエイリアス。
+		 * @param	key
+		 * @param	value
+		 */
+		public function sets(key:String, value:*):void {
+			put(key, value);
+		}
+		
+		/**
+		 * 指定した要素を削除する。
+		 * @param	key
+		 */
 		public function remove(key:String):void {
 			delete $obj[key];
 		}
