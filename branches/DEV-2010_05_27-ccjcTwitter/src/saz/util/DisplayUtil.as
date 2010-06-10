@@ -40,6 +40,14 @@
 			return new ColorTransform( k, k, k, 1, red, green, blue );
 		}*/
 		
+		/**
+		 * DisplayObject.transform.colorTransformをリセットする。
+		 * @param	target
+		 */
+		public static function clearRGB(target:DisplayObject):void {
+			var colorTrans:ColorTransform = new ColorTransform();
+			target.transform.colorTransform = colorTrans;
+		}
 		
 		/**
 		 * 着色する
