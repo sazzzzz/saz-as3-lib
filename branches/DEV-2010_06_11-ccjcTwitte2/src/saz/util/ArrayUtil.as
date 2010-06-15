@@ -80,13 +80,15 @@
 		 * </listing>
 		 */
 		public static function createIndexData(target:Array, key:String = "id"):Object {
+			//trace("ArrayUtil.createIndexData(", arguments);
 			var res:Object = new Object;
-			var value:Object;
+			var value:*;
 			
 			target.forEach(function(item:*, index:int, arr:Array):void {
 				// Objectでなかったら無視
 				if ("object" == typeof(item)) {
 					value = item[key];
+					//trace(item, index, value);
 					if ("number" == typeof(value)) {
 						// 数値型だとキーにできないので、エラー
 						throw new TypeError("ArrayUtil.createIndexData(): 値が数値型のため、プロパティ名にできません。");
