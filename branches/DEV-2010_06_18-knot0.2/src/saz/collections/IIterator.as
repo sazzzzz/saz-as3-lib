@@ -21,18 +21,18 @@ package saz.collections {
 		 * 次の要素があるかどうか。
 		 * @return
 		 */
-		public function hasNext():Boolean;
+		function hasNext():Boolean;
 		
 		/**
 		 * 次の要素を取得。
 		 * @return
 		 */
-		public function next():*;
+		function next():*;
 		
 		/**
 		 * next()で取得した要素を削除する。
 		 */
-		public function remove():void;
+		function remove():void;
 	}
 	
 }

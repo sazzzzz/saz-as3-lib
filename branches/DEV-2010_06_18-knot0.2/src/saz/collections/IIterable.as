@@ -9,7 +9,7 @@ package saz.collections {
 		 * Iteratorを取得。
 		 * @return
 		 */
-		public function getIterator():IIterator;
+		function getIterator():IIterator;
 	}
 	
 }

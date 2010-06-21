@@ -16,7 +16,7 @@ package saz.collections {
 		 * function callback(item:*, index:int, enum:IEnumerator):void;
 		 * @param	thisObject	関数の this として使用するオブジェクトです。
 		 */
-		public function forEach(callback:Function, thisObject:*= null):void;
+		function forEach(callback:Function, thisObject:*= null):void;
 	}
 	
 }
