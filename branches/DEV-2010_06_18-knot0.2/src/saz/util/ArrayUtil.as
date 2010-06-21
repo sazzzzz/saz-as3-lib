@@ -172,6 +172,23 @@
 		//}
 		
 		/**
+		 * 配列の要素をシャッフルする。
+		 * @param	target
+		 * @see	http://blog.livedoor.jp/dankogai/archives/50614134.html
+		 */
+		public static function shuffle(target:Array):void {
+			// Fisher-Yates法だそうです。
+			var i:int = target.length;
+			var j:int, t:*;
+			while (i) {
+				j = Math.floor(Math.random() * i);
+				t = target[--i];
+				target[i] = target[j];
+				target[j] = t;
+			}
+		}
+		
+		/**
 		 * 指定した値で埋める。
 		 * @param	target
 		 * @param	value
