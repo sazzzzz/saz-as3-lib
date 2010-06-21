@@ -102,22 +102,22 @@
 		}
 		
 		
-		static function getNewPoint():Point {
+		public static function getNewPoint():Point {
 			if ($newPoint == null)$newPoint = new Point();
 			return $newPoint;
 		}
 		
-		static function getNewRectangle():Rectangle {
+		public static function getNewRectangle():Rectangle {
 			if ($newRectangle == null)$newRectangle = new Rectangle();
 			return $newRectangle;
 		}
 		
-		static function getNewMatrix():Matrix {
+		public static function getNewMatrix():Matrix {
 			if ($newMatrix == null)$newMatrix = new Matrix();
 			return $newMatrix;
 		}
 		
-		static function getNewColorTransform():ColorTransform {
+		public static function getNewColorTransform():ColorTransform {
 			if ($newColorTransform == null)$newColorTransform = new ColorTransform();
 			return $newColorTransform;
 		}
