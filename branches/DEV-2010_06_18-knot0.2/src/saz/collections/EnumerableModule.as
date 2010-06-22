@@ -3,9 +3,10 @@ package saz.collections {
 	 * RubyなEnumerable.
 	 * TODO	ArrayをIEnumeratorに変更する！
 	 * @author saz
-	 * http://www.ruby-lang.org/ja/man/html/Enumerable.html
+	 * @see	http://www.ruby-lang.org/ja/man/html/Enumerable.html
+	 * @see	http://www.s2factory.co.jp/tech/prototype/prototype.js.html#Reference.Enumerable
 	 */
-	public class EnumerableModule{
+	public class EnumerableModule implements IEnumerator {
 		//private var $component:IEnumerator;
 		private var $component:Array;
 		
@@ -16,20 +17,112 @@ package saz.collections {
 		//public function EnumerableModule(component:IEnumerator) {
 		public function EnumerableModule(component:Array) {
 			$component = component;
+			
+			//エイリアス
+			collect = map;
+			find = detect;
+			findAll = select;
+			includes = member;
 		}
 		
-		private function $iterateBoolean(value:Boolean, index:int):Boolean {
-			return value;
-		}
+		//--------------------------------------
+		// ALIAS
+		//--------------------------------------
 		
+		/**
+		 * mapと同じ。
+		 * @param	iterator
+		 * @return
+		 */
+		//public function collect(iterator:Function = null):Array { return []; }
+		public var collect:Function;
+		
+		/**
+		 * detectと同じ。
+		 * @param	iterator
+		 * @return
+		 */
+		//public function find(iterator:Function):* { return 0; }
+		public var find:Function;
+		
+		/**
+		 * selectと同じ。
+		 * @param	iterator
+		 * @return
+		 */
+		//public function findAll(iterator:Function):Array { return[]; }
+		public var findAll:Function;
+		
+		/**
+		 * memberと同じ。（本来は"include"だが予約されていて使えない）
+		 * @param	value
+		 * @return
+		 */
+		//public function include(value:*):Boolean { return false; }
+		public var includes:Function;
+		
+		/**
+		 * entriesと同じ。
+		 * @return
+		 */
+		public var toArray:Function;
+		
+		
+		//--------------------------------------
+		// PRIVATE
+		//--------------------------------------
+		
+		/**
+		 * 要素自体を返す。
+		 * @param	item
+		 * @param	index
+		 * @return
+		 */
 		private function $iterateItem(item:*, index:int):*{
 			return item;
 		}
 		
 		/**
+		 * 要素自体をBooleanにして返す。
+		 * @param	item
+		 * @param	index
+		 * @return
+		 * 0	Boolean(0)	false
+		 * NaN	Boolean(NaN)	false
+		 * 数値 (0 でも NaN でもない)	Boolean(4)	true
+		 * 空のストリング	Boolean("")	false
+		 * 空ではないストリング	Boolean("6")	true
+		 * null	Boolean(null)	false
+		 * undefined	Boolean(undefined)	false
+		 * Object クラスのインスタンス	Boolean(new Object())	true
+		 * 引数なし	Boolean()	false
+		 * @see	http://livedocs.adobe.com/flash/9.0_jp/ActionScriptLangRefV3/package.html#Boolean()
+		 */
+		private function $iterateBoolean(item:Boolean, index:int):Boolean {
+			return Boolean(item);
+		}
+		
+		
+		//--------------------------------------
+		// PUBLIC
+		//--------------------------------------
+		
+		
+		/**
+		 * 配列内の各アイテムについて関数を実行します。
+		 * @param	iterator
+		 * @param	thisObject = null
+		 */
+		public function forEach(iterator:Function, thisObject = null):void {
+			$component.forEach(iterator, thisObject);
+		}
+		// なんかの役に立つかと思って、これ自身もIEnumerator型にしてみる。
+		
+		/**
+		 * 「すべて」の要素が、テストをパスするかどうかをチェックする。
 		 * すべての要素が真である場合に true を返します。偽である要素が あれば、 false を返します。
 		 * @param	iterator	（オプション）評価式。各要素に対してiteratorを実行し、その戻り値によって判定を行う。
-		 * iterator(item:*, index:int):Boolean
+		 * function(item:*, index:int):Boolean
 		 * @return
 		 * @example <listing version="3.0" >
 		 * var be1 = new EnumerableModule([true,true,true]);
@@ -51,9 +144,10 @@ package saz.collections {
 		}
 		
 		/**
-		 * すべての要素が偽である場合に false を返します。真である要素 があれば、 true を返しま
+		 * 「いずれか」の要素が、テストをパスするかどうかをチェックする。
+		 * すべての要素が偽である場合に false を返します。真である要素 があれば、 true を返します。
 		 * @param	iterator	（オプション）評価式。各要素に対してiteratorを実行し、その戻り値によって判定を行う。
-		 * iterator(item:*, index:int):Boolean
+		 * function(item:*, index:int):Boolean
 		 * @return
 		 */
 		public function any(iterator:Function = null):Boolean {
@@ -67,14 +161,15 @@ package saz.collections {
 			return res;
 		}
 		
+		
 		/**
 		 * 各要素に対してブロックを評価した結果を全て含む配列を返します。
-		 * @param	iterator	（オプション）評価式。省略した場合は、すべての要素を配列にして返す。
+		 * @param	iterator	評価式。
 		 * function(item:*, index:int):*
 		 * @return
 		 */
-		public function map(iterator:Function = null):Array {
-			if (null == iterator) iterator = $iterateItem;
+		public function map(iterator:Function):Array {
+			//if (null == iterator) iterator = $iterateItem;
 			var res:Array = new Array();
 			$component.forEach(function(item:*, index:int, enu:Array):void {
 				res.push(iterator(item, IndexedList));
@@ -82,11 +177,12 @@ package saz.collections {
 			return res;
 		}
 		
+		
 		/**
 		 * 要素に対してブロックを評価した値が真になった最初の要素を返します。 
 		 * 真になる要素がひとつも見つからなかったときは null を返します
 		 * @param	iterator	評価式。
-		 * function(item:*, index:int):*
+		 * function(item:*, index:int):Boolean
 		 * @return
 		 */
 		public function detect(iterator:Function):* {
@@ -99,11 +195,12 @@ package saz.collections {
 			return res;
 		}
 		
+		
 		/**
 		 * 各要素に対してブロックを評価した値が真であった要素を全て含む配列を返します。
 		 * 真になる要素がひとつもなかった場合は空の配列を返します。
 		 * @param	iterator	評価式。
-		 * function(item:*, index:int):*
+		 * function(item:*, index:int):Boolean
 		 * @return
 		 */
 		public function select(iterator:Function):Array {
@@ -146,6 +243,14 @@ package saz.collections {
 		 * @return
 		 */
 		public function inject(init:*, iterator:Function):*{
+			if (null != init) {
+				return $injectWithInit(init, iterator);
+			}else {
+				//return $injectNoInit(init, iterator);
+				return $injectNoInit(iterator);
+			}
+		}
+		/*public function inject(init:*, iterator:Function):*{
 			var res:*= init;
 			if (null != init) {
 				$component.forEach(function(item:*, index:int, enu:Array):void {
@@ -161,7 +266,60 @@ package saz.collections {
 				});
 			}
 			return res;
+		}*/
+		
+		/**
+		 * inject()サブ。initが指定されたとき。
+		 * @param	init
+		 * @param	iterator
+		 * @return
+		 */
+		private function $injectWithInit(init:*, iterator:Function):*{
+			var res:*= init;
+			$component.forEach(function(item:*, index:int, enu:Array):void {
+				res = iterator(res, item);
+			});
+			return res;
 		}
+		
+		/**
+		 * inject()サブ。initがnullだったとき。
+		 * @param	iterator
+		 * @return
+		 */
+		//private function $injectNoInit(init:*, iterator:Function):*{
+		private function $injectNoInit(iterator:Function):*{
+			var res:*= null;
+			// 最初の1回用
+			var firstFunc:Function = function(item:*, index:int, enu:Array):void {
+				//trace("firstFunc(", arguments);
+				res = item;
+				func = mainFunc;
+			};
+			// 2回目以降用
+			var mainFunc:Function = function(item:*, index:int, enu:Array):void {
+				//trace("mainFunc(", arguments);
+				res = iterator(res, item);
+			};
+			var func:Function = firstFunc;
+			$component.forEach(function(item:*, index:int, enu:Array):void {
+				func(item, index, enu);
+			});
+			return res;
+		}
+		/*private function $injectNoInit(init:*, iterator:Function):*{
+			var res:*= init;
+			$component.forEach(function(item:*, index:int, enu:Array):void {
+				if (0 == index) {
+					res = item;
+				}else {
+					res = iterator(res, item);
+				}
+			});
+			return res;
+		}*/
+		
+		
 		
 		/**
 		 * value と == の関係にある要素を含むとき真を返します。
@@ -179,22 +337,27 @@ package saz.collections {
 		}
 		
 		/**
-		 * 最大の要素を返します。全要素が互いに <=> メソッドで比較できることを仮定しています。
-		 * 要素が存在しなければ null を返します。
-		 * @param	iterator	（オプション）評価式。指定した場合は、各要素の大小判定を行い、最大の要素を返します。
-		 * ブロックの値は、a>b のとき正、a==b のとき 0、a<b のとき負の整数を、期待しています。ブロックが整数以外を返したときは 例外 TypeError が発生します。
-		 * function(a:*, b:*):*
+		 * 最大の要素を返します。全要素が互いに <=> メソッドで比較できることを仮定しています。要素が存在しなければ null を返します。
+		 * compareFunctionを指定した場合は、compareFunctionによって大小判定を行います。
+		 * @param	compareFunction	（オプション）評価式。指定した場合は、各要素の大小判定を行い、最大の要素を返します。
+		 * 戻り値は、a>b のとき正、a==b のとき 0、a<b のとき負の整数を、期待しています。
+		 * 未実装⇒ブロックが整数以外を返したときは 例外 TypeError が発生します。
+		 * function(a:*, b:*):int
 		 * @return
 		 */
 		public function max(compareFunction:Function = null):* {
 			if (null == compareFunction) {
 				return $max();
 			}else {
-				return $max2(compareFunction);
+				return $maxWithFunc(compareFunction);
 			}
 		}
 		
-		private function $max():*{
+		/**
+		 * max()サブ。iteratorが省略されたとき。
+		 * @return
+		 */
+		/*private function $max():*{
 			var res:* = null;
 			$component.forEach(function(item:*, index:int, enu:Array):void {
 				if (0 == index) {
@@ -204,16 +367,36 @@ package saz.collections {
 				}
 			});
 			return res;
+		}*/
+		private function $max():*{
+			var res:* = null;
+			// 最初の1回用
+			var firstFunc:Function = function(item:*, index:int, enu:Array):void {
+				//trace("firstFunc(", arguments);
+				res = item;
+				func = mainFunc;
+			};
+			// 2回目以降用
+			var mainFunc:Function = function(item:*, index:int, enu:Array):void {
+				//trace("mainFunc(", arguments);
+				if (res < item) res = item;
+			};
+			var func:Function = firstFunc;
+			$component.forEach(function(item:*, index:int, enu:Array):void {
+				func(item, index, enu);
+			});
+			return res;
 		}
 		
 		/**
+		 * max()サブ。iteratorが指定されたとき。
 		 * ブロックの評価結果で各要素の大小判定を行い、最大の要素を返します。 要素が存在しなければ null を返します。
 		 * ブロックの値は、a>b のとき正、a==b のとき 0、a<b のとき負の整数を、期待しています。
 		 * @param	compareFunction
-		 * function(a:*, b:*):*
+		 * function(a:*, b:*):int
 		 * @return
 		 */
-		private function $max2(compareFunction:Function):* {
+		/*private function $maxWithFunc(compareFunction:Function):* {
 			var res:* = null;
 			var comp:int;
 			$component.forEach(function(item:*, index:int, enu:Array):void {
@@ -222,14 +405,231 @@ package saz.collections {
 				}else {
 					comp = compareFunction(res, item);
 					// FIXME	「ブロックが整数以外を返したときは 例外 TypeError が発生します。」実装できてない。
-					/*if (comp is int) {
-					}else {
-						throw new TypeError("EnumerableModule.max: 評価式の戻り値がintではありません。");
-					}*/
+					//if (comp is int) {
+					//}else {
+						//throw new TypeError("EnumerableModule.max: 評価式の戻り値がintではありません。");
+					//}
 					if (0 > comp) {
 						res = item;
 					}
 				}
+			});
+			return res;
+		}*/
+		private function $maxWithFunc(compareFunction:Function):* {
+			var res:* = null;
+			var comp:int;
+			// 最初の1回用
+			var firstFunc:Function = function(item:*, index:int, enu:Array):void {
+				//trace("firstFunc(", arguments);
+				res = item;
+				func = mainFunc;
+			};
+			// 2回目以降用
+			var mainFunc:Function = function(item:*, index:int, enu:Array):void {
+				//trace("mainFunc(", arguments);
+				// a>b のとき正、a==b のとき 0、a<b のとき負の整数
+				comp = compareFunction(res, item);
+				// FIXME	「ブロックが整数以外を返したときは 例外 TypeError が発生します。」実装できてない。
+				//if (comp is int) {
+				//}else {
+					//throw new TypeError("EnumerableModule.max: 評価式の戻り値がintではありません。");
+				//}
+				if (0 > comp) {
+					res = item;
+				}
+			};
+			var func:Function = firstFunc;
+			$component.forEach(function(item:*, index:int, enu:Array):void {
+				func(item, index, enu);
+			});
+			return res;
+		}
+		
+		// TODO	maxBy()よくわからないので未実装
+		//public function maxBy(compareFunction:Function):*
+		
+		/**
+		 * 最小の要素を返します。全要素が互いに <=> メソッドで比較でき ることを仮定しています。要素が存在しなければ null を返します。
+		 * compareFunctionを指定した場合は、compareFunctionによって大小判定を行います。
+		 * @param	compareFunction	（オプション）評価式。指定した場合は、各要素の大小判定を行い、最小の要素を返します。
+		 * 戻り値は、a>b のとき正、a==b のとき 0、a<b のとき負の整数を、期待しています。
+		 * 未実装⇒ブロックが整数以外を返したときは 例外 TypeError が発生します。
+		 * function(a:*, b:*):int
+		 * @return
+		 */
+		public function min(compareFunction:Function = null):* {
+			if (null == compareFunction) {
+				return $min();
+			}else {
+				return $minWithFunc(compareFunction);
+			}
+		}
+		
+		/**
+		 * 評価式なしで最小値を返します。
+		 * @return
+		 */
+		private function $min():*{
+			var res:* = null;
+			// 最初の1回用
+			var firstFunc:Function = function(item:*, index:int, enu:Array):void {
+				res = item;
+				func = mainFunc;
+			};
+			// 2回目以降用
+			var mainFunc:Function = function(item:*, index:int, enu:Array):void {
+				if (res > item) res = item;
+			};
+			var func:Function = firstFunc;
+			$component.forEach(function(item:*, index:int, enu:Array):void {
+				func(item, index, enu);
+			});
+			return res;
+		}
+		
+		/**
+		 * 評価式ありで、最小値を返します。
+		 * @param	compareFunction
+		 * function(a:*, b:*):int
+		 * @return
+		 */
+		private function $minWithFunc(compareFunction:Function):* {
+			var res:* = null;
+			var comp:int;
+			// 最初の1回用
+			var firstFunc:Function = function(item:*, index:int, enu:Array):void {
+				//trace("firstFunc(", arguments);
+				res = item;
+				func = mainFunc;
+			};
+			// 2回目以降用
+			var mainFunc:Function = function(item:*, index:int, enu:Array):void {
+				//trace("mainFunc(", arguments);
+				// a>b のとき正、a==b のとき 0、a<b のとき負の整数
+				comp = compareFunction(res, item);
+				// FIXME	「ブロックが整数以外を返したときは 例外 TypeError が発生します。」実装できてない。
+				//if (comp is int) {
+				//}else {
+					//throw new TypeError("EnumerableModule.max: 評価式の戻り値がintではありません。");
+				//}
+				if (0 < comp) {
+					res = item;
+				}
+			};
+			var func:Function = firstFunc;
+			$component.forEach(function(item:*, index:int, enu:Array):void {
+				func(item, index, enu);
+			});
+			return res;
+		}
+		
+		
+		// TODO	minBy()よくわからないので未実装
+		//public function minBy(compareFunction:Function):*
+		
+		
+		/**
+		 * 各要素に対して評価式の戻り値が真であった要素からなる配列と 偽であった要素からなる配列からなる配列を返します。
+		 * @param	iterator	評価式。
+		 * function(item:*, index:int):Boolean
+		 * @return	真であった要素からなる配列と、偽であった要素からなる配列からなる2次元配列
+		 */
+		public function partition(iterator:Function):Array {
+			var trueRes:Array = new Array();
+			var falseRes:Array = new Array();
+			$component.forEach(function(item:*, index:int, enu:Array):void {
+				if (iterator(item, index)) {
+					trueRes.push(item);
+				}else {
+					falseRes.push(item);
+				}
+			});
+			return [trueRes, falseRes];
+		}
+		
+		/**
+		 * 各要素に対してブロックを評価し、その値が偽であった要素を集めた新しい配列を返します。
+		 * select()、findAll()の逆。
+		 * @param	iterator	評価式。
+		 * function(item:*, index:int):Boolean
+		 * @return
+		 */
+		public function reject(iterator:Function):Array {
+			var res:Array = new Array();
+			$component.forEach(function(item:*, index:int, enu:Array):void {
+				if (false == iterator(item, index)) {
+					res.push(item);
+				}
+			});
+			return res;
+		}
+		
+		// TODO	sort(),sortBy()大変そうなので未実装
+		//public function sort(compareFunction:Function):Array
+		//public function sortBy(iterator:Function):Array
+		
+		/**
+		 * 全ての要素を含む配列を返します。
+		 * @return
+		 */
+		public function entries():Array {
+			var res:Array = new Array();
+			$component.forEach(function(item:*, index:int, enu:Array):void {
+				res.push(item);
+			});
+			return res;
+		}
+		
+		
+		/**
+		 * 現在の集合に与えられた集合をマージする。 
+		 * このマージ操作は現在の集合と同じ要素数の新しい配列を返し、返される配列の各要素はマージされる集合の各々から同じ index のものを集めたものの配列 (以下 sub-array と表記) となる。
+		 * transform 関数が指定された場合、各 sub-array は返される前にその関数を使って変換される。（要は各 sub-array にmap(transform)する。）
+		 * @param	collection1[, collection2 [, ... collectionN ]]	
+		 * @param	transform	
+		 * function(item:*, index:int):*
+		 * @return
+		 * @example <listing version="3.0" >
+		 * zip(collection1[, collection2 [, ... collectionN [,transform]]])
+		 * </listing>
+		 * @example <listing version="3.0" >
+		 * trace(new EnumerableModule([1,2,3]).zip([4,5,6], [7,8,9]));	// "[ [1,4,7],[2,5,8],[3,6,9] ]" を返す。
+		 * </listing>
+		 * @see	http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18848
+		 * @see	http://634.ayumu-baby.com/pukiwiki/index.php?JavaScript/Prototype/Enumerable#z93ac035
+		 */
+		public function zip(...rest:Array):* {
+			var res:Array = new Array();
+			var arrs:Array;
+			var last:* = rest[rest.length - 1];
+			if (last is Function) {
+				// 関数あり
+				arrs = rest.slice(0, rest.length - 1);
+				$component.forEach(function(item:*, index:int, enu:Array):void {
+					res.push([item].concat($zipArrays(index, arrs)));
+				});
+				return res.map(last, null);
+			}else {
+				// 関数なし
+				arrs = rest;
+				$component.forEach(function(item:*, index:int, enu:Array):void {
+					res.push([item].concat($zipArrays(index, arrs)));
+				});
+				return res;
+			}
+		}
+		
+		/**
+		 * 2次元配列から指定インデックスの要素だけ抜き出した配列を返す。
+		 * @param	index
+		 * @param	arrs
+		 * @return
+		 */
+		private function $zipArrays(index:int, arrs:Array):Array {
+			var res:Array = new Array();
+			arrs.forEach(function(item:*, i:int, arr:Array):void {
+				res.push(item[index]);
 			});
 			return res;
 		}
