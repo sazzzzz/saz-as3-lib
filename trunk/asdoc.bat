@@ -1,3 +1,5 @@
+REM グローバルクラスパスから「そうめん」を除外
+REM C:\Program Files\Adobe\Adobe Flash CS3\ja\Configuration\ActionScript 3.0\Classes
 @ECHO OFF
 REM http://blog.yaimo.net/tag/asdoc/
 REM http://www.nilab.info/zurazure2/000852.html
@@ -7,5 +9,6 @@ REM "C:\ols\flex_sdk_3.5\bin\asdoc.exe" -main-title "sazLib_as3" -output "E:\_sa
 REM "C:\ols\flex_sdk_3.5\bin\asdoc.exe" -source-path E:\_saz\LIB\saz\as3\work\src -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz"   -library-path "E:\_saz\LIB\saz\as3\work\libs" -main-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" "C:\Program Files\Adobe\Adobe Flash CS3\ja\Configuration\ActionScript 3.0\Classes" -compiler.strict=false 
 REM "C:\ols\flex_sdk_3.5\bin\asdoc.exe" -source-path E:\_saz\LIB\saz\as3\work\src -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz"   -library-path "E:\_saz\LIB\saz\as3\work\libs" -main-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc"  -compiler.strict=false 
 REM "C:\ols\flex_sdk_3.5\bin\asdoc.exe" -source-path E:\_saz\LIB\saz\as3\work\src -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" "E:\_saz\LIB\saz\as3\work\libs" "C:\Program Files\Adobe\Adobe Flash CS3\ja\Configuration\ActionScript 3.0\Classes" -main-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc"  -compiler.strict=false 
-"C:\ols\flex_sdk_3.5\bin\asdoc.exe" -source-path E:\_saz\LIB\saz\as3\work\src -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" "E:\_saz\LIB\saz\as3\work\libs" "C:\Program Files\Adobe\Adobe Flash CS3\ja\Configuration\ActionScript 3.0\Classes" -library-path "E:\_saz\LIB\saz\as3\work\libs" -main-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc"  -compiler.strict=false  -compiler.show-actionscript-warnings=false
+REM "C:\ols\flex_sdk_3.5\bin\asdoc.exe" -source-path E:\_saz\LIB\saz\as3\work\src -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" "E:\_saz\LIB\saz\as3\work\libs" "C:\Program Files\Adobe\Adobe Flash CS3\ja\Configuration\ActionScript 3.0\Classes" -library-path "E:\_saz\LIB\saz\as3\work\libs" -main-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc"  -compiler.strict=false  -compiler.show-actionscript-warnings=false
+"C:\ols\flex_sdk_4.1\bin\asdoc.exe" -source-path E:\_saz\LIB\saz\as3\work\src -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" "E:\_saz\LIB\saz\as3\work\libs" "C:\Program Files\Adobe\Adobe Flash CS3\ja\Configuration\ActionScript 3.0\Classes" -library-path "E:\_saz\LIB\saz\as3\work\libs" -main-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc"  -compiler.strict=false  -compiler.show-actionscript-warnings=false
 PAUSE
