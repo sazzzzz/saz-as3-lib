@@ -6,7 +6,7 @@ package saz.collections {
 	 * @see	http://www.ruby-lang.org/ja/man/html/Enumerable.html
 	 * @see	http://www.s2factory.co.jp/tech/prototype/prototype.js.html#Reference.Enumerable
 	 */
-	public class EnumerableModule implements IEnumerator {
+	public class Enumerable implements IEnumerator {
 		//private var $component:IEnumerator;
 		private var $component:Array;
 		
@@ -14,8 +14,8 @@ package saz.collections {
 		 * コンストラクタ。
 		 * @param	component	対象のIEnumerator（=forEach()を持っている）
 		 */
-		//public function EnumerableModule(component:IEnumerator) {
-		public function EnumerableModule(component:Array) {
+		//public function Enumerable(component:IEnumerator) {
+		public function Enumerable(component:Array) {
 			$component = component;
 			
 			//エイリアス
@@ -125,9 +125,9 @@ package saz.collections {
 		 * function(item:*, index:int):Boolean
 		 * @return
 		 * @example <listing version="3.0" >
-		 * var be1 = new EnumerableModule([true,true,true]);
+		 * var be1 = new Enumerable([true,true,true]);
 		 * trace(be1);		// true
-		 * var be2 = new EnumerableModule([true,false,true]);
+		 * var be2 = new Enumerable([true,false,true]);
 		 * trace(be2);		// false
 		 * </listing>
 		 */
@@ -407,7 +407,7 @@ package saz.collections {
 					// FIXME	「ブロックが整数以外を返したときは 例外 TypeError が発生します。」実装できてない。
 					//if (comp is int) {
 					//}else {
-						//throw new TypeError("EnumerableModule.max: 評価式の戻り値がintではありません。");
+						//throw new TypeError("Enumerable.max: 評価式の戻り値がintではありません。");
 					//}
 					if (0 > comp) {
 						res = item;
@@ -433,7 +433,7 @@ package saz.collections {
 				// FIXME	「ブロックが整数以外を返したときは 例外 TypeError が発生します。」実装できてない。
 				//if (comp is int) {
 				//}else {
-					//throw new TypeError("EnumerableModule.max: 評価式の戻り値がintではありません。");
+					//throw new TypeError("Enumerable.max: 評価式の戻り値がintではありません。");
 				//}
 				if (0 > comp) {
 					res = item;
@@ -511,7 +511,7 @@ package saz.collections {
 				// FIXME	「ブロックが整数以外を返したときは 例外 TypeError が発生します。」実装できてない。
 				//if (comp is int) {
 				//}else {
-					//throw new TypeError("EnumerableModule.max: 評価式の戻り値がintではありません。");
+					//throw new TypeError("Enumerable.max: 評価式の戻り値がintではありません。");
 				//}
 				if (0 < comp) {
 					res = item;
@@ -594,7 +594,7 @@ package saz.collections {
 		 * zip(collection1[, collection2 [, ... collectionN [,transform]]])
 		 * </listing>
 		 * @example <listing version="3.0" >
-		 * trace(new EnumerableModule([1,2,3]).zip([4,5,6], [7,8,9]));	// "[ [1,4,7],[2,5,8],[3,6,9] ]" を返す。
+		 * trace(new Enumerable([1,2,3]).zip([4,5,6], [7,8,9]));	// "[ [1,4,7],[2,5,8],[3,6,9] ]" を返す。
 		 * </listing>
 		 * @see	http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18848
 		 * @see	http://634.ayumu-baby.com/pukiwiki/index.php?JavaScript/Prototype/Enumerable#z93ac035
