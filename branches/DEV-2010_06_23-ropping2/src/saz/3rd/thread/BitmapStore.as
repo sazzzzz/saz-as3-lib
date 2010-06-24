@@ -1,4 +1,4 @@
-﻿package saz.load {
+﻿package saz.3rd.thread {
 	import flash.display.*;
 	import flash.errors.IOError;
 	import flash.events.*;
