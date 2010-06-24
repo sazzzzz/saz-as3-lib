@@ -13,21 +13,21 @@ package saz.display.bitmapmix {
 		protected var $exts:/*BitmapData*/Array;
 		protected var $ratio:Number;
 		
-		protected static var $nPoint:Point;
-		protected static var $nRect:Rectangle;
-		protected static var $nMtx:Matrix;
-		protected static var $nCT:ColorTransform;
+		public var newPoint:Point;
+		public var newRectangle:Rectangle;
+		public var newMatrix:Matrix;
+		public var newColorTransform:ColorTransform;
 		
-		public function BitmapMixer(dst:BitmapData, srcA:BitmapData, srcB:BitmapData) {
-			$dst = dst;
-			$srca = srcA;
-			$srcb = srcB;
+		public function BitmapMixer(dst:BitmapData = null, srcA:BitmapData = null, srcB:BitmapData = null) {
+			if (null != dst)$dst = dst;
+			if (null != srcA) $srca = srcA;
+			if (null != srcB)$srcb = srcB;
 			$exts = new Array();
 			
-			if(null==$nPoint) $nPoint = new Point();
-			if(null==$nRect) $nRect = new Rectangle();
-			if(null==$nMtx) $nMtx = new Matrix();
-			if(null==$nCT) $nCT = new ColorTransform();
+			if(null==newPoint) newPoint = new Point();
+			if(null==newRectangle) newRectangle = new Rectangle();
+			if(null==newMatrix) newMatrix = new Matrix();
+			if(null==newColorTransform) newColorTransform = new ColorTransform();
 			
 			$ratio = 0;
 			
@@ -43,10 +43,10 @@ package saz.display.bitmapmix {
 			});
 			$exts = null;
 			
-			$nPoint = null;
-			$nRect = null;
-			$nMtx = null;
-			$nCT = null;
+			newPoint = null;
+			newRectangle = null;
+			newMatrix = null;
+			newColorTransform = null;
 			
 			$destroyHook();
 		}

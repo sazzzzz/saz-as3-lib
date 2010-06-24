@@ -10,7 +10,8 @@ package saz.display.bitmapmix {
 		
 		private var $alphaCT:ColorTransform;
 		
-		public function DissolveMixer(dst:BitmapData, srcA:BitmapData, srcB:BitmapData) {
+		//public function DissolveMixer(dst:BitmapData, srcA:BitmapData, srcB:BitmapData) {
+		public function DissolveMixer(dst:BitmapData = null, srcA:BitmapData = null, srcB:BitmapData = null) {
 			super(dst, srcA, srcB);
 		}
 		
@@ -34,9 +35,9 @@ package saz.display.bitmapmix {
 		 * 描画フック。描画ルーチンを指定。
 		 */
 		override protected function $drawHook():void {
-			$dst.copyPixels($srca, $srca.rect, $nPoint);
+			$dst.copyPixels($srca, $srca.rect, newPoint);
 			$alphaCT.alphaMultiplier = $ratio;
-			$dst.draw($srcb, $nMtx, $alphaCT);
+			$dst.draw($srcb, newMatrix, $alphaCT);
 		}
 		
 	}
