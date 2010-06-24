@@ -1,4 +1,4 @@
-package saz.3rd.progression4 {
+package saz.outside.progression4 {
 	import flash.events.*;
 	import flash.net.*;
 	import flash.trace.Trace;
@@ -80,7 +80,9 @@ package saz.3rd.progression4 {
 			
 			var scope:ResourceManager = this;
 			$sList.addCommand(
-				new Trace("load start:",url);
+				function():void {
+				}
+				//,new Trace("load start:"+ url)
 				,new LoadBitmapData(req, {
 					catchError:function(target:Object, error:Error):void {
 						trace("ResourceManager LoadBitmapData エラー:", "url=", url);
@@ -89,10 +91,10 @@ package saz.3rd.progression4 {
 						this.executeComplete();	//次のコマンドに繋げるため終了通知。
 					}
 				})
-				,new Trace("load complete:",url);
+				//,new Trace("load complete:"+ url)
 				,function():void {
-					scope.dispatchEvent(new ResourceEvent(url,url));
-					scope.dispatchEvent(new ResourceEvent(ResourceEvent.COMPLETE,url));
+					scope.dispatchEvent(new ResourceEvent(url, url));
+					scope.dispatchEvent(new ResourceEvent(ResourceEvent.COMPLETE, url));
 				}
 			);
 		}

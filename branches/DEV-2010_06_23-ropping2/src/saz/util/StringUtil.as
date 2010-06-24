@@ -1,4 +1,5 @@
 ﻿package saz.util {
+	import flash.net.URLRequest;
 	
 	/**
 	 * Stringユーティリティ。
@@ -14,6 +15,16 @@
 		 * 0x0A
 		 */
 		public static var LF:String = String.fromCharCode(10);	//0x0A
+		
+		
+		/**
+		 * URLRequestを文字列表現にして返す。
+		 * @param	req
+		 * @return
+		 */
+		public static function URLRequestToString(req:URLRequest):String {
+			return (null == req.data) ? req.url : req.url + "?" + req.data.toString();
+		}
 		
 		/**
 		 * Dateを文字列表現にして返す
