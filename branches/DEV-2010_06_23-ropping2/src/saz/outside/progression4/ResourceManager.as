@@ -85,9 +85,11 @@ package saz.outside.progression4 {
 				//,new Trace("load start:"+ url)
 				,new LoadBitmapData(req, {
 					catchError:function(target:Object, error:Error):void {
-						trace("ResourceManager LoadBitmapData エラー:", "url=", url);
-						trace(target);
-						trace(error);
+						trace("ResourceManager LoadBitmapData エラー:");
+						trace("target", target);
+						trace("error", error);
+						// FIXME	外側でエラー処理が書けるような実装が必要だ。
+						//throw(error);
 						this.executeComplete();	//次のコマンドに繋げるため終了通知。
 					}
 				})
