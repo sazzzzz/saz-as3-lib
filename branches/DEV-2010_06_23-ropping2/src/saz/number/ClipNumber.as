@@ -20,8 +20,8 @@ package saz.number {
 		 * @param	min	最小値。
 		 * @param	max	最大値。
 		 * @example <listing version="3.0" >
-		 * import saz.number.*;
-		 * import saz.events.*;
+		 * import saz.number.ClipNumber;
+		 * import saz.events.ClipEvent;
 		 * 
 		 * var cn1:ClipNumber = new ClipNumber(5,0,10);
 		 * cn1.addEventListener(ClipEvent.SMALL, onSmall);
@@ -29,21 +29,21 @@ package saz.number {
 		 * cn1.addEventListener(ClipEvent.OVER, onOver);
 		 * cn1.addEventListener(ClipEvent.CHANGE, onChange);
 		 * 
+		 * // 小さすぎ
 		 * function onSmall (e:ClipEvent) {
-		 * 	trace("onSmall");
-		 * 	trace(e);
+		 * 	trace("onSmall", e);
 		 * }
+		 * // 大きすぎ
 		 * function onLarge (e:ClipEvent) {
-		 * 	trace("onLarge");
-		 * 	trace(e);
+		 * 	trace("onLarge", e);
 		 * }
+		 * // 小さすぎまたは大きすぎ
 		 * function onOver (e:ClipEvent) {
-		 * 	trace("onOver");
-		 * 	trace(e);
+		 * 	trace("onOver", e);
 		 * }
+		 * // 変化があった時
 		 * function onChange (e:ClipEvent) {
-		 * 	trace("onChange");
-		 * 	trace(e);
+		 * 	trace("onChange", e);
 		 * }
 		 * </listing>
 		 */
@@ -73,7 +73,10 @@ package saz.number {
 				dispatchEvent(new ClipEvent(ClipEvent.LARGE, $old, $value, over));
 				dispatchEvent(new ClipEvent(ClipEvent.OVER, $old, $value, over));
 			}
-			dispatchEvent(new ClipEvent(ClipEvent.CHANGE, $old, $value, over));
+			
+			if ($old != $value) {
+				dispatchEvent(new ClipEvent(ClipEvent.CHANGE, $old, $value, over));
+			}
 		}
 		
 		/**
