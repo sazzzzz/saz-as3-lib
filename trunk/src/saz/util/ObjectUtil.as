@@ -7,8 +7,22 @@
 	public class ObjectUtil {
 		
 		/**
+		 * Objectインスタンスを複製する。
+		 * 各要素は複製せず、参照を代入するのみ。
+		 * @param	target	対象とするObject。
+		 * @return
+		 */
+		public static function clone(target:Object):Object {
+			var res:Object = new Object();
+			for (var name:String in target) {
+				res[name] = target[name];
+			}
+			return res;
+		}
+		
+		/**
 		 * Object内のすべての要素を削除する。
-		 * @param	target	対象とするObject
+		 * @param	target	対象とするObject。
 		 */
 		public static function removeAll(target:Object):void {
 			// for each じゃダメでした！
