@@ -1,5 +1,5 @@
 ﻿package saz.util {
-	import saz.IteratorBreakError;
+	import saz.errors.IteratorBreakError;
 	
 	/**
 	 * Arrayユーティリティークラス。

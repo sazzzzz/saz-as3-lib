@@ -40,6 +40,8 @@ package saz.util {
 		public function DateUtil() {
 		}
 		
+		
+		
 		/**
 		 * Dateインスタンスを複製する。
 		 * @param	d
@@ -50,6 +52,30 @@ package saz.util {
 			return new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
 		}
 		
+		/**
+		 * Dateを文字列表現にして返す
+		 * @param	date	Dateインスタンス。
+		 * @param	sep	セパレータ。省略すると空文字。
+		 * @param	isYear	年を出力するかどうか。デフォルトはtrue。
+		 * @param	isMonth	月を出力するかどうか。デフォルトはtrue。
+		 * @param	isDate	日付を出力するかどうか。デフォルトはtrue。
+		 * @param	isHour	時間を出力するかどうか。デフォルトはtrue。
+		 * @param	isMinute	分を出力するかどうか。デフォルトはtrue。
+		 * @param	isSecond	秒を出力するかどうか。デフォルトはtrue。
+		 * @param	isMillisecound	ミリ秒を出力するかどうか。デフォルトはfalse。
+		 * @return	String
+		 */
+		public static function dateToString(date:Date, sep:String="", isYear:Boolean = true, isMonth:Boolean = true, isDate:Boolean = true, isHour:Boolean = true, isMinute:Boolean = true, isSecond:Boolean = true, isMillisecound:Boolean = false):String {
+			var res:/*String*/Array = new Array();
+			if (isYear) res.push( StringUtil.zeroPadding(String(date.getFullYear()), 4));
+			if (isMonth) res.push( StringUtil.zeroPadding(String(date.getMonth()), 2));
+			if (isDate) res.push( StringUtil.zeroPadding(String(date.getDate()), 2));
+			if (isHour) res.push( StringUtil.zeroPadding(String(date.getHours()), 2));
+			if (isMinute) res.push( StringUtil.zeroPadding(String(date.getMinutes()), 2));
+			if (isSecond) res.push( StringUtil.zeroPadding(String(date.getSeconds()), 2));
+			if (isMillisecound) res.push( StringUtil.zeroPadding(String(date.getMilliseconds()), 3));
+			return res.join(sep);
+		}
 		
 	}
 
