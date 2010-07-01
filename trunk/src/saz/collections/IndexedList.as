@@ -3,8 +3,7 @@ package saz.collections {
 	import flash.utils.flash_proxy;
 	
 	/**
-	 * 索引つきリスト。<br/>
-	 * Decoratorパターン。<br/>
+	 * 索引つきリスト。Decoratorパターン。<br/>
 	 * @author saz
 	 * @see	http://www.techscore.com/tech/DesignPattern/Decorator.html
 	 * @see	http://livedocs.adobe.com/flash/9.0_jp/ActionScriptLangRefV3/flash/utils/Proxy.html#includeExamplesSummary
@@ -17,7 +16,10 @@ package saz.collections {
 		
 		/**
 		 * 
-		 * @param	list
+		 * @param	list	Listを拡張してインスタンス生成。Decoratorパターン。
+		 * @example <listing version="3.0" >
+		 * var myList:IndexedList = new IndexedList(new List());
+		 * </listing>
 		 */
 		public function IndexedList(list:IList = null) {
 			$list = (null == list) ? new List() : list;
