@@ -18,6 +18,13 @@
 		 * コンストラクタ
 		 * @param	triggerObj	Event.ENTER_FRAMEを送出するDisplayObject
 		 * @param	interval	イベントを発生させる間隔。0=毎フレーム、1=1フレームおき。
+		 * @example <listing version="3.0" >
+		 * var intervalFrame = new IntervalFrame(StageReference.stage, 1);
+		 * intervalFrame.addEventListener(TimerEvent.TIMER, $onUpdate);
+		 * function $onUpdate(e:TimerEvent):void {
+		 * 	// do something
+		 * }
+		 * </listing>
 		 */
 		function IntervalFrame(triggerObj:DisplayObject, interval:int = 1) {
 			$trigger = triggerObj;
