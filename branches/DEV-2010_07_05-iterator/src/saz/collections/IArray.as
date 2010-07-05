@@ -1,4 +1,4 @@
-package saz.flash {
+package saz.collections {
 	
 	/**
 	 * Arrayのインターフェース定義
