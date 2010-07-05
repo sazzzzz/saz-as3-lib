@@ -1,28 +1,41 @@
 package saz.collections {
 	/**
 	 * RubyなEnumerable.
-	 * TODO	ArrayをIEnumeratorに変更する！
 	 * @author saz
 	 * @see	http://www.ruby-lang.org/ja/man/html/Enumerable.html
 	 * @see	http://www.s2factory.co.jp/tech/prototype/prototype.js.html#Reference.Enumerable
 	 */
 	public class Enumerable implements IEnumerator {
-		//private var $component:IEnumerator;
-		private var $component:Array;
+		private var $component:IEnumerator;
+		//private var $component:Array;
 		
 		/**
 		 * コンストラクタ。
 		 * @param	component	対象のIEnumerator（=forEach()を持っている）
 		 */
-		//public function Enumerable(component:IEnumerator) {
-		public function Enumerable(component:Array) {
+		//public function Enumerable(component:Array) {
+		public function Enumerable(component:IEnumerator) {
 			$component = component;
+			//$component = component as IEnumerator;
 			
 			//エイリアス
 			collect = map;
 			find = detect;
 			findAll = select;
 			includes = member;
+		}
+		
+		/**
+		 * obj オブジェクトについて、 each の代わりに method という 名前のメソッドを使って繰り返すオブジェクトを生成して返す。
+		 * @param	obj
+		 * @param	methodName
+		 * @return
+		 */
+		// Ruby Enumerable::Enumerator.new のマネ。
+		// http://www.ruby-lang.org/ja/man/html/Enumerable_Enumerator.html
+		//static public function enumerator(obj:Object, methodName:String, args:Array):Enumerable {
+		static public function enumerator(obj:Object, methodName:String):Enumerable {
+			return new Enumerable(new Enumerator(obj, methodName));
 		}
 		
 		//--------------------------------------
@@ -108,6 +121,7 @@ package saz.collections {
 		//--------------------------------------
 		
 		
+		// なんかの役に立つかと思って、これ自身もIEnumerator型にしてみる。
 		/**
 		 * 配列内の各アイテムについて関数を実行します。
 		 * @param	iterator
@@ -116,7 +130,6 @@ package saz.collections {
 		public function forEach(iterator:Function, thisObject = null):void {
 			$component.forEach(iterator, thisObject);
 		}
-		// なんかの役に立つかと思って、これ自身もIEnumerator型にしてみる。
 		
 		/**
 		 * 「すべて」の要素が、テストをパスするかどうかをチェックする。

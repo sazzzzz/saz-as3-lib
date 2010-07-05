@@ -6,13 +6,27 @@ sazLib as3 制作ノート
 
 ■設計
 
-r = new EnumerableModule(ve1.zip(v2)).inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
+// ベクトル a と b の内積
+r = new Enumerable(va.zip(vb)).inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
 ↓
-r = ve1.zip(v2).inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
+r = va.zip(vb).inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
 と書けるようにしたい！
 戻り値をArrayじゃなくて、Enumerableにしないと。
-
 http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18848
+
+
+◎EnumerableArray（仮称）が作れるのか？
+→Proxyを使う
+　⇒Arrayのサブクラスじゃないので、TypeErrorの可能性
+　⇒Arrayとの互換性は取れる
+→Decorator＋Arrayのサブクラス
+　⇒Arrayのサブクラスじゃないので、TypeErrorの可能性
+　⇒arr[i]は使えない
+→Arrayのサブクラスにする
+　⇒Decoratorじゃなくなる
+　⇒Arrayとの互換性は取れる
+
+
 
 ○Decorator
 http://ibu4gin.net/blog/?p=516
