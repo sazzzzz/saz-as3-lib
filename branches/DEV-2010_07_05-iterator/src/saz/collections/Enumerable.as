@@ -12,11 +12,15 @@ package saz.collections {
 		/**
 		 * コンストラクタ。
 		 * @param	component	対象のIEnumerator（=forEach()を持っている）
+		 * @example <listing version="3.0" >
+		 * var arr:Array = [true, true, true];
+		 * var enu:Enumerable = new Enumerable(new EnumeratorArray(arr));
+		 * trace(enu.all());
+		 * </listing>
 		 */
 		//public function Enumerable(component:Array) {
 		public function Enumerable(component:IEnumerator) {
 			$component = component;
-			//$component = component as IEnumerator;
 			
 			//エイリアス
 			collect = map;
@@ -26,10 +30,15 @@ package saz.collections {
 		}
 		
 		/**
-		 * obj オブジェクトについて、 each の代わりに method という 名前のメソッドを使って繰り返すオブジェクトを生成して返す。
-		 * @param	obj
-		 * @param	methodName
+		 * obj オブジェクトについて、 forEach の代わりに method という 名前のメソッドを使って繰り返すオブジェクトを生成して返す。
+		 * @param	obj	対象とするオブジェクト。
+		 * @param	methodName	forEach の代わりとなるメソッドの名前。
 		 * @return
+		 * @example <listing version="3.0" >
+		 * var arr:Array = [true, false, true];
+		 * var enu:Enumerable = Enumerable.enumerator(arr, "forEach");
+		 * trace(enu.all());
+		 * </listing>
 		 */
 		// Ruby Enumerable::Enumerator.new のマネ。
 		// http://www.ruby-lang.org/ja/man/html/Enumerable_Enumerator.html
