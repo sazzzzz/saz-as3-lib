@@ -8,17 +8,18 @@
 	public class StringUtil {
 		
 		/**
-		 * 0x0D
+		 * CR。0x0D。
 		 */
 		public static var CR:String = String.fromCharCode(13);	//0x0D
 		/**
-		 * 0x0A
+		 * LF。0x0A。
 		 */
 		public static var LF:String = String.fromCharCode(10);	//0x0A
 		
 		
 		/**
-		 * 文字列の置換
+		 * 文字列の置換。String.replace()あるし…廃止。
+		 * @deprecated	String.replace()があるので廃止。
 		 * @param	target
 		 * @param	search
 		 * @param	replace

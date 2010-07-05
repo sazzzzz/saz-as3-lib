@@ -74,11 +74,20 @@ package saz.util.twitter {
 		}*/
 		
 		/**
-		 * プロフィールページのURL。
-		 * @return	"http://twitter.com/tsuda"
+		 * ユーザー（プロフィール）ページのURL。
+		 * @return	like "http://twitter.com/tsuda"
+		 */
+		public function getUserPageUrl():String {
+			return TwitterUtil.getUserPageUrlByData(this);
+		}
+		
+		/**
+		 * ユーザー（プロフィール）ページのURL。
+		 * @deprecated	getUserPageUrl()に移動。
+		 * @return
 		 */
 		public function getProfilePageUrl():String {
-			return "http://twitter.com/" + screen_name;
+			return getUserPageUrl();
 		}
 		
 	}
