@@ -187,6 +187,14 @@ package saz.util.twitter {
 			return TwitterUtil.getTweetPageUrlByData(this);
 		}
 		
+		/**
+		 * 現在のtext（ツイート内容）に、<a>タグを付与して返す。
+		 * @return
+		 */
+		public function genTweetLinks():String {
+			return TwitterUtil.genTweetLinks(text);
+		}
+		
 	}
 	
 }

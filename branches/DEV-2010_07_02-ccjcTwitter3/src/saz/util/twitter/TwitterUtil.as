@@ -9,7 +9,10 @@ package saz.util.twitter {
 		//static public const REG_URL:String = "(\\s|^)" + RegExpUtil.REG_URL + "(\\s|$)";
 		//static public const REPL_URL:String = "$1<a href=\"$2\">$2</a>$4";
 		
-		static private const $URL_HASHTAG1:String = "http://search.twitter.com/search?q=";
+		// ex. http://search.twitter.com/search?q=%232010wc	アメリカ
+		//static private const $URL_HASHTAG1:String = "http://search.twitter.com/search?q=";
+		// ex. http://twitter.com/#search?q=%23wanko		日本
+		static private const $URL_HASHTAG1:String = "http://twitter.com/#search?q=";
 		
 		static private const $URL_REPLY1:String = "http://twitter.com/";
 		

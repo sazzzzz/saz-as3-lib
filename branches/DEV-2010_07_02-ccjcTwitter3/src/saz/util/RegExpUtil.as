@@ -17,6 +17,12 @@ package saz.util {
 		 */
 		static public const REPL_URL:String = '<a href="$1" target="_blank">$1</a>';
 		
+		
+		/**
+		 * HTMLタグに一致する正規表現。
+		 */
+		static public const REG_HTML_TAG:String = '<[^>]*>';
+		
 		/**
 		 * 文字列中のURLをリンクつきに置換。
 		 * @param	target
