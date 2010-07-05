@@ -25,6 +25,9 @@ http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18848
 →Arrayのサブクラスにする
 　⇒Decoratorじゃなくなる
 　⇒Arrayとの互換性は取れる
+	Array
+	class ArrayDecorator extends Array
+	class EnumerableArray extends ArrayDecorator implements IEnumerator
 
 
 
