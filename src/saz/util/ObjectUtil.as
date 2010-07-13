@@ -1,10 +1,24 @@
 ﻿package saz.util {
+	import flash.utils.ByteArray;
 	
 	/**
 	 * Objectユーティリティ
 	 * @author saz
 	 */
 	public class ObjectUtil {
+		
+		/**
+		 * Objectの深い複製。
+		 * @see	http://help.adobe.com/ja_JP/ActionScript/3.0_ProgrammingAS3/WS5b3ccc516d4fbf351e63e3d118a9b90204-7ee7.html
+		 * @param	target	対象とするObject。
+		 * @return
+		 */
+		static public function deepClone(target:Object):* {
+			var ba:ByteArray = new ByteArray();
+			ba.writeObject(target);
+			ba.position = 0;
+			return (ba.readObject());
+		}
 		
 		/**
 		 * Objectインスタンスを複製する。
