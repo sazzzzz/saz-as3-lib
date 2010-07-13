@@ -1,4 +1,4 @@
-package saz {
+package saz.collections {
 	
 	/**
 	 * ...
