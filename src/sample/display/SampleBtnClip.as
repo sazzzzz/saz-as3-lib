@@ -3,7 +3,8 @@
 	import fl.transitions.Tween;
 	import flash.display.*;
 	import flash.events.*;
-	import saz.display.BtnClip;
+	//import saz.display.BtnClip;
+	import saz.display.btnclip.BtnClip;
 	
 	/**
 	 * ...
