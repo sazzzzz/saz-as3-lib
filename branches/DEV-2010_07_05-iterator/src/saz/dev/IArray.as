@@ -1,4 +1,4 @@
-package saz.collections {
+package saz.dev {
 	
 	/**
 	 * Arrayのインターフェース定義

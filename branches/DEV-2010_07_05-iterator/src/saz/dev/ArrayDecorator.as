@@ -1,5 +1,5 @@
 package saz.dev {
-	import saz.collections.IArray;
+	import saz.dev.IArray;
 	
 	/**
 	 * ...

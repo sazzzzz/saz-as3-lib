@@ -72,7 +72,10 @@
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
-    <!-- example: <hidden path="..." /> -->
+    <hidden path="src\_collections_Enumerable.swf" />
+    <hidden path="src\_collections_EnumeratorArray.swf" />
+    <hidden path="src\_dev_ArrayDecorator.swf" />
+    <hidden path="src\_util_ArrayUtil.swf" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
