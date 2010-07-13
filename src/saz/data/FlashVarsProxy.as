@@ -1,4 +1,4 @@
-﻿package saz.util {
+﻿package saz.data {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	
