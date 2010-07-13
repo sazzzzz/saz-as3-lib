@@ -3,7 +3,7 @@ package saz.collections {
 	 * IEnumerator インターフェースを持つ Array ラッパ。
 	 * @author saz
 	 */
-	public class EnumeratorObject implements IEnumerator{
+	public class ObjectEnumerator implements IEnumerator{
 		
 		private var $component:Object;
 		
@@ -11,21 +11,34 @@ package saz.collections {
 		 * コンストラクタ。
 		 * @param	component	対象とするObjectインスタンス。
 		 * @example <listing version="3.0" >
-		 * var enum:EnumeratorObject = new EnumeratorObject(obj);
+		 * var obj:Object = {a:"foo", b:"bar"};
+		 * var enum:ObjectEnumerator = new ObjectEnumerator(obj);
 		 * </listing>
 		 */
-		public function EnumeratorObject(component:Object) {
+		public function ObjectEnumerator(component:Object) {
 			$component = component;
 		}
 		
 		/* INTERFACE saz.collections.IEnumerator */
 		
+		/**
+		 * 各要素について関数を実行します。
+		 * @param	callback	各アイテムについて実行する関数です。
+		 * @param	thisObject	関数の this として使用するオブジェクトです。
+		 * @example <listing version="3.0" >
+		 * var obj:Object = {a:"foo", b:"bar"};
+		 * var enum:ObjectEnumerator = new ObjectEnumerator(obj);
+		 * enum.forEach(function(item:*, index:int, collection:Object):void{
+		 * 	trace(item);
+		 * });
+		 * </listing>
+		 */
 		public function forEach(callback:Function, thisObject:* = null):void {
 			var i:int = -1;
 			for each(var item:* in $component) {
 				i++;
-				//callback.apply(thisObject, [item, i, $component]);
-				callback.apply(thisObject, [item, i, this]);
+				callback.apply(thisObject, [item, i, $component]);
+				//callback.apply(thisObject, [item, i, this]);
 			}
 		}
 		
