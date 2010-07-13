@@ -1,21 +1,25 @@
 package saz.collections {
 	/**
-	 * RubyなEnumerable.
-	 * TODO	ArrayをIEnumeratorに変更する！
+	 * Enumeratorに対して、便利なメソッドを提供する。RubyなEnumerable。
 	 * @author saz
 	 * @see	http://www.ruby-lang.org/ja/man/html/Enumerable.html
 	 * @see	http://www.s2factory.co.jp/tech/prototype/prototype.js.html#Reference.Enumerable
+	 * TODO	未実装：maxBy(), minBy(), sort(), sortBy()
 	 */
 	public class Enumerable implements IEnumerator {
-		//private var $component:IEnumerator;
-		private var $component:Array;
+		
+		private var $component:IEnumerator;
 		
 		/**
 		 * コンストラクタ。
 		 * @param	component	対象のIEnumerator（=forEach()を持っている）
+		 * @example <listing version="3.0" >
+		 * var arr:Array = [true, true, true];
+		 * var enu:Enumerable = new Enumerable(new ArrayEnumerator(arr));
+		 * trace(enu.all());
+		 * </listing>
 		 */
-		//public function Enumerable(component:IEnumerator) {
-		public function Enumerable(component:Array) {
+		public function Enumerable(component:IEnumerator) {
 			$component = component;
 			
 			//エイリアス
@@ -24,6 +28,26 @@ package saz.collections {
 			findAll = select;
 			includes = member;
 		}
+		
+		/**
+		 * obj オブジェクトについて、 forEach の代わりに method という 名前のメソッドを使って繰り返すオブジェクトを生成して返す。
+		 * @param	obj	対象とするオブジェクト。
+		 * @param	methodName	forEach の代わりとなるメソッドの名前。
+		 * @return
+		 * @example <listing version="3.0" >
+		 * var arr:Array = [true, false, true];
+		 * var enu:Enumerable = Enumerable.enumerator(arr, "forEach");
+		 * trace(enu.all());
+		 * </listing>
+		 */
+		// Ruby Enumerable::Enumerator.new のマネ。
+		// http://www.ruby-lang.org/ja/man/html/Enumerable_Enumerator.html
+		static public function enumerator(obj:Object, methodName:String = "forEach"):Enumerable {
+			return new Enumerable(new Enumerator(obj, methodName));
+		}
+		
+		
+		
 		
 		//--------------------------------------
 		// ALIAS
@@ -68,8 +92,12 @@ package saz.collections {
 		public var toArray:Function;
 		
 		
+		
+		
+		
+		
 		//--------------------------------------
-		// PRIVATE
+		// PRIVATE COMMON
 		//--------------------------------------
 		
 		/**
@@ -108,6 +136,7 @@ package saz.collections {
 		//--------------------------------------
 		
 		
+		// なんかの役に立つかと思って、これ自身もIEnumerator型にしてみる。
 		/**
 		 * 配列内の各アイテムについて関数を実行します。
 		 * @param	iterator
@@ -116,7 +145,6 @@ package saz.collections {
 		public function forEach(iterator:Function, thisObject = null):void {
 			$component.forEach(iterator, thisObject);
 		}
-		// なんかの役に立つかと思って、これ自身もIEnumerator型にしてみる。
 		
 		/**
 		 * 「すべて」の要素が、テストをパスするかどうかをチェックする。
@@ -134,8 +162,7 @@ package saz.collections {
 		public function all(iterator:Function = null):Boolean {
 			if (null == iterator) iterator = $iterateBoolean;
 			var res:Boolean = true;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
-				//trace(item, ":", iterator(item, index));
+			$component.forEach(function(item:*, index:int, collection:Object):void {
 				if (false == iterator(item, index)) {
 					res = false;
 				}
@@ -153,7 +180,7 @@ package saz.collections {
 		public function any(iterator:Function = null):Boolean {
 			if (null == iterator) iterator = $iterateBoolean;
 			var res:Boolean = false;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
+			$component.forEach(function(item:*, index:int, collection:Object):void {
 				if (true == iterator(item, index)) {
 					res = true;
 				}
@@ -171,7 +198,7 @@ package saz.collections {
 		public function map(iterator:Function):Array {
 			//if (null == iterator) iterator = $iterateItem;
 			var res:Array = new Array();
-			$component.forEach(function(item:*, index:int, enu:Array):void {
+			$component.forEach(function(item:*, index:int, collection:Object):void {
 				res.push(iterator(item, IndexedList));
 			});
 			return res;
@@ -187,7 +214,7 @@ package saz.collections {
 		 */
 		public function detect(iterator:Function):* {
 			var res:*= null;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
+			$component.forEach(function(item:*, index:int, collection:Object):void {
 				if (null == res && true == iterator(item, index)) {
 					res = item;
 				}
@@ -205,7 +232,7 @@ package saz.collections {
 		 */
 		public function select(iterator:Function):Array {
 			var res:Array = new Array();
-			$component.forEach(function(item:*, index:int, enu:Array):void {
+			$component.forEach(function(item:*, index:int, collection:Object):void {
 				if (true == iterator(item, index)) {
 					res.push(item);
 				}
@@ -225,7 +252,7 @@ package saz.collections {
 		public function grep(pattern:RegExp, iterator:Function = null):Array {
 			if (null == iterator) iterator = $iterateItem;
 			var res:Array = new Array();
-			$component.forEach(function(item:String, index:int, enu:Array):void {
+			$component.forEach(function(item:String, index:int, collection:Object):void {
 				if (true == pattern.test(item)) {
 					res.push(iterator(item, index));
 				}
@@ -234,9 +261,11 @@ package saz.collections {
 		}
 		
 		/**
-		 * 最初に初期値 init と 最初の要素を引数にiteratorを実行します。2 回目以降のループでは、前のブロックの実行結果と次の要素を引数に順次iteratorを実行します。
+		 * 最初に初期値 init と 最初の要素を引数にiteratorを実行します。
+		 * 2 回目以降のループでは、前のブロックの実行結果と次の要素を引数に順次iteratorを実行します。
 		 * そうして最後の要素まで繰り返し、最後のブロックの実行結果を返します。要素が空の場合は init を返します。
-		 * 初期値 init にnullを指定した場合は、最初に先頭の要素と 2 番目の要素をブロックに渡します。この場合、要素が 1 つしかなければブロック を実行せずに最初の要素を返します。要素が空なら null を返しま す。
+		 * 初期値 init にnullを指定した場合は、最初に先頭の要素と 2 番目の要素をブロックに渡します。
+		 * この場合、要素が 1 つしかなければブロックを実行せずに最初の要素を返します。要素が空なら null を返します。
 		 * @param	init	（オプション）初期値。
 		 * @param	iterator
 		 * function(result:*, item:*):*
@@ -246,27 +275,9 @@ package saz.collections {
 			if (null != init) {
 				return $injectWithInit(init, iterator);
 			}else {
-				//return $injectNoInit(init, iterator);
 				return $injectNoInit(iterator);
 			}
 		}
-		/*public function inject(init:*, iterator:Function):*{
-			var res:*= init;
-			if (null != init) {
-				$component.forEach(function(item:*, index:int, enu:Array):void {
-					res = iterator(res, item);
-				});
-			}else {
-				$component.forEach(function(item:*, index:int, enu:Array):void {
-					if (0 == index) {
-						res = item;
-					}else {
-						res = iterator(res, item);
-					}
-				});
-			}
-			return res;
-		}*/
 		
 		/**
 		 * inject()サブ。initが指定されたとき。
@@ -276,7 +287,7 @@ package saz.collections {
 		 */
 		private function $injectWithInit(init:*, iterator:Function):*{
 			var res:*= init;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
+			$component.forEach(function(item:*, index:int, collection:Object):void {
 				res = iterator(res, item);
 			});
 			return res;
@@ -291,33 +302,20 @@ package saz.collections {
 		private function $injectNoInit(iterator:Function):*{
 			var res:*= null;
 			// 最初の1回用
-			var firstFunc:Function = function(item:*, index:int, enu:Array):void {
-				//trace("firstFunc(", arguments);
+			var firstFunc:Function = function(item:*, index:int, collection:Object):void {
 				res = item;
 				func = mainFunc;
 			};
 			// 2回目以降用
-			var mainFunc:Function = function(item:*, index:int, enu:Array):void {
-				//trace("mainFunc(", arguments);
+			var mainFunc:Function = function(item:*, index:int, collection:Object):void {
 				res = iterator(res, item);
 			};
 			var func:Function = firstFunc;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
-				func(item, index, enu);
+			$component.forEach(function(item:*, index:int, collection:Object):void {
+				func(item, index, collection);
 			});
 			return res;
 		}
-		/*private function $injectNoInit(init:*, iterator:Function):*{
-			var res:*= init;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
-				if (0 == index) {
-					res = item;
-				}else {
-					res = iterator(res, item);
-				}
-			});
-			return res;
-		}*/
 		
 		
 		
@@ -328,7 +326,7 @@ package saz.collections {
 		 */
 		public function member(value:*):Boolean {
 			var res:Boolean = false;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
+			$component.forEach(function(item:*, index:int, collection:Object):void {
 				if (value == item) {
 					res = true;
 				}
@@ -357,33 +355,20 @@ package saz.collections {
 		 * max()サブ。iteratorが省略されたとき。
 		 * @return
 		 */
-		/*private function $max():*{
-			var res:* = null;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
-				if (0 == index) {
-					res = item;
-				}else if (res < item) {
-					res = item;
-				}
-			});
-			return res;
-		}*/
 		private function $max():*{
 			var res:* = null;
 			// 最初の1回用
-			var firstFunc:Function = function(item:*, index:int, enu:Array):void {
-				//trace("firstFunc(", arguments);
+			var firstFunc:Function = function(item:*, index:int, collection:Object):void {
 				res = item;
 				func = mainFunc;
 			};
 			// 2回目以降用
-			var mainFunc:Function = function(item:*, index:int, enu:Array):void {
-				//trace("mainFunc(", arguments);
+			var mainFunc:Function = function(item:*, index:int, collection:Object):void {
 				if (res < item) res = item;
 			};
 			var func:Function = firstFunc;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
-				func(item, index, enu);
+			$component.forEach(function(item:*, index:int, collection:Object):void {
+				func(item, index, collection);
 			});
 			return res;
 		}
@@ -396,38 +381,16 @@ package saz.collections {
 		 * function(a:*, b:*):int
 		 * @return
 		 */
-		/*private function $maxWithFunc(compareFunction:Function):* {
-			var res:* = null;
-			var comp:int;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
-				if (0 == index) {
-					res = item;
-				}else {
-					comp = compareFunction(res, item);
-					// FIXME	「ブロックが整数以外を返したときは 例外 TypeError が発生します。」実装できてない。
-					//if (comp is int) {
-					//}else {
-						//throw new TypeError("Enumerable.max: 評価式の戻り値がintではありません。");
-					//}
-					if (0 > comp) {
-						res = item;
-					}
-				}
-			});
-			return res;
-		}*/
 		private function $maxWithFunc(compareFunction:Function):* {
 			var res:* = null;
 			var comp:int;
 			// 最初の1回用
-			var firstFunc:Function = function(item:*, index:int, enu:Array):void {
-				//trace("firstFunc(", arguments);
+			var firstFunc:Function = function(item:*, index:int, collection:Object):void {
 				res = item;
 				func = mainFunc;
 			};
 			// 2回目以降用
-			var mainFunc:Function = function(item:*, index:int, enu:Array):void {
-				//trace("mainFunc(", arguments);
+			var mainFunc:Function = function(item:*, index:int, collection:Object):void {
 				// a>b のとき正、a==b のとき 0、a<b のとき負の整数
 				comp = compareFunction(res, item);
 				// FIXME	「ブロックが整数以外を返したときは 例外 TypeError が発生します。」実装できてない。
@@ -440,8 +403,8 @@ package saz.collections {
 				}
 			};
 			var func:Function = firstFunc;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
-				func(item, index, enu);
+			$component.forEach(function(item:*, index:int, collection:Object):void {
+				func(item, index, collection);
 			});
 			return res;
 		}
@@ -473,17 +436,17 @@ package saz.collections {
 		private function $min():*{
 			var res:* = null;
 			// 最初の1回用
-			var firstFunc:Function = function(item:*, index:int, enu:Array):void {
+			var firstFunc:Function = function(item:*, index:int, collection:Object):void {
 				res = item;
 				func = mainFunc;
 			};
 			// 2回目以降用
-			var mainFunc:Function = function(item:*, index:int, enu:Array):void {
+			var mainFunc:Function = function(item:*, index:int, collection:Object):void {
 				if (res > item) res = item;
 			};
 			var func:Function = firstFunc;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
-				func(item, index, enu);
+			$component.forEach(function(item:*, index:int, collection:Object):void {
+				func(item, index, collection);
 			});
 			return res;
 		}
@@ -498,13 +461,12 @@ package saz.collections {
 			var res:* = null;
 			var comp:int;
 			// 最初の1回用
-			var firstFunc:Function = function(item:*, index:int, enu:Array):void {
-				//trace("firstFunc(", arguments);
+			var firstFunc:Function = function(item:*, index:int, collection:Object):void {
 				res = item;
 				func = mainFunc;
 			};
 			// 2回目以降用
-			var mainFunc:Function = function(item:*, index:int, enu:Array):void {
+			var mainFunc:Function = function(item:*, index:int, collection:Object):void {
 				//trace("mainFunc(", arguments);
 				// a>b のとき正、a==b のとき 0、a<b のとき負の整数
 				comp = compareFunction(res, item);
@@ -518,8 +480,8 @@ package saz.collections {
 				}
 			};
 			var func:Function = firstFunc;
-			$component.forEach(function(item:*, index:int, enu:Array):void {
-				func(item, index, enu);
+			$component.forEach(function(item:*, index:int, collection:Object):void {
+				func(item, index, collection);
 			});
 			return res;
 		}
@@ -538,7 +500,7 @@ package saz.collections {
 		public function partition(iterator:Function):Array {
 			var trueRes:Array = new Array();
 			var falseRes:Array = new Array();
-			$component.forEach(function(item:*, index:int, enu:Array):void {
+			$component.forEach(function(item:*, index:int, collection:Object):void {
 				if (iterator(item, index)) {
 					trueRes.push(item);
 				}else {
@@ -557,7 +519,7 @@ package saz.collections {
 		 */
 		public function reject(iterator:Function):Array {
 			var res:Array = new Array();
-			$component.forEach(function(item:*, index:int, enu:Array):void {
+			$component.forEach(function(item:*, index:int, collection:Object):void {
 				if (false == iterator(item, index)) {
 					res.push(item);
 				}
@@ -570,12 +532,12 @@ package saz.collections {
 		//public function sortBy(iterator:Function):Array
 		
 		/**
-		 * 全ての要素を含む配列を返します。
+		 * 全ての要素を含む配列を返します。つまり配列化する。
 		 * @return
 		 */
 		public function entries():Array {
 			var res:Array = new Array();
-			$component.forEach(function(item:*, index:int, enu:Array):void {
+			$component.forEach(function(item:*, index:int, collection:Object):void {
 				res.push(item);
 			});
 			return res;
@@ -596,6 +558,13 @@ package saz.collections {
 		 * @example <listing version="3.0" >
 		 * trace(new Enumerable([1,2,3]).zip([4,5,6], [7,8,9]));	// "[ [1,4,7],[2,5,8],[3,6,9] ]" を返す。
 		 * </listing>
+		 * @example <listing version="3.0" >
+		 * // ベクトルの内積
+		 * var va=[1,3];
+		 * var vb=[3,4];
+		 * var enu:Enumerable = Enumerable.enumerator(va);
+		 * var r = Enumerable.enumerator(enu.zip(vb)).inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
+		 * </listing>
 		 * @see	http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18848
 		 * @see	http://634.ayumu-baby.com/pukiwiki/index.php?JavaScript/Prototype/Enumerable#z93ac035
 		 */
@@ -606,14 +575,14 @@ package saz.collections {
 			if (last is Function) {
 				// 関数あり
 				arrs = rest.slice(0, rest.length - 1);
-				$component.forEach(function(item:*, index:int, enu:Array):void {
+				$component.forEach(function(item:*, index:int, collection:Object):void {
 					res.push([item].concat($zipArrays(index, arrs)));
 				});
 				return res.map(last, null);
 			}else {
 				// 関数なし
 				arrs = rest;
-				$component.forEach(function(item:*, index:int, enu:Array):void {
+				$component.forEach(function(item:*, index:int, collection:Object):void {
 					res.push([item].concat($zipArrays(index, arrs)));
 				});
 				return res;
