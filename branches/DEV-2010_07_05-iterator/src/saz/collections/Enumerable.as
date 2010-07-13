@@ -1,6 +1,6 @@
 package saz.collections {
 	/**
-	 * RubyなEnumerable.
+	 * Enumeratorに対して、便利なメソッドを提供する。RubyなEnumerable。
 	 * @author saz
 	 * @see	http://www.ruby-lang.org/ja/man/html/Enumerable.html
 	 * @see	http://www.s2factory.co.jp/tech/prototype/prototype.js.html#Reference.Enumerable
