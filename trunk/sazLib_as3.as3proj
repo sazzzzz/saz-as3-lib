@@ -76,6 +76,12 @@
     <hidden path="src\_collections_EnumeratorArray.swf" />
     <hidden path="src\_dev_ArrayDecorator.swf" />
     <hidden path="src\_util_ArrayUtil.swf" />
+    <hidden path="src\_collections_ArrayEnumerator.swf" />
+    <hidden path="src\_collections_ObjectEnumerator.swf" />
+    <hidden path="src\_data_FlashVarsProxy.swf" />
+    <hidden path="src\_dev_DWord.swf" />
+    <hidden path="src\_display_btnclip_BtnClip.swf" />
+    <hidden path="src\_number_TweenerNumber.swf" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
