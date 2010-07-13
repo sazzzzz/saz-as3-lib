@@ -14,7 +14,11 @@
 		static private var $newMatrix:Matrix;
 		static private var $newColorTransform:ColorTransform;
 		
-		
+		/**
+		 * BitmapDataをタイルパターンとして塗りつぶす。
+		 * @param	dst	塗りつぶすBitmapData。
+		 * @param	src	タイルパターンとして使用するBitmapData。
+		 */
 		public static function fillTexture(dst:BitmapData, src:BitmapData):void {
 			var p:Point = new Point(0, 0);
 			var sw:uint = src.width;
@@ -100,6 +104,8 @@
 			bmp.draw(target);
 			return bmp;
 		}
+		
+		
 		
 		
 		public static function getNewPoint():Point {

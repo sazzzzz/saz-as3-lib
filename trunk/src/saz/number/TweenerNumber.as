@@ -1,4 +1,4 @@
-﻿package saz.util {
+﻿package saz.number {
 	import caurina.transitions.Tweener;
 	import flash.display.*;
 	import flash.events.*;
@@ -20,6 +20,7 @@
 	
 	/**
 	 * Tweenerで補完するNumber。EventDispatcherつき。
+	 * FIXME	Tweenerの実行フレーム数が一定しない。
 	 * @author saz
 	 */
 	public class TweenerNumber extends EventDispatcher {

@@ -50,8 +50,8 @@
 		}
 		
 		/**
-		 * 着色する
-		 * @deprecated	createColorTransform()を使えや
+		 * 着色する。createColorTransform()を使えや。
+		 * @deprecated	createColorTransform()を使えや。
 		 * @param	target
 		 * @param	rgb
 		 * @param	alpha

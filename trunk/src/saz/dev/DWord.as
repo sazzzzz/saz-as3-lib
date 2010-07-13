@@ -1,4 +1,4 @@
-﻿package saz {
+﻿package saz.dev {
 	
 	/**
 	 * ダブルワード。ビット操作用クラス。<br/>
