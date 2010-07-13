@@ -207,7 +207,9 @@
 		 * @param	target	対象とする配列
 		 */
 		public static function removeAll(target:Array):void {
-			target.splice(0);
+			//target.splice(0);
+			// http://www.coltware.com/2009/07/14/flex_array_delete_item/
+			target.length = 0;
 		}
 		
 		
