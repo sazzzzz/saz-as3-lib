@@ -1,4 +1,4 @@
-﻿package saz.display {
+﻿package saz.display.btnclip {
 	import flash.display.*;
 	import flash.events.*;
 	import saz.events.NaviEvent;
