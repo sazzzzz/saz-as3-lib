@@ -183,7 +183,16 @@ package saz.util.twitter {
 		 * @return	"http://twitter.com/tsuda/status/14780129332"
 		 */
 		public function getTweetPageUrl():String {
-			return "http://twitter.com/" + user.screen_name + "/status/" + id;
+			//return "http://twitter.com/" + user.screen_name + "/status/" + id;
+			return TwitterUtil.getTweetPageUrlByData(this);
+		}
+		
+		/**
+		 * 現在のtext（ツイート内容）に、<a>タグを付与して返す。
+		 * @return
+		 */
+		public function genTweetLinks():String {
+			return TwitterUtil.genTweetLinks(text);
 		}
 		
 	}
