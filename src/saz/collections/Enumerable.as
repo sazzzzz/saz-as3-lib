@@ -270,6 +270,13 @@ package saz.collections {
 		 * @param	iterator
 		 * function(result:*, item:*):*
 		 * @return
+		 * @example <listing version="3.0" >
+		 * // 数値の合計を求める。
+		 * var enu:Enumerable = new Enumerable(new ArrayEnumerable([1,2,3,4,5,6,7,8,9]));
+		 * trace(enu.inject(0, function(result:Number, item:Number):Number{
+		 * 	return result + item;
+		 * });
+		 * </listing>
 		 */
 		public function inject(init:*, iterator:Function):*{
 			if (null != init) {

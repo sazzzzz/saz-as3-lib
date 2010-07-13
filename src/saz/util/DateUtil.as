@@ -54,6 +54,7 @@ package saz.util {
 		
 		/**
 		 * Dateを文字列表現にして返す
+		 * @deprecated	これ汎用性ないな。廃止しよう。
 		 * @param	date	Dateインスタンス。
 		 * @param	sep	セパレータ。省略すると空文字。
 		 * @param	isYear	年を出力するかどうか。デフォルトはtrue。

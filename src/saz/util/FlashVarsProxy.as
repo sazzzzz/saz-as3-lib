@@ -3,7 +3,7 @@
 	import flash.display.MovieClip;
 	
 	/**
-	 * ...
+	 * FlashVarsの代理。ムービープレビュー時に、FlashVarsの値を設定できるようにする。
 	 * @author saz
 	 */
 	public class FlashVarsProxy {
