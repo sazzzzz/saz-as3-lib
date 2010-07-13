@@ -3,6 +3,7 @@ package saz.collections {
 	 * IEnumeratorの汎用ラッパクラス。
 	 * @author saz
 	 */
+	// TODO	必要かな？これ
 	public class Enumerator implements IEnumerator{
 		
 		private var $component:Object;
