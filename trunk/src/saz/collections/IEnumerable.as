@@ -9,7 +9,8 @@ package saz.collections {
 		 * Enumeratorを取得。
 		 * @return
 		 */
-		function getEnumerator():IEnumerator;
+		//function getEnumerator():IEnumerator;
+		function enumerator():IEnumerator;
 	}
 	
 }

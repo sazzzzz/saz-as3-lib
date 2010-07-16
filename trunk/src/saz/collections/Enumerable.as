@@ -42,9 +42,9 @@ package saz.collections {
 		 */
 		// Ruby Enumerable::Enumerator.new のマネ。
 		// http://www.ruby-lang.org/ja/man/html/Enumerable_Enumerator.html
-		static public function enumerator(obj:Object, methodName:String = "forEach"):Enumerable {
+		/*static public function enumerator(obj:Object, methodName:String = "forEach"):Enumerable {
 			return new Enumerable(new Enumerator(obj, methodName));
-		}
+		}*/
 		
 		
 		
@@ -197,9 +197,9 @@ package saz.collections {
 		 */
 		public function map(iterator:Function):Array {
 			//if (null == iterator) iterator = $iterateItem;
-			var res:Array = new Array();
+			var res:Array = new EnumerableArray();
 			$component.forEach(function(item:*, index:int, collection:Object):void {
-				res.push(iterator(item, IndexedList));
+				res.push(iterator(item, index));
 			});
 			return res;
 		}
@@ -231,7 +231,7 @@ package saz.collections {
 		 * @return
 		 */
 		public function select(iterator:Function):Array {
-			var res:Array = new Array();
+			var res:Array = new EnumerableArray();
 			$component.forEach(function(item:*, index:int, collection:Object):void {
 				if (true == iterator(item, index)) {
 					res.push(item);
@@ -251,7 +251,7 @@ package saz.collections {
 		 */
 		public function grep(pattern:RegExp, iterator:Function = null):Array {
 			if (null == iterator) iterator = $iterateItem;
-			var res:Array = new Array();
+			var res:Array = new EnumerableArray();
 			$component.forEach(function(item:String, index:int, collection:Object):void {
 				if (true == pattern.test(item)) {
 					res.push(iterator(item, index));
@@ -505,8 +505,8 @@ package saz.collections {
 		 * @return	真であった要素からなる配列と、偽であった要素からなる配列からなる2次元配列
 		 */
 		public function partition(iterator:Function):Array {
-			var trueRes:Array = new Array();
-			var falseRes:Array = new Array();
+			var trueRes:Array = new EnumerableArray();
+			var falseRes:Array = new EnumerableArray();
 			$component.forEach(function(item:*, index:int, collection:Object):void {
 				if (iterator(item, index)) {
 					trueRes.push(item);
@@ -525,7 +525,7 @@ package saz.collections {
 		 * @return
 		 */
 		public function reject(iterator:Function):Array {
-			var res:Array = new Array();
+			var res:Array = new EnumerableArray();
 			$component.forEach(function(item:*, index:int, collection:Object):void {
 				if (false == iterator(item, index)) {
 					res.push(item);
@@ -543,7 +543,7 @@ package saz.collections {
 		 * @return
 		 */
 		public function entries():Array {
-			var res:Array = new Array();
+			var res:Array = new EnumerableArray();
 			$component.forEach(function(item:*, index:int, collection:Object):void {
 				res.push(item);
 			});
@@ -576,7 +576,7 @@ package saz.collections {
 		 * @see	http://634.ayumu-baby.com/pukiwiki/index.php?JavaScript/Prototype/Enumerable#z93ac035
 		 */
 		public function zip(...rest:Array):* {
-			var res:Array = new Array();
+			var res:Array = new EnumerableArray();
 			var arrs:Array;
 			var last:* = rest[rest.length - 1];
 			if (last is Function) {
@@ -603,7 +603,7 @@ package saz.collections {
 		 * @return
 		 */
 		private function $zipArrays(index:int, arrs:Array):Array {
-			var res:Array = new Array();
+			var res:Array = new EnumerableArray();
 			arrs.forEach(function(item:*, i:int, arr:Array):void {
 				res.push(item[index]);
 			});

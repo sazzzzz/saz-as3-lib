@@ -1,11 +1,9 @@
 package saz.collections {
 	/**
-	 * IEnumerator インターフェースを持つ Array ラッパ。
+	 * Object用Enumerator。
 	 * @author saz
 	 */
-	public class ObjectEnumerator implements IEnumerator{
-		
-		private var $component:Object;
+	public class ObjectEnumerator extends Enumerator{
 		
 		/**
 		 * コンストラクタ。
@@ -16,15 +14,16 @@ package saz.collections {
 		 * </listing>
 		 */
 		public function ObjectEnumerator(component:Object) {
-			$component = component;
+			super(component);
 		}
 		
-		/* INTERFACE saz.collections.IEnumerator */
 		
 		/**
 		 * 各要素について関数を実行します。
 		 * @param	callback	各アイテムについて実行する関数です。
+		 * function callback(item:*, index:int, collection:Object):void;
 		 * @param	thisObject	関数の this として使用するオブジェクトです。
+		 * 
 		 * @example <listing version="3.0" >
 		 * var obj:Object = {a:"foo", b:"bar"};
 		 * var enum:ObjectEnumerator = new ObjectEnumerator(obj);
@@ -33,12 +32,11 @@ package saz.collections {
 		 * });
 		 * </listing>
 		 */
-		public function forEach(callback:Function, thisObject:* = null):void {
+		override public function forEach(callback:Function, thisObject:* = null):void {
 			var i:int = -1;
 			for each(var item:* in $component) {
 				i++;
 				callback.apply(thisObject, [item, i, $component]);
-				//callback.apply(thisObject, [item, i, this]);
 			}
 		}
 		
