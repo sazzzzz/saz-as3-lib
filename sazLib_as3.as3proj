@@ -82,6 +82,7 @@
     <hidden path="src\_dev_DWord.swf" />
     <hidden path="src\_display_btnclip_BtnClip.swf" />
     <hidden path="src\_number_TweenerNumber.swf" />
+    <hidden path="src\_util_ObjectUtil.swf" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />

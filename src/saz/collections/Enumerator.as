@@ -6,22 +6,14 @@ package saz.collections {
 	// TODO	必要かな？これ
 	public class Enumerator implements IEnumerator{
 		
-		private var $component:Object;
-		private var $methodName:String;
+		protected var $component:*;
 		
 		/**
 		 * コンストラクタ。
 		 * @param	component	対象オブジェクト。
-		 * @param	methodName	forEach の代わりとなるメソッドの名前。
-		 * @example <listing version="3.0" >
-		 * var arr:Array = [true, false, true];
-		 * var enu:Enumerable = new Enumerable(new Enumerator(arr, "forEach"));
-		 * trace(enu.all());
-		 * </listing>
 		 */
-		public function Enumerator(component:Object, methodName:String) {
+		public function Enumerator(component:*) {
 			$component = component;
-			$methodName = methodName;
 		}
 		
 		/**
@@ -31,8 +23,15 @@ package saz.collections {
 		 * @param	thisObject	関数の this として使用するオブジェクトです。
 		 */
 		public function forEach(callback:Function, thisObject:* = null):void {
-			//$method(callback, thisObject);	//これじゃダメ。
-			$component[$methodName](callback, thisObject);
+		}
+		
+		/**
+		 * Enumerableを返す。
+		 * @return
+		 */
+		//public function getEnumerable():Enumerable {
+		public function enumerable():Enumerable {
+			return new Enumerable(this);
 		}
 		
 	}

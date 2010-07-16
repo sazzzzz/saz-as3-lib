@@ -1,6 +1,6 @@
 package saz.collections {
 	/**
-	 * IEnumerator インターフェースを持つ Array ラッパ。
+	 * Array用Enumerator。
 	 * @author saz
 	 */
 	public class ArrayEnumerator extends Enumerator {
@@ -15,12 +15,21 @@ package saz.collections {
 		 * </listing>
 		 */
 		public function ArrayEnumerator(component:Array) {
-			super(component, "forEach");
+			//super(component, "forEach");
+			super(component);
 		}
 		
-		/*override public function forEach(callback:Function, thisObject:* = null):void {
-			super.forEach(callback, this);
-		}*/
+		/* INTERFACE saz.collections.IEnumerator */
+		
+		/**
+		 * 各要素について関数を実行します。
+		 * @param	callback	各アイテムについて実行する関数です。
+		 * function callback(item:*, index:int, collection:Object):void;
+		 * @param	thisObject	関数の this として使用するオブジェクトです。
+		 */
+		override public function forEach(callback:Function, thisObject:* = null):void {
+			$component.forEach(callback, thisObject);
+		}
 		
 	}
 
