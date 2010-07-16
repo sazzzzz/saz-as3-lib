@@ -1,6 +1,6 @@
 package saz.collections {
 	/**
-	 * IEnumeratorの汎用ラッパクラス。
+	 * IEnumerator実装用の、親クラス。サブクラスはforEach()をオーバーライドすること。
 	 * @author saz
 	 */
 	// TODO	必要かな？これ
