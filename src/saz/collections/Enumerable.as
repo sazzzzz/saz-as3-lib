@@ -12,17 +12,22 @@ package saz.collections {
 		
 		/**
 		 * コンストラクタ。
-		 * @param	component	対象のIEnumerator（=forEach()を持っている）
+		 * @param	component	対象とするIEnumeratorを実装（=forEach()を持つ）したクラスのインスタンス。
 		 * @example <listing version="3.0" >
 		 * var arr:Array = [true, true, true];
 		 * var enu:Enumerable = new Enumerable(new ArrayEnumerator(arr));
+		 * trace(enu.all());
+		 * </listing>
+		 * @example <listing version="3.0" >
+		 * var arr:Array = [true, true, true];
+		 * var enu:Enumerable = new ArrayEnumerator(arr).enumerable();
 		 * trace(enu.all());
 		 * </listing>
 		 */
 		public function Enumerable(component:IEnumerator) {
 			$component = component;
 			
-			//エイリアス
+			// エイリアスメソッドを設定。
 			collect = map;
 			find = detect;
 			findAll = select;
