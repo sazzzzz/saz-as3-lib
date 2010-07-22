@@ -3,9 +3,9 @@ package saz.collections {
 	 * ...
 	 * @author saz
 	 */
-	public class IteratorArray implements IIterator{
+	public class ArrayIterator implements IIterator{
 		
-		public function IteratorArray(arr:Array = null) {
+		public function ArrayIterator(arr:Array = null) {
 			
 			
 		}
