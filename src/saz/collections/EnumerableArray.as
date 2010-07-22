@@ -25,6 +25,16 @@ package saz.collections {
 			}
 		}
 		
+		
+		/* INTERFACE saz.collections.IEnumerable */
+		
+		//public function getEnumerator():IEnumerator{
+		public function enumerator():IEnumerator{
+			return new ArrayEnumerator(this);
+		}
+		
+		/* ORIGINAL */
+		
 		/**
 		 * Enumerableインスタンスを返す。
 		 * FIXME	暫定的につけてみる。
@@ -32,14 +42,6 @@ package saz.collections {
 		 */
 		public function enumerable():Enumerable {
 			return new Enumerable(enumerator());
-		}
-		
-		
-		/* INTERFACE saz.collections.IEnumerable */
-		
-		//public function getEnumerator():IEnumerator{
-		public function enumerator():IEnumerator{
-			return new ArrayEnumerator(this);
 		}
 		
 	}

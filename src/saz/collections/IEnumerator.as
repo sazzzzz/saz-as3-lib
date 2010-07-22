@@ -19,6 +19,13 @@ package saz.collections {
 		 * @param	thisObject	関数の this として使用するオブジェクトです。
 		 */
 		function forEach(callback:Function, thisObject:*= null):void;
+		
+		/**
+		 * Enumerableインスタンスを返す。
+		 * FIXME	暫定的につけてみる。
+		 * @return
+		 */
+		//function enumerable():Enumerable;
 	}
 	
 }

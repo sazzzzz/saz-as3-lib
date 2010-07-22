@@ -6,7 +6,8 @@ package saz.collections {
 	 * @see	http://www.s2factory.co.jp/tech/prototype/prototype.js.html#Reference.Enumerable
 	 * TODO	未実装：maxBy(), minBy(), sort(), sortBy()
 	 */
-	public class Enumerable implements IEnumerator {
+	//public class Enumerable implements IEnumerator {
+	public class Enumerable {
 		
 		private var $component:IEnumerator;
 		

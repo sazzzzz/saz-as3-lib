@@ -117,8 +117,8 @@ while (iterator.hasNext()) {
 	i++;
 }
 
-›Iterable
-getIterator():IIterator
+›IIterable
+iterator():IIterator
 
 ›IEnumerator
 forEach(iterator:Function):void
@@ -127,7 +127,7 @@ list.forEach(function(item:*, index:int, enu:IEnumerator):void{
 });
 
 ›IEnumerable
-getEnumerator():IEnumerator
+enumerator():IEnumerator
 
 œÀ‘•
 
