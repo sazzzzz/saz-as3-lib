@@ -4,7 +4,7 @@ package saz.collections {
 	 * enumerator()メソッドを実装したArrayのサブクラス。Enumerable内部で使用。
 	 * @author saz
 	 */
-	public dynamic class EnumerableArray extends Array implements IEnumerable{
+	public dynamic class EnumerableArray extends Array implements IEnumeratioin{
 		
 		public function EnumerableArray(...args) {
 			// Array クラスの拡張
@@ -26,7 +26,7 @@ package saz.collections {
 		}
 		
 		
-		/* INTERFACE saz.collections.IEnumerable */
+		/* INTERFACE saz.collections.IEnumeratioin */
 		
 		//public function getEnumerator():IEnumerator{
 		public function enumerator():IEnumerator{
