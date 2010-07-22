@@ -4,7 +4,7 @@ package saz.collections {
 	 * IEnumeratorを持ってるインターフェース。
 	 * @author saz
 	 */
-	public interface IEnumeratioin {
+	public interface IEnumeration {
 		/**
 		 * Enumeratorを取得。
 		 * @return
