@@ -3,7 +3,7 @@ package saz.collections {
 	 * IEnumerator実装用の、親クラス。サブクラスはforEach()をオーバーライドすること。
 	 * @author saz
 	 */
-	public class Enumerator implements IEnumerator{
+	public class Enumerator implements IEnumerator, IEnumerable {
 		
 		protected var $component:*;
 		
@@ -28,7 +28,6 @@ package saz.collections {
 		 * Enumerableを返す。
 		 * @return
 		 */
-		//public function getEnumerable():Enumerable {
 		public function enumerable():Enumerable {
 			return new Enumerable(this);
 		}

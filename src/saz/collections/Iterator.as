@@ -4,7 +4,7 @@ package saz.collections {
 	 * IIteratorを実装した親クラス。
 	 * @author saz
 	 */
-	public class Iterator implements IIterator{
+	public class Iterator implements IIterator, IEnumeration, IEnumerable {
 		
 		public function Iterator() {
 		}
@@ -41,8 +41,8 @@ package saz.collections {
 		 * FIXME	暫定的につけてみる。
 		 * @return
 		 */
-		//public function enumerator():IEnumerator {
-		public function enumerator():IteratorEnumerator {
+		public function enumerator():IEnumerator {
+		//public function enumerator():IteratorEnumerator {
 			return new IteratorEnumerator(this);
 		}
 		
