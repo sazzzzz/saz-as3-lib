@@ -35,22 +35,6 @@ package saz.collections {
 			includes = member;
 		}
 		
-		/**
-		 * obj オブジェクトについて、 forEach の代わりに method という 名前のメソッドを使って繰り返すオブジェクトを生成して返す。
-		 * @param	obj	対象とするオブジェクト。
-		 * @param	methodName	forEach の代わりとなるメソッドの名前。
-		 * @return
-		 * @example <listing version="3.0" >
-		 * var arr:Array = [true, false, true];
-		 * var enu:Enumerable = Enumerable.enumerator(arr, "forEach");
-		 * trace(enu.all());
-		 * </listing>
-		 */
-		// Ruby Enumerable::Enumerator.new のマネ。
-		// http://www.ruby-lang.org/ja/man/html/Enumerable_Enumerator.html
-		/*static public function enumerator(obj:Object, methodName:String = "forEach"):Enumerable {
-			return new Enumerable(new Enumerator(obj, methodName));
-		}*/
 		
 		
 		
@@ -576,8 +560,8 @@ package saz.collections {
 		 * // ベクトルの内積
 		 * var va=[1,3];
 		 * var vb=[3,4];
-		 * var enu:Enumerable = Enumerable.enumerator(va);
-		 * var r = Enumerable.enumerator(enu.zip(vb)).inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
+		 * var enu:Enumerable = new Enumerable(new ArrayEnumerator(arr));
+		 * var r = enu.zip(vb).enumerable().inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
 		 * </listing>
 		 * @see	http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18848
 		 * @see	http://634.ayumu-baby.com/pukiwiki/index.php?JavaScript/Prototype/Enumerable#z93ac035
