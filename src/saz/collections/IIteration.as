@@ -4,7 +4,7 @@ package saz.collections {
 	 * IIteratorを持ってるインターフェース。
 	 * @author saz
 	 */
-	public interface IIterable {
+	public interface IIteration {
 		/**
 		 * Iteratorを取得。
 		 * @return
