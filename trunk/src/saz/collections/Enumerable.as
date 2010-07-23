@@ -33,6 +33,7 @@ package saz.collections {
 			find = detect;
 			findAll = select;
 			includes = member;
+			toArray = entries;
 		}
 		
 		
@@ -118,6 +119,18 @@ package saz.collections {
 		 */
 		private function $iterateBoolean(item:Boolean, index:int):Boolean {
 			return Boolean(item);
+		}
+		
+		/**
+		 * ソート用デフォルト比較関数。
+		 * @param	a	
+		 * @param	b
+		 * @return
+		 */
+		static private function $sortCompare(a:*, b:*):Number {
+			if (a > b) return 1;
+			else if (a < b) return - 1;
+			return 0;
 		}
 		
 		
@@ -525,9 +538,45 @@ package saz.collections {
 			return res;
 		}
 		
-		// TODO	sort(),sortBy()大変そうなので未実装
-		//public function sort(compareFunction:Function):EnumerableArray
-		//public function sortBy(iterator:Function):EnumerableArray
+		// TODO	sort()は、sortBy()があれば不要そうなので未実装
+		/**
+		 * 全ての要素を昇順にソートした配列を生成して返します。
+		 * @param	compareFunction
+		 * function(a:*, b:*):Number
+		 * @return
+		 */
+		public function sort(compareFunction:Function = null):EnumerableArray {
+			if (null == compareFunction) compareFunction = $sortCompare;
+			return this.entries().sort(compareFunction);
+		}
+		
+		/**
+		 * iteratorの評価結果を <=> メソッドで比較することで、昇順にソートします。ソートされた配列を新たに生成して返します。
+		 * @param	iterator	<=> による比較の対象となる値を返すFunction。
+		 * function(item:*, index:int):*
+		 * @return	ソート済みの要素が格納された EnumerableArray インスタンス。
+		 */
+		public function sortBy(iterator:Function):EnumerableArray {
+			// http://itpro.nikkeibp.co.jp/article/COLUMN/20070606/273878/?ST=oss&P=4
+			
+			// 要素を基に比較の対象となる値を計算し，要素そのものと一緒に配列に入れておきます。
+			/*var compo:EnumerableArray = this.map(function(item:*, index:int):Array { return [iterator(item, index), item]; } );
+			// 比較の対象となる値でソートします。
+			compo.sort(function (a:Array, b:Array):Number {
+				if (a[0] > b[0]) return 1;
+				else if (a[0] < b[0]) return - 1;
+				return 0;
+			});
+			// 最後に元の配列の要素だけ取り出し，ソート結果を得ます
+			return compo.enumerable().map(function(item:*, index:int):*{ return item[1]; } );*/
+			
+			// 合体してみた。
+			return this.map(function(item:*, index:int):Array { return [iterator(item, index), item]; } ).sort(function (a:Array, b:Array):Number {
+				if (a[0] > b[0]) return 1;
+				else if (a[0] < b[0]) return - 1;
+				return 0;
+			}).enumerable().map(function(item:*, index:int):*{ return item[1]; } );
+		}
 		
 		/**
 		 * 全ての要素を含む配列を返します。つまり配列化する。
