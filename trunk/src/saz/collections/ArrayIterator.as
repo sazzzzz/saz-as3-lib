@@ -22,8 +22,9 @@ package saz.collections {
 		public function ArrayIterator(collection:Array) {
 			super();
 			$arr = collection;
-			$index = 0;
-			$lastIndex = -1;
+			//$index = 0;
+			//$lastIndex = -1;
+			reset();
 		}
 		
 		/* INTERFACE saz.collections.IIterator */
@@ -53,6 +54,14 @@ package saz.collections {
 			if ( -1 == $lastIndex) throw new IllegalStateError("next()が呼び出されていないか、最後のnext()の後にすでにremove()が実行されています。");
 			$arr.splice($lastIndex, 1);
 			$index = $lastIndex;
+			$lastIndex = -1;
+		}
+		
+		/**
+		 * @copy	IIterator#reset
+		 */
+		override public function reset():void {
+			$index = 0;
 			$lastIndex = -1;
 		}
 		

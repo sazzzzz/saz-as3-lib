@@ -49,6 +49,13 @@ package saz.collections {
 			return $iterator.remove();
 		}*/
 		
+		/**
+		 * @copy	IIterator#reset
+		 */
+		override public function reset():void {
+			$iterator.reset();
+		}
+		
 	}
 
 }
