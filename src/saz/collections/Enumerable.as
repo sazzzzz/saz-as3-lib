@@ -97,7 +97,7 @@ package saz.collections {
 		 * @param	index
 		 * @return
 		 */
-		private function $iterateItem(item:*, index:int):*{
+		static private function $iterateItem(item:*, index:int):*{
 			return item;
 		}
 		
@@ -117,7 +117,7 @@ package saz.collections {
 		 * 引数なし	Boolean()	false
 		 * @see	http://livedocs.adobe.com/flash/9.0_jp/ActionScriptLangRefV3/package.html#Boolean()
 		 */
-		private function $iterateBoolean(item:Boolean, index:int):Boolean {
+		static private function $iterateBoolean(item:Boolean, index:int):Boolean {
 			return Boolean(item);
 		}
 		
@@ -130,6 +130,18 @@ package saz.collections {
 		static private function $sortCompare(a:*, b:*):Number {
 			if (a > b) return 1;
 			else if (a < b) return - 1;
+			return 0;
+		}
+		
+		/**
+		 * sortBy()用比較関数。
+		 * @param	a
+		 * @param	b
+		 * @return
+		 */
+		static private function $sortByCompare(a:Array, b:Array):Number {
+			if (a[0] > b[0]) return 1;
+			else if (a[0] < b[0]) return - 1;
 			return 0;
 		}
 		
@@ -562,20 +574,17 @@ package saz.collections {
 			// 要素を基に比較の対象となる値を計算し，要素そのものと一緒に配列に入れておきます。
 			/*var compo:EnumerableArray = this.map(function(item:*, index:int):Array { return [iterator(item, index), item]; } );
 			// 比較の対象となる値でソートします。
-			compo.sort(function (a:Array, b:Array):Number {
-				if (a[0] > b[0]) return 1;
-				else if (a[0] < b[0]) return - 1;
-				return 0;
-			});
+			//compo.sort(function (a:Array, b:Array):Number {
+				//if (a[0] > b[0]) return 1;
+				//else if (a[0] < b[0]) return - 1;
+				//return 0;
+			//});
+			compo.sort($sortByCompare);
 			// 最後に元の配列の要素だけ取り出し，ソート結果を得ます
 			return compo.enumerable().map(function(item:*, index:int):*{ return item[1]; } );*/
 			
 			// 合体してみた。
-			return this.map(function(item:*, index:int):Array { return [iterator(item, index), item]; } ).sort(function (a:Array, b:Array):Number {
-				if (a[0] > b[0]) return 1;
-				else if (a[0] < b[0]) return - 1;
-				return 0;
-			}).enumerable().map(function(item:*, index:int):*{ return item[1]; } );
+			return this.map(function(item:*, index:int):Array { return [iterator(item, index), item]; } ).sort($sortByCompare).enumerable().map(function(item:*, index:int):*{ return item[1]; } );
 		}
 		
 		/**
