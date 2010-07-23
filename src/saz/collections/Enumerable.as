@@ -4,7 +4,6 @@ package saz.collections {
 	 * @author saz
 	 * @see	http://www.ruby-lang.org/ja/man/html/Enumerable.html
 	 * @see	http://www.s2factory.co.jp/tech/prototype/prototype.js.html#Reference.Enumerable
-	 * TODO	未実装：maxBy(), minBy(), sort(), sortBy()
 	 */
 	//public class Enumerable implements IEnumerator {
 	public class Enumerable {
@@ -431,8 +430,15 @@ package saz.collections {
 			return res;
 		}
 		
-		// TODO	maxBy()よくわからないので未実装
-		//public function maxBy(compareFunction:Function):*
+		/**
+		 * iteratorの評価結果を <=> メソッドで比較し、最大の要素を返す。
+		 * @param	iterator
+		 * function(a:*,b:*):*
+		 * @return
+		 */
+		public function maxBy(iterator:Function):*{
+			return this.map(function(item:*, index:int):Array { return [iterator(item, index), item]; } ).enumerable().max($sortByCompare)[1];
+		}
 		
 		/**
 		 * 最小の要素を返します。全要素が互いに <=> メソッドで比較でき ることを仮定しています。要素が存在しなければ null を返します。
@@ -508,9 +514,18 @@ package saz.collections {
 			return res;
 		}
 		
-		
-		// TODO	minBy()よくわからないので未実装
-		//public function minBy(compareFunction:Function):*
+		/**
+		 * iteratorの評価結果を <=> メソッドで比較し、最小の要素を返す。
+		 * @param	iterator
+		 * function(a:*,b:*):*
+		 * @return
+		 */
+		public function minBy(iterator:Function):* {
+			// 要素を基に比較の対象となる値を計算し，要素そのものと一緒に配列に入れておきます。
+			//var compo:EnumerableArray = this.map(function(item:*, index:int):Array { return [iterator(item, index), item]; } );
+			//return compo.enumerable().min($sortByCompare)[1];
+			return this.map(function(item:*, index:int):Array { return [iterator(item, index), item]; } ).enumerable().min($sortByCompare)[1];
+		}
 		
 		
 		/**
@@ -550,7 +565,6 @@ package saz.collections {
 			return res;
 		}
 		
-		// TODO	sort()は、sortBy()があれば不要そうなので未実装
 		/**
 		 * 全ての要素を昇順にソートした配列を生成して返します。
 		 * @param	compareFunction
