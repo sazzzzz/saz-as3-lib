@@ -34,6 +34,13 @@ package saz.collections {
 			throw new IllegalOperationError("このメソッドは実装されていません。");
 		}
 		
+		/**
+		 * @copy	IIterator#reset
+		 */
+		public function reset():void {
+			throw new IllegalOperationError("このメソッドは実装されていません。");
+		}
+		
 		/* ORIGINAL */
 		
 		/**

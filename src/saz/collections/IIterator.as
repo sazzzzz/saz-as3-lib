@@ -38,6 +38,12 @@ package saz.collections {
 		 * next()が呼び出されていないか、最後のnext()の後にすでにremove()が実行されている場合もエラー。
 		 */
 		function remove():void;
+		
+		/**
+		 * 最初の要素に戻す。
+		 * IteratorEnumeratorのために、.NETのIEnumerator風にしてみる。
+		 */
+		function reset():void;
 	}
 	
 }
