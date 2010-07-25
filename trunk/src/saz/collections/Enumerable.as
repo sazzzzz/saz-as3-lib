@@ -28,11 +28,11 @@ package saz.collections {
 			$component = component;
 			
 			// エイリアスメソッドを設定。
-			collect = map;
-			find = detect;
-			findAll = select;
-			includes = member;
-			toArray = entries;
+			//collect = map;
+			//find = detect;
+			//findAll = select;
+			//includes = member;
+			//toArray = entries;
 		}
 		
 		
@@ -49,7 +49,7 @@ package saz.collections {
 		 * @return
 		 */
 		//public function collect(iterator:Function = null):EnumerableArray { return []; }
-		public var collect:Function;
+		public var collect:Function = map;
 		
 		/**
 		 * detectと同じ。
@@ -57,7 +57,7 @@ package saz.collections {
 		 * @return
 		 */
 		//public function find(iterator:Function):* { return 0; }
-		public var find:Function;
+		public var find:Function = detect;
 		
 		/**
 		 * selectと同じ。
@@ -65,7 +65,7 @@ package saz.collections {
 		 * @return
 		 */
 		//public function findAll(iterator:Function):EnumerableArray { return[]; }
-		public var findAll:Function;
+		public var findAll:Function = select;
 		
 		/**
 		 * memberと同じ。（本来は"include"だが予約されていて使えない）
@@ -73,13 +73,13 @@ package saz.collections {
 		 * @return
 		 */
 		//public function include(value:*):Boolean { return false; }
-		public var includes:Function;
+		public var includes:Function = member;
 		
 		/**
 		 * entriesと同じ。
 		 * @return
 		 */
-		public var toArray:Function;
+		public var toArray:Function = entries;
 		
 		
 		
