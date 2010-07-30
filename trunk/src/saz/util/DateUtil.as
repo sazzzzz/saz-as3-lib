@@ -53,6 +53,28 @@ package saz.util {
 		}
 		
 		/**
+		 * ミリ秒を日時分秒に変換。
+		 * @param	time	ミリ秒。
+		 * @return	日時分秒を格納したObject。{ date:日, hours:時, minutes:分, seconds:秒, milliseconds:ミリ秒 }。
+		 */
+		static public function timeToObject(time:Number):Object {
+			return {
+				date:Math.floor(time / TIME_DATE)
+				,hours:Math.floor(time / TIME_HOUR) % 24
+				,minutes:Math.floor(time / TIME_MINUTE) % 60
+				,seconds:Math.floor(time / TIME_SECOND) % 60
+				,milliseconds:time % TIME_SECOND
+			};
+			/*return {
+				date:Math.floor(time / (24 * 60 * 60 * 1000))
+				,hours:Math.floor(time / (60 * 60 * 1000)) % 24
+				,minutes:Math.floor(time / (60 * 1000)) % 60
+				,seconds:Math.floor(time / 1000) % 60
+				,milliseconds:time % 1000
+			};*/
+		}
+		
+		/**
 		 * Dateを文字列表現にして返す
 		 * @deprecated	これ汎用性ないな。廃止しよう。
 		 * @param	date	Dateインスタンス。
