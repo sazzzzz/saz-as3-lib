@@ -35,20 +35,25 @@ package saz.display {
 		 */
 		public function matrix():Matrix {
 			// http://www.d-project.com/flex/009_FreeTransform/
-			$mtxa.identity();
-			$mtxa.scale(sourceRectangle.width, sourceRectangle.height);
-			$mtxa.rotate(sourceRadian);
-			$mtxa.translate(sourceRectangle.x, sourceRectangle.y);
+			
 			// createBoxだとゆがむ。なぜだ？
 			//$mtxa.createBox(sourceRectangle.width, sourceRectangle.height, sourceRadian);
 			//$mtxa.createBox(sourceRectangle.width, sourceRectangle.height, sourceRadian, sourceRectangle.x, sourceRectangle.y);
+			
+			$mtxa.identity();
+			// scale()、rotate()、translate() の順番じゃないとダメ
+			$mtxa.scale(sourceRectangle.width, sourceRectangle.height);
+			$mtxa.rotate(sourceRadian);
+			$mtxa.translate(sourceRectangle.x, sourceRectangle.y);
 			$mtxa.invert();
+			
 			
 			/*$mtxb.identity();
 			$mtxb.scale(destinationRectangle.width, destinationRectangle.height);
 			$mtxb.rotate(destinationRadian);
 			$mtxb.translate(destinationRectangle.x, destinationRectangle.y);*/
-			// こっちは平気。
+			// こっちは平気?
+			// createBox() = identity()、rotate()、scale()、translate() 
 			$mtxb.createBox(destinationRectangle.width, destinationRectangle.height, destinationRadian, destinationRectangle.x, destinationRectangle.y);
 			
 			var res:Matrix = new Matrix();
