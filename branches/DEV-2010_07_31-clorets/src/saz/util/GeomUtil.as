@@ -1,12 +1,47 @@
 package saz.util {
-	import flash.display.DisplayObject;
+	//import flash.display.DisplayObject;
 	import flash.geom.*;
 	/**
-	 * Rectangleユーティリティー
+	 * Geomユーティリティー
 	 * @author saz
-	 * @deprecated	GeomUtilに変名。
 	 */
-	public class RectangleUtil {
+	public class GeomUtil {
+		
+		/**
+		 * baseに対してtargetをセンタリングする。
+		 * @param	target
+		 * @param	base
+		 * @return
+		 */
+		static public function centering(target:Rectangle, base:Rectangle):Point {
+			return new Point(base.x + (base.width - target.width) / 2, base.y + (base.height - target.height) / 2);
+		}
+		
+		/**
+		 * targetのx,y,width,heightをRectangleで指定。
+		 * @param	target
+		 * @param	rect
+		 */
+		static public function setRectangle(target:Object, rect:Rectangle):void {
+			target.x = rect.x;
+			target.y = rect.y;
+			target.width = rect.width;
+			target.height = rect.height;
+		}
+		
+		/**
+		 * targetからRectangleを返す。
+		 * @param	target
+		 * @return
+		 */
+		static public function getRectangle(target:Object):Rectangle {
+			return new Rectangle(
+				target.x
+				,target.y
+				,target.width
+				,target.height
+			);
+		}
 		
 		static public var innterFit:Function = inscribe;
 		static public var outerFit:Function = circumscribe;

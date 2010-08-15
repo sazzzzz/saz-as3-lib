@@ -9,6 +9,33 @@
 	public class DisplayUtil {
 		
 		/**
+		 * DisplayObjectのx,y,width,heightをRectangleで指定。
+		 * @param	target
+		 * @param	rect
+		 * @deprecated	GeomUtil.setRectangle へ移行。
+		 */
+		static public function setPropsByRectangle(target:DisplayObject, rect:Rectangle):void {
+			target.x = rect.x;
+			target.y = rect.y;
+			target.width = rect.width;
+			target.height = rect.height;
+		}
+		
+		/**
+		 * DisplayObjectからRectangleを返す。
+		 * @param	target
+		 * @return	GeomUtil.setRectangle へ。
+		 */
+		static public function displayObjectToRectangle(target:DisplayObject):Rectangle {
+			return new Rectangle(
+				target.x
+				,target.y
+				,target.width
+				,target.height
+			);
+		}
+		
+		/**
 		 * RGB値およびアルファ値から、ColorTransformを生成
 		 * @param	rgb	0xff0000など。
 		 * @param	alpha
