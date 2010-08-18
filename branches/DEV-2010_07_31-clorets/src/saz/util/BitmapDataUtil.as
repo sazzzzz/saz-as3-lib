@@ -8,11 +8,113 @@
 	 */
 	public class BitmapDataUtil {
 		
-		
 		static private var $newPoint:Point;
 		static private var $newRectangle:Rectangle;
 		static private var $newMatrix:Matrix;
 		static private var $newColorTransform:ColorTransform;
+		
+		/**
+		 * BitmapDataからPointとBitmapDataの配列を作る。
+		 * @param	src
+		 * @param	size
+		 * @return
+		 */
+		static public function createRectangleParticlesFromBitmapData(src:BitmapData, size:uint):Object {
+			var sw:int = src.width;
+			var sh:int = src.height;
+			
+			var c:int = Math.ceil(sw / size);
+			var r:int = Math.ceil(sh / size);
+			//var points:Array = new Array();
+			//var bmps:Array = new Array();
+			var points:Array = new Array(c * r);
+			var bmps:Array = new Array(c * r);
+			trace("c, r, c * r", c, r, c * r);
+			
+			var index:int = 0;
+			var bmp:BitmapData;
+			var np:Point = new Point();
+			var rect:Rectangle = new Rectangle(0,0,size,size);
+			
+			do {
+				rect.x = 0;
+				rect.height = (rect.y + size < sh) ? size : sh - rect.y;
+				
+				do {
+					points[index] = new Point(rect.x, rect.y);
+					rect.width = (rect.x + size < sw) ? size : sw - rect.x;
+					bmp = new BitmapData(rect.width, rect.height);
+					bmps[index] = bmp;
+					bmp.copyPixels(src, rect, np);
+					//trace(rect);
+					
+					index++;
+					rect.x += size;
+				}while (rect.x < sw)
+				
+				rect.y += size;
+			}while (rect.y < sh)
+			
+			return { points:points, bmps:bmps };
+		}
+		/*static public function createRectangleParticlesFromBitmapData(src:BitmapData, size:uint):Object {
+			var sw:int = src.width;
+			var sh:int = src.height;
+			
+			var c:int = Math.ceil(sw / size);
+			var r:int = Math.ceil(sh / size);
+			//var points:Array = new Array();
+			//var bmps:Array = new Array();
+			var points:Array = new Array(c * r);
+			var bmps:Array = new Array(c * r);
+			trace("c, r, c * r", c, r, c * r);
+			
+			var index:int = 0;
+			//var x:int = 0;
+			//var y:int = 0;
+			//var w:int, h:int;
+			var row:Object;
+			var bmp:BitmapData;
+			var np:Point = new Point();
+			var rect:Rectangle = new Rectangle(0,0,size,size);
+			
+			do {
+				//x = 0;
+				//h = (y + size < sh) ? size : sh - y;
+				rect.x = 0;
+				rect.height = (rect.y + size < sh) ? size : sh - rect.y;
+				
+				do {
+					//points[index] = new Point(x, y);
+					points[index] = new Point(rect.x, rect.y);
+					rect.width = (rect.x + size < sw) ? size : sw - rect.x;
+					if (x + size < sw) {
+						//通常サイズ
+						rect.width = size;
+						bmp = new BitmapData(size, h);
+					}else {
+						//端切れ
+						rect.width = sw - x;
+						bmp = new BitmapData(sw - x, h);
+					}
+					bmp = new BitmapData(rect.width, rect.height);
+					bmps[index] = bmp;
+					bmp.copyPixels(src, rect, np);
+					//trace(rect);
+					
+					index++;
+					//x += size;
+					rect.x += size;
+				}while (rect.x < sw)
+				
+				//y += size;
+				rect.y += size;
+			}while (rect.y < sh)
+			
+			return { points:points, bmps:bmps };
+		}*/
+		
+		
 		
 		/**
 		 * BitmapDataをきれいに縮小し、新しいBitmapDataインスタンスを返す。段階的に縮小。
