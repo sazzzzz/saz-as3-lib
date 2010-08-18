@@ -15,6 +15,55 @@
 		static private var $newColorTransform:ColorTransform;
 		
 		/**
+		 * BitmapDataをきれいに縮小し、新しいBitmapDataインスタンスを返す。段階的に縮小。
+		 * @param	src	BitmapData
+		 * @param	width	縮小後の横幅。
+		 * @param	height	縮小後の高さ。
+		 * @param	smoothing	（オプション）スムージング。
+		 * @return
+		 */
+		static public function reduce(src:BitmapData, width:int, height:int, smoothing:Boolean = true):BitmapData {
+			var res:BitmapData;
+			var bmp1:BitmapData, bmp2:BitmapData;
+			var last:BitmapData;
+			
+			bmp1 = src.clone();
+			bmp2 = new BitmapData(Math.ceil(src.width / 2), Math.ceil(src.height / 2), false, 0);
+			
+			var mtx:Matrix = new Matrix();
+			var w:Number = src.width;
+			var h:Number = src.height;
+			var nw:Number = src.width;
+			var nh:Number = src.height;
+			var count:int = -1;
+			while (w > width * 2 && h > height * 2) {
+				count++;
+				if (w > width * 2) nw = Math.ceil(w / 2);
+				if (h > height * 2) nh = Math.ceil(h / 2);
+				mtx.identity();
+				mtx.scale(nw / w, nh / h);
+				if (count % 2 == 0) {
+					bmp2.draw(bmp1, mtx, null, null, null, smoothing);
+				}else {
+					bmp1.draw(bmp2, mtx, null, null, null, smoothing);
+				}
+				w = nw;
+				h = nh;
+				//trace(w, h);
+			}
+			last = (count % 2 == 0)?bmp2:bmp1;
+			
+			res = new BitmapData(width, height);
+			mtx.identity();
+			mtx.scale(width / w, height / h);
+			res.draw(last, mtx, null, null, null, smoothing);
+			bmp1.dispose();
+			bmp2.dispose();
+			//trace(res.width, res.height);
+			return res;
+		}
+		
+		/**
 		 * BitmapDataをタイルパターンとして塗りつぶす。
 		 * @param	dst	塗りつぶすBitmapData。
 		 * @param	src	タイルパターンとして使用するBitmapData。
