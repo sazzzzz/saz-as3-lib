@@ -50,6 +50,26 @@
 		}
 		
 		/**
+		 * Objectの中身を、trace()する。
+		 * @param	target
+		 * @param	indent
+		 */
+		static public function trace(target:Object, indent:String = ""):void {
+			var item:*;
+			for(var p:String in o){
+				item = o[p];
+				if (typeof(item) == "object") {
+				//if(item is Object){
+					trace(indent + p + ":{");
+					objDump(item, indent + "  ");
+					trace(indent + "}");
+				}else{
+					trace(indent + p + ":", item);
+				}
+			}
+		}
+		
+		/**
 		 * Object　の中身をStringにして返す。ダンプ用。
 		 * @param	target
 		 * @return
