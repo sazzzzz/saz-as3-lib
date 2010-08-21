@@ -90,6 +90,74 @@
 			target.transform.colorTransform = colorTrans;
 		}
 		
+		
+		/**
+		 * DisplayObjectContainerの子用each。
+		 * @param	target
+		 * @param	iterator
+		 * function(item:DisplayObject, index:int, collection:DisplayObjectContainer):void
+		 * @example <listing version="3.0" >
+		 * </listing>
+		 */
+		static public function eachChildren(target:DisplayObjectContainer, iterator:Function):void {
+			var num:int = target.numChildren;
+			var item:DisplayObject;
+			for (var i:int = 0; i < num; i++) {
+				item = target.getChildAt(i);
+				iterator(item, i, target);
+			}
+		}
+		
+		/**
+		 * DisplayObjectContainerの子をArrayに。
+		 * @param	target
+		 * @return
+		 */
+		static public function childrenToArray(target:DisplayObjectContainer):Array {
+			var res:Array = new Array();
+			eachChildren(target, function(item:DisplayObject, index:int, collection:DisplayObjectContainer):void {
+				res.push(item);
+			});
+			return res;
+		}
+		
+		/**
+		 * DisplayObjectContainerの子リストをStringに。ダンプ用。
+		 * @param	target
+		 * @param	iterator	（オプション）DisplayObject→String変換関数。
+		 * @return
+		 */
+		static public function childrenToString(target:DisplayObjectContainer, iterator:Function = null):String {
+			if (null == iterator) iterator = $childToString;
+			var res:String = "";
+			eachChildren(target, function(item:DisplayObject, index:int, collection:DisplayObjectContainer):void {
+				res += iterator(item, index, collection);
+			});
+			return res;
+		}
+		
+		/**
+		 * childrenToString用デフォルト関数。
+		 * @param	item
+		 * @param	index
+		 * @param	collection
+		 * @return
+		 */
+		static public function $childToString(item:DisplayObject, index:int, collection:DisplayObjectContainer):String {
+			return item.name + "\r";
+		}
+		
+		/**
+		 * DisplayObjectContainerの子リストをtrace。
+		 * @param	target
+		 */
+		static public function dumpChildren(target:DisplayObjectContainer):void {
+			trace(childrenToString(target, function(item:DisplayObject, index:int, collection:DisplayObjectContainer):String {
+				return "[" + ObjectUtil.getClassName(item) + "]" + "\t" + item.name + "\r";
+			}));
+		}
+		
+		
 	}
 	
 }
