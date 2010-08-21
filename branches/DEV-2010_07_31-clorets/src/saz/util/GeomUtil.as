@@ -8,13 +8,12 @@ package saz.util {
 	public class GeomUtil {
 		
 		/**
-		 * baseに対してtargetをセンタリングする。
-		 * @param	target
-		 * @param	base
+		 * x,y,width,heightを持つObjectから、プロパティをコピーしたRectangleを生成。
+		 * @param	obj
 		 * @return
 		 */
-		static public function centering(target:Rectangle, base:Rectangle):Point {
-			return new Point(base.x + (base.width - target.width) / 2, base.y + (base.height - target.height) / 2);
+		static public function objectToRectangle(obj:Object):Rectangle {
+			return new Rectangle(obj.x, obj.y, obj.width, obj.height);
 		}
 		
 		/**
@@ -41,6 +40,16 @@ package saz.util {
 				,target.width
 				,target.height
 			);
+		}
+		
+		/**
+		 * baseに対してtargetをセンタリングする。
+		 * @param	target
+		 * @param	base
+		 * @return
+		 */
+		static public function centering(target:Rectangle, base:Rectangle):Point {
+			return new Point(base.x + (base.width - target.width) / 2, base.y + (base.height - target.height) / 2);
 		}
 		
 		static public var innterFit:Function = inscribe;
