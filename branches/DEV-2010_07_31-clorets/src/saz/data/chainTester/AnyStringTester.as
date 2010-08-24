@@ -1,10 +1,9 @@
 package saz.data.chainTester {
-	import saz.data.chainTester.IChainTester;
 	/**
 	 * 必ず反応。
 	 * @author saz
 	 */
-	public class AnyStringTester extends StringTesterBase implements IChainTester{
+	public class AnyStringTester extends StringTesterBase{
 		
 		public function AnyStringTester(resFunc:Function = null, alwaysChain:Boolean = false) {
 			super(resFunc, alwaysChain);
@@ -13,6 +12,7 @@ package saz.data.chainTester {
 		/* INTERFACE saz.data.chainTester.IChainTester */
 		
 		override public function canResponse(msg:String):Boolean {
+			//trace("AnyStringTester.canResponse(", arguments);
 			return true;
 		}
 		

@@ -12,6 +12,9 @@ package saz.util {
 		 * URLに一致する正規表現。
 		 */
 		static public const REG_URL:String = "((https?|ftp)://[0-9a-zA-Z,;:~&=@_'%?+\-/$.!*()]+)";
+		//static public const URL:RegExp = /((https?|ftp)://[0-9a-zA-Z,;:~&=@_'%?+\-\/$.!*()]+)/;		//未テスト
+		static public const URL:RegExp = new RegExp(REG_URL);		//未テスト
+		
 		/**
 		 * URL -> <a>タグ用置換文字列。
 		 */
@@ -22,12 +25,14 @@ package saz.util {
 		 * HTMLタグに一致する正規表現。
 		 */
 		static public const REG_HTML_TAG:String = '<[^>]*>';
+		static public const HTML_TAG:RegExp = new RegExp(REG_HTML_TAG);
 		
 		/**
 		 * メールアドレスに一致（簡易版）。
 		 */
 		// http://blog.tofu-kun.org/070416103551.php
 		static public const REG_MAIL:String = '^[^@]+@[^.]+\..+';
+		static public const MAIL:RegExp = new RegExp(REG_MAIL);
 		// http://www.tt.rim.or.jp/~canada/comp/cgi/tech/mailaddrmatch/
 		
 		/**

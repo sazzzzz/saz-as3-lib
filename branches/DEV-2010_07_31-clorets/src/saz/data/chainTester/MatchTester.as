@@ -15,6 +15,7 @@ package saz.data.chainTester {
 		/* INTERFACE saz.data.chainTester.IChainTester */
 		
 		override public function canResponse(msg:String):Boolean {
+			//trace("MatchTester.canResponse(", arguments);
 			return $regExp.test(msg);
 		}
 		

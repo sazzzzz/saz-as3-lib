@@ -12,6 +12,7 @@ package saz.data.chainTester {
 		/* INTERFACE saz.data.chainTester.IChainTester */
 		
 		override public function canResponse(msg:String):Boolean {
+			//trace("EmptyStringTester.canResponse(", arguments);
 			return "" == msg;
 		}
 		

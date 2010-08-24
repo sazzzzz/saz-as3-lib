@@ -8,10 +8,13 @@ package saz.data.chainTester {
 	 */
 	public class StringTesterBase implements IChainTester {
 		
-		protected var $response:Function;
 		
 		protected var $alwaysChain:Boolean;
 		protected var $next:IChainTester;
+		protected var $response:Function;
+		
+		/*protected var $first:IChainTester;*/
+		/*public var first:IChainTester;*/
 		
 		/**
 		 * 
@@ -23,6 +26,18 @@ package saz.data.chainTester {
 			$alwaysChain = alwaysChain;
 		}
 		
+		/*public function getFirst():IChainTester {
+			return $first;
+		}
+		
+		public function setFirst(tester:IChainTester):StringTesterBase {
+			$first = tester;
+			return this;
+		}*/
+		
+		
+		/* INTERFACE saz.data.chainTester.IChainTester */
+		
 		/**
 		 * 次のIChainTesterインスタンスを設定する。
 		 * @param	tester
@@ -30,6 +45,10 @@ package saz.data.chainTester {
 		 */
 		public function setNext(tester:IChainTester):IChainTester {
 			$next = tester;
+			
+			/*if (!$first) setFirst(this);
+			StringTesterBase(tester).setFirst(getFirst());*/
+			
 			//return this;
 			return tester;
 		}
