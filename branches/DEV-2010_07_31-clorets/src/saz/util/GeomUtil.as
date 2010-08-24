@@ -1,11 +1,38 @@
 package saz.util {
-	//import flash.display.DisplayObject;
 	import flash.geom.*;
 	/**
 	 * Geomユーティリティー
 	 * @author saz
 	 */
 	public class GeomUtil {
+		
+		//--------------------------------------
+		// BitmapDataUtilから移動
+		//--------------------------------------
+		static private var $newPoint:Point;
+		static private var $newRectangle:Rectangle;
+		static private var $newMatrix:Matrix;
+		static private var $newColorTransform:ColorTransform;
+		
+		public static function getNewPoint():Point {
+			if ($newPoint == null)$newPoint = new Point();
+			return $newPoint;
+		}
+		
+		public static function getNewRectangle():Rectangle {
+			if ($newRectangle == null)$newRectangle = new Rectangle();
+			return $newRectangle;
+		}
+		
+		public static function getNewMatrix():Matrix {
+			if ($newMatrix == null)$newMatrix = new Matrix();
+			return $newMatrix;
+		}
+		
+		public static function getNewColorTransform():ColorTransform {
+			if ($newColorTransform == null)$newColorTransform = new ColorTransform();
+			return $newColorTransform;
+		}
 		
 		/**
 		 * x,y,width,heightを持つObjectから、プロパティをコピーしたRectangleを生成。

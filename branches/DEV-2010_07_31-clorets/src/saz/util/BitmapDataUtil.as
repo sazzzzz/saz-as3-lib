@@ -258,22 +258,33 @@
 		
 		
 		
-		
+		/**
+		 * @deprecated	saz.util.GeomUtilへ移動。
+		 */
 		public static function getNewPoint():Point {
 			if ($newPoint == null)$newPoint = new Point();
 			return $newPoint;
 		}
 		
+		/**
+		 * @deprecated	saz.util.GeomUtilへ移動。
+		 */
 		public static function getNewRectangle():Rectangle {
 			if ($newRectangle == null)$newRectangle = new Rectangle();
 			return $newRectangle;
 		}
 		
+		/**
+		 * @deprecated	saz.util.GeomUtilへ移動。
+		 */
 		public static function getNewMatrix():Matrix {
 			if ($newMatrix == null)$newMatrix = new Matrix();
 			return $newMatrix;
 		}
 		
+		/**
+		 * @deprecated	saz.util.GeomUtilへ移動。
+		 */
 		public static function getNewColorTransform():ColorTransform {
 			if ($newColorTransform == null)$newColorTransform = new ColorTransform();
 			return $newColorTransform;

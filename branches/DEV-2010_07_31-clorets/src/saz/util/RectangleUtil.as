@@ -1,5 +1,4 @@
 package saz.util {
-	import flash.display.DisplayObject;
 	import flash.geom.*;
 	/**
 	 * Rectangleユーティリティー
