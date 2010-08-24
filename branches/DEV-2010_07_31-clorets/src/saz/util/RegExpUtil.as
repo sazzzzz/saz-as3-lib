@@ -24,6 +24,13 @@ package saz.util {
 		static public const REG_HTML_TAG:String = '<[^>]*>';
 		
 		/**
+		 * メールアドレスに一致（簡易版）。
+		 */
+		// http://blog.tofu-kun.org/070416103551.php
+		static public const REG_MAIL:String = '^[^@]+@[^.]+\..+';
+		// http://www.tt.rim.or.jp/~canada/comp/cgi/tech/mailaddrmatch/
+		
+		/**
 		 * 文字列中のURLをリンクつきに置換。
 		 * @param	target
 		 * @return
