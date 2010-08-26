@@ -9,6 +9,12 @@
 	public class DisplayUtil {
 		
 		/**
+		 * 最大フレーム数。
+		 * @see	http://kb2.adobe.com/jp/cps/228/228626.html
+		 */
+		static public const MAX_FRAMES:int = 16000 - 10;
+		
+		/**
 		 * DisplayObjectのx,y,width,heightをRectangleで指定。
 		 * @param	target
 		 * @param	rect
