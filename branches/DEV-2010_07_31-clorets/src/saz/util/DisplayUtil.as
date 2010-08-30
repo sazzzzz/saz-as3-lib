@@ -12,43 +12,28 @@
 		 * 最小フレーム。
 		 */
 		static public const MIN_FRAME:int = 1;
-		
 		/**
 		 * 最大フレーム数。
 		 * @see	http://kb2.adobe.com/jp/cps/228/228626.html
 		 */
 		static public const MAX_FRAME:int = 16000 - 10;
 		
-		/**
-		 * DisplayObjectのx,y,width,heightをRectangleで指定。
-		 * @param	target
-		 * @param	rect
-		 * @deprecated	GeomUtil.setRectangle へ移行。
-		 */
-		static public function setPropsByRectangle(target:DisplayObject, rect:Rectangle):void {
-			target.x = rect.x;
-			target.y = rect.y;
-			target.width = rect.width;
-			target.height = rect.height;
-		}
+		
 		
 		/**
-		 * DisplayObjectからRectangleを返す。
-		 * @param	target
-		 * @return	GeomUtil.setRectangle へ。
+		 * ドキュメントクラス（あるいはメインタイムライン）が、親SWFかどうかを返す。
+		 * @param	target	調べたいドキュメントクラス（あるいはメインタイムライン）。
+		 * @return	親SWFならtrue。
+		 * @see	http://www.imajuk.com/blog/archives/2008/01/as3root_1.html
 		 */
-		static public function displayObjectToRectangle(target:DisplayObject):Rectangle {
-			return new Rectangle(
-				target.x
-				,target.y
-				,target.width
-				,target.height
-			);
+		static public function isRootDocument(document:DisplayObjectContainer):Boolean {
+			return document.parent is Stage;
 		}
+		
 		
 		/**
 		 * RGB値およびアルファ値から、ColorTransformを生成。
-		 * バグの可能性。（createColorTransform(0x000000, 1 / 2)が期待通りにならない）
+		 * バグの可能性。（createColorTransform(0x000000, 1 / 2)が期待通りにならない？）
 		 * @param	rgb	0xff0000など。
 		 * @param	alpha
 		 * @return	ColorTransformインスタンス
@@ -91,10 +76,10 @@
 		
 		/**
 		 * 着色する。createColorTransform()を使えや。
-		 * @deprecated	createColorTransform()を使えや。
 		 * @param	target
 		 * @param	rgb
 		 * @param	alpha
+		 * @deprecated	createColorTransform()を使えや。
 		 */
 		public static function setRGB(target:DisplayObject, rgb:int, alpha:Number = 1):void {
 			var colorTrans:ColorTransform = new ColorTransform();
@@ -168,6 +153,41 @@
 			trace(childrenToString(target, function(item:DisplayObject, index:int, collection:DisplayObjectContainer):String {
 				return "[" + ObjectUtil.getClassName(item) + "]" + "\t" + item.name + "\r";
 			}));
+		}
+		
+		
+		
+		
+		//--------------------------------------
+		// GeomUtilへ移動しました。
+		//--------------------------------------
+		
+		/**
+		 * DisplayObjectのx,y,width,heightをRectangleで指定。
+		 * @param	target
+		 * @param	rect
+		 * @deprecated	GeomUtil.setRectangle へ移行。
+		 */
+		static public function setPropsByRectangle(target:DisplayObject, rect:Rectangle):void {
+			target.x = rect.x;
+			target.y = rect.y;
+			target.width = rect.width;
+			target.height = rect.height;
+		}
+		
+		/**
+		 * DisplayObjectからRectangleを返す。
+		 * @param	target
+		 * @return	
+		 * @deprecated	GeomUtil.setRectangle へ。
+		 */
+		static public function displayObjectToRectangle(target:DisplayObject):Rectangle {
+			return new Rectangle(
+				target.x
+				,target.y
+				,target.width
+				,target.height
+			);
 		}
 		
 		
