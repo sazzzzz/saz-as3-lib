@@ -1,5 +1,6 @@
 ﻿package saz.util {
 	import flash.utils.ByteArray;
+	import flash.utils.describeType;
 	
 	/**
 	 * Objectユーティリティ
@@ -50,6 +51,26 @@
 		}
 		
 		/**
+		 * Objectの中身を、trace()する。
+		 * @param	target
+		 * @param	indent
+		 */
+		static public function dump2(target:Object, indent:String = ""):void {
+			var item:*;
+			for(var p:String in target){
+				item = target[p];
+				if (typeof(item) == "object") {
+				//if(item is Object){
+					trace(indent + p + ":{");
+					arguments.callee(item, indent + "  ");
+					trace(indent + "}");
+				}else{
+					trace(indent + p + ":", item);
+				}
+			}
+		}
+		
+		/**
 		 * Object　の中身をStringにして返す。ダンプ用。
 		 * @param	target
 		 * @return
@@ -81,6 +102,15 @@
 			return res;
 		}
 		
+		/**
+		 * オブジェクトからクラス名を取得する
+		 * @param	target
+		 * @return
+		 * @see	http://www.func09.com/wordpress/archives/152
+		 */
+		static public function getClassName(target:*):String {
+			return String(describeType(target).@name).match(/::(.*)/)[1];
+		}
 		
 	}
 	
