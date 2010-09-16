@@ -1,0 +1,155 @@
+sazLib as3 制作ノート
+
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+■ イテレータ
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+■設計
+
+// ベクトル a と b の内積
+r = new Enumerable(va.zip(vb)).inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
+↓
+r = va.zip(vb).inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
+と書けるようにしたい！
+戻り値をArrayじゃなくて、Enumerableにしないと。
+http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18848
+
+↓
+r = va.zip(vb).getXXX().inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
+ならできるんじゃね？
+Enumerableを返すメソッドを追加した、Arrayのサブクラスを作り、
+EnumerableのメソッドはArrayではなくEnumerableArrayを返せばよい。
+
+r = va.zip(vb).getEnumerator().getEnumerable().inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
+r = new Enumerable(va.zip(vb).getEnumerator()).inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
+
+
+◎EnumerableArray（仮称）が作れるのか？
+→Proxyを使う
+　⇒Arrayのサブクラスじゃないので、TypeErrorの可能性
+　⇒Arrayとの互換性は取れる
+→Decorator＋Arrayのサブクラス
+　⇒Arrayのサブクラスじゃないので、TypeErrorの可能性
+　⇒arr[i]は使えない
+→Arrayのサブクラスにする
+　⇒Decoratorじゃなくなる
+　⇒Arrayとの互換性は取れる
+	Array
+	class ArrayDecorator extends Array
+	class EnumerableArray extends ArrayDecorator implements IEnumerator
+
+
+
+○Decorator
+http://ibu4gin.net/blog/?p=516
+http://www.trick7.com/blog/2007/01/08-161901.php
+
+○flash.utils.Proxy
+E:\_saz\TEST\fla\fla9\Proxy\ProxyObj でテスト中
+http://kozy.heteml.jp/l4l/2008/06/as3proxy.html
+http://blog.seyself.com/2008/08/post_2008081222.html
+http://fladdict.net/blog/2008/08/smartdelegate.html
+
+
+■リサーチ
+
+○GoF Iterator パターン
+next()
+hasNext()
+http://ja.wikipedia.org/wiki/Iterator_%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3
+
+○java.util.Iterator インターフェース
+hasNext():Boolean
+next():*
+remove():void	nextメソッドで取得できた要素を削除
+while (iterator.hasNext()) {
+	A a = (A)iterator.next();
+	a.foo();
+}
+http://java.sun.com/j2se/1.5.0/ja/docs/ja/api/java/util/Iterator.html
+http://www.javainthebox.net/publication/200209JP26API/Iterator.html
+
+○java.util.Enumeration インタフェース
+hasMoreElements():Boolean
+nextElement():*
+for (Enumeration e = v.elements(); e.hasMoreElements();) {
+	System.out.println(e.nextElement());
+}
+http://java.sun.com/j2se/1.5.0/ja/docs/ja/api/java/util/Enumeration.html
+
+○C++ STL
+for(; first != last; ++first){
+	std::cout << *first << std::endl;
+}
+
+○.NET
+IEnumeratorインターフェイス
+Current
+MoveNext()
+Reset()	最初の要素に戻す
+IEnumerableインターフェイス
+GetEnumerator()
+// 明示的な使い方
+IEnumerator<MyType> iter = list.GetEnumerator();
+while (iter.MoveNext())
+    Console.WriteLine(iter.Current);
+ 
+// 暗黙的な使い方
+foreach (MyType value in list)
+    Console.WriteLine(value);
+http://ja.wikipedia.org/wiki/%E3%82%A4%E3%83%86%E3%83%AC%E3%83%BC%E3%82%BF
+
+http://www.green-sleeves.net/blog/archives/2008/10/271743
+
+
+
+
+●インターフェース
+
+○IIterator
+hasNext():Boolean
+next():*
+remove():void	nextメソッドで取得できた要素を削除
+var item:Foo, i:int = 0;
+while (iterator.hasNext()) {
+	item = Foo(iterator.next());
+	item.bar();
+	i++;
+}
+
+○IIteration
+iterator():IIterator
+
+○IEnumerator
+forEach(iterator:Function):void
+list.forEach(function(item:*, index:int, enu:IEnumerator):void{
+	trace(item,index);
+});
+
+○IEnumeration
+enumerator():IEnumerator
+
+○IEnumerable
+enumerable():Enumerable
+
+●実装
+
+○Enumerable
+all()
+any()
+...
+http://www.ruby-lang.org/ja/man/html/Enumerable.html
+var enum = new Enumerable(new Array()); //Decoratorパターン?
+trace(enum.all());
+
+○EnumeratorArray
+○IteratorArray
+Arrayのラップ
+○EnumObject
+Objectのラップ
+とか
+
+
+
+
+
