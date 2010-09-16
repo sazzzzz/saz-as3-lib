@@ -1,11 +1,83 @@
 package saz.util {
 	import flash.geom.*;
 	/**
-	 * Rectangleユーティリティー
+	 * Geomユーティリティー
 	 * @author saz
-	 * @deprecated	GeomUtilに変名。
 	 */
-	public class RectangleUtil {
+	public class GeomUtil {
+		
+		//--------------------------------------
+		// BitmapDataUtilから移動
+		//--------------------------------------
+		static private var $newPoint:Point;
+		static private var $newRectangle:Rectangle;
+		static private var $newMatrix:Matrix;
+		static private var $newColorTransform:ColorTransform;
+		
+		public static function getNewPoint():Point {
+			if ($newPoint == null)$newPoint = new Point();
+			return $newPoint;
+		}
+		
+		public static function getNewRectangle():Rectangle {
+			if ($newRectangle == null)$newRectangle = new Rectangle();
+			return $newRectangle;
+		}
+		
+		public static function getNewMatrix():Matrix {
+			if ($newMatrix == null)$newMatrix = new Matrix();
+			return $newMatrix;
+		}
+		
+		public static function getNewColorTransform():ColorTransform {
+			if ($newColorTransform == null)$newColorTransform = new ColorTransform();
+			return $newColorTransform;
+		}
+		
+		/**
+		 * x,y,width,heightを持つObjectから、プロパティをコピーしたRectangleを生成。
+		 * @param	obj
+		 * @return
+		 */
+		static public function objectToRectangle(obj:Object):Rectangle {
+			return new Rectangle(obj.x, obj.y, obj.width, obj.height);
+		}
+		
+		/**
+		 * targetのx,y,width,heightをRectangleで指定。
+		 * @param	target
+		 * @param	rect
+		 */
+		static public function setRectangle(target:Object, rect:Rectangle):void {
+			target.x = rect.x;
+			target.y = rect.y;
+			target.width = rect.width;
+			target.height = rect.height;
+		}
+		
+		/**
+		 * targetからRectangleを返す。
+		 * @param	target
+		 * @return
+		 */
+		static public function getRectangle(target:Object):Rectangle {
+			return new Rectangle(
+				target.x
+				,target.y
+				,target.width
+				,target.height
+			);
+		}
+		
+		/**
+		 * baseに対してtargetをセンタリングする。
+		 * @param	target
+		 * @param	base
+		 * @return
+		 */
+		static public function centering(target:Rectangle, base:Rectangle):Point {
+			return new Point(base.x + (base.width - target.width) / 2, base.y + (base.height - target.height) / 2);
+		}
 		
 		static public var innterFit:Function = inscribe;
 		static public var outerFit:Function = circumscribe;
