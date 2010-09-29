@@ -1,18 +1,16 @@
 package saz.display.pixel {
-	import flash.geom.Rectangle;
-	import flash.display.BitmapData;
+	import flash.display.*;
+	import flash.geom.*;
 	/**
-	 * ...
+	 * pixel抽象クラス。
 	 * @author saz
 	 */
-	//public class AbstractPixel implements IPixel{
 	public class AbstractPixel {
 		
 		public var x:Number = 0.0;
 		public var y:Number = 0.0;
 		
 		public function AbstractPixel() {
-			
 		}
 		
 		/* INTERFACE saz.display.pixel.IPixel */
@@ -22,7 +20,6 @@ package saz.display.pixel {
 		}
 		
 		public function set bitmapData(value:BitmapData):void{
-			
 		}
 		
 		public function get parent():AbstractPixel{
@@ -50,19 +47,15 @@ package saz.display.pixel {
 		}
 		
 		public function set name(value:String):void{
-			
 		}
 		
 		public function draw():void{
-			
 		}
 		
 		public function atAdded(target:AbstractPixel):void{
-			
 		}
 		
 		public function atRemoved(target:AbstractPixel):void{
-			
 		}
 		
 	}

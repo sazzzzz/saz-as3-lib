@@ -7,7 +7,6 @@ package saz.display.pixel {
 	 * BitmapData上のレイヤー。
 	 * @author saz
 	 */
-	//public class PixelLayer extends PixelSprite implements IPixel {
 	public class PixelLayer extends PixelSprite {
 		
 		private var $children:/*AbstractPixel*/Array;
@@ -20,14 +19,6 @@ package saz.display.pixel {
 			
 			$children = new Array();
 		}
-		
-		
-		// FIXME	テスト用
-		/*public function DUMP():void {
-			$children.forEach(function(item:*, index:int, arr:Array):void {
-			});
-			trace($children);
-		}*/
 		
 		
 		
@@ -64,59 +55,6 @@ package saz.display.pixel {
 				item.draw();
 			});
 		}
-		
-		// FPS=24	遅くなってる！
-		/*private function $hitDraw():void {
-			var rect:Rectangle = new Rectangle(0, 0, width, height);
-			var hitRect:Rectangle;
-			
-			$children.forEach(function(item:AbstractPixel, index:int, arr:Array):void {
-				hitRect = rect.intersection(item.rect);
-				//表示範囲内
-				if (0.0 < hitRect.width && 0.0 < hitRect.height) {
-					item.draw();
-				}
-			});
-		}*/
-		// FPS=23／半分はみだす FPS=30
-		// Rectangle.intersection()のせい ⇒コメントアウトするとFPS=35に
-		// BitmapData側でクリップ処理をしてるせいか？
-		/*private function $hitDraw():void {
-			var rect:Rectangle = new Rectangle(0, 0, width, height);
-			var hitRect:Rectangle;
-			var childRect:Rectangle = new Rectangle();
-			
-			$children.forEach(function(item:AbstractPixel, index:int, arr:Array):void {
-				childRect.x = item.x;
-				childRect.y = item.y;
-				childRect.width = item.width;
-				childRect.height = item.height;
-				
-				hitRect = rect.intersection(childRect);
-				//表示範囲内
-				if (0.0 < hitRect.width && 0.0 < hitRect.height) {
-					item.draw();
-				}
-			});
-		}*/
-		
-		/*private function $clipDraw():void {
-			var bmp:BitmapData = bitmapData;
-			var rect:Rectangle = new Rectangle(0, 0, width, height);
-			var sourceRect:Rectangle = new Rectangle();
-			var destPoint:Point = new Point();
-			var hitRect:Rectangle;
-			
-			//$parentBmp.copyPixels($bitmapData, $bitmapData.rect, $destPoint, null, null, mergeAlpha);
-			$children.forEach(function(item:AbstractPixel, index:int, arr:Array):void {
-				hitRect = rect.intersection(item.rect);
-				//表示範囲内
-				if (0.0 < hitRect.width && 0.0 < hitRect.height) {
-					item.draw();
-				}
-			});
-		}*/
-		
 		
 		
 		

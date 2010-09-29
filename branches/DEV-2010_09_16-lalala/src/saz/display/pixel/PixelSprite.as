@@ -5,11 +5,7 @@ package saz.display.pixel {
 	 * BitmapData上のスプライト。
 	 * @author saz
 	 */
-	//public class PixelSprite extends AbstractPixel implements IPixel {
 	public class PixelSprite extends AbstractPixel {
-		
-		//public var x:Number = 0.0;
-		//public var y:Number = 0.0;
 		
 		// 当然mergeAlpha=falseのほうが早い。FPS60で、38対29の差。
 		public var mergeAlpha:Boolean;
@@ -24,20 +20,15 @@ package saz.display.pixel {
 		
 		protected var $rect:Rectangle;
 		
-		//protected var $x:Number;
-		//protected var $y:Number;
-		
 		protected var $name:String = "PixelSprite";
 		
 		//参照をキャッシュ
 		protected var $parentBmp:BitmapData;
-		//protected var $sourceRect:Rectangle;
 		
 		public function PixelSprite(bmp:BitmapData, mergeAlpha:Boolean = true) {
 			bitmapData = bmp;
 			this.mergeAlpha = mergeAlpha;
 			
-			//$sourceRect = new Rectangle();
 			if (null == $destPoint) $destPoint = new Point();
 		}
 		
@@ -59,7 +50,7 @@ package saz.display.pixel {
 			if (null == value) throw new ArgumentError("PixelSprite.bitmapData 引数がnullです。");
 			$bitmapData = value;
 			
-			if(null==$rect) $rect = new Rectangle();
+			if (null == $rect) $rect = new Rectangle();
 			$rect.width = value.width;
 			$rect.height = value.height;
 		}
