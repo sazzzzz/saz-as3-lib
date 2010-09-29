@@ -25,6 +25,7 @@ package saz.display.pixel {
 		//参照をキャッシュ
 		protected var $parentBmp:BitmapData;
 		
+		
 		public function PixelSprite(bmp:BitmapData, mergeAlpha:Boolean = true) {
 			bitmapData = bmp;
 			this.mergeAlpha = mergeAlpha;

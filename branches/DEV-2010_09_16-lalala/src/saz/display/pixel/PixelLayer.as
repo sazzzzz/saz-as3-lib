@@ -47,13 +47,16 @@ package saz.display.pixel {
 		
 		public function get children():/*AbstractPixel*/Array { return $children; }
 		
+		
+		
 		// FPS=29／半分はみだす FPS=37
 		// 描画量によって、FPSは変化してるようだ。
 		private function $drawChildren():void {
 			if (0 == $children.length) return;
-			$children.forEach(function(item:AbstractPixel, index:int, arr:Array):void {
+			for (var i:int = 0, len:int = $children.length, item:AbstractPixel; i < len; i++) {
+				item = $children[i];
 				item.draw();
-			});
+			}
 		}
 		
 		
