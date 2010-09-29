@@ -5,15 +5,24 @@ package saz.display.pixel {
 	 * BitmapData上のスプライト。
 	 * @author saz
 	 */
-	public class PixelSprite implements IPixel {
+	//public class PixelSprite extends AbstractPixel implements IPixel {
+	public class PixelSprite extends AbstractPixel {
 		
-		public var x:Number = 0.0;
-		public var y:Number = 0.0;
+		//public var x:Number = 0.0;
+		//public var y:Number = 0.0;
+		
+		// 当然mergeAlpha=falseのほうが早い。FPS60で、38対29の差。
 		public var mergeAlpha:Boolean;
 		
+		//外部参照
 		protected var $bitmapData:BitmapData;
-		protected var $parent:IPixel;
-		protected var $root:IPixel;
+		protected var $parent:AbstractPixel;
+		protected var $root:AbstractPixel;
+		
+		//インスタンスを使いまわす。
+		static protected var $destPoint:Point;
+		
+		protected var $rect:Rectangle;
 		
 		//protected var $x:Number;
 		//protected var $y:Number;
@@ -22,13 +31,14 @@ package saz.display.pixel {
 		
 		//参照をキャッシュ
 		protected var $parentBmp:BitmapData;
-		protected var $destPoint:Point;
+		//protected var $sourceRect:Rectangle;
 		
 		public function PixelSprite(bmp:BitmapData, mergeAlpha:Boolean = true) {
 			bitmapData = bmp;
 			this.mergeAlpha = mergeAlpha;
 			
-			$destPoint = new Point();
+			//$sourceRect = new Rectangle();
+			if (null == $destPoint) $destPoint = new Point();
 		}
 		
 		public function toString():String {
@@ -41,30 +51,29 @@ package saz.display.pixel {
 		// get/set
 		//--------------------------------------
 		
-		public function get bitmapData():BitmapData{
+		override public function get bitmapData():BitmapData{
 			return $bitmapData;
 		}
 		
-		public function set bitmapData(value:BitmapData):void{
+		override public function set bitmapData(value:BitmapData):void {
+			if (null == value) throw new ArgumentError("PixelSprite.bitmapData 引数がnullです。");
 			$bitmapData = value;
+			
+			if(null==$rect) $rect = new Rectangle();
+			$rect.width = value.width;
+			$rect.height = value.height;
 		}
 		
-		public function get parent():IPixel{
+		override public function get parent():AbstractPixel{
 			return $parent;
 		}
 		
-		/*public function set parent(value:IPixel):void{
-			$parent = value;
-		}*/
-		
-		public function get root():IPixel{
-			//return $root;
-			
+		override public function get root():AbstractPixel{
 			//どこにも所属してない場合はnullを返す。
 			if (null == $parent) return null;
 			
 			//チェーンをたどって探す
-			var p:IPixel = parent;
+			var p:AbstractPixel = parent;
 			do {
 				if (null == p.parent) {
 					break;
@@ -75,45 +84,34 @@ package saz.display.pixel {
 			return p;
 		}
 		
-		/*public function set root(value:IPixel):void{
-			$root = value;
-		}*/
-		
-		/*public function get x():Number{
-			return $x;
-		}
-		
-		public function set x(value:Number):void{
-			$x = value;
-		}
-		
-		public function get y():Number{
-			return $y;
-		}
-		
-		public function set y(value:Number):void{
-			$y = value;
-		}*/
 		
 		/**
 		 * bitmapDataの幅。bitmapDataが指定されてない場合は、-1を返す。
 		 */
-		public function get width():int{
+		override public function get width():int{
 			return ($bitmapData) ? $bitmapData.width : -1;
 		}
 		
 		/**
 		 * bitmapDataの高さ。bitmapDataが指定されてない場合は、-1を返す。
 		 */
-		public function get height():int{
+		override public function get height():int{
 			return ($bitmapData) ? $bitmapData.height : -1;
 		}
 		
-		public function get name():String{
+		override public function get rect():Rectangle {
+			$rect.x = x;
+			$rect.y = y;
+			return $rect;
+		}
+		
+		
+		
+		override public function get name():String{
 			return $name;
 		}
 		
-		public function set name(value:String):void{
+		override public function set name(value:String):void{
 			$name = value;
 		}
 		
@@ -122,23 +120,27 @@ package saz.display.pixel {
 		// method
 		//--------------------------------------
 		
-		/**
-		 * 描画
-		 */
-		public function draw():void {
-			//trace(name, "draw", x, y);
+		protected function $drawSelf():void {
+			if (null == $parent) return;
 			$destPoint.x = x;
 			$destPoint.y = y;
 			$parentBmp.copyPixels($bitmapData, $bitmapData.rect, $destPoint, null, null, mergeAlpha);
 		}
 		
+		/**
+		 * 描画
+		 */
+		override public function draw():void {
+			$drawSelf();
+		}
 		
-		public function atAdded(target:IPixel):void {
+		
+		override public function atAdded(target:AbstractPixel):void {
 			$parent = target;
 			$parentBmp = target.bitmapData;
 		}
 		
-		public function atRemoved(target:IPixel):void {
+		override public function atRemoved(target:AbstractPixel):void {
 			$parent = null;
 			$parentBmp = null;
 		}

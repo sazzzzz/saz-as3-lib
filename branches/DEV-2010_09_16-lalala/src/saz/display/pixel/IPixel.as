@@ -1,5 +1,6 @@
 package saz.display.pixel {
 	import flash.display.BitmapData;
+	import flash.geom.Rectangle;
 	
 	/**
 	 * Pixelインターフェース。
@@ -15,10 +16,8 @@ package saz.display.pixel {
 		function set bitmapData(value:BitmapData):void;
 		
 		function get parent():IPixel;
-		//function set parent(value:IPixel):void;
 		
 		function get root():IPixel;
-		//function set root(value:IPixel):void;
 		
 		//function get x():Number;
 		//function set x(value:Number):void;
@@ -27,6 +26,7 @@ package saz.display.pixel {
 		
 		function get width():int;
 		function get height():int;
+		function get rect():Rectangle;
 		
 		function get name():String;
 		function set name(value:String):void;
