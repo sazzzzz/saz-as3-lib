@@ -156,7 +156,7 @@ package saz.collections {
 		 * @param	iterator
 		 * @param	thisObject = null
 		 */
-		public function forEach(iterator:Function, thisObject = null):void {
+		public function forEach(iterator:Function, thisObject:Object = null):void {
 			$component.forEach(iterator, thisObject);
 		}
 		
