@@ -36,7 +36,7 @@ package saz.media {
 		 */
 		public function destroy():void {
 			stop();
-			$sound.removeEventListener(Event.COMPLETE, $sound_complete);
+			if($sound) $sound.removeEventListener(Event.COMPLETE, $sound_complete);
 			$sound = null;
 			$soundChannel = null;
 			$soundTransform = null;
@@ -123,15 +123,15 @@ package saz.media {
 		 * SoundTransformインスタンス。
 		 */
 		public function get soundTransform():SoundTransform {
-			trace("SoundHelper get soundTransform(", arguments);
+			//trace("SoundHelper get soundTransform(", arguments);
 			if (null == $soundChannel) {
 				//再生前
-				trace("$soundChannel = null");
+				//trace("$soundChannel = null");
 				if (null == $soundTransform) $soundTransform = new SoundTransform();
 				return $soundTransform;
 			}else {
 				//再生した後
-				trace("$soundChannel nullじゃない");
+				//trace("$soundChannel nullじゃない");
 				if (null != $soundTransform) $soundTransform = null;
 				return $soundChannel.soundTransform;
 			}
@@ -141,14 +141,14 @@ package saz.media {
 		 * SoundTransformインスタンスを設定。
 		 */
 		public function set soundTransform(value:SoundTransform):void {
-			trace("SoundHelper set soundTransform(", arguments);
+			//trace("SoundHelper set soundTransform(", arguments);
 			if (null == $soundChannel) {
 				//再生前
-				trace("$soundChannel = null");
+				//trace("$soundChannel = null");
 				$soundTransform = value;
 			}else {
 				//再生した後
-				trace("$soundChannel nullじゃない");
+				//trace("$soundChannel nullじゃない");
 				$soundChannel.soundTransform = value;
 			}
 		}
