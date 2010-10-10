@@ -19,9 +19,26 @@ package saz.media {
 		
 		// 再生中かどうかのフラグ。
 		private var $isPlaying:Boolean = false;
+		private var $isLoop:Boolean = false;
 		private var $sound:Sound;
 		private var $soundChannel:SoundChannel;
 		private var $soundTransform:SoundTransform;
+		
+		/**
+		 * @copy	saz.media.SoundHelperEvent#PLAY
+		 * 
+		 * @eventType	saz.media.SoundHelperEvent.PLAY
+		 */
+		[Event(name = "play", type = "saz.media.SoundHelperEvent")];
+		
+		/**
+		 * @copy	saz.media.SoundHelperEvent#STOP
+		 * 
+		 * @eventType	saz.media.SoundHelperEvent.STOP
+		 */
+		[Event(name = "stop", type = "saz.media.SoundHelperEvent")];
+		
+		
 		
 		/**
 		 * コンストラクタ。
@@ -47,7 +64,7 @@ package saz.media {
 		/**
 		 * 再生開始。引数はSound.play()と同じ。
 		 * @param	startTime
-		 * @param	loops
+		 * @param	loops	無限ループしたい場合は、SoundHelper.LOOPS_MAXの使用を推奨。
 		 * @param	sndTransform
 		 * @return
 		 */
@@ -55,8 +72,11 @@ package saz.media {
 			if ($isPlaying) return null;
 			
 			$isPlaying = true;
+			$isLoop = (0 != loops);
 			if (null != sndTransform) soundTransform = sndTransform;
 			$soundChannel = $sound.play(startTime, loops, soundTransform);
+			dispatchEvent(new SoundHelperEvent(SoundHelperEvent.PLAY, 0));
+			//dispatchEvent(new SoundHelperEvent(SoundHelperEvent.PLAY, loops));
 			return $soundChannel;
 		}
 		
@@ -68,7 +88,9 @@ package saz.media {
 			if (!$isPlaying) return;
 			
 			$isPlaying = false;
+			$isLoop = false;
 			$soundChannel.stop();
+			dispatchEvent(new SoundHelperEvent(SoundHelperEvent.STOP, 0));
 		}
 		
 		
@@ -106,24 +128,15 @@ package saz.media {
 		 */
 		public function get sound():Sound { return $sound; }
 		
-		//public function set sound(value:Sound):void {
-			//$sound = value;
-		//}
-		
 		/**
 		 * SoundChannelインスタンス。play()前はnullを返す。
 		 */
 		public function get soundChannel():SoundChannel { return $soundChannel; }
 		
-		//public function set soundChannel(value:SoundChannel):void {
-			//$soundChannel = value;
-		//}
-		
 		/**
 		 * SoundTransformインスタンス。
 		 */
 		public function get soundTransform():SoundTransform {
-			//trace("SoundHelper get soundTransform(", arguments);
 			if (null == $soundChannel) {
 				//再生前
 				//trace("$soundChannel = null");
@@ -141,7 +154,6 @@ package saz.media {
 		 * SoundTransformインスタンスを設定。
 		 */
 		public function set soundTransform(value:SoundTransform):void {
-			//trace("SoundHelper set soundTransform(", arguments);
 			if (null == $soundChannel) {
 				//再生前
 				//trace("$soundChannel = null");
@@ -183,6 +195,10 @@ package saz.media {
 		 * 再生中かどうか。
 		 */
 		public function get isPlaying():Boolean { return $isPlaying; }
+		/**
+		 * ループ再生中かどうか。
+		 */
+		public function get isLoop():Boolean { return $isLoop; }
 		
 	}
 

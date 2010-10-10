@@ -34,6 +34,9 @@ package saz.number {
 			$total = value;
 		}
 		
+		/**
+		 * 平均値を得る。
+		 */
 		public function get value():Number {
 			return $total / $count;
 		}
