@@ -70,6 +70,7 @@ package saz.media {
 		public function destroy():void {
 			$clearSounds();
 			$clearSoundClasses();
+			loader.contentLoaderInfo.removeEventListener(Event.INIT, $loader_init);
 		}
 		
 		/**
@@ -106,9 +107,9 @@ package saz.media {
 			try {
 				loader.close();
 			}catch (e:IOError) {
-				trace("IOError",e);
+				//trace("IOError",e);
 			}catch (e:Error) {
-				trace("Error",e);
+				//trace("Error",e);
 			}
 			
 			$isLoading = false;
@@ -117,6 +118,7 @@ package saz.media {
 		
 		
 		private function $loader_init(e:Event):void {
+			trace("SoundSWFProxy.$loader_init(", arguments);
 			loader.contentLoaderInfo.removeEventListener(Event.INIT, $loader_init);
 			$isLoading = false;
 			
