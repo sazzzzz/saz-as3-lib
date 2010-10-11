@@ -42,10 +42,10 @@ package saz.media {
 		
 		/**
 		 * コンストラクタ。
-		 * @param	sound	Soundインスタンス。
+		 * @param	sound	（オプション）Soundインスタンス。
 		 */
-		public function SoundHelper(sound:Sound) {
-			$initSound(sound);
+		public function SoundHelper(sound:Sound = null) {
+			if(sound) $initSound(sound);
 		}
 		
 		/**
@@ -69,7 +69,7 @@ package saz.media {
 		 * @return
 		 */
 		public function play(startTime:Number = 0.0, loops:int = 0, sndTransform:SoundTransform = null):SoundChannel {
-			if ($isPlaying) return null;
+			if (!$sound || $isPlaying) return null;
 			
 			$isPlaying = true;
 			$isLoop = (0 != loops);
@@ -85,7 +85,7 @@ package saz.media {
 		 */
 		public function stop():void {
 			//if (null != $soundChannel) $soundChannel.stop();
-			if (!$isPlaying) return;
+			if (!$sound || !$isPlaying) return;
 			
 			$isPlaying = false;
 			$isLoop = false;
@@ -114,6 +114,7 @@ package saz.media {
 			$sound.addEventListener(Event.COMPLETE, $sound_complete);
 		}
 		
+		
 		private function $sound_complete(e:Event):void{
 			$isPlaying = false;
 		}
@@ -127,6 +128,12 @@ package saz.media {
 		 * Soundインスタンス。
 		 */
 		public function get sound():Sound { return $sound; }
+		
+		public function set sound(value:Sound):void {
+			destroy();
+			$initSound(value);
+		}
+		
 		
 		/**
 		 * SoundChannelインスタンス。play()前はnullを返す。
