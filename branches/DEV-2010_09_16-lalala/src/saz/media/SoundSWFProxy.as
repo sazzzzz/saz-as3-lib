@@ -7,6 +7,7 @@ package saz.media {
 	import flash.media.*;
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
+	import flash.system.System;
 	
 	/**
 	 * 外部サウンドswfプロクシ.
@@ -16,9 +17,15 @@ package saz.media {
 	 */
 	public class SoundSWFProxy extends EventDispatcher{
 		
-		// FIXME	メモリリークが起きる。タイミングによって（？）起きたり、起きなかったり。load()連打すると起き易いようだ。
+		// 			メモリリークが起きる。タイミングによって（？）起きたり、起きなかったり。load()連打すると起き易いようだ。
 		//			キャッシュが効いてるときに起きやすい？
 		//			メモリ使用量はMAX:84MBぐらいで止まる。いちおうGCが効いている。
+		//			-> System.gc()で抑制。
+		
+		/**
+		 * ロード前に自動でGCする。
+		 */
+		public var autoGC:Boolean = true;
 		
 		/**
 		 * Soundクラス名のリスト.
@@ -83,6 +90,7 @@ package saz.media {
 			
 			unload();
 			destroy();
+			if(autoGC) System.gc();
 			
 			$isLoading = true;
 			loader.contentLoaderInfo.addEventListener(Event.INIT, $loader_init, false, 0, true);
