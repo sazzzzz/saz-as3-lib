@@ -13,21 +13,22 @@ package saz.controll {
 		protected var $items:Array;
 		
 		public function Pool(createFnc:Function = null) {
-			atCreate = (null != createFnc) ? createFnc : $atCreate;
+			//atCreate = (null != createFnc) ? createFnc : $atCreate;
+			$initHook(createFnc);
 			
 			if (!$items) $items = new Array();
 		}
 		
 		/**
 		 * インスタンスを取得. プールされてれば、プールから取り出す. なければ作る. 
-		 * @param	...rest	atCreate（＝コンストラクタ）に渡すパラメータ.
+		 * @param	...args	atCreate（＝コンストラクタ）に渡すパラメータ.
 		 * @return	インスタンス.
 		 */
-		public function getItem(...rest):Object {
+		public function getItem(...args):Object {
 			if ($items.length > 0) {
 				return $items.pop();
 			}else {
-				return atCreate.apply(null, rest);
+				return atCreate.apply(null, args);
 			}
 		}
 		
@@ -36,6 +37,7 @@ package saz.controll {
 		 * @param	item	返すインスタンス.
 		 */
 		public function backItem(item:Object):void {
+			if (null == item) throw new ArgumentError("Pool#backItem: null以外を指定してください。");
 			$items.push(item);
 		}
 		
@@ -43,8 +45,21 @@ package saz.controll {
 			return String($items);
 		}
 		
-		protected function $atCreate(...rest):Object {
+		
+		
+		protected function $initHook(createFnc:Function = null):void {
+			atCreate = (null != createFnc) ? createFnc : $atCreate;
+		}
+		
+		protected function $atCreate(...args):Object {
 			return { };
+		}
+		
+		/**
+		 * プールされている数.
+		 */
+		public function get length():uint {
+			return $items.length;
 		}
 		
 	}
