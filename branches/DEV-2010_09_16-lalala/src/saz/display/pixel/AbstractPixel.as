@@ -52,10 +52,14 @@ package saz.display.pixel {
 		public function draw():void{
 		}
 		
-		public function atAdded(target:AbstractPixel):void{
+		
+		
+		// parent設定用
+		internal function atAdded(target:AbstractPixel):void{
 		}
 		
-		public function atRemoved(target:AbstractPixel):void{
+		// parent設定用
+		internal function atRemoved(target:AbstractPixel):void{
 		}
 		
 	}

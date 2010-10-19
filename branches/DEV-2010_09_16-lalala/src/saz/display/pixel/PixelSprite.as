@@ -37,6 +37,12 @@ package saz.display.pixel {
 			return name;
 		}
 		
+		public function destroy():void {
+			$bitmapData = null;
+			$parent = null;
+			
+		}
+		
 		/* INTERFACE saz.display.pixel.IPixel */
 		
 		//--------------------------------------
@@ -126,13 +132,16 @@ package saz.display.pixel {
 			$drawSelf();
 		}
 		
+		//--------------------------------------
+		// internal
+		//--------------------------------------
 		
-		override public function atAdded(target:AbstractPixel):void {
+		override internal function atAdded(target:AbstractPixel):void {
 			$parent = target;
 			$parentBmp = target.bitmapData;
 		}
 		
-		override public function atRemoved(target:AbstractPixel):void {
+		override internal function atRemoved(target:AbstractPixel):void {
 			$parent = null;
 			$parentBmp = null;
 		}
