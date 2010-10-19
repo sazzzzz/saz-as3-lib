@@ -23,20 +23,22 @@ package saz.display.pixel {
 		public function get children():/*AbstractPixel*/Array { return $children; }
 		
 		
-		//private function $addChild
-		
 		//private function $removeChildAt(index:int) {
-			//
+		
+		//public function contains(child:AbstractPixel):Boolean {
+			//return true;
 		//}
+		
 		
 		public function addChild(child:AbstractPixel):void {
 			// 重複登録しないようremove
-			removeChild(child);
+			//removeChild(child);
 			
 			child.atAdded(this);
 			$children.push(child);
 		}
 		
+		// FIXME	遅い！
 		public function removeChild(child:AbstractPixel):void {
 			var index:int = ArrayUtil.find($children, child);
 			// 子じゃなかったら終了

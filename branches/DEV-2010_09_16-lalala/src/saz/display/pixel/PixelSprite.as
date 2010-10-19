@@ -26,8 +26,8 @@ package saz.display.pixel {
 		protected var $parentBmp:BitmapData;
 		
 		
-		public function PixelSprite(bmp:BitmapData, mergeAlpha:Boolean = true) {
-		//public function PixelSprite(bmp:BitmapData = null, mergeAlpha:Boolean = true) {
+		//public function PixelSprite(bmp:BitmapData, mergeAlpha:Boolean = true) {
+		public function PixelSprite(bmp:BitmapData = null, mergeAlpha:Boolean = true) {
 			if (bmp) bitmapData = bmp;
 			this.mergeAlpha = mergeAlpha;
 			
@@ -55,7 +55,7 @@ package saz.display.pixel {
 		}
 		
 		override public function set bitmapData(value:BitmapData):void {
-			if (null == value) throw new ArgumentError("PixelSprite.bitmapData 引数がnullです。");
+			//if (null == value) throw new ArgumentError("PixelSprite.bitmapData 引数がnullです。");
 			$bitmapData = value;
 			
 			if (null == $rect) $rect = new Rectangle();
