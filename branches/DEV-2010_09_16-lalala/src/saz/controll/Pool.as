@@ -10,7 +10,9 @@ package saz.controll {
 		 */
 		public var atCreate:Function;
 		
+		protected var $args:Array;
 		protected var $items:Array;
+		
 		
 		public function Pool(createFnc:Function = null) {
 			//atCreate = (null != createFnc) ? createFnc : $atCreate;
@@ -21,14 +23,14 @@ package saz.controll {
 		
 		/**
 		 * インスタンスを取得. プールされてれば、プールから取り出す. なければ作る. 
-		 * @param	...args	atCreate（＝コンストラクタ）に渡すパラメータ.
+		 * コンストラクタに引数を渡したい場合は、共通引数argsを指定できる。
 		 * @return	インスタンス.
 		 */
-		public function getItem(...args):Object {
+		public function getItem():Object {
 			if ($items.length > 0) {
 				return $items.pop();
 			}else {
-				return atCreate.apply(null, args);
+				return atCreate.apply(null, $args);
 			}
 		}
 		
@@ -51,6 +53,11 @@ package saz.controll {
 			atCreate = (null != createFnc) ? createFnc : $atCreate;
 		}
 		
+		/**
+		 * コンストラクト関数. サブクラスでオーバーライドする用.
+		 * @param	...args	共通引数.
+		 * @return
+		 */
 		protected function $atCreate(...args):Object {
 			return { };
 		}
@@ -60,6 +67,15 @@ package saz.controll {
 		 */
 		public function get length():uint {
 			return $items.length;
+		}
+		
+		/**
+		 * コンストラクタに渡す、共通の引数.
+		 */
+		public function get args():Array { return $args; }
+		
+		public function set args(value:Array):void {
+			$args = value;
 		}
 		
 	}

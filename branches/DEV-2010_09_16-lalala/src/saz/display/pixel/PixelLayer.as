@@ -20,6 +20,7 @@ package saz.display.pixel {
 			$children = new Array();
 		}
 		
+		public function get children():/*AbstractPixel*/Array { return $children; }
 		
 		
 		//private function $addChild
@@ -45,7 +46,6 @@ package saz.display.pixel {
 			$children.splice(index, 1);
 		}
 		
-		public function get children():/*AbstractPixel*/Array { return $children; }
 		
 		
 		

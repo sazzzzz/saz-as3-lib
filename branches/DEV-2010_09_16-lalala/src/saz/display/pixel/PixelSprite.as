@@ -27,7 +27,8 @@ package saz.display.pixel {
 		
 		
 		public function PixelSprite(bmp:BitmapData, mergeAlpha:Boolean = true) {
-			bitmapData = bmp;
+		//public function PixelSprite(bmp:BitmapData = null, mergeAlpha:Boolean = true) {
+			if (bmp) bitmapData = bmp;
 			this.mergeAlpha = mergeAlpha;
 			
 			if (null == $destPoint) $destPoint = new Point();

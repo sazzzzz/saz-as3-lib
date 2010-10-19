@@ -35,7 +35,7 @@ package saz.display.pixel {
 			atCreate = $atChatCreate;
 		}
 		
-		//override protected function $atCreate(...args):Chat {		//1023: オーバーライドに対応していません。型が一致してないとダメ.
+		//override protected function $atCreate(...args):Chat {		//1023: オーバーライドに対応していません。	⇒型が一致してないとダメ.
 		private function $atChatCreate(...args):PixelSprite {
 			return new PixelSprite(args[0], args[1]);
 		}
