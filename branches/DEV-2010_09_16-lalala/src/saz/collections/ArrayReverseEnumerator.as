@@ -1,20 +1,20 @@
 package saz.collections {
 	/**
-	 * Array用Enumerator。
+	 * Array用逆順Enumerator。
 	 * @author saz
 	 */
-	public class ArrayEnumerator extends Enumerator {
+	public class ArrayReverseEnumerator extends Enumerator {
 		
 		/**
 		 * コンストラクタ。
 		 * @param	component	対象Arrayインスタンス。
 		 * @example <listing version="3.0" >
 		 * var arr:Array = [true, true, true];
-		 * var enu:Enumerable = new Enumerable(new ArrayEnumerator(arr));
+		 * var enu:Enumerable = new Enumerable(new ArrayReverseEnumerator(arr));
 		 * trace(enu.all());
 		 * </listing>
 		 */
-		public function ArrayEnumerator(component:Array) {
+		public function ArrayReverseEnumerator(component:Array) {
 			//super(component, "forEach");
 			super(component);
 		}
@@ -29,7 +29,7 @@ package saz.collections {
 		 */
 		override public function forEach(callback:Function, thisObject:* = null):void {
 			//$component.forEach(callback, thisObject);
-			for (var i:int = 0, len:int = $component.length, item:*; i < len; i++) {
+			for (var i:int = $component.length - 1, item:*; i >= 0; i--) {
 				item = $component[i];
 				callback(item, i, $component);
 			}
