@@ -25,13 +25,19 @@ package saz.display.pixel {
 		
 		//private function $removeChildAt(index:int) {
 		
-		//public function contains(child:AbstractPixel):Boolean {
-			//return true;
-		//}
+		
+		public function contains(child:AbstractPixel):Boolean {
+			// これも全然おそい
+			return $children.some(function(item:*, index:int, array:Array):Boolean{
+				return (item == child);
+			});
+		}
 		
 		
 		public function addChild(child:AbstractPixel):void {
 			// 重複登録しないようremove
+			// FIXME	すごく遅いのでコメントアウト。
+			//contains(child);
 			//removeChild(child);
 			
 			child.atAdded(this);

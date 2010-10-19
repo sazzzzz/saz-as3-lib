@@ -10,6 +10,9 @@ package saz.display.pixel {
 		// 当然mergeAlpha=falseのほうが早い。FPS60で、38対29の差。
 		public var mergeAlpha:Boolean;
 		
+		//clear()で使用する色。当然、描画先のbmpによって、ARGBかRGBか左右されるだろうな。
+		public var clearColor:Number = 0;
+		
 		//外部参照
 		protected var $bitmapData:BitmapData;
 		protected var $parent:AbstractPixel;
@@ -34,6 +37,8 @@ package saz.display.pixel {
 			if (null == $destPoint) $destPoint = new Point();
 		}
 		
+		
+		
 		public function toString():String {
 			return name;
 		}
@@ -41,8 +46,12 @@ package saz.display.pixel {
 		public function destroy():void {
 			$bitmapData = null;
 			$parent = null;
-			
 		}
+		
+		public function clear():void {
+			$bitmapData.fillRect($bitmapData.rect, clearColor);
+		}
+		
 		
 		/* INTERFACE saz.display.pixel.IPixel */
 		
