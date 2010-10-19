@@ -19,6 +19,15 @@
 		static public const MAX_FRAME:int = 16000 - 10;
 		
 		
+		/**
+		 * 外部swfから指定した名前のクラスを取り出す.
+		 * @param	loaderInfo	LoaderのLoaderInfoインスタンス.
+		 * @param	className	クラス名.
+		 * @return
+		 */
+		static public function getExternalClass(loaderInfo:LoaderInfo, className:String):Class {
+			return loaderInfo.applicationDomain.getDefinition(className) as Class;
+		}
 		
 		/**
 		 * ドキュメントクラス（あるいはメインタイムライン）が、親SWFかどうかを返す。
