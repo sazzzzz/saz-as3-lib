@@ -1,9 +1,10 @@
 ﻿package saz.string {
+	import saz.util.RegExpUtil;
 	
 	/**
 	 * URL操作。
 	 * プロパティ名はJSのwindow.locationのまね。<br/>
-	 * TODO:	ローカルパスへの対応が中途半端。<br/>
+	 * ローカルファイルは非対応です。<br/>
 	 * @see http://pzxa85.hp.infoseek.co.jp/www/js/location.htm
 	 * @author saz
 	 */
@@ -11,17 +12,19 @@
 		
 		public static const PROTOCOL_HTTP:String = "http:";
 		public static const PROTOCOL_HTTPS:String = "https:";
-		public static const PROTOCOL_FILE:String = "file:";
+		public static const PROTOCOL_FTP:String = "ftp:";
+		//public static const PROTOCOL_FILE:String = "file:";	//ローカルファイル非対応
 		
-		private var $url:String;
+		static public var regExp:RegExp;
 		
-		private var $protocol:String;
-		private var $host:String;
-		private var $hostname:String;
-		private var $port:String;
-		private var $pathname:String;
-		private var $search:String;
-		private var $hash:String;
+		public var protocol:String;
+		public var hostname:String;
+		public var port:String;
+		public var search:String;
+		public var hash:String;
+		public var directory:String;
+		public var filename:String;
+		
 		
 		/**
 		 * コンストラクタ。<br/>
@@ -34,96 +37,69 @@
 		 * URL の各部を示す文字列を返します。href の値が "http://www.yyy.zzz:8000/aaa/bbb/ccc.cgi?KEY=CGI#XYZ" だとすると、それぞれの値は以下のようになります。<br/>
 		 * <pre>
 		 * protocol: "http:"
-		 * host:     "www.yyy.zzz:8000"
 		 * hostname: "www.yyy.zzz"
 		 * port:     "8000"
-		 * pathname: "/aaa/bbb/ccc.cgi"
+		 * directory:"/aaa/bbb/"
+		 * filename: "ccc.cgi"
 		 * search:   "?KEY=CGI"
 		 * hash:     "#XYZ"
+		 * host:     "www.yyy.zzz:8000"
+		 * pathname: "/aaa/bbb/ccc.cgi"
 		 * </pre>
 		 * @param	url
 		 */
 		function Location(url:String) {
-			$init(url);
+			this.url = url;
 		}
 		
-		private function $init(url:String):void {
-			this.$url = url;
-			var rest:String = url;
-			var arr1:Array;
-			arr1 = rest.split("//");
-			this.$protocol = String(arr1.shift());
-			rest = arr1.join("//");
-			
-			arr1 = rest.split("/");
-			this.$host = String(arr1.shift());
-			var hostArr:Array = this.$host.split(":");
-			this.$hostname = hostArr[0];
-			this.$port = (hostArr[1] == undefined) ? "" : hostArr[1];
-			rest = arr1.join("/");
-			
-			arr1 = rest.split("#");
-			//trace(arr1);
-			//trace(arr1.length);
-			this.$hash = (arr1.length == 1) ? "" : "#" + arr1.pop();
-			//trace(arr1);
-			//trace(arr1.length);
-			rest = arr1.join("#");
-			
-			arr1 = rest.split("?");
-			this.$pathname = "/" + String(arr1.shift());
-			rest = arr1.join("?");
-			
-			this.$search = (rest == "") ? "" : "?" + rest;
+		public function parse(url:String):void {
+			if (!regExp) regExp = new RegExp(RegExpUtil.PARSE_URL);
+			var res:Array = url.match(regExp);
+			/*
+			0	http://www.yyy.zzz:8000/aaa/bbb/ccc.cgi?KEY=CGI#XYZ
+			1*	http
+			2*	www.yyy.zzz
+			3	:8000
+			4*	8000
+			5*	/aaa/bbb/
+			6	bbb/
+			7*	ccc.cgi
+			8*	?KEY=CGI
+			9*	#XYZ
+			*/
+			protocol = res[1] ? res[1] + ":" : "";
+			hostname = res[2] ? res[2] : "";
+			port = res[4] ? res[4] : "";
+			directory = res[5] ? res[5] : "";
+			filename = res[7] ? res[7] : "";
+			search = res[8] ? res[8] : "";
+			hash = res[9] ? res[9] : "";
+			//$host = ("" == port) ? hostname : hostname + ":" + port;
+			//$pathname = directory + filename;
 		}
 		
 		//--------------------------------------
 		// GETTER
 		//--------------------------------------
 		
-		public function get url():String { return $url; }
+		public function get url():String {
+			return protocol + "//" + hostname + (("" == port) ? "" : ":" + port) + directory + filename + search + hash;
+		}
+		
+		public function set url(value:String):void {
+			parse(value);
+		}
+		
+		public function get host():String {
+			return ("" == port) ? hostname : hostname + ":" + port;
+		}
+		
+		public function get pathname():String {
+			return directory + filename;
+		}
 		
 		
-		/**
-		 * プロトコル
-		 * "http:", "file:"
-		 */
-		public function get protocol():String { return $protocol; }
 		
-		/**
-		 * ポート込みのホスト
-		 * "www.yyy.zzz:8000"
-		 */
-		public function get host():String { return $host; }
-		
-		/**
-		 * ホスト名
-		 * "www.yyy.zzz"
-		 */
-		public function get hostname():String { return $hostname; }
-		
-		/**
-		 * ポート
-		 * "8000"
-		 */
-		public function get port():String { return $port; }
-		
-		/**
-		 * パス
-		 * "/aaa/bbb/ccc.cgi"
-		 */
-		public function get pathname():String { return $pathname; }
-		
-		/**
-		 * クエリー部分
-		 * "?KEY=CGI"
-		 */
-		public function get search():String { return $search; }
-		
-		/**
-		 * ハッシュ
-		 */
-		public function get hash():String { return $hash; }
 		
 		
 	}
