@@ -31,6 +31,9 @@ package saz.media {
 			$dispatcher = dispatcher;
 			
 			if (!$posDiffAverage)$posDiffAverage = new AverageNumber();
+			
+			//すでに再生中なら処理開始
+			if (soundHelper.isPlaying) $start();
 		}
 		
 		
@@ -64,6 +67,8 @@ package saz.media {
 		}
 		
 		private function $enterFrame(e:Event):void {
+			//trace("SoundBeat.$enterFrame(", arguments);
+			
 			if (!$soundHelper.soundChannel) return;
 			var pos:Number = $soundHelper.soundChannel.position;
 			// soundChannel.positionに変化がなければ何もしない？
@@ -98,7 +103,8 @@ package saz.media {
 		// LISTENER
 		//--------------------------------------
 		
-		private function $soundHelper_play(e:SoundHelperEvent):void{
+		private function $soundHelper_play(e:SoundHelperEvent):void {
+			trace("SoundBeat.$soundHelper_play(", arguments);
 			$start();
 		}
 		

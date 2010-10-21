@@ -5,6 +5,7 @@
 	 * URL操作。
 	 * プロパティ名はJSのwindow.locationのまね。<br/>
 	 * ローカルファイルは非対応です。<br/>
+	 * TODO	ローカルファイルに対応したい！⇒別クラスかな…
 	 * @see http://pzxa85.hp.infoseek.co.jp/www/js/location.htm
 	 * @author saz
 	 */

@@ -27,6 +27,7 @@ package saz.util {
 		 * </listing>
 		 */
 		static public const PARSE_URL:String = "(https?|ftp)://([^:/]+)(:(\\d+))?(/([^/]+/)*)?([^/?#]*)?(\\?[^#]*)?(#.*)?";
+		//static public const PARSE_URL:String = "(https?|ftp|file)(://|:///)([^:/]+)(:(\\d+))?(/([^/]+/)*)?([^/?#]*)?(\\?[^#]*)?(#.*)?";
 		
 		/**
 		 * URL -> <a>タグ用置換文字列. 
