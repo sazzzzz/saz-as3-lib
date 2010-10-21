@@ -9,6 +9,8 @@ package saz.media {
 	 */
 	public class SoundHolder extends WatchMap {
 		
+		static public var classSuffix:String = "Class";
+		
 		public function SoundHolder() {
 			super();
 		}
@@ -36,17 +38,20 @@ package saz.media {
 		//}
 		
 		/**
-		 * 外部からSoundクラスを取り出し、Soundインスタンスを追加する
+		 * 外部からSoundクラスを取り出し、Soundクラス、Soundインスタンスを追加する.
+		 * Soundクラスは、className+"Class"で登録.
 		 * @param	loaderInfo
 		 * @param	className
 		 */
 		public function extractSound(loaderInfo:LoaderInfo, className:String):void {
 			var SoundClass:Class = ClassUtil.extractClass(loaderInfo, className);
+			super.put(className + classSuffix, SoundClass);
 			super.put(className, new SoundClass());
 		}
 		
 		/**
-		 * 外部からSoundクラスをまとめて取り出し、Soundインスタンスを追加する
+		 * 外部からSoundクラスをまとめて取り出し、Soundクラス、Soundインスタンスを追加する.
+		 * Soundクラスは、className+"Class"で登録.
 		 * @param	loaderInfo
 		 * @param	classNames
 		 */
@@ -58,8 +63,7 @@ package saz.media {
 			//}
 			var soundClasses:Array = ClassUtil.extractClasses(loaderInfo, classNames);
 			for (var i:int = 0, len:int = soundClasses.length, SoundClass:Class; i < len; i++) {
-				SoundClass = soundClasses[i];
-				super.put(classNames[i], new SoundClass());
+				extractSound(loaderInfo, classNames[i]);
 			}
 		}
 		
