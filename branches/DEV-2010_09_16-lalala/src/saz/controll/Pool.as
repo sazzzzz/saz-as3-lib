@@ -26,7 +26,8 @@ package saz.controll {
 		 * コンストラクタに引数を渡したい場合は、共通引数argsを指定できる。
 		 * @return	インスタンス.
 		 */
-		public function getItem():Object {
+		//public function getItem():Object {
+		public function getItem():* {
 			if ($items.length > 0) {
 				return $items.pop();
 			}else {
