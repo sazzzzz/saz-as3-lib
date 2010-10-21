@@ -66,7 +66,8 @@ package saz.util {
 		 */
 		static public function registerExternalFont(loaderInfo:LoaderInfo, fontName:String):Class {
 			//var FontClass:Class = loaderInfo.applicationDomain.getDefinition(fontName) as Class;
-			var FontClass:Class = DisplayUtil.getExternalClass(loaderInfo, fontName);
+			//var FontClass:Class = DisplayUtil.getExternalClass(loaderInfo, fontName);
+			var FontClass:Class = ClassUtil.extractClass(loaderInfo, fontName);
 			Font.registerFont(FontClass);
 			return FontClass;
 		}

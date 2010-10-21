@@ -24,7 +24,7 @@
 			$initEventDispatcher();
 		}
 		
-		public override function put(key:String, value:*):void {
+		override public function put(key:String, value:*):void {
 			var oldValue:*= super.gets(key);
 			//値が同じなら何もしない
 			if (oldValue == value) return;

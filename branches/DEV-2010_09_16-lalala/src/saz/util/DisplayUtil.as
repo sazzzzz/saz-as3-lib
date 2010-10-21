@@ -21,6 +21,7 @@
 		
 		/**
 		 * 外部swfから指定した名前のクラスを取り出す.
+		 * @deprecated	廃止予定. 代わりにClassUtil.extractClassを使え.
 		 * @param	loaderInfo	LoaderのLoaderInfoインスタンス.
 		 * @param	className	クラス名.
 		 * @return
