@@ -42,6 +42,7 @@ package saz.controll {
 		public function backItem(item:Object):void {
 			if (null == item) throw new ArgumentError("Pool#backItem: null以外を指定してください。");
 			$items.push(item);
+			$backHook(item);
 		}
 		
 		public function toString():String {
@@ -52,6 +53,9 @@ package saz.controll {
 		
 		protected function $initHook(createFnc:Function = null):void {
 			atCreate = (null != createFnc) ? createFnc : $atCreate;
+		}
+		
+		protected function $backHook(item:Object):void {
 		}
 		
 		/**
