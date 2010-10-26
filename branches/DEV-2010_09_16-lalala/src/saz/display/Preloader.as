@@ -1,16 +1,14 @@
 package saz.display {
-	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.HTTPStatusEvent;
 	import flash.events.IEventDispatcher;
-	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
 	/**
-	 * ...
+	 * プリローダ用ドキュメントクラス.
+	 * @see	sample.display.MyPreloader
 	 * @author saz
 	 */
 	public class Preloader extends Document{
@@ -185,11 +183,10 @@ package saz.display {
 		//--------------------------------------
 		
 		public function get loader():Loader { return $loader; }
-		//public function get content():DisplayObject { return $loader ? $loader.content : null; }
 		public function get content():Sprite { return $loader ? Sprite($loader.content) : null; }
 		public function get contentLoaderInfo():LoaderInfo { return $loader ? $loader.contentLoaderInfo : null; }
-		public function get bytesLoaded():uint { return $loader.contentLoaderInfo.bytesLoaded; }
-		public function get bytesTotal():uint { return $loader.contentLoaderInfo.bytesTotal; }
+		public function get bytesLoaded():uint { return $loader ? $loader.contentLoaderInfo.bytesLoaded : null; }
+		public function get bytesTotal():uint { return $loader ? $loader.contentLoaderInfo.bytesTotal : null; }
 		
 		
 		public function get background():Sprite {
