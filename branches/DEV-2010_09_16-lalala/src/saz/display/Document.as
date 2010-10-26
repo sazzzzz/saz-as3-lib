@@ -7,7 +7,7 @@ package saz.display {
 	 * ドキュメントベースクラス.
 	 * @author saz
 	 */
-	public class DocumentBase extends Sprite{
+	public class Document extends Sprite{
 		
 		private var $isReady:Boolean = false;
 		public function get isReady():Boolean { return $isReady; }
@@ -19,16 +19,44 @@ package saz.display {
 		
 		
 		
-		public function DocumentBase() {
+		public function Document() {
 			super();
 			
 			addEventListener(Event.ENTER_FRAME, $enterFrame);
 			addEventListener(Event.ADDED_TO_STAGE, $addedToStage);
 			loaderInfo.addEventListener(Event.INIT, $loaderInfo_init);
 			loaderInfo.addEventListener(Event.COMPLETE, $loaderInfo_complete);
+			
+			$constructorHook();
 		}
 		
 		
+		
+		//--------------------------------------
+		// for override
+		//--------------------------------------
+		
+		/**
+		 * コンストラクタ、addEventListenerの後に実行. 
+		 */
+		protected function $constructorHook():void {}
+		
+		/**
+		 * atReady()の直後に実行. 
+		 */
+		protected function $readyHook():void {}
+		
+		/**
+		 * SWF ファイルの読み込みが完了し、stage 及び loaderInfo にアクセス可能になった場合に送出されます。
+		 * サブクラスでオーバーライドする用。
+		 */
+		protected function atReady():void {}
+		
+		
+		
+		//--------------------------------------
+		// main
+		//--------------------------------------
 		
 		private function $addedToStage(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, $addedToStage);
@@ -57,7 +85,6 @@ package saz.display {
 		}
 		
 		
-		
 		/**
 		 * isReadyを更新し、準備ができてればatReady()をよびだす.
 		 */
@@ -66,14 +93,11 @@ package saz.display {
 			
 			$isReady = true;
 			atReady();
+			$readyHook();
 		}
 		
-		/**
-		 * SWF ファイルの読み込みが完了し、stage 及び loaderInfo にアクセス可能になった場合に送出されます。
-		 * サブクラスでオーバーライドする用。
-		 */
-		protected function atReady():void {
-		}
+		
+		
 		
 		
 	}
