@@ -31,29 +31,24 @@ package saz.display {
 		
 		
 		private function $addedToStage(e:Event):void {
-			//trace("DocumentBase.$addedToStage(", arguments);
 			removeEventListener(Event.ADDED_TO_STAGE, $addedToStage);
 			$isAddedToStage = true;
 			$checkReady();
 		}
 		
 		private function $loaderInfo_init(e:Event):void {
-			//trace("DocumentBase.$loaderInfo_init(", arguments);
 			loaderInfo.removeEventListener(Event.INIT, $loaderInfo_init);
 			$isInit = true;
 			$checkReady();
 		}
 		
 		private function $loaderInfo_complete(e:Event):void {
-			//trace("DocumentBase.$loaderInfo_complete(", arguments);
 			loaderInfo.removeEventListener(Event.COMPLETE, $loaderInfo_complete);
 			$isComplete = true;
 			$checkReady();
 		}
 		
 		private function $enterFrame(e:Event):void {
-			//trace("DocumentBase.$enterFrame(", arguments);
-			//trace(stage, loaderInfo);
 			if (!stage || !loaderInfo) return;
 			
 			removeEventListener(Event.ENTER_FRAME, $enterFrame);
@@ -67,7 +62,6 @@ package saz.display {
 		 * isReadyを更新し、準備ができてればatReady()をよびだす.
 		 */
 		private function $checkReady():void {
-			//trace($isReady, $isAddedToStage, $isInit, $isComplete);
 			if ($isReady || !$isAddedToStage || !$isInit || !$isComplete || !$isStage) return;
 			
 			$isReady = true;
@@ -76,10 +70,9 @@ package saz.display {
 		
 		/**
 		 * SWF ファイルの読み込みが完了し、stage 及び loaderInfo にアクセス可能になった場合に送出されます。
+		 * サブクラスでオーバーライドする用。
 		 */
 		protected function atReady():void {
-			//trace("DocumentBase.atReady(", arguments);
-			//trace(loaderInfo.bytesLoaded, loaderInfo.bytesTotal);
 		}
 		
 		
