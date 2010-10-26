@@ -8,8 +8,8 @@ package saz.test {
 	 */
 	public class Log {
 		
-		static var isTrace:Boolean = true;
-		static var isFirebug:Boolean = false;
+		static public var isTrace:Boolean = true;
+		static public var isFirebug:Boolean = false;
 		
 		static private var $dsp:DisplayObject;
 		static private var $msgs:String = "";
