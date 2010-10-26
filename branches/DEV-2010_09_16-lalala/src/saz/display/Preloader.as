@@ -169,8 +169,8 @@ package saz.display {
 		
 		private function $loader_complete(e:Event):void {
 			$stopProgress();
-			$dispatchLoadComplete();
 			$completeHook();
+			$dispatchLoadComplete();
 		}
 		
 		private function $loader_progress(e:ProgressEvent):void {
@@ -185,7 +185,8 @@ package saz.display {
 		//--------------------------------------
 		
 		public function get loader():Loader { return $loader; }
-		public function get content():DisplayObject { return $loader ? $loader.content : null; }
+		//public function get content():DisplayObject { return $loader ? $loader.content : null; }
+		public function get content():Sprite { return $loader ? Sprite($loader.content) : null; }
 		public function get contentLoaderInfo():LoaderInfo { return $loader ? $loader.contentLoaderInfo : null; }
 		public function get bytesLoaded():uint { return $loader.contentLoaderInfo.bytesLoaded; }
 		public function get bytesTotal():uint { return $loader.contentLoaderInfo.bytesTotal; }
