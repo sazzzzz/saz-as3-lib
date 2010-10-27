@@ -1,12 +1,12 @@
-package saz.collections {
+package saz.collections.iterator {
 	import saz.errors.IllegalStateError;
 	import saz.errors.NoSuchElementError;
+	import saz.collections.*;
 	/**
-	 * Array用Iterator
+	 * Array用１周Iteratorベースクラス.
 	 * @author saz
 	 */
-	//public class ArrayIterator implements IIterator {
-	public class ArrayIterator extends Iterator implements IIterator {
+	public class ArrayCycleIteratorBase extends Iterator implements IIterator {
 		
 		//--------------------------------------
 		// OUTSIDE
@@ -19,11 +19,30 @@ package saz.collections {
 		protected var $index:int;
 		protected var $lastIndex:int;
 		
-		public function ArrayIterator(collection:Array) {
+		protected var $start:int;
+		protected var $count:int;
+		
+		public function ArrayCycleIteratorBase(collection:Array, start:int = 0) {
 			super();
+			if (collection.length <= start) throw new ArgumentError("startはcollection.lengthより小さくなくてはいけません。");
 			$arr = collection;
+			$start = start;
 			reset();
 		}
+		
+		
+		/* オーバーライド用 */
+		protected function $nextHook():void { }
+		protected function $removeHook():void {}
+		
+		
+		
+		
+		protected function $clip(index:int):int {
+			return Math.max(0, Math.min(index, $arr.length - 1));
+		}
+		
+		
 		
 		/* INTERFACE saz.collections.IIterator */
 		
@@ -31,7 +50,7 @@ package saz.collections {
 		 * @copy	IIterator#hasNext
 		 */
 		override public function hasNext():Boolean{
-			return ($index < $arr.length);
+			return (0 < $count);
 		}
 		
 		/**
@@ -41,7 +60,8 @@ package saz.collections {
 			if (!hasNext()) throw new NoSuchElementError("これ以上要素がありません。");
 			var res:*= $arr[$index];
 			$lastIndex = $index;
-			$index++;
+			$nextHook();
+			$count--;
 			return res;
 		}
 		
@@ -51,8 +71,7 @@ package saz.collections {
 		override public function remove():void{
 			if ( -1 == $lastIndex) throw new IllegalStateError("next()が呼び出されていないか、最後のnext()の後にすでにremove()が実行されています。");
 			$arr.splice($lastIndex, 1);
-			//$index = $lastIndex;
-			$index = Math.max(0, $index - 1);
+			$removeHook();
 			$lastIndex = -1;
 		}
 		
@@ -60,8 +79,9 @@ package saz.collections {
 		 * @copy	IIterator#reset
 		 */
 		override public function reset():void {
-			$index = 0;
+			$index = $start;
 			$lastIndex = -1;
+			$count = $arr.length;
 		}
 		
 	}
