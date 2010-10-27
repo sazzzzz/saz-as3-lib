@@ -58,11 +58,10 @@ package saz.collections {
 		 * function callback(item:XML, index:int, collection:XMLList):void;
 		 */
 		public function each(list:XMLList, iterator:Function):void {
-			//trace("MapXMLParser.each(");
 			for (var i:int = 0, n:int = list.length(), item:XML; i < n; i++) {
 				item = list[i];
-				//trace(item);				// コレじゃダメ
-				trace(item.toXMLString());
+				//trace(item);				// コレじゃ出力されない
+				//trace(item.toXMLString());
 				iterator(item, i, list);
 			}
 		}
@@ -76,7 +75,7 @@ package saz.collections {
 		 * @param	convertBooleans	Booleanに自動変換
 		 */
 		public function readParam(xml:XML, keyName:String = "name", valueName:String = "value", convertNumbers:Boolean = false, convertBooleans:Boolean = false):void {
-			trace(xml.name(), xml.@[keyName], xml.@[valueName]);
+			//trace(xml.name(), xml.@[keyName], xml.@[valueName]);
 			var value:*= xml.@[valueName];
 			if (convertNumbers) value = StringUtil.asNumber(value);
 			if (!(value is Number) && convertBooleans) value = StringUtil.asBoolean(value);
@@ -93,7 +92,6 @@ package saz.collections {
 		 * @see	#readParam
 		 */
 		public function readParamList(list:XMLList, keyName:String = "name", valueName:String = "value", convertNumbers:Boolean = false, convertBooleans:Boolean = false):void {
-			//trace("MapXMLParser.readParamList(");
 			each(list, function (item:XML, index:int, collection:XMLList):void {
 				readParam(item, keyName, valueName, convertNumbers, convertBooleans);
 			});
