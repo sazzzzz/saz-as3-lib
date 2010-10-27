@@ -112,6 +112,31 @@
 		//--------------------------------------
 		
 		/**
+		 * 可能ならNumberに変換、無理ならStringで返す. 
+		 * @param	value
+		 * @return
+		 */
+		static public function asNumber(value:Object):*{
+			// http://cuaoar.jp/2006/01/is.html
+			var str:String = value.toString();
+			var num = Number(str);
+			return isNaN(num) ? str : num;
+		}
+		
+		static private const $asB:Object = { _true:true, _false:false };
+		
+		/**
+		 * 可能ならBooleanに変換、無理ならStringで返す. 
+		 * "true","TRUE","True" -> true
+		 * @param	value	
+		 * @return
+		 */
+		static public function asBoolean(value:Object):*{
+			var key:String = "_" + value.toString().toLowerCase();
+			return ( key in $asB) ? $asB[key] : value.toString();
+		}
+		
+		/**
 		 * URLRequestを文字列表現にして返す. クエリーを開きたいときに. 
 		 * @param	req
 		 * @return
