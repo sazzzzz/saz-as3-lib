@@ -28,10 +28,6 @@ package saz.collections.iterator {
 		override protected function $nextHook():void {
 			$index++;
 		}
-		//override protected function $resetHook():void { }
-		/*override protected function $removeHook():void {
-			$index = Math.max(0, $index - 1);
-		}*/
 		
 		
 		/* INTERFACE saz.collections.IIterator */

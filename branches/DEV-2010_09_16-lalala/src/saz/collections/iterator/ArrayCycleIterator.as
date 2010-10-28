@@ -5,7 +5,6 @@ package saz.collections.iterator {
 	 * Array用１周Iterator.
 	 * @author saz
 	 */
-	//public class ArrayCycleIterator extends ArrayCycleIteratorBase implements IIterator {
 	public class ArrayCycleIterator extends ArrayIteratorBase implements IIterator {
 		
 		private var $cycleCount:int;

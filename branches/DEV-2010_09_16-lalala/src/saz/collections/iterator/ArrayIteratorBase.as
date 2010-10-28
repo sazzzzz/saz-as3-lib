@@ -41,7 +41,6 @@ package saz.collections.iterator {
 		// 主にインデックス処理
 		protected function $nextHook():void { }
 		protected function $resetHook():void { }
-		//protected function $removeHook():void { }
 		
 		
 		/* protected */
@@ -85,15 +84,6 @@ package saz.collections.iterator {
 			$resetHook();
 		}
 		
-		/**
-		 * @copy	IIterator#remove
-		 */
-		/*override public function remove():void{
-			if ( -1 == $lastIndex) throw new IllegalStateError("next()が呼び出されていないか、最後のnext()の後にすでにremove()が実行されています。");
-			$arr.splice($lastIndex, 1);
-			$removeHook();
-			$lastIndex = -1;
-		}*/
 		
 	}
 

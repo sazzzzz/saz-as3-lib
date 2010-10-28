@@ -6,7 +6,6 @@ package saz.collections.iterator {
 	 * Array用逆回転１周Iterator.
 	 * @author saz
 	 */
-	//public class ArrayCycleReverseIterator extends ArrayCycleIteratorBase implements IIterator {
 	public class ArrayCycleReverseIterator extends ArrayIteratorBase implements IIterator {
 		
 		private var $cycleCount:int;
@@ -23,7 +22,6 @@ package saz.collections.iterator {
 		
 		override protected function $nextHook():void {
 			var len:int = $arr.length;
-			//$index = (($index - (len-1) - 1) % len) + (len-1);
 			$index = (($index - len) % len) + len - 1;
 			if ($index == $start) $cycle--;
 		}
