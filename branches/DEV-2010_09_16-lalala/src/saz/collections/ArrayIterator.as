@@ -1,4 +1,5 @@
 package saz.collections {
+	import saz.collections.iterator.ArrayIteratorBase;
 	import saz.errors.IllegalStateError;
 	import saz.errors.NoSuchElementError;
 	/**
@@ -6,22 +7,23 @@ package saz.collections {
 	 * @author saz
 	 */
 	//public class ArrayIterator implements IIterator {
-	public class ArrayIterator extends Iterator implements IIterator {
+	//public class ArrayIterator extends Iterator implements IIterator {
+	public class ArrayIterator extends ArrayIteratorBase implements IIterator {
 		
 		//--------------------------------------
 		// OUTSIDE
 		//--------------------------------------
-		protected var $arr:Array;
+		//protected var $arr:Array;
 		
 		//--------------------------------------
 		// INSIDE
 		//--------------------------------------
-		protected var $index:int;
-		protected var $lastIndex:int;
+		//protected var $index:int;
+		//protected var $lastIndex:int;
 		
 		public function ArrayIterator(collection:Array) {
-			super();
-			$arr = collection;
+			super(collection);
+			//$arr = collection;
 			reset();
 		}
 		

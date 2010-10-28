@@ -5,9 +5,9 @@ package saz.collections.iterator {
 	 * Array用逆回転１周Iterator.
 	 * @author saz
 	 */
-	public class ArrayReverseCycleIterator extends ArrayCycleIteratorBase implements IIterator {
+	public class ArrayOnceReverseIterator extends ArrayOnceIteratorBase implements IIterator {
 		
-		public function ArrayReverseCycleIterator(collection:Array, start:int = ArrayHelper.MAX_INDEX) {
+		public function ArrayOnceReverseIterator(collection:Array, start:int = ArrayHelper.MAX_INDEX) {
 			super(collection, Math.min(collection.length - 1, start));
 		}
 		
@@ -18,7 +18,8 @@ package saz.collections.iterator {
 		}
 		
 		override protected function $removeHook():void {
-			$index = $clip($index);
+			//$index = $clip($index);
+			$index = $clipIndex($index);
 		}
 		
 	}

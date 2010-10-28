@@ -4,9 +4,9 @@ package saz.collections.iterator {
 	 * Array用１周Iterator.
 	 * @author saz
 	 */
-	public class ArrayCycleIterator extends ArrayCycleIteratorBase implements IIterator {
+	public class ArrayOnceIterator extends ArrayOnceIteratorBase implements IIterator {
 		
-		public function ArrayCycleIterator(collection:Array, start:int = 0) {
+		public function ArrayOnceIterator(collection:Array, start:int = 0) {
 			super(collection, start);
 		}
 		
@@ -15,7 +15,8 @@ package saz.collections.iterator {
 		}
 		
 		override protected function $removeHook():void {
-			$index = $clip($index - 1);
+			//$index = $clip($index - 1);
+			$index = $clipIndex($index - 1);
 		}
 		
 		
