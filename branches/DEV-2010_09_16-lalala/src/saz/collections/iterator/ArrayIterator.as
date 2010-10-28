@@ -1,4 +1,4 @@
-package saz.collections {
+package saz.collections.iterator {
 	import saz.collections.iterator.ArrayIteratorBase;
 	import saz.errors.IllegalStateError;
 	import saz.errors.NoSuchElementError;

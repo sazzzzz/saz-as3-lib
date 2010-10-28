@@ -1,5 +1,7 @@
-package saz.collections {
+package saz.collections.iterator {
 	import flash.errors.IllegalOperationError;
+	import saz.collections.*;
+	import saz.collections.enumerator.*;
 	/**
 	 * IIteratorを実装した親クラス。
 	 * @author saz
