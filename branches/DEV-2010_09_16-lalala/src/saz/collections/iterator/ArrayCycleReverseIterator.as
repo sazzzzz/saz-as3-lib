@@ -5,9 +5,9 @@ package saz.collections.iterator {
 	 * Array用逆回転１周Iterator.
 	 * @author saz
 	 */
-	public class ArrayOnceReverseIterator extends ArrayOnceIteratorBase implements IIterator {
+	public class ArrayCycleReverseIterator extends ArrayCycleIteratorBase implements IIterator {
 		
-		public function ArrayOnceReverseIterator(collection:Array, start:int = ArrayHelper.MAX_INDEX) {
+		public function ArrayCycleReverseIterator(collection:Array, start:int = ArrayHelper.MAX_INDEX) {
 			super(collection, Math.min(collection.length - 1, start));
 		}
 		

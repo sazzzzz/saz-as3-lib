@@ -4,9 +4,9 @@ package saz.collections.iterator {
 	 * Array用１周Iterator.
 	 * @author saz
 	 */
-	public class ArrayOnceIterator extends ArrayOnceIteratorBase implements IIterator {
+	public class ArrayCycleIterator extends ArrayCycleIteratorBase implements IIterator {
 		
-		public function ArrayOnceIterator(collection:Array, start:int = 0) {
+		public function ArrayCycleIterator(collection:Array, start:int = 0) {
 			super(collection, start);
 		}
 		

@@ -6,8 +6,7 @@ package saz.collections.iterator {
 	 * Array用１周Iteratorベースクラス.
 	 * @author saz
 	 */
-	//public class ArrayOnceIteratorBase extends Iterator implements IIterator {
-	public class ArrayOnceIteratorBase extends ArrayIteratorBase implements IIterator {
+	public class ArrayCycleIteratorBase extends ArrayIteratorBase implements IIterator {
 		
 		//--------------------------------------
 		// OUTSIDE
@@ -23,7 +22,7 @@ package saz.collections.iterator {
 		protected var $start:int;
 		protected var $count:int;
 		
-		public function ArrayOnceIteratorBase(collection:Array, start:int = 0) {
+		public function ArrayCycleIteratorBase(collection:Array, start:int = 0) {
 			super(collection);
 			if (collection.length <= start) throw new ArgumentError("startはcollection.lengthより小さくなくてはいけません。");
 			$arr = collection;
