@@ -3,7 +3,7 @@ package saz.collections.iterator {
 	import saz.errors.NoSuchElementError;
 	
 	/**
-	 * ...
+	 * Array用Iteratorベースクラス.
 	 * @author saz
 	 */
 	public class ArrayIteratorBase extends Iterator implements IIterator {

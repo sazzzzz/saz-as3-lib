@@ -17,6 +17,11 @@ package saz.collections.iterator {
 	 */
 	public class ArrayIterator extends ArrayIteratorBase implements IIterator {
 		
+		/**
+		 * コンストラクタ.
+		 * @param	collection	対象とするArray. 
+		 * @param	start	インデックスの初期値.
+		 */
 		public function ArrayIterator(collection:Array, start:int = 0) {
 			super(collection, start);
 		}
@@ -45,7 +50,8 @@ package saz.collections.iterator {
 		override public function remove():void{
 			if ( -1 == $lastIndex) throw new IllegalStateError("next()が呼び出されていないか、最後のnext()の後にすでにremove()が実行されています。");
 			$arr.splice($lastIndex, 1);
-			$index = Math.max(0, $index - 1);
+			//$index = Math.max(0, $index - 1);
+			$index = $clipIndex($index - 1);
 			$lastIndex = -1;
 		}
 		
