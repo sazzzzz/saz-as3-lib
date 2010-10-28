@@ -1,31 +1,38 @@
 package saz.collections.iterator {
-	import saz.collections.iterator.ArrayIteratorBase;
 	import saz.errors.IllegalStateError;
 	import saz.errors.NoSuchElementError;
 	/**
-	 * Array用Iterator
+	 * Array用Iterator. 要素がなくなったら終了.
 	 * @author saz
+	 * @example <listing version="3.0" >
+	 * import saz.collections.iterator.*;
+	 * var n1:Array = [0,1,2,3,4,5,6,7,8,9,10];
+	 * var in1:ArrayIterator = new ArrayIterator(n1);
+	 * var item:*;
+	 * while(in1.hasNext()){
+	 * 	item = in1.next();
+	 * 	trace(item);
+	 * }
+	 * </listing>
 	 */
-	//public class ArrayIterator implements IIterator {
-	//public class ArrayIterator extends Iterator implements IIterator {
 	public class ArrayIterator extends ArrayIteratorBase implements IIterator {
 		
-		//--------------------------------------
-		// OUTSIDE
-		//--------------------------------------
-		//protected var $arr:Array;
-		
-		//--------------------------------------
-		// INSIDE
-		//--------------------------------------
-		//protected var $index:int;
-		//protected var $lastIndex:int;
-		
-		public function ArrayIterator(collection:Array) {
-			super(collection);
-			//$arr = collection;
-			reset();
+		public function ArrayIterator(collection:Array, start:int = 0) {
+			super(collection, start);
 		}
+		
+		
+		/* オーバーライド用 */
+		
+		// 主にインデックス処理
+		override protected function $nextHook():void {
+			$index++;
+		}
+		//override protected function $resetHook():void { }
+		/*override protected function $removeHook():void {
+			$index = Math.max(0, $index - 1);
+		}*/
+		
 		
 		/* INTERFACE saz.collections.IIterator */
 		
@@ -37,32 +44,12 @@ package saz.collections.iterator {
 		}
 		
 		/**
-		 * @copy	IIterator#next
-		 */
-		override public function next():*{
-			if (!hasNext()) throw new NoSuchElementError("これ以上要素がありません。");
-			var res:*= $arr[$index];
-			$lastIndex = $index;
-			$index++;
-			return res;
-		}
-		
-		/**
 		 * @copy	IIterator#remove
 		 */
 		override public function remove():void{
 			if ( -1 == $lastIndex) throw new IllegalStateError("next()が呼び出されていないか、最後のnext()の後にすでにremove()が実行されています。");
 			$arr.splice($lastIndex, 1);
-			//$index = $lastIndex;
 			$index = Math.max(0, $index - 1);
-			$lastIndex = -1;
-		}
-		
-		/**
-		 * @copy	IIterator#reset
-		 */
-		override public function reset():void {
-			$index = 0;
 			$lastIndex = -1;
 		}
 		

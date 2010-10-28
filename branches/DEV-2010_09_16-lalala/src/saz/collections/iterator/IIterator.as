@@ -1,7 +1,8 @@
 package saz.collections.iterator {
 	
 	/**
-	 * Iterator インターフェース。
+	 * Iterator インターフェース.
+	 * current()は実装しないぞ.　関数で遅いので「あえて」実装しない. 参照を自分で保持してね.
 	 * @see	java.util.Iterator インターフェース と同じ。
 	 * @see	http://java.sun.com/j2se/1.5.0/ja/docs/ja/api/java/util/Iterator.html
 	 * @see	http://www.javainthebox.net/publication/200209JP26API/Iterator.html
@@ -31,19 +32,19 @@ package saz.collections.iterator {
 		function next():*;
 		
 		/**
-		 * next()で、最後に取得した要素を削除する。
+		 * 最初の要素に戻す。
+		 * IteratorEnumeratorのために、.NETのIEnumerator風にしてみる。
+		 */
+		function reset():void;
+		
+		/**
+		 * （このメソッドはオプションです.）next()で、最後に取得した要素を削除する。
 		 * このメソッドは、next の呼び出しごとに 1 回だけ呼び出すことができます。
 		 * 反復子の動作は、繰り返し処理がこのメソッドの呼び出し以外の方法で実行されているときに基になるコレクションが変更された場合は保証されません。
 		 * remove()をサポートしない場合はエラー。
 		 * next()が呼び出されていないか、最後のnext()の後にすでにremove()が実行されている場合もエラー。
 		 */
 		function remove():void;
-		
-		/**
-		 * 最初の要素に戻す。
-		 * IteratorEnumeratorのために、.NETのIEnumerator風にしてみる。
-		 */
-		function reset():void;
 	}
 	
 }
