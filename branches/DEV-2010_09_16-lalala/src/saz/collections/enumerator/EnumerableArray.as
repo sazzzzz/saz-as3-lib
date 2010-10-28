@@ -1,5 +1,5 @@
-package saz.collections {
-	import saz.collections.IEnumerator;
+package saz.collections.enumerator {
+	import saz.collections.enumerator.IEnumerator;
 	/**
 	 * enumerator()メソッドを実装したArrayのサブクラス。Enumerable内部で使用。
 	 * @author saz

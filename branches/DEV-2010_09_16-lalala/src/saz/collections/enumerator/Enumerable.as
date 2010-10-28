@@ -1,4 +1,4 @@
-package saz.collections {
+package saz.collections.enumerator {
 	/**
 	 * Enumeratorに対して、便利なメソッドを提供する。RubyなEnumerable。
 	 * @author saz

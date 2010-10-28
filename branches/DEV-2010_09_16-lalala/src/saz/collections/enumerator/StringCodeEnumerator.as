@@ -1,4 +1,4 @@
-package saz.collections {
+package saz.collections.enumerator {
 	/**
 	 * Stringの1文字ずつの文字コードを、要素として扱うEnumerator。
 	 * @author saz

@@ -1,4 +1,4 @@
-package saz.collections {
+package saz.collections.enumerator {
 	/**
 	 * Object用Enumerator。
 	 * @author saz

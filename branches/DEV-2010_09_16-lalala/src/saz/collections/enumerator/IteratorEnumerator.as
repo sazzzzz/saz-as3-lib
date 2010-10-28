@@ -1,5 +1,6 @@
-package saz.collections {
+package saz.collections.enumerator {
 	import saz.errors.IllegalStateError;
+	import saz.collections.iterator.IIterator;
 	/**
 	 * IIteratorをIEnumeratorにするラッパ。
 	 * @author saz

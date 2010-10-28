@@ -1,4 +1,4 @@
-package saz.collections {
+package saz.collections.enumerator {
 	/**
 	 * Array用逆順Enumerator。
 	 * @author saz

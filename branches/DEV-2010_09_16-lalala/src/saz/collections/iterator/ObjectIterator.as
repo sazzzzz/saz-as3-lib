@@ -1,4 +1,4 @@
-package saz.collections {
+package saz.collections.iterator {
 	/**
 	 * Object用Iterator。順番は不定。
 	 * @author saz

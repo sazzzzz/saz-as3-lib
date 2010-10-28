@@ -1,4 +1,4 @@
-package saz.collections {
+package saz.collections.enumerator {
 	/**
 	 * IEnumerator実装用の、親クラス。サブクラスはforEach()をオーバーライドすること。
 	 * @author saz
