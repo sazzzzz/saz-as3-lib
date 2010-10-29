@@ -21,6 +21,7 @@ package saz.display {
 			super();
 			
 			$initHaldlers();
+			mouseEnabled = true;
 			buttonMode = true;
 		}
 		
@@ -44,7 +45,7 @@ package saz.display {
 		
 		
 		
-		
+		// イベントハンドラ設定処理
 		private function $setEventHandler(func:Function, type:String, handlerName:String, curHandler:Function):void {
 			if (func == curHandler) return;
 			
@@ -57,6 +58,9 @@ package saz.display {
 				this[handlerName] = func;
 			}
 		}
+		
+		
+		
 		
 		public function get atRollOver():Function { return $onRollOver; }
 		
@@ -81,14 +85,6 @@ package saz.display {
 		public function set atDoubleClick(func:Function):void {
 			$setEventHandler(func, MouseEvent.DOUBLE_CLICK, "$onDoubleClick", $onDoubleClick);
 			doubleClickEnabled = hasEventListener(MouseEvent.DOUBLE_CLICK);
-			/*if (null != func) {
-				doubleClickEnabled = true;
-				addEventListener(MouseEvent.DOUBLE_CLICK, func);
-			}else {
-				if (hasEventListener(MouseEvent.DOUBLE_CLICK)) doubleClickEnabled = false;
-				removeEventListener(MouseEvent.DOUBLE_CLICK, $onDoubleClick);
-			}
-			$onDoubleClick = func;*/
 		}
 		
 		
