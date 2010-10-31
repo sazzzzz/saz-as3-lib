@@ -18,6 +18,16 @@
 		
 		
 		/**
+		 * 指定URLがローカルかどうか. ＝"file:///"を含むかどうか. 
+		 * @param	urlStr	URL文字列.
+		 * @return
+		 */
+		static public function isLocal(urlStr:String):Boolean {
+			//trace(urlStr.indexOf("file:///"));
+			return ( 0 == urlStr.indexOf("file:///"));
+		}
+		
+		/**
 		 * 文字列の置換. 
 		 * 廃止予定だったけど、String.replace()が1回しか置換してくれないので存続. 
 		 * @param	target
