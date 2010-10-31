@@ -2,7 +2,6 @@ package saz.events.collector {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
-	//import saz.collections.enumerator.*;
 	
 	/**
 	 * EventCollectorベースクラス.
@@ -18,7 +17,6 @@ package saz.events.collector {
 		protected var $types:Array;
 		protected var $lisners:Array;
 		protected var $results:Array;
-		//protected var $resultsEnum:Enumerable;
 		
 		public function EventCollectorBase() {
 			super();
@@ -49,10 +47,6 @@ package saz.events.collector {
 			return res;
 		}
 		
-		/*override public function toString():String {
-			return "[EventCollectorBase]";
-		}*/
-		
 		override public function destroy():void {
 			removeListenAll();
 			$dsps.length = 0;
@@ -60,7 +54,6 @@ package saz.events.collector {
 			$lisners.length = 0;
 			$results.length = 0;
 			
-			//$resultsEnum = null;
 			$destroyHook();
 		}
 		
@@ -120,13 +113,6 @@ package saz.events.collector {
 			
 			$dsps.push(dispatcher);
 			$types.push(eventType);
-			
-			/*var func:Function = $createListener($results, $dsps.length);
-			dispatcher.addEventListener(eventType, func);
-			$lisners.push(func);
-			$results.push(false);
-			
-			$isComplete = false;*/
 		}
 		
 		override public function removeListen(dispatcher:IEventDispatcher, eventType:String):void {
@@ -165,8 +151,6 @@ package saz.events.collector {
 		private function $initListens():void {
 			$lisners = new Array();
 			$results = new Array();
-			
-			//$resultsEnum = new ArrayEnumerator($results).enumerable();
 		}
 		
 		private function $createListener(arr:Array, index:int):Function {
@@ -215,7 +199,6 @@ package saz.events.collector {
 		 * 結果.
 		 */
 		override public function get result():Boolean {
-			//return $resultsEnum.all();
 			return $resultHook();
 		}
 		
