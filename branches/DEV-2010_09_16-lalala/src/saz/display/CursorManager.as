@@ -8,6 +8,7 @@ package saz.display {
 	import flash.ui.Mouse;
 	/**
 	 * カーソルマネージャ.
+	 * サブクラスを作って、シングルトンにして、カーソル名はconstにするといいんじゃね？
 	 * @author saz
 	 * @example <listing version="3.0" >
 	 * var sp = new Sprite();	//専用コンテナを用意.
@@ -43,7 +44,7 @@ package saz.display {
 			Mouse.hide();
 			
 			// 表示中の
-			if ($cursor) $container.removeChild($cursor);
+			if ($cursor && $container.contains($cursor)) $container.removeChild($cursor);
 			
 			// 新しいの
 			$cursor = $cursors[key];
@@ -57,8 +58,10 @@ package saz.display {
 		public function restore():void {
 			Mouse.show();
 			
-			$container.removeChild($cursor);
-			$cursor = null;
+			if ($cursor && $container.contains($cursor)) {
+				$container.removeChild($cursor);
+				$cursor = null;
+			}
 			
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE, $stage_mouseMove);
 		}
