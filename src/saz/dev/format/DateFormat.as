@@ -1,4 +1,4 @@
-package saz.string.format {
+package saz.dev.format {
 	/**
 	 * Dateフォーマッタ.
 	 * @author saz
