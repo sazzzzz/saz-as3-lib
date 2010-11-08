@@ -8,11 +8,14 @@ package saz.collections.enumerator {
 	//public class Enumerable implements IEnumerator {
 	public class Enumerable {
 		
-		private var $component:IEnumerator;
+		private var $target:Object;
+		private var $method:String;
+		private var $each:Function;
 		
 		/**
 		 * コンストラクタ。
-		 * @param	component	対象とするIEnumeratorを実装（=forEach()を持つ）したクラスのインスタンス。
+		 * @param	collection	対象とするコレクションインスタンス。
+		 * @param	methodName	関数名。
 		 * @example <listing version="3.0" >
 		 * var arr:Array = [true, true, true];
 		 * var enu:Enumerable = new Enumerable(new ArrayEnumerator(arr));
@@ -23,19 +26,38 @@ package saz.collections.enumerator {
 		 * var enu:Enumerable = new ArrayEnumerator(arr).enumerable();
 		 * trace(enu.all());
 		 * </listing>
+		 * @example <listing version="3.0" >
+		 * var arr:Array = [true, true, true];
+		 * var enu:Enumerable = new Enumerable();
+		 * enu.setTarget(arr);
+		 * </listing>
 		 */
-		public function Enumerable(component:IEnumerator) {
-			$component = component;
-			
-			// エイリアスメソッドを設定。
-			//collect = map;
-			//find = detect;
-			//findAll = select;
-			//includes = member;
-			//toArray = entries;
+		//public function Enumerable(collection:IEnumerator) {
+		public function Enumerable(collection:Object = null, methodName:String = "forEach") {
+			//$target = collection;
+			//target = collection;
+			if(collection) setTarget(collection, methodName);
 		}
 		
 		
+		/*public function get target():Object { return $target; }
+		
+		public function set target(value:Object):void {
+			$target = value;
+			$each = $target["forEach"];
+		}*/
+		
+		
+		/**
+		 * 対象コレクションを設定。後から変更可能。
+		 * @param	collection	対象とするコレクションインスタンス。
+		 * @param	methodName	関数名。
+		 */
+		public function setTarget(collection:Object, methodName:String = "forEach"):void {
+			$target = collection;
+			$method = methodName;
+			$each = $target[$method];
+		}
 		
 		
 		
@@ -45,39 +67,31 @@ package saz.collections.enumerator {
 		
 		/**
 		 * mapと同じ。
-		 * @param	iterator
-		 * @return
+		 * @copy	#map
 		 */
-		//public function collect(iterator:Function = null):EnumerableArray { return []; }
 		public var collect:Function = map;
 		
 		/**
 		 * detectと同じ。
-		 * @param	iterator
-		 * @return
+		 * @copy	#detect
 		 */
-		//public function find(iterator:Function):* { return 0; }
 		public var find:Function = detect;
 		
 		/**
 		 * selectと同じ。
-		 * @param	iterator
-		 * @return
+		 * @copy	#select
 		 */
-		//public function findAll(iterator:Function):EnumerableArray { return[]; }
 		public var findAll:Function = select;
 		
 		/**
 		 * memberと同じ。（本来は"include"だが予約されていて使えない）
-		 * @param	value
-		 * @return
+		 * @copy	#member
 		 */
-		//public function include(value:*):Boolean { return false; }
 		public var includes:Function = member;
 		
 		/**
 		 * entriesと同じ。
-		 * @return
+		 * @copy	#entries
 		 */
 		public var toArray:Function = entries;
 		
@@ -117,6 +131,7 @@ package saz.collections.enumerator {
 		 * @see	http://livedocs.adobe.com/flash/9.0_jp/ActionScriptLangRefV3/package.html#Boolean()
 		 */
 		static private function $iterateBoolean(item:Boolean, index:int):Boolean {
+			trace("Enumerable.$iterateBoolean(", arguments);
 			return Boolean(item);
 		}
 		
@@ -156,9 +171,9 @@ package saz.collections.enumerator {
 		 * @param	iterator
 		 * @param	thisObject = null
 		 */
-		public function forEach(iterator:Function, thisObject = null):void {
-			$component.forEach(iterator, thisObject);
-		}
+		/*public function forEach(iterator:Function, thisObject = null):void {
+			$each(iterator, thisObject);
+		}*/
 		
 		/**
 		 * 「すべて」の要素が、テストをパスするかどうかをチェックする。
@@ -176,11 +191,17 @@ package saz.collections.enumerator {
 		public function all(iterator:Function = null):Boolean {
 			if (null == iterator) iterator = $iterateBoolean;
 			var res:Boolean = true;
-			$component.forEach(function(item:*, index:int, collection:Object):void {
-				if (false == iterator(item, index)) {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+				if (!iterator(item, index)) {
 					res = false;
 				}
-			});
+			}]);
+			/*$each(function(item:*, index:int, collection:Object):void {
+				//if (false == iterator(item, index)) {
+				if (!iterator(item, index)) {
+					res = false;
+				}
+			});*/
 			return res;
 		}
 		
@@ -194,11 +215,12 @@ package saz.collections.enumerator {
 		public function any(iterator:Function = null):Boolean {
 			if (null == iterator) iterator = $iterateBoolean;
 			var res:Boolean = false;
-			$component.forEach(function(item:*, index:int, collection:Object):void {
-				if (true == iterator(item, index)) {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+				//if (true == iterator(item, index)) {
+				if (iterator(item, index)) {
 					res = true;
 				}
-			});
+			}]);
 			return res;
 		}
 		
@@ -212,9 +234,9 @@ package saz.collections.enumerator {
 		public function map(iterator:Function):EnumerableArray {
 			//if (null == iterator) iterator = $iterateItem;
 			var res:EnumerableArray = new EnumerableArray();
-			$component.forEach(function(item:*, index:int, collection:Object):void {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
 				res.push(iterator(item, index));
-			});
+			}]);
 			return res;
 		}
 		
@@ -228,11 +250,12 @@ package saz.collections.enumerator {
 		 */
 		public function detect(iterator:Function):* {
 			var res:*= null;
-			$component.forEach(function(item:*, index:int, collection:Object):void {
-				if (null == res && true == iterator(item, index)) {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+				//if (null == res && true == iterator(item, index)) {
+				if (null == res && iterator(item, index)) {
 					res = item;
 				}
-			});
+			}]);
 			return res;
 		}
 		
@@ -246,11 +269,12 @@ package saz.collections.enumerator {
 		 */
 		public function select(iterator:Function):EnumerableArray {
 			var res:EnumerableArray = new EnumerableArray();
-			$component.forEach(function(item:*, index:int, collection:Object):void {
-				if (true == iterator(item, index)) {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+				//if (true == iterator(item, index)) {
+				if (iterator(item, index)) {
 					res.push(item);
 				}
-			});
+			}]);
 			return res;
 		}
 		
@@ -266,11 +290,12 @@ package saz.collections.enumerator {
 		public function grep(pattern:RegExp, iterator:Function = null):EnumerableArray {
 			if (null == iterator) iterator = $iterateItem;
 			var res:EnumerableArray = new EnumerableArray();
-			$component.forEach(function(item:String, index:int, collection:Object):void {
-				if (true == pattern.test(item)) {
+			$each.apply($target,[function(item:String, index:int, collection:Object):void {
+				//if (true == pattern.test(item)) {
+				if (pattern.test(item)) {
 					res.push(iterator(item, index));
 				}
-			});
+			}]);
 			return res;
 		}
 		
@@ -308,9 +333,9 @@ package saz.collections.enumerator {
 		 */
 		private function $injectWithInit(init:*, iterator:Function):*{
 			var res:*= init;
-			$component.forEach(function(item:*, index:int, collection:Object):void {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
 				res = iterator(res, item);
-			});
+			}]);
 			return res;
 		}
 		
@@ -332,9 +357,9 @@ package saz.collections.enumerator {
 				res = iterator(res, item);
 			};
 			var func:Function = firstFunc;
-			$component.forEach(function(item:*, index:int, collection:Object):void {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
 				func(item, index, collection);
-			});
+			}]);
 			return res;
 		}
 		
@@ -347,11 +372,11 @@ package saz.collections.enumerator {
 		 */
 		public function member(value:*):Boolean {
 			var res:Boolean = false;
-			$component.forEach(function(item:*, index:int, collection:Object):void {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
 				if (value == item) {
 					res = true;
 				}
-			});
+			}]);
 			return res;
 		}
 		
@@ -388,9 +413,9 @@ package saz.collections.enumerator {
 				if (res < item) res = item;
 			};
 			var func:Function = firstFunc;
-			$component.forEach(function(item:*, index:int, collection:Object):void {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
 				func(item, index, collection);
-			});
+			}]);
 			return res;
 		}
 		
@@ -424,9 +449,9 @@ package saz.collections.enumerator {
 				}
 			};
 			var func:Function = firstFunc;
-			$component.forEach(function(item:*, index:int, collection:Object):void {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
 				func(item, index, collection);
-			});
+			}]);
 			return res;
 		}
 		
@@ -473,9 +498,9 @@ package saz.collections.enumerator {
 				if (res > item) res = item;
 			};
 			var func:Function = firstFunc;
-			$component.forEach(function(item:*, index:int, collection:Object):void {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
 				func(item, index, collection);
-			});
+			}]);
 			return res;
 		}
 		
@@ -508,9 +533,9 @@ package saz.collections.enumerator {
 				}
 			};
 			var func:Function = firstFunc;
-			$component.forEach(function(item:*, index:int, collection:Object):void {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
 				func(item, index, collection);
-			});
+			}]);
 			return res;
 		}
 		
@@ -537,13 +562,13 @@ package saz.collections.enumerator {
 		public function partition(iterator:Function):EnumerableArray {
 			var trueRes:EnumerableArray = new EnumerableArray();
 			var falseRes:EnumerableArray = new EnumerableArray();
-			$component.forEach(function(item:*, index:int, collection:Object):void {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
 				if (iterator(item, index)) {
 					trueRes.push(item);
 				}else {
 					falseRes.push(item);
 				}
-			});
+			}]);
 			//return [trueRes, falseRes];
 			return new EnumerableArray(trueRes, falseRes);
 		}
@@ -557,11 +582,11 @@ package saz.collections.enumerator {
 		 */
 		public function reject(iterator:Function):EnumerableArray {
 			var res:EnumerableArray = new EnumerableArray();
-			$component.forEach(function(item:*, index:int, collection:Object):void {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
 				if (false == iterator(item, index)) {
 					res.push(item);
 				}
-			});
+			}]);
 			return res;
 		}
 		
@@ -607,9 +632,9 @@ package saz.collections.enumerator {
 		 */
 		public function entries():EnumerableArray {
 			var res:EnumerableArray = new EnumerableArray();
-			$component.forEach(function(item:*, index:int, collection:Object):void {
+			$each.apply($target,[function(item:*, index:int, collection:Object):void {
 				res.push(item);
-			});
+			}]);
 			return res;
 		}
 		
@@ -645,16 +670,16 @@ package saz.collections.enumerator {
 			if (last is Function) {
 				// 関数あり
 				arrs = rest.slice(0, rest.length - 1);
-				$component.forEach(function(item:*, index:int, collection:Object):void {
+				$each.apply($target,[function(item:*, index:int, collection:Object):void {
 					res.push([item].concat($zipArrays(index, arrs)));
-				});
+				}]);
 				return res.map(last, null);
 			}else {
 				// 関数なし
 				arrs = rest;
-				$component.forEach(function(item:*, index:int, collection:Object):void {
+				$each.apply($target,[function(item:*, index:int, collection:Object):void {
 					res.push([item].concat($zipArrays(index, arrs)));
-				});
+				}]);
 				return res;
 			}
 		}
