@@ -12,7 +12,7 @@
 		 * @see	http://help.adobe.com/ja_JP/ActionScript/3.0_ProgrammingAS3/WS5b3ccc516d4fbf351e63e3d118a9b90204-7fcd.html
 		 */
 		
-		private static var $instance:Singleton = null;
+		static private var $instance:Singleton = null;
 		
 		function Singleton(caller:Function = null) {
 			if (Singleton.getInstance != caller) {
@@ -32,7 +32,7 @@
 		 * インスタンスを生成する。
 		 * @return
 		 */
-		public static function getInstance():Singleton {
+		static public function getInstance():Singleton {
 			//インスタンスが未作成の場合、インスタンスを作成。
 			if (null == $instance) {
 				$instance = new Singleton(arguments.callee);
