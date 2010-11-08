@@ -2,7 +2,7 @@ package saz.events {
 	import flash.events.Event;
 	
 	/**
-	 * アニメーションイベント。StringAnimator用。
+	 * アニメーションイベント。<s>StringAnimator用。</s>未使用みたい.
 	 * @author saz
 	 */
 	public class AnimationEvent extends Event {

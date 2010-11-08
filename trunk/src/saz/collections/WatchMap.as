@@ -24,7 +24,7 @@
 			$initEventDispatcher();
 		}
 		
-		public override function put(key:String, value:*):void {
+		override public function put(key:String, value:*):void {
 			var oldValue:*= super.gets(key);
 			//値が同じなら何もしない
 			if (oldValue == value) return;
@@ -34,6 +34,9 @@
 			dispatchEvent(new WatchEvent(WatchEvent.CHANGE, key, oldValue, value));
 			dispatchEvent(new WatchEvent(key, key, oldValue, value));
 		}
+		
+		
+		
 		
 		
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void {
