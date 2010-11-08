@@ -5,6 +5,11 @@ package saz.test {
 	/**
 	 * テスト用出力。まとめて1フレームごとに出力。
 	 * @author saz
+	 * @example <listing version="3.0" >
+	 * Log.isFirebug = true;
+	 * Log.init(stage);
+	 * Log.log("This is test message.");
+	 * </listing>
 	 */
 	public class Log {
 		
@@ -15,19 +20,33 @@ package saz.test {
 		static private var $msgs:String = "";
 		static private var $isUpdate:Boolean = false;
 		
+		/**
+		 * 初期化＆処理開始.
+		 * @param	dsp
+		 */
 		static public function init(dsp:DisplayObject):void {
 			$dsp = dsp;
 			start();
 		}
 		
+		/**
+		 * 出力処理開始. （init()をコールすると自動で開始するので、通常使いません)
+		 */
 		static public function start():void {
 			$dsp.addEventListener(Event.ENTER_FRAME, $loop);
 		}
 		
+		/**
+		 * 出力処理停止. ただし停止中もlog()で受け取ったメッセージは、バッファに溜めてる. 
+		 */
 		static public function stop():void {
 			$dsp.removeEventListener(Event.ENTER_FRAME, $loop);
 		}
 		
+		/**
+		 * 出力. 
+		 * @param	value
+		 */
 		static public function log(value:*):void {
 			$isUpdate = true;
 			$msgs += value.toString() + "\r";
@@ -42,7 +61,7 @@ package saz.test {
 		static private function $print():void {
 			if ($isUpdate) {
 				if (isTrace) trace($msgs);
-				if (isFirebug) ExternalInterface.call("console.log", $msgs);
+				if (isFirebug && ExternalInterface.available) ExternalInterface.call("console.log", $msgs);
 				$isUpdate = false;
 				$msgs = "";
 			}

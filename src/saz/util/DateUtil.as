@@ -79,13 +79,13 @@ package saz.util {
 		 * @deprecated	これ汎用性ないな。廃止しよう。
 		 * @param	date	Dateインスタンス。
 		 * @param	sep	セパレータ。省略すると空文字。
-		 * @param	isYear	年を出力するかどうか。デフォルトはtrue。
-		 * @param	isMonth	月を出力するかどうか。デフォルトはtrue。
-		 * @param	isDate	日付を出力するかどうか。デフォルトはtrue。
-		 * @param	isHour	時間を出力するかどうか。デフォルトはtrue。
-		 * @param	isMinute	分を出力するかどうか。デフォルトはtrue。
-		 * @param	isSecond	秒を出力するかどうか。デフォルトはtrue。
-		 * @param	isMillisecound	ミリ秒を出力するかどうか。デフォルトはfalse。
+		 * @param	isYear	年を出力するかどうか。
+		 * @param	isMonth	月を出力するかどうか。
+		 * @param	isDate	日付を出力するかどうか。
+		 * @param	isHour	時間を出力するかどうか。
+		 * @param	isMinute	分を出力するかどうか。
+		 * @param	isSecond	秒を出力するかどうか。
+		 * @param	isMillisecound	ミリ秒を出力するかどうか。
 		 * @return	String
 		 */
 		public static function dateToString(date:Date, sep:String="", isYear:Boolean = true, isMonth:Boolean = true, isDate:Boolean = true, isHour:Boolean = true, isMinute:Boolean = true, isSecond:Boolean = true, isMillisecound:Boolean = false):String {
