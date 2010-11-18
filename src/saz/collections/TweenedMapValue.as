@@ -20,20 +20,8 @@
 	
 	/**
 	 * WatchMapの特定のプロパティをトィーンする。
-	 * @deprecated	汎用性がないのでTweenerNumberに移行。廃止予定。　ていうか動いてない！！！廃止廃止！
+	 * @deprecated	汎用性がないのでTweenerNumberに移行。廃止予定。
 	 * @author saz
-	 * @example <listing version="3.0" >
-	 * var wmap:WatchMap = new WatchMap();
-	 * wmap.put("yamada", 0);
-	 * 
-	 * var tm0:TweenedMapValue = new TweenedMapValue();
-	 * tm0.SetTarget(wmap,"yamada");
-	 * tm0.time = 1;
-	 * tm0.transition = "easeInOutExpo";
-	 * tm0.Start();
-	 * 
-	 * wmap.put("yamada",10);
-	 * </listing>
 	 */
 	public class TweenedMapValue extends EventDispatcher {
 		
@@ -48,17 +36,11 @@
 		public var time:Number = 0;
 		public var transition:String = "easeOutExpo";
 		
-		public var Start:Function;
-		public var Stop:Function;
-		public var SetTarget:Function;
-		
 		private var $watchMap:WatchMap;
 		private var $key:String;
 		
 		function TweenedMapValue() {
-			Start = start;
-			Stop = stop;
-			SetTarget = setTarget;
+			
 		}
 		
 		private function $onChange(e:WatchEvent):void {
@@ -85,12 +67,12 @@
 			dispatchEvent(new WatchEvent(WatchEvent.COMPLETE, $key, $oldVal, value));
 		}
 		
-		public function start():void {
+		public function Start():void {
 			value = $watchMap.gets($key);
 			$watchMap.addEventListener($key, $onChange);
 		}
 		
-		public function stop():void {
+		public function Stop():void {
 			$watchMap.removeEventListener($key, $onChange);
 		}
 		
@@ -99,7 +81,7 @@
 		 * @param	watchMap
 		 * @param	key
 		 */
-		public function setTarget(watchMap:WatchMap, key:String):void {
+		public function SetTarget(watchMap:WatchMap, key:String):void {
 			$watchMap = watchMap;
 			$key = key;
 		}

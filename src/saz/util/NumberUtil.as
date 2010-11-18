@@ -66,25 +66,6 @@ package saz.util {
 			return Math.abs(a - b) < EPSILON;
 		}
 		
-		/**
-		 * 平均値計算用関数（クロージャ）を返す。
-		 * @return	平均値計算用関数。
-		 * @example <listing version="3.0" >
-		 * var getAverage:Function = NumberUtil.averageClosure();
-		 * trace(getAverage(1));
-		 * trace(getAverage(2));
-		 * </listing>
-		 */
-		static public function averageClosure():Function {
-			var count:int = 0;
-			var total:Number = 0.0;
-			return function(value:Number):Number {
-				count++;
-				total += value;
-				return total / count;
-			}
-		}
-		
 	}
 	
 }

@@ -9,19 +9,6 @@
 	public class ObjectUtil {
 		
 		/**
-		 * プロパティ名の一覧を返す.
-		 * @param	target	対象とするObject。
-		 * @return	プロパティ名を含むArray. 順不同. 
-		 */
-		static public function propNames(target:Object):Array {
-			var res:Array = new Array();
-			for (var p:* in target) {
-				res.push(p);
-			}
-			return res;
-		}
-		
-		/**
 		 * Objectの深い複製。
 		 * @see	http://help.adobe.com/ja_JP/ActionScript/3.0_ProgrammingAS3/WS5b3ccc516d4fbf351e63e3d118a9b90204-7ee7.html
 		 * @param	target	対象とするObject。
@@ -64,16 +51,6 @@
 		}
 		
 		/**
-		 * オブジェクトからクラス名を取得する
-		 * @param	target
-		 * @return
-		 * @see	http://www.func09.com/wordpress/archives/152
-		 */
-		static public function getClassName(target:*):String {
-			return String(describeType(target).@name).match(/::(.*)/)[1];
-		}
-		
-		/**
 		 * Objectの中身を、trace()する。
 		 * @param	target
 		 * @param	indent
@@ -92,9 +69,6 @@
 				}
 			}
 		}
-		
-		// エイリアス
-		static public var toString:Function = dump;
 		
 		/**
 		 * Object　の中身をStringにして返す。ダンプ用。
@@ -126,6 +100,16 @@
 			}
 			res += indent + "}\n";
 			return res;
+		}
+		
+		/**
+		 * オブジェクトからクラス名を取得する
+		 * @param	target
+		 * @return
+		 * @see	http://www.func09.com/wordpress/archives/152
+		 */
+		static public function getClassName(target:*):String {
+			return String(describeType(target).@name).match(/::(.*)/)[1];
 		}
 		
 	}

@@ -144,15 +144,6 @@
 		
 		
 		/**
-		 * 配列内の要素をランダムに返す.
-		 * @param	target
-		 * @return
-		 */
-		public static function random(target:Array):*{
-			return target[Math.floor(Math.random() * target.length)];
-		}
-		
-		/**
 		 * 配列から指定した名前のプロパティを抜き出した配列を作る。<br/>
 		 * @param	target	対象とする配列。
 		 * @param	key	プロパティ名。

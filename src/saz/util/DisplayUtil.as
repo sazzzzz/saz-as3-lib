@@ -19,25 +19,6 @@
 		static public const MAX_FRAME:int = 16000 - 10;
 		
 		
-		/**
-		 * 指定したDisplayObjectのURLがローカルかどうか. ＝"file:///"を含むかどうか. 
-		 * @param	dsp	DisplayObjectインスタンス.
-		 * @return
-		 */
-		static public function isLocal(dsp:DisplayObject):Boolean {
-			return ( 0 == dsp.loaderInfo.url.indexOf("file:///"));
-		}
-		
-		/**
-		 * 外部swfから指定した名前のクラスを取り出す.
-		 * @deprecated	廃止予定. 代わりにClassUtil.extractClassを使え.
-		 * @param	loaderInfo	LoaderのLoaderInfoインスタンス.
-		 * @param	className	クラス名.
-		 * @return
-		 */
-		static public function getExternalClass(loaderInfo:LoaderInfo, className:String):Class {
-			return loaderInfo.applicationDomain.getDefinition(className) as Class;
-		}
 		
 		/**
 		 * ドキュメントクラス（あるいはメインタイムライン）が、親SWFかどうかを返す。

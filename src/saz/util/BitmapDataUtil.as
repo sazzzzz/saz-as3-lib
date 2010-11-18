@@ -8,13 +8,10 @@
 	 */
 	public class BitmapDataUtil {
 		
-		static public const VER9_MAX_SIZE:int = 2880;
-		
 		static private var $newPoint:Point;
 		static private var $newRectangle:Rectangle;
 		static private var $newMatrix:Matrix;
 		static private var $newColorTransform:ColorTransform;
-		
 		
 		/**
 		 * BitmapDataからPointとBitmapDataの配列を作る。
