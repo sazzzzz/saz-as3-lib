@@ -34,6 +34,29 @@ package saz.util {
 			return $newColorTransform;
 		}
 		
+		
+		
+		
+		
+		
+		
+		/**
+		 * ベクトルを正規化. 向きはそのままで、長さ1にしたベクトルを返す.
+		 * Point.nomalize()を使えよ！
+		 * @param	point
+		 * @return
+		 */
+		static public function normalizeVector(x:Number, y:Number):Point {
+			var len:Number = Math.sqrt((x * x) + (y * y));
+			return new Point(
+				x / len, y / len
+			);
+		}
+		
+		
+		
+		
+		
 		/**
 		 * x,y,width,heightを持つObjectから、プロパティをコピーしたRectangleを生成。
 		 * @param	obj
