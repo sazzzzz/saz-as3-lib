@@ -9,9 +9,9 @@ package saz.util {
 		public static const THUM_SIZE_M:int = 76;
 		public static const THUM_SIZE_S:int = 40;
 		
-		public static const URL_NO_IMAGE_L:String = "http://img.mixi.jp/img/basic/common/noimage_member180.gif";
-		public static const URL_NO_IMAGE_M:String = "http://img.mixi.jp/img/basic/common/noimage_member76.gif";
-		public static const URL_NO_IMAGE_S:String = "http://img.mixi.jp/img/basic/common/noimage_member40.gif";
+		public static const URL_NOIMAGE_L:String = "http://img.mixi.jp/img/basic/common/noimage_member180.gif";
+		public static const URL_NOIMAGE_M:String = "http://img.mixi.jp/img/basic/common/noimage_member76.gif";
+		public static const URL_NOIMAGE_S:String = "http://img.mixi.jp/img/basic/common/noimage_member40.gif";
 		
 		/**
 		 * プロフィール画像のURL
@@ -48,13 +48,13 @@ package saz.util {
 		public static function getNoImageUrl(size:int = THUM_SIZE_M):String {
 			switch(size) {
 				case THUM_SIZE_L:
-					return URL_NO_IMAGE_L;
+					return URL_NOIMAGE_L;
 				case THUM_SIZE_M:
-					return URL_NO_IMAGE_M;
+					return URL_NOIMAGE_M;
 				case THUM_SIZE_S:
-					return URL_NO_IMAGE_S;
+					return URL_NOIMAGE_S;
 			}
-			return URL_NO_IMAGE_S;
+			return URL_NOIMAGE_S;
 		}
 		
 	}
