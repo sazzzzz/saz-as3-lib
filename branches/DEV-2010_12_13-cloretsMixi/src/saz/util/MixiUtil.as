@@ -1,4 +1,5 @@
 package saz.util {
+	import flash.external.ExternalInterface;
 	/**
 	 * mixiユーティリティ.
 	 * @author saz
@@ -12,6 +13,37 @@ package saz.util {
 		public static const URL_NOIMAGE_L:String = "http://img.mixi.jp/img/basic/common/noimage_member180.gif";
 		public static const URL_NOIMAGE_M:String = "http://img.mixi.jp/img/basic/common/noimage_member76.gif";
 		public static const URL_NOIMAGE_S:String = "http://img.mixi.jp/img/basic/common/noimage_member40.gif";
+		
+		public static const URL_RUN_APP:String = "http://mixi.jp/run_appli.pl?id=";
+		public static const URL_VIEW_APP:String = "http://mixi.jp/view_appli.pl?id=";
+		
+		/**
+		 * アプリ実行ページURL
+		 * @param	appId
+		 * @return
+		 */
+		public static function getRunAppUrl(appId:String):String {
+			return URL_RUN_APP + appId;
+		}
+		
+		/**
+		 * アプリ紹介ページURL
+		 * @param	appId
+		 * @return
+		 */
+		public static function getViewAppUrl(appId:String):String {
+			return URL_VIEW_APP + appId;
+		}
+		
+		
+		/**
+		 * appParams用にObjectをエンコード. 
+		 * @param	params
+		 * @return
+		 */
+		public static function encodeAppParams(params:Object):String {
+			return ExternalInterface.call("kiss.encodeAppParams", params);1
+		}
 		
 		/**
 		 * プロフィール画像のURL
