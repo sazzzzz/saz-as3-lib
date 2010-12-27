@@ -22,8 +22,14 @@ package saz.util {
 		 * @param	appId
 		 * @return
 		 */
-		public static function getRunAppUrl(appId:String):String {
-			return URL_RUN_APP + appId;
+		public static function getRunAppUrl(appId:String, params:Object = null):String {
+			if (params) {
+				//return URL_RUN_APP + appId + "&appParams=" + encodeAppParams(params);
+				return URL_RUN_APP + appId + "&" + encodeAppParams(params);
+			}else {
+				return URL_RUN_APP + appId;
+			}
+			//return URL_RUN_APP + appId + ((params) ? "&" + encodeAppParams(params) : "");
 		}
 		
 		/**
@@ -42,7 +48,7 @@ package saz.util {
 		 * @return
 		 */
 		public static function encodeAppParams(params:Object):String {
-			return ExternalInterface.call("kiss.encodeAppParams", params);1
+			return ExternalInterface.call("kiss.encodeAppParams", params);
 		}
 		
 		/**
