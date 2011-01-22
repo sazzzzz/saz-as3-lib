@@ -1,13 +1,36 @@
 package saz.util {
 	import flash.display.LoaderInfo;
 	import flash.text.Font;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	/**
 	 * テキスト用ユーティリティークラス.
 	 * @author saz
 	 */
 	public class TextUtil {
 		
+		/**
+		 * TextFormatのプロパティ名リスト. textFormatToString用.
+		 */
+		public static const TEXTFORMAT_PROPS:Array = ["align", "blockIndent", "bold", "bullet", "color", "font", "indent", "italic", "kerning", "leading", "leftMargin", "letterSpacing", "rightMargin", "size", "tabStops", "target", "underline", "url"];
+		
 		static private var $fonts:Object;
+		
+		
+		/**
+		 * TextFieldからTextFormatをコピーして、別のTextFieldに適用する.
+		 * 具体的には、srcからgetTextFormat()して、targetのsetTextFormat()とdefaultTextFormatに指定.
+		 * @param	src	TextFormatを取り出すTextField.
+		 * @param	target	TextFormatを適用する先. 省略した場合は、srcに適用する.
+		 */
+		public static function attachTextFormat(src:TextField, target:TextField = null):void {
+			var fmt:TextFormat = src.getTextFormat();
+			if (!target) target = src;
+			target.setTextFormat(fmt);
+			target.defaultTextFormat = fmt;
+		}
+		
+		
 		
 		/**
 		 * 登録したフォントインスタンスを返す.
@@ -70,6 +93,16 @@ package saz.util {
 			var FontClass:Class = ClassUtil.extractClass(loaderInfo, fontName);
 			Font.registerFont(FontClass);
 			return FontClass;
+		}
+		
+		
+		/**
+		 * TextFormatのプロパティ一覧をStringにして返す. ObjectUtil.propertiesToString形式
+		 * @param	target
+		 * @return
+		 */
+		public static function textFormatToString(target:TextFormat):String {
+			return ObjectUtil.propertiesToString(target, TEXTFORMAT_PROPS);
 		}
 		
 	}

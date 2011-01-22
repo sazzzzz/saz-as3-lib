@@ -8,6 +8,35 @@
 	 */
 	public class ObjectUtil {
 		
+		
+		/**
+		 * 指定プロパティの値を配列にして返す.
+		 * @param	target	対象オブジェクト.
+		 * @param	names	プロパティ名のリスト.
+		 * @return
+		 */
+		public static function getProperties(target:Object, names:Array):Array {
+			var res:Array = new Array(names.length);
+			names.forEach(function(item:*, index:int, arr:Array):void {
+				res[index] = target[item];
+			});
+			return res;
+		}
+		
+		/**
+		 * 対象オブジェクトのプロパティを一括設定します.jp.nium.utils.ObjectUtil.setProperties のマネ.
+		 * @param	target	対象オブジェクト.
+		 * @param	params	設定したいプロパティを含んだオブジェクトです.
+		 * @see	jp.nium.utils.ObjectUtil#setProperties
+		 * @see	http://asdoc.progression.jp/4.0/jp/nium/utils/ObjectUtil.html#setProperties()
+		 */
+		public static function setProperties(target:Object, params:Object):void {
+			for (var p:String in params) {
+				target[p] = params[p];
+			}
+		}
+		
+		
 		/**
 		 * プロパティ名の一覧を返す.
 		 * @param	target	対象とするObject。
@@ -73,6 +102,38 @@
 			return String(describeType(target).@name).match(/::(.*)/)[1];
 		}
 		
+		
+		
+		//--------------------------------------------------------------------------
+		//
+		//  テスト用
+		//
+		//--------------------------------------------------------------------------
+		
+		
+		public static function propertiesToString(target:Object, names:Array, separator:String = ": "):String {
+			var res:String = "";
+			names.forEach(function(item:String, index:int, arr:Array):void {
+				res += item + separator + target[item] + "\n";
+			});
+			return res;
+			
+		}
+		
+		/**
+		 * Objectの中身を、trace()する. toStringをtraceしてる.
+		 * @param	target
+		 */
+		public static function traceObject(target:Object):void {
+			trace(toString(target));
+		}
+		
+		/**
+		 * Object の中身をStringにして返す. dumpのエイリアス.
+		 */
+		static public var toString:Function = dump;
+		
+		
 		/**
 		 * Objectの中身を、trace()する。
 		 * @param	target
@@ -92,9 +153,6 @@
 				}
 			}
 		}
-		
-		// エイリアス
-		static public var toString:Function = dump;
 		
 		/**
 		 * Object　の中身をStringにして返す。ダンプ用。
