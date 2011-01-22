@@ -35,11 +35,6 @@ package saz.string {
 			}
 		}
 		
-		//
-		// よく使うメモ
-		// fontFamily:"ＭＳ ゴシック,ＭＳ Ｐゴシック,メイリオ,ヒラギノ角ゴ Pro W3,ヒラギノ角ゴ ProN W3,Osaka,sans-serif"
-		//
-		
 		/**
 		 * HTMLモードを返す。MODE_HTML|MODE_XHTML。
 		 */

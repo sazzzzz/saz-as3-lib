@@ -1,5 +1,4 @@
 ﻿package saz.collections {
-	import saz.util.ObjectUtil;
 	
 	/**
 	 * java風Map。機能限定版。
@@ -16,13 +15,6 @@
 		 */
 		function Map() {
 			$obj = new Object();
-		}
-		
-		/**
-		 * 格納されているキーの一覧を返します.
-		 */
-		public function get keys():Array {
-			return ObjectUtil.propNames($obj);
 		}
 		
 		/**

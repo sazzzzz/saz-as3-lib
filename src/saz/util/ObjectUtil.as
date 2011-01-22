@@ -1,6 +1,4 @@
 ﻿package saz.util {
-	import flash.utils.ByteArray;
-	import flash.utils.describeType;
 	
 	/**
 	 * Objectユーティリティ
@@ -8,78 +6,9 @@
 	 */
 	public class ObjectUtil {
 		
-		
-		/**
-		 * 指定プロパティの値を配列にして返す.
-		 * @param	target	対象オブジェクト.
-		 * @param	names	プロパティ名のリスト.
-		 * @return
-		 */
-		public static function getProperties(target:Object, names:Array):Array {
-			var res:Array = new Array(names.length);
-			names.forEach(function(item:*, index:int, arr:Array):void {
-				res[index] = target[item];
-			});
-			return res;
-		}
-		
-		/**
-		 * 対象オブジェクトのプロパティを一括設定します.jp.nium.utils.ObjectUtil.setProperties のマネ.
-		 * @param	target	対象オブジェクト.
-		 * @param	params	設定したいプロパティを含んだオブジェクトです.
-		 * @see	jp.nium.utils.ObjectUtil#setProperties
-		 * @see	http://asdoc.progression.jp/4.0/jp/nium/utils/ObjectUtil.html#setProperties()
-		 */
-		public static function setProperties(target:Object, params:Object):void {
-			for (var p:String in params) {
-				target[p] = params[p];
-			}
-		}
-		
-		
-		/**
-		 * プロパティ名の一覧を返す.
-		 * @param	target	対象とするObject。
-		 * @return	プロパティ名を含むArray. 順不同. 
-		 */
-		static public function propNames(target:Object):Array {
-			var res:Array = new Array();
-			for (var p:* in target) {
-				res.push(p);
-			}
-			return res;
-		}
-		
-		/**
-		 * Objectの深い複製。
-		 * @see	http://help.adobe.com/ja_JP/ActionScript/3.0_ProgrammingAS3/WS5b3ccc516d4fbf351e63e3d118a9b90204-7ee7.html
-		 * @param	target	対象とするObject。
-		 * @return
-		 */
-		static public function deepClone(target:Object):* {
-			var ba:ByteArray = new ByteArray();
-			ba.writeObject(target);
-			ba.position = 0;
-			return (ba.readObject());
-		}
-		
-		/**
-		 * Objectインスタンスを複製する。
-		 * 各要素は複製せず、参照を代入するのみ。
-		 * @param	target	対象とするObject。
-		 * @return
-		 */
-		public static function clone(target:Object):Object {
-			var res:Object = new Object();
-			for (var name:String in target) {
-				res[name] = target[name];
-			}
-			return res;
-		}
-		
 		/**
 		 * Object内のすべての要素を削除する。
-		 * @param	target	対象とするObject。
+		 * @param	target	対象とするObject
 		 */
 		public static function removeAll(target:Object):void {
 			// for each じゃダメでした！
@@ -89,68 +18,6 @@
 			for (var name:String in target) {
 				//target[name] = null;		// null代入だとエントリが残っちゃう！
 				delete target[name];		// for..in で、 delete じゃないとダメみたい。
-			}
-		}
-		
-		/**
-		 * オブジェクトからクラス名を取得する
-		 * @param	target
-		 * @return
-		 * @see	http://www.func09.com/wordpress/archives/152
-		 */
-		static public function getClassName(target:*):String {
-			return String(describeType(target).@name).match(/::(.*)/)[1];
-		}
-		
-		
-		
-		//--------------------------------------------------------------------------
-		//
-		//  テスト用
-		//
-		//--------------------------------------------------------------------------
-		
-		
-		public static function propertiesToString(target:Object, names:Array, separator:String = ": "):String {
-			var res:String = "";
-			names.forEach(function(item:String, index:int, arr:Array):void {
-				res += item + separator + target[item] + "\n";
-			});
-			return res;
-			
-		}
-		
-		/**
-		 * Objectの中身を、trace()する. toStringをtraceしてる.
-		 * @param	target
-		 */
-		public static function traceObject(target:Object):void {
-			trace(toString(target));
-		}
-		
-		/**
-		 * Object の中身をStringにして返す. dumpのエイリアス.
-		 */
-		static public var toString:Function = dump;
-		
-		
-		/**
-		 * Objectの中身を、trace()する。
-		 * @param	target
-		 * @param	indent
-		 */
-		static public function dump2(target:Object, indent:String = ""):void {
-			var item:*;
-			for(var p:String in target){
-				item = target[p];
-				if (typeof(item) == "object") {
-				//if(item is Object){
-					trace(indent + p + ":{");
-					arguments.callee(item, indent + "  ");
-					trace(indent + "}");
-				}else{
-					trace(indent + p + ":", item);
-				}
 			}
 		}
 		
@@ -185,6 +52,7 @@
 			res += indent + "}\n";
 			return res;
 		}
+		
 		
 	}
 	

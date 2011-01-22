@@ -7,19 +7,19 @@
 	 */
 	public class VarDefault {
 		
-		public static const UNDEFINED:* = undefined;
+		public static const UNDEFINED = undefined;
 		
 		/**
 		 * Numberのデフォルト値判定には、isNumberDefault()を使う。
 		 */
-		public static const NUMBER:* = NaN;
+		public static const NUMBER = NaN;
 		
-		public static const BOOLEAN:* = false;
-		public static const INT:* = 0;
-		public static const UINT:* = 0;
-		public static const STRING:* = null;
-		public static const OBJECT:* = null;
-		public static const OTHERS:* = null;
+		public static const BOOLEAN = false;
+		public static const INT = 0;
+		public static const UINT = 0;
+		public static const STRING = null;
+		public static const OBJECT = null;
+		public static const OTHERS = null;
 		
 		/**
 		 * Numberがデフォルト値かどうかを返す。

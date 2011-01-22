@@ -39,9 +39,8 @@ package saz.collections {
 		
 		/**
 		 * 配列の中から、指定キーと値をもつ要素を返す。
-		 * TODO	型によっては動作しないかも…
 		 * @param	key
-		 * @param	value	型によっては動作しないかも…。動作確認済み＝Date。
+		 * @param	value
 		 * @return	指定キーと値をもつ要素を返す。見つからない場合はnullを返す。
 		 */
 		public function search(key:String, value:*):*{
@@ -64,7 +63,6 @@ package saz.collections {
 			
 			if (true == $needFlush) {
 				//索引データをフラッシュ
-				//trace("索引データをフラッシュ");
 				$needFlush = false;
 				$clearIndexData();
 				res = $createIndexData(key);
@@ -72,12 +70,10 @@ package saz.collections {
 				return res;
 			}else if (null == $indexDatas[key]) {
 				//索引データがまだないので作る
-				//trace("索引データがまだないので作る");
 				res = $createIndexData(key);
 				$indexDatas[key] = res;
 				return res;
 			}else {
-				//trace("索引データあり");
 				return $indexDatas[key];
 			}
 		}

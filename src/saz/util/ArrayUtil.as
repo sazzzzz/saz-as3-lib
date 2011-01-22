@@ -1,5 +1,5 @@
 ﻿package saz.util {
-	import saz.errors.IteratorBreakError;
+	import saz.IteratorBreakError;
 	
 	/**
 	 * Arrayユーティリティークラス。
@@ -80,15 +80,13 @@
 		 * </listing>
 		 */
 		public static function createIndexData(target:Array, key:String = "id"):Object {
-			//trace("ArrayUtil.createIndexData(", arguments);
 			var res:Object = new Object;
-			var value:*;
+			var value:Object;
 			
 			target.forEach(function(item:*, index:int, arr:Array):void {
 				// Objectでなかったら無視
 				if ("object" == typeof(item)) {
 					value = item[key];
-					//trace(item, index, value);
 					if ("number" == typeof(value)) {
 						// 数値型だとキーにできないので、エラー
 						throw new TypeError("ArrayUtil.createIndexData(): 値が数値型のため、プロパティ名にできません。");
@@ -144,15 +142,6 @@
 		
 		
 		/**
-		 * 配列内の要素をランダムに返す.
-		 * @param	target
-		 * @return
-		 */
-		public static function random(target:Array):*{
-			return target[Math.floor(Math.random() * target.length)];
-		}
-		
-		/**
 		 * 配列から指定した名前のプロパティを抜き出した配列を作る。<br/>
 		 * @param	target	対象とする配列。
 		 * @param	key	プロパティ名。
@@ -183,23 +172,6 @@
 		//}
 		
 		/**
-		 * 配列の要素をシャッフルする。
-		 * @param	target
-		 * @see	http://blog.livedoor.jp/dankogai/archives/50614134.html
-		 */
-		public static function shuffle(target:Array):void {
-			// Fisher-Yates法だそうです。
-			var i:int = target.length;
-			var j:int, t:*;
-			while (i) {
-				j = Math.floor(Math.random() * i);
-				t = target[--i];
-				target[i] = target[j];
-				target[j] = t;
-			}
-		}
-		
-		/**
 		 * 指定した値で埋める。
 		 * @param	target
 		 * @param	value
@@ -216,9 +188,7 @@
 		 * @param	target	対象とする配列
 		 */
 		public static function removeAll(target:Array):void {
-			//target.splice(0);
-			// http://www.coltware.com/2009/07/14/flex_array_delete_item/
-			target.length = 0;
+			target.splice(0);
 		}
 		
 		

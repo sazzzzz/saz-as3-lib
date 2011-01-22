@@ -23,10 +23,6 @@ package saz.util.tagcloud {
 			name = tagName;
 			count = tagCount;
 		}
-		
-		public function toString():String {
-			return [name, count].toString();
-		}
 	}
 
 }

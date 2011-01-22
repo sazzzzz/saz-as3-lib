@@ -21,27 +21,10 @@ package saz.collections {
 		 * シンタックス2： エレメント数 4 個の新しい List インスタンスを作成します。<br />
 		 * @example <listing version="3.0" >
 		 * var myList:List = new List(4);
-		 * var myList:List = new List(new Array(4));	//これでもOK。
 		 * </listing>
-		 * シンタックス3： 初期値を指定して、新しい List インスタンスを作成します。<br />
-		 * @example <listing version="3.0" >
-		 * var myList:List = new List([0,0]);
-		 * </listing>
-		 * @deprecated	引数に数字を指定するパターンは廃止。
 		 */
-		//public function List(arr:Array = null) {
-		public function List(...rest) {
-			var arg:*= rest[0];
-			if (arg is int) {
-				$arr = new Array(arg);
-			}else if (arg is Array) {
-				$arr = arg;
-			}else {
-				$arr = new Array();
-			}
-		}
-		/*public function List(arr:Array = null) {
-			$arr = (null==arr) ? new Array() : arr;
+		/*public function List(arr:Array = new Array()) {
+			$arr = arr;
 		}*/
 		
 		/**
@@ -54,9 +37,9 @@ package saz.collections {
 		 * var myList:List = new List(4);
 		 * </listing>
 		 */
-		/*public function List(size:int = 0) {
+		public function List(size:int = 0) {
 			$arr = new Array(size);
-		}*/
+		}
 		
 		/**
 		 * Arrayインスタンスを返す。
@@ -229,8 +212,7 @@ package saz.collections {
 		public function toString():String {
 			//return String($arr);
 			//return ObjectUtil.dump($arr);
-			//return "[saz.collections.List]";
-			return getArray().toString();
+			return "[saz.collections.List]";
 		}
 		
 	}
