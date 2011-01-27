@@ -68,7 +68,8 @@
 		 * @see	http://level0.kayac.com/2009/06/colortransform.php
 		 * @see	http://help.adobe.com/ja_JP/ActionScript/3.0_ProgrammingAS3/WS5b3ccc516d4fbf351e63e3d118a9b90204-7fd1.html#WS5b3ccc516d4fbf351e63e3d118a9b90204-7f6c
 		 */
-		public static function createColorTransform( rgb:int, alpha:Number = 1 ):ColorTransform {
+		//public static function createColorTransform( rgb:int, alpha:Number = 1 ):ColorTransform {
+		public static function createColorTransform( rgb:uint, alpha:Number = 1 ):ColorTransform {
 			// FIXME	createColorTransform(0x000000, 1 / 2)が期待通りにならない。
 			var k:Number = 1.0 - alpha;
 			var red:Number = (rgb >> 16 & 0xFF) * alpha;
