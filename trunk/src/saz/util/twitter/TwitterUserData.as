@@ -36,12 +36,12 @@ package saz.util.twitter {
 		 */
 		public var _protected:Boolean;
 		public var followers_count:int;
-		public var profile_background_color:int;
-		public var profile_text_color:int;
-		public var profile_link_color:int;
-		public var profile_sidebar_fill_color:int;
-		public var profile_sidebar_border_color:int;
-		public var friends_count:int;
+		public var profile_background_color:uint;		// RGB値はuint！
+		public var profile_text_color:uint;
+		public var profile_link_color:uint;
+		public var profile_sidebar_fill_color:uint;
+		public var profile_sidebar_border_color:uint;
+		public var friends_count:uint;
 		public var created_at:Date;
 		public var favourites_count:int;
 		public var utc_offset:int;
