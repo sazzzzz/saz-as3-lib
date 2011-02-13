@@ -3,6 +3,7 @@ package saz.display {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import saz.events.DynamicEvent;
 	
@@ -12,11 +13,9 @@ package saz.display {
 	 */
 	public class InvisibleButton extends EventDispatcher {
 		
-		public static const STATE_STOP:String = "stop";
-		public static const INSIDE:String = "inside";
-		public static const OUTSIDE:String = "outside";
+		private static const STOP:String = "stop";
 		
-		private var $state:String = STATE_STOP;
+		private var $state:String = STOP;
 		private var $isRunning:Boolean = false;
 		
 		private var $container:DisplayObject;
@@ -32,13 +31,13 @@ package saz.display {
 		}
 		
 		private function $loop(e:Event):void {
-			$setState(($rect.contains($container.mouseX, $container.mouseY)) ? INSIDE : OUTSIDE);
+			$setState(($rect.contains($container.mouseX, $container.mouseY)) ? MouseEvent.ROLL_OVER : MouseEvent.ROLL_OUT);
 		}
 		
 		private function $setState(state:String):void {
 			if ($state == state) return;
 			$state = state;
-			dispatchEvent(new DynamicEvent(state));
+			dispatchEvent(new MouseEvent(state));
 		}
 		
 		
@@ -49,7 +48,7 @@ package saz.display {
 		}
 		
 		public function stop():void {
-			$state = STATE_STOP;
+			$state = STOP;
 			$isRunning = false;
 			$dispatcher.removeEventListener($eventType, $loop);
 		}
