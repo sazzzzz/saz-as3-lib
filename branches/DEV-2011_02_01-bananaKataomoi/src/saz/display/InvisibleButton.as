@@ -13,9 +13,9 @@ package saz.display {
 	 */
 	public class InvisibleButton extends EventDispatcher {
 		
-		private static const STOP:String = "stop";
+		//private static const STOP:String = "stop";
 		
-		private var $state:String = STOP;
+		private var $state:String = MouseEvent.ROLL_OUT;
 		private var $isRunning:Boolean = false;
 		
 		private var $container:DisplayObject;
@@ -48,7 +48,7 @@ package saz.display {
 		}
 		
 		public function stop():void {
-			$state = STOP;
+			//$state = STOP;
 			$isRunning = false;
 			$dispatcher.removeEventListener($eventType, $loop);
 		}
