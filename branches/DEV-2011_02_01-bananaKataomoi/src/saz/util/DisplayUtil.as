@@ -42,6 +42,22 @@
 		//--------------------------------------
 		
 		/**
+		 * 対象DisplayObjectからルートに至るまで、全てのInteractiveObjectに対してmouseEnabledを設定する. 
+		 * @param	target	スタート地点となるDisplayObject.
+		 * @param	value	mouseEnabledに設定する値. デフォルトはfalse. 
+		 */
+		public static function forceMouseEnabled(target:DisplayObject, value:Boolean = false):void {
+			while (target != null && !(target is Stage)) {
+				if (target is InteractiveObject) {
+					//trace(target, InteractiveObject(target).mouseEnabled);
+					InteractiveObject(target).mouseEnabled = value;
+				}
+				target = target.parent;
+			}
+		}
+		
+		
+		/**
 		 * ColorMatrixFilter用デフォルト配列。
 		 * @return
 		 */
