@@ -10,7 +10,7 @@ package saz.display.dialog {
 	 * @example <listing version="3.0" >
 	 * var dc:DialogController = new DialogController(sprite);
 	 * //背景用Sprite
-	 * dc.background = new SimpleDialogBackground({
+	 * dc.background = new RectDialogBackground({
 	 * 	fillRect:new Rectangle(0,0,stage.stageWidth,stage.stageHeight)
 	 * 	,time:1/4
 	 * 	,maxAlpha:0.5

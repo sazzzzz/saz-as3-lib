@@ -14,43 +14,71 @@ package saz.display.dialog {
 	import jp.progression.scenes.*;
 	
 	/**
-	 * DialogController用ベタ背景
+	 * DialogController用背景ベースクラス.
+	 * 要Progression4. 
 	 * @author saz
 	 */
-	public class SimpleDialogBackground extends CastSprite {
-		
-		public var fillRect:Rectangle;
-		public var time:Number = 1 / 4;
-		public var maxAlpha:Number = 0.5;
+	public class DialogBackgroundBase extends CastSprite {
 		
 		/**
-		 * 新しい SimpleDialogBackground インスタンスを作成します。
+		 * フェードin/outする時間. 
 		 */
-		public function SimpleDialogBackground( initObject:Object = null ) {
+		public var time:Number = 1 / 4;
+		/**
+		 * 表示時のアルファ値. 
+		 */
+		public var maxAlpha:Number = 0.5;
+		/**
+		 * フェードin/outする時のイージング.
+		 */
+		public var transition:String = "linear";
+		
+		private var $inited:Boolean = false;
+		
+		/**
+		 * 新しい DialogBackgroundBase インスタンスを作成します。
+		 */
+		public function DialogBackgroundBase( initObject:Object = null ) {
 			// 親クラスを初期化します。
 			super( initObject );
-			
-			if (!fillRect) fillRect = new Rectangle(0, 0, 100, 100);
+		}
+		
+		private function $init():void {
+			$inited = true;
 			
 			alpha = 0.0;
 			cacheAsBitmap = true;
+			
+			init();
 		}
 		
-		protected function $draw():void {
-			var g:Graphics = graphics;
-			g.clear();
-			g.beginFill(0);
-			g.drawRect(fillRect.x, fillRect.y, fillRect.width, fillRect.height);
-		}
+		//--------------------------------------
+		// オーバーライド用
+		//--------------------------------------
+		
+		protected function init():void { }
+		protected function draw():void { }
+		protected function clear():void { }
+		protected function castAddedHook():void { }
+		protected function castRemovedHook():void { }
+		
+		
+		
+		
 		
 		/**
 		 * IExecutable オブジェクトが AddChild コマンド、または AddChildAt コマンド経由で表示リストに追加された場合に送出されます。
 		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
 		 */
 		override protected function atCastAdded():void {
-			$draw();
+			if (!$inited)$init();
+			
+			castAddedHook();
 			addCommand(
-				new DoTweener(this, { time:time, alpha:maxAlpha, transition:"linear" } )
+				new Func(function():void {
+					draw();
+				})
+				,new DoTweener(this, { time:time, alpha:maxAlpha, transition:transition } )
 			);
 		}
 		
@@ -59,10 +87,11 @@ package saz.display.dialog {
 		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
 		 */
 		override protected function atCastRemoved():void {
+			castRemovedHook();
 			addCommand(
-				new DoTweener(this, { time:time, alpha:0.0, transition:"linear" } )
+				new DoTweener(this, { time:time, alpha:0.0, transition:transition } )
 				,new Func(function():void {
-					graphics.clear();
+					clear();
 				})
 			);
 		}

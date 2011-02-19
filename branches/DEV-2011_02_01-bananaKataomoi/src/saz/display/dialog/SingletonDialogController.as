@@ -11,7 +11,7 @@ package saz.display.dialog {
 	 * @example <listing version="3.0" >
 	 * SingletonDialogController.getInstance().init(sprite);
 	 * //背景用Sprite
-	 * SingletonDialogController.getInstance().background = new SimpleDialogBackground({
+	 * SingletonDialogController.getInstance().background = new RectDialogBackground({
 	 * 	fillRect:new Rectangle(0,0,stage.stageWidth,stage.stageHeight)
 	 * 	,time:1/4
 	 * 	,maxAlpha:0.5
