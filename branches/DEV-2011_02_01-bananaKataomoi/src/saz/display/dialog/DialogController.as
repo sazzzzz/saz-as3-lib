@@ -8,9 +8,9 @@ package saz.display.dialog {
 	 * @author saz
 	 * 
 	 * @example <listing version="3.0" >
-	 * DialogController.getInstance().init(sprite);
+	 * var dc:DialogController = new DialogController(sprite);
 	 * //背景用Sprite
-	 * DialogController.getInstance().background = new SimpleDialogBackground({
+	 * dc.background = new SimpleDialogBackground({
 	 * 	fillRect:new Rectangle(0,0,stage.stageWidth,stage.stageHeight)
 	 * 	,time:1/4
 	 * 	,maxAlpha:0.5
@@ -20,8 +20,8 @@ package saz.display.dialog {
 	 * alert.addEventListener(DialogEvent.CLOSE,function(e:DialogEvent):void{
 	 * 	trace("dia1 CLOSE", e);
 	 * });
-	 * DialogController.getInstance().add(alert,"alert");
-	 * DialogController.getInstance().show("alert");
+	 * dc.add(alert,"alert");
+	 * dc.show("alert");
 	 * </listing>
 	 */
 	public class DialogController{
@@ -37,15 +37,8 @@ package saz.display.dialog {
 		private var $showCount:int = 0;
 		private var $isBackgroundShown:Boolean = false;
 		
-		function DialogController(caller:Function = null) {
-			if (DialogController.getInstance != caller) {
-				throw new Error("DialogControllerクラスはシングルトンクラスです。getInstance()メソッドを使ってインスタンス化してください。");
-			}
-			if (null != DialogController.$instance) {
-				throw new Error("DialogControllerインスタンスはひとつしか生成できません。");
-			}
-			
-			//ここからいろいろ書く
+		function DialogController(dialogContainer:CastSprite = null) {
+			if(dialogContainer) init(dialogContainer);
 		}
 		
 		private function $getEntry(id:String):Object {
@@ -65,18 +58,23 @@ package saz.display.dialog {
 			hide(e.target.id);
 		}
 		
+		
+		
 		/**
 		 * 初期化
 		 * @param	cast	コンテナとなるCastSpriteインスタンス。
 		 */
-		public function init(cast:CastSprite):void {
-			if (null == cast) return;
+		public function init(dialogContainer:CastSprite):void {
+			if (null == dialogContainer) return;
 			isReady = true;
-			container = cast;
+			container = dialogContainer;
 			
 			$dias = new Object();
 			$showCount = 0;
 		}
+		
+		
+		
 		
 		/**
 		 * ダイアログを登録。
@@ -89,7 +87,6 @@ package saz.display.dialog {
 			if ($getEntry(id)) return false;
 			
 			dialog.id = id;
-			//dialog.controller = this;
 			dialog.addEventListener(DialogEvent.CLOSE, $dialog_close);
 			$dias[id] = {id:id, cast:dialog, index:index, isShown:false};
 			return true;
@@ -181,17 +178,6 @@ package saz.display.dialog {
 			return $getEntry(id).cast;
 		}
 		
-		/**
-		 * インスタンスを生成する。
-		 * @return
-		 */
-		public static function getInstance():DialogController {
-			//インスタンスが未作成の場合、インスタンスを作成。
-			if (null == $instance) {
-				$instance = new DialogController(arguments.callee);
-			}
-			return $instance;
-		}
 	}
 
 }
