@@ -2,7 +2,7 @@ package saz.display.loading {
 	import flash.display.*;
 	
 	/**
-	 * ...
+	 * いくつかのSpriteが円周上を移動するアニメーション.
 	 * @author saz
 	 */
 	public class SimpleCircularLoading extends LoadingDrawerBase {
@@ -36,7 +36,7 @@ package saz.display.loading {
 			var res:Shape = new Shape();
 			var g:Graphics = res.graphics;
 			g.lineStyle();
-			g.beginFill(0xFFFFFF, 1.0);
+			g.beginFill(0xFFFFFF, 0.5);
 			g.drawRect( -1, -1, 3, 3);
 			return res;
 		}

@@ -4,16 +4,18 @@ package saz.display.loading {
 	import flash.events.IEventDispatcher;
 	
 	/**
-	 * プリローダーアニメーション用ベースクラス.
-	 * ADDED_TO_STAGEで描画開始. REMOVED_FROM_STAGEで停止. 
+	 * プリローダーアニメーション描画用ベースクラス.
 	 * @author saz
 	 */
 	public class LoadingDrawerBase {
 		
+		/**
+		 * 描画対象とするDisplayObjectContainer. 
+		 */
 		public var container:DisplayObjectContainer;
 		
 		/**
-		 * 生成する子インスタンスの数. ADDED_TO_STAGE後に変更しても反映されない. 
+		 * 生成する子インスタンスの数. start()後に変更しても反映されない. 
 		 */
 		public var num:int = 12;
 		
@@ -102,6 +104,9 @@ package saz.display.loading {
 		// internal
 		//--------------------------------------
 		
+		/**
+		 * 描画開始
+		 */
 		public function start():void {
 			if ($isRunning) return;
 			$isRunning = true;
@@ -116,6 +121,9 @@ package saz.display.loading {
 			$dispatcher.addEventListener($eventType, $loop);
 		}
 		
+		/**
+		 * 描画停止
+		 */
 		public function stop():void {
 			if (!$isRunning) return;
 			$isRunning = false;
@@ -146,6 +154,10 @@ package saz.display.loading {
 		public function destroy():void {
 			$dispatcher.removeEventListener($eventType, $loop);
 			removeChildren();
+			$items.forEach(function(item:DisplayObject, index:int, arr:Array):void {
+				item=null;
+			});
+			$items.length = 0;
 			atDestroy();
 		}
 		

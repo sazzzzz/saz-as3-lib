@@ -2,7 +2,7 @@ package saz.display.loading {
 	import flash.display.*;
 	import saz.util.ObjectUtil;
 	/**
-	 * ...
+	 * いくつかのspriteが回転するアニメーション.
 	 * @author saz
 	 */
 	public class SimpleRotationalLoading extends LoadingDrawerBase {
