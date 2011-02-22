@@ -43,7 +43,7 @@ package saz.display.loading {
 		 * @param	extra	各atDrawItemに渡されるリレーオブジェクト. プロパティを追加して各atDrawItem内で使用する. 
 		 */
 		override protected function atDraw(extra:Object):void {
-			baseRotation += speed;
+			baseRotation = (baseRotation + speed) % 360;		// %360しておかないと、時間たつとおかしくなる
 			extra.rotation = baseRotation;
 		}
 		
