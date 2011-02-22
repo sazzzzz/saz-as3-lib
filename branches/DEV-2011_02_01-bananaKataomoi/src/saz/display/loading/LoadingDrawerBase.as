@@ -8,8 +8,9 @@ package saz.display.loading {
 	 * ADDED_TO_STAGEで描画開始. REMOVED_FROM_STAGEで停止. 
 	 * @author saz
 	 */
-	public class LoadingIndicatorBase extends Sprite {
+	public class LoadingDrawerBase {
 		
+		public var container:DisplayObjectContainer;
 		
 		/**
 		 * 生成する子インスタンスの数. ADDED_TO_STAGE後に変更しても反映されない. 
@@ -21,15 +22,15 @@ package saz.display.loading {
 		protected var $eventType:String;
 		
 		protected var $isReady:Boolean = false;
-		protected var $isShown:Boolean = false;
+		protected var $isRunning:Boolean = false;
 		protected var $items:Array;
 		
 		private var $extraObj:Object;
 		
-		public function LoadingIndicatorBase() {
+		public function LoadingDrawerBase(displayContainer:DisplayObjectContainer) {
 			super();
 			
-			$init();
+			$init(displayContainer);
 		}
 		
 		
@@ -38,6 +39,12 @@ package saz.display.loading {
 		// オーバーライド用
 		//--------------------------------------
 		
+		
+		/**
+		 * start()直後に一度だけ呼ばれる. 主にインスタンス生成を行う. 
+		 * @param	extra	各atCreateItemに渡されるリレーオブジェクト. プロパティを追加して各atCreateItem内で使用する. 
+		 */
+		protected function atReady(extra:Object):void { }
 		
 		/**
 		 * 表示するDisplayObjectの生成メソッドを定義する. 
@@ -65,53 +72,23 @@ package saz.display.loading {
 		
 		
 		
+		/**
+		 * start()直後に呼ばれる. 主に表示アニメーションを行う. 
+		 */
+		//protected function atStart():void { }
 		
 		
 		/**
-		 * ADDED_TO_STAGE直後に一度だけ呼ばれる. 主にインスタンス生成を行う. 
-		 * @param	extra	各atCreateItemに渡されるリレーオブジェクト. プロパティを追加して各atCreateItem内で使用する. 
+		 * stop()後に呼ばれる. 主に消えるアニメーションを行う. 
 		 */
-		protected function atReady(extra:Object):void {
-			visible = false;
-		}
+		//protected function atStop():void { }
 		
-		/**
-		 * ADDED_TO_STAGE直後に呼ばれる. 主に表示アニメーションを行う. showComplete()を実行すること！
-		 */
-		protected function atShow():void {
-			// your code
-			visible = true;
-			
-			// 必須
-			showComplete();
-		}
-		
-		/**
-		 * showComplete()から呼ばれる. 主に表示アニメーション完了処理を行う. 
-		 */
-		protected function atShowComplete():void { }
-		
-		/**
-		 * REMOVED_FROM_STAGE後に呼ばれる. 主に消えるアニメーションを行う. hideComplete()を実行すること！
-		 */
-		protected function atHide():void {
-			// your code
-			visible = false;
-			
-			// 必須
-			hideComplete();
-		}
-		
-		/**
-		 * hideComplete()から呼ばれる. 主に消えるアニメーション完了処理を行う. 
-		 */
-		protected function atHideComplete():void { }
 		
 		
 		/**
 		 * コンストラクタから呼ばれる.
 		 */
-		protected function atInit():void { }
+		//protected function atInit():void { }
 		
 		/**
 		 * デストラクト時に呼ばれる. 
@@ -125,34 +102,26 @@ package saz.display.loading {
 		// internal
 		//--------------------------------------
 		
-		public function show():void {
-			if ($isShown) return;
-			$isShown = true;
+		public function start():void {
+			if ($isRunning) return;
+			$isRunning = true;
 			
 			if (!$isReady) $ready();
-			atShow();
+			//atStart();
 			
 			if (!$dispatcher && !$eventType) {
-				$dispatcher = stage;
+				$dispatcher = container;
 				$eventType = Event.ENTER_FRAME;
 			}
 			$dispatcher.addEventListener($eventType, $loop);
 		}
 		
-		public function showComplete():void {
-			atShowComplete();
-		}
-		
-		public function hide():void {
-			if (!$isShown) return;
-			$isShown = false;
+		public function stop():void {
+			if (!$isRunning) return;
+			$isRunning = false;
 			
-			atHide();
-		}
-		
-		public function hideComplete():void {
-			atHideComplete();
 			$dispatcher.removeEventListener($eventType, $loop);
+			//atStop();
 		}
 		
 		
@@ -163,7 +132,7 @@ package saz.display.loading {
 		 */
 		public function setListen(dispatcher:IEventDispatcher, eventType:String):void {
 			// 実行中ならイベント登録しなおす
-			if ($isShown) {
+			if ($isRunning) {
 				$dispatcher.removeEventListener($eventType, $loop);
 				dispatcher.addEventListener(eventType, $loop);
 			}
@@ -175,8 +144,6 @@ package saz.display.loading {
 		 * デストラクタ. 
 		 */
 		public function destroy():void {
-			//removeEventListener(Event.ADDED_TO_STAGE, $this_addedStage);
-			//removeEventListener(Event.REMOVED_FROM_STAGE, $this_removedStage);
 			$dispatcher.removeEventListener($eventType, $loop);
 			removeChildren();
 			atDestroy();
@@ -190,13 +157,13 @@ package saz.display.loading {
 		//イラネ
 		protected function addChildren():void {
 			$items.forEach(function(item:DisplayObject, index:int, arr:Array):void {
-				addChild(item);
+				container.addChild(item);
 			});
 		}
 		
 		protected function removeChildren():void {
 			$items.forEach(function(item:DisplayObject, index:int, arr:Array):void {
-				removeChild(item);
+				container.removeChild(item);
 			});
 		}
 		
@@ -207,10 +174,9 @@ package saz.display.loading {
 		/**
 		 * コンストラクタから呼ばれる.
 		 */
-		private function $init():void {
-			//addEventListener(Event.ADDED_TO_STAGE, $this_addedStage);
-			//addEventListener(Event.REMOVED_FROM_STAGE, $this_removedStage);
-			atInit();
+		private function $init(displayContainer:DisplayObjectContainer):void {
+			container = displayContainer;
+			//atInit();
 		}
 		
 		/**
@@ -219,13 +185,13 @@ package saz.display.loading {
 		private function $ready():void {
 			if ($isReady) return;
 			$isReady = true;
-			$items = new Array(num);
+			if(!$items) $items = new Array(num);
 			
 			var extraObj:Object = { };
 			atReady(extraObj);
 			for (var i:int = 0, n:int = num, item:DisplayObject; i < n; i++) {
 				item = atCreateItem(i, n, extraObj);
-				addChild(item);
+				container.addChild(item);
 				$items[i] = item;
 			}
 		}
@@ -251,14 +217,6 @@ package saz.display.loading {
 		// event handler
 		//--------------------------------------
 		
-		/*private function $this_addedStage(e:Event):void {
-			show();
-		}
-		
-		private function $this_removedStage(e:Event):void {
-			hide();
-		}*/
-		
 		private function $loop(e:Event):void {
 			$draw();
 		}
@@ -271,7 +229,7 @@ package saz.display.loading {
 		 * 表示中かどうか
 		 */
 		public function get isShown():Boolean {
-			return $isShown;
+			return $isRunning;
 		}
 		
 		

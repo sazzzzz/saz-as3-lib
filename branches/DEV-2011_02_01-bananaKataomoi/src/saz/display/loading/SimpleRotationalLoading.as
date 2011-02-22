@@ -5,7 +5,7 @@ package saz.display.loading {
 	 * ...
 	 * @author saz
 	 */
-	public class SimpleRotationalLoading extends LoadingIndicatorBase {
+	public class SimpleRotationalLoading extends LoadingDrawerBase {
 		
 		/**
 		 * 回転するスピード. 単位は度. 
@@ -17,8 +17,8 @@ package saz.display.loading {
 		public var baseRotation:Number = 0.0;
 		
 		
-		public function SimpleRotationalLoading() {
-			super();
+		public function SimpleRotationalLoading(displayContainer:DisplayObjectContainer) {
+			super(displayContainer);
 		}
 		
 		/**
@@ -59,14 +59,6 @@ package saz.display.loading {
 			item.rotation = extra.rotation;
 		}
 		
-		/**
-		 * ADDED_TO_STAGE直後に一度だけ呼ばれる. 主にインスタンス生成を行う. 
-		 * @param	extra	各atCreateItemに渡されるリレーオブジェクト. プロパティを追加して各atCreateItem内で使用する. 
-		 */
-		override protected function atReady(extra:Object):void {
-			//extra.test = 0;
-			//visible = false;
-		}
 		
 	}
 

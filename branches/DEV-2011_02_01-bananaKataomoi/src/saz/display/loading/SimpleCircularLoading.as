@@ -5,7 +5,7 @@ package saz.display.loading {
 	 * ...
 	 * @author saz
 	 */
-	public class SimpleCircularLoading extends LoadingIndicatorBase {
+	public class SimpleCircularLoading extends LoadingDrawerBase {
 		
 		/**
 		 * 半径
@@ -21,8 +21,8 @@ package saz.display.loading {
 		public var baseRotation:Number = 0.0;
 		
 		
-		public function SimpleCircularLoading() {
-			super();
+		public function SimpleCircularLoading(displayContainer:DisplayObjectContainer) {
+			super(displayContainer);
 		}
 		
 		
@@ -64,23 +64,6 @@ package saz.display.loading {
 		}
 		
 		
-		/**
-		 * ADDED_TO_STAGE直後に呼ばれる. 主に表示アニメーションを行う. showComplete()を実行すること！
-		 */
-		override protected function atShow():void {
-			visible = true;
-			//
-			showComplete();
-		}
-		
-		/**
-		 * REMOVED_FROM_STAGE後に呼ばれる. 主に消えるアニメーションを行う. hideComplete()を実行すること！
-		 */
-		override protected function atHide():void {
-			visible = false;
-			//
-			hideComplete();
-		}
 		
 	}
 
