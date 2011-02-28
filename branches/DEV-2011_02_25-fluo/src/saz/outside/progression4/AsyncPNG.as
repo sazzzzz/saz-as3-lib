@@ -51,6 +51,11 @@ package saz.outside.progression4 {
 					
 					this.listen(_png, Event.COMPLETE);
 					_png.encodeAsync(bitmapData);
+				},
+				function():void {
+					//vvv parent重要
+					this.parent.latestData = _png.data;
+					trace(Object(_png.data).constructor);
 				}
 			);
 		}

@@ -39,6 +39,8 @@ package saz.outside.progression4 {
 		private var _latestEvent:Event;
 		public function get latestEvent():Event { return _latestEvent; }
 		
+		//public var writeMethod:Function = writeUTFBytes;
+		
 		/**
 		 * 新しい AsyncWriteFile インスタンスを作成します。
 		 */
@@ -62,15 +64,27 @@ package saz.outside.progression4 {
 					_fileStream.openAsync(file, fileMode);
 					
 					try {
-						_fileStream.writeUTFBytes(data);
+						//_fileStream.writeUTFBytes(data);		//FIXME	writeメソッドの選択をどうする？サブクラス？
+						_fileStream.writeBytes(data);
 					}catch (error:IOError) {		// エラー
 						trace(error.message);
 					}finally {
 						_fileStream.close();
 					}
+				},
+				function():void {
+					trace("comp");
 				}
 			);
 		}
+		
+		/*public static function writeUTFBytes(value:*):void {
+			_fileStream.writeUTFBytes(value);
+		}
+		
+		public static function writeBytes(value:*):void {
+			_fileStream.writeBytes(value);
+		}*/
 		
 		
 		private function $stream_IOError(event:IOErrorEvent):void {
