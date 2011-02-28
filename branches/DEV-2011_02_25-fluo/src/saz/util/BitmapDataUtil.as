@@ -19,6 +19,28 @@
 		// drawHistogram用テンポラリBitmdapData
 		static private var $histogramTmp:BitmapData;
 		
+		
+		/**
+		 * レベル補正. 
+		 * @param	src	元画像
+		 * @param	dst	出力先画像
+		 * @param	shadow	シャドウ. 0～255. デフォルトは0.
+		 * @param	middle	中間調（ガンマ）. 0～255. デフォルトは128.
+		 * @param	hilite	ハイライト. 0～255. デフォルトは255.
+		 */
+		static public function applyLevels(src:BitmapData, dst:BitmapData, shadow:int = 0, middle:int = 128, hilite:int = 255):void {
+			var gamma:Number = Math.log((middle-shadow) / (hilite-shadow)) / Math.log(0.5);
+			var mapR:Array = [], mapG:Array = [], mapB:Array = [];
+			for (var i:int = 0; i < 0x100; i++) {
+				mapB[i] = i < shadow ? 0 : 1 > hilite ? 0xFF : 255 * Math.pow((i - shadow) / (hilite - shadow), 1 / gamma);
+				mapG[i] = mapB[i] << 8;
+				mapR[i] = mapB[i] << 16;
+			}
+			dst.paletteMap(src, src.rect, getNewPoint(), mapR, mapG, mapB);
+		}
+		
+		
+		
 		/**
 		 * ヒストグラムを描画する
 		 * @param	bmp	対象となるBitmapData
