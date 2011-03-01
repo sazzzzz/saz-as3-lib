@@ -15,7 +15,58 @@ package saz.util {
 		static private var $newColorTransform:ColorTransform;
 		
 		
+		/**
+		 * createTransformMatrixの簡略版. 
+		 * @param	srcWidth
+		 * @param	srcHeight
+		 * @param	dstWidth
+		 * @param	dstHeight
+		 * @return
+		 */
+		static public function createScaleMatrix(srcWidth:Number, srcHeight:Number, dstWidth:Number, dstHeight:Number):Matrix {
+			return createTransformMatrix(
+				getNewPoint(), new Point(srcWidth, 0), new Point(0, srcHeight), getNewPoint(), new Point(dstWidth, 0), new Point(0, dstHeight)
+			);
+		}
 		
+		/**
+		 * 座標変換用Matrixをつくる
+		 * @param	a0
+		 * @param	a1
+		 * @param	a2
+		 * @param	b0
+		 * @param	b1
+		 * @param	b2
+		 * @return
+		 * @see	http://www.d-project.com/flex/009_FreeTransform/
+		 */
+		static public function createTransformMatrix(a0:Point, a1:Point, a2:Point, b0:Point, b1:Point, b2:Point):Matrix {
+			
+			var ma : Matrix = new Matrix(
+				a1.x - a0.x, a1.y - a0.y,
+				a2.x - a0.x, a2.y - a0.y);
+			ma.invert();
+			
+			var mb : Matrix = new Matrix(
+				b1.x - b0.x, b1.y - b0.y,
+				b2.x - b0.x, b2.y - b0.y);
+			
+			var m : Matrix = new Matrix();
+			
+			// O(原点)へ移動 
+			m.translate(-a0.x, -a0.y);
+			
+			// 単位行列に変換(aの座標系の逆行列)
+			m.concat(ma);
+			
+			// bの座標系に変換 
+			m.concat(mb);
+			
+			// b0へ移動 
+			m.translate(b0.x, b0.y);
+			
+			return m;
+		}
 		
 		
 		
