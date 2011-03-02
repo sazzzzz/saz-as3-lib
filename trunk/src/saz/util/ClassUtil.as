@@ -1,10 +1,13 @@
 package saz.util {
 	import flash.display.LoaderInfo;
+	import flash.utils.describeType;
 	/**
 	 * ...
 	 * @author saz
 	 */
 	public class ClassUtil{
+		
+		
 		
 		/**
 		 * 外部swfから指定した名前のクラスを取り出す.

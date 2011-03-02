@@ -8,7 +8,9 @@
 	 */
 	public class DisplayUtil {
 		
-		static private var $defaultColorMatrix:Array;
+		//--------------------------------------
+		// const
+		//--------------------------------------
 		
 		/**
 		 * 最小フレーム。
@@ -19,6 +21,39 @@
 		 * @see	http://kb2.adobe.com/jp/cps/228/228626.html
 		 */
 		static public const MAX_FRAME:int = 16000 - 10;
+		
+		/**
+		 * generateLayoutCode用プロパティ名のリスト. 
+		 */
+		//public static const LAYOUT_ACCESSOR_NAMES:Array = ["x", "y", "scaleX", "scaleY", "rotation", "alpha", "blendMode"];
+		public static const LAYOUT_ACCESSOR_NAMES:Array = ["x", "y", "width", "height", "rotation", "alpha", "blendMode"];
+		//public static const LAYOUT_ACCESSOR_NAMES:Array = ["x", "y", "width", "height", "scaleX", "scaleY", "rotation", "alpha", "blendMode"];
+		
+		
+		//--------------------------------------
+		// vars
+		//--------------------------------------
+		
+		static private var $defaultColorMatrix:Array;
+		
+		private static var _sprite:Sprite;
+		private static var _movieClip:MovieClip;
+		
+		/**
+		 * デフォルトSprite. 
+		 */
+		public static function get sprite():Sprite {
+			_sprite ||= new Sprite();
+			return _sprite;
+		}
+		
+		/**
+		 * デフォルトMovieClip. 
+		 */
+		public static function get movieClip():MovieClip {
+			_movieClip ||= new MovieClip();
+			return _movieClip;
+		}
 		
 		
 		//--------------------------------------
@@ -32,14 +67,77 @@
 		 * @param	className	クラス名.
 		 * @return
 		 */
-		static public function getExternalClass(loaderInfo:LoaderInfo, className:String):Class {
+		/*static public function getExternalClass(loaderInfo:LoaderInfo, className:String):Class {
 			return loaderInfo.applicationDomain.getDefinition(className) as Class;
+		}*/
+		
+		
+		
+		//--------------------------------------
+		// code generation
+		//--------------------------------------
+		
+		// 
+		private static function _formatLayoutCode(target:DisplayObject, propName:String, value:*):String {
+			return target.name + "." + propName + " = " + value + ";\n";
 		}
+		
+		/**
+		 * 指定DisplayObjectの、レイアウト用コードをStringで返す. 
+		 * @param	target	対象とするDisplayObject. 
+		 * @param	isRound	数字を四捨五入するかどうか. scaleX,scaleYは小数点以下2桁で、それ以外は整数化する. 
+		 * @param	nameList	プロパティ名のリスト. デフォルトはLAYOUT_ACCESSOR_NAMES. 
+		 * @param	formatFunction	出力用関数. デフォルトは_formatLayoutCode. 
+		 * @return
+		 */
+		public static function generateLayoutCode(target:DisplayObject, isRound:Boolean = true, nameList:Array = null, formatFunction:Function = null):String {
+			nameList ||= LAYOUT_ACCESSOR_NAMES;
+			formatFunction ||= _formatLayoutCode;
+			
+			var res:String = "";
+			var prop:String, value:*;
+			for (var i:int = 0, n:int = nameList.length; i < n; i++) {
+				prop = nameList[i];
+				value = target[prop];
+				if (value != sprite[prop]) {
+					// 値が違う
+					if (isRound && (prop == "scaleX" || prop == "scaleY")) value = Math.round(value * 100) / 100;
+					if (isRound && (prop == "x" || prop == "y" || prop == "width" || prop == "height" || prop == "rotation")) value = Math.round(value);
+					if (typeof(value) == "string") value = '"' + value + '"';
+					res += formatFunction(target, prop, value);
+				}
+			}
+			//res += "addChild(" + target.name + ");\n";
+			return res;
+		}
+		
+		/**
+		 * 指定DisplayObjectContainer内のDisplayObjectの、レイアウト用コードをStringで返す. 
+		 * @param	container	対象とするDisplayObjectContainer. 
+		 * @param	isRound	数字を四捨五入するかどうか. scaleX,scaleYは小数点以下2桁で、それ以外は整数化する. 
+		 * @param	nameList	プロパティ名のリスト. デフォルトはLAYOUT_ACCESSOR_NAMES. 
+		 * @param	formatFunction	出力用関数. デフォルトは_formatLayoutCode. 
+		 * @return
+		 */
+		public static function generateChildenLayoutCode(container:DisplayObjectContainer, isRound:Boolean = true, nameList:Array = null, formatFunction:Function = null):String {
+			nameList ||= LAYOUT_ACCESSOR_NAMES;
+			formatFunction ||= _formatLayoutCode;
+			
+			var res:String = "";
+			for (var i:int, item:DisplayObject; i < container.numChildren; i++) {
+				item = container.getChildAt(i);
+				res += generateLayoutCode(item, isRound, nameList, formatFunction);
+			}
+			return res;
+		}
+		
 		
 		
 		//--------------------------------------
 		// main
 		//--------------------------------------
+		
+		
 		
 		/**
 		 * 対象DisplayObjectからルートに至るまで、全てのInteractiveObjectに対してmouseEnabledを設定する. 
@@ -141,12 +239,12 @@
 		 * @param	alpha
 		 * @deprecated	createColorTransform()を使えや。
 		 */
-		public static function setRGB(target:DisplayObject, rgb:uint, alpha:Number = 1):void {
+		/*public static function setRGB(target:DisplayObject, rgb:uint, alpha:Number = 1):void {
 			var colorTrans:ColorTransform = new ColorTransform();
 			colorTrans.color = rgb;
 			colorTrans.alphaMultiplier = alpha;
 			target.transform.colorTransform = colorTrans;
-		}
+		}*/
 		
 		
 		/**
@@ -228,12 +326,12 @@
 		 * @param	rect
 		 * @deprecated	GeomUtil.setRectangle へ移行。
 		 */
-		static public function setPropsByRectangle(target:DisplayObject, rect:Rectangle):void {
+		/*static public function setPropsByRectangle(target:DisplayObject, rect:Rectangle):void {
 			target.x = rect.x;
 			target.y = rect.y;
 			target.width = rect.width;
 			target.height = rect.height;
-		}
+		}*/
 		
 		/**
 		 * DisplayObjectからRectangleを返す。
@@ -241,14 +339,14 @@
 		 * @return	
 		 * @deprecated	GeomUtil.setRectangle へ。
 		 */
-		static public function displayObjectToRectangle(target:DisplayObject):Rectangle {
+		/*static public function displayObjectToRectangle(target:DisplayObject):Rectangle {
 			return new Rectangle(
 				target.x
 				,target.y
 				,target.width
 				,target.height
 			);
-		}
+		}*/
 		
 		
 	}

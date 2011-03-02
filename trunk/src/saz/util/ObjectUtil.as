@@ -9,6 +9,8 @@
 	public class ObjectUtil {
 		
 		
+		//public static function listDefferenceProperties(target:Object,names:Array):
+		
 		/**
 		 * 指定プロパティの値を配列にして返す.
 		 * @param	target	対象オブジェクト.
@@ -103,12 +105,35 @@
 		}
 		
 		
+		/**
+		 * インスタンス同士を比較して、値が異なるアクセサをリストにして返す. ただし対象となるアクセサはBoolean, String, Number, int, utin型のみ. 
+		 * @param	target	調べる対象のインスタンス. 
+		 * @param	original	比較対象のインスタンス. 
+		 * @return	{name:"name", value:value}形式のObjectの配列. 
+		 * @see	http://help.adobe.com/ja_JP/Flash/CS5/AS3LR/flash/utils/package.html#describeType()
+		 * @see	http://www.be-interactive.org/?itemid=26
+		 */
+		public static function listDifferentAccessor(target:*, original:*):Array {
+			var res:Array = [];
+			var value:*;
+			for each(var acc:XML in describeType(target)..accessor) {
+				value = target[acc.@name];
+				var to:String = typeof(value);
+				if ( (to == "boolean" || to == "string" || to == "number") && value != original[acc.@name]) {
+					res.push({name:acc.@name, value:value});
+				}
+			}
+			return res;
+		}
+		
+		
 		
 		//--------------------------------------------------------------------------
 		//
 		//  テスト用
 		//
 		//--------------------------------------------------------------------------
+		
 		
 		
 		public static function propertiesToString(target:Object, names:Array, separator:String = ": "):String {
