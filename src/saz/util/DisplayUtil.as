@@ -8,6 +8,8 @@
 	 */
 	public class DisplayUtil {
 		
+		static private var $defaultColorMatrix:Array;
+		
 		/**
 		 * 最小フレーム。
 		 */
@@ -19,14 +21,9 @@
 		static public const MAX_FRAME:int = 16000 - 10;
 		
 		
-		/**
-		 * 指定したDisplayObjectのURLがローカルかどうか. ＝"file:///"を含むかどうか. 
-		 * @param	dsp	DisplayObjectインスタンス.
-		 * @return
-		 */
-		static public function isLocal(dsp:DisplayObject):Boolean {
-			return ( 0 == dsp.loaderInfo.url.indexOf("file:///"));
-		}
+		//--------------------------------------
+		// @deprecated
+		//--------------------------------------
 		
 		/**
 		 * 外部swfから指定した名前のクラスを取り出す.
@@ -37,6 +34,50 @@
 		 */
 		static public function getExternalClass(loaderInfo:LoaderInfo, className:String):Class {
 			return loaderInfo.applicationDomain.getDefinition(className) as Class;
+		}
+		
+		
+		//--------------------------------------
+		// main
+		//--------------------------------------
+		
+		/**
+		 * 対象DisplayObjectからルートに至るまで、全てのInteractiveObjectに対してmouseEnabledを設定する. 
+		 * @param	target	スタート地点となるDisplayObject.
+		 * @param	value	mouseEnabledに設定する値. デフォルトはfalse. 
+		 */
+		public static function forceMouseEnabled(target:DisplayObject, value:Boolean = false):void {
+			while (target != null && !(target is Stage)) {
+				if (target is InteractiveObject) {
+					//trace(target, InteractiveObject(target).mouseEnabled);
+					InteractiveObject(target).mouseEnabled = value;
+				}
+				target = target.parent;
+			}
+		}
+		
+		
+		/**
+		 * ColorMatrixFilter用デフォルト配列。
+		 * @return
+		 */
+		public static function getDefaultColorMatrix():Array {
+			if (!$defaultColorMatrix)$defaultColorMatrix = [
+				1, 0, 0, 0, 0,
+				0, 1, 0, 0, 0,
+				0, 0, 1, 0, 0,
+				0, 0, 0, 1, 0
+			];
+			return $defaultColorMatrix;
+		}
+		
+		/**
+		 * 指定したDisplayObjectのURLがローカルかどうか. ＝"file:///"を含むかどうか. 
+		 * @param	dsp	DisplayObjectインスタンス.
+		 * @return
+		 */
+		static public function isLocal(dsp:DisplayObject):Boolean {
+			return ( 0 == dsp.loaderInfo.url.indexOf("file:///"));
 		}
 		
 		/**
