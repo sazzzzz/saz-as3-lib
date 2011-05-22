@@ -27,6 +27,25 @@
 			return ( 0 == urlStr.indexOf("file:///"));
 		}
 		
+		/**
+		 * 左端から指定された長さの文字をコピーし、Stringにして返す. 
+		 * @param	target	対象とするString
+		 * @param	len	抜き出す長さ
+		 * @return
+		 */
+		public static function left(target:String, len:int):String {
+			return target.substr(0, len);
+		}
+		
+		/**
+		 * 右端から指定された長さの文字をコピーし、Stringにして返す. 
+		 * @param	target	対象とするString
+		 * @param	len	抜き出す長さ
+		 * @return
+		 */
+		public static function right(target:String, len:int):String {
+			return target.substr( -len, len);
+		}
 		
 		/**
 		 * 改行を削除
