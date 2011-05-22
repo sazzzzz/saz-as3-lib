@@ -13,8 +13,8 @@ package saz.test {
 	 */
 	public class Log {
 		
-		static public var isTrace:Boolean = true;
-		static public var isFirebug:Boolean = false;
+		public static var isTrace:Boolean = true;
+		public static var isFirebug:Boolean = false;
 		
 		static private var $dsp:DisplayObject;
 		static private var $msgs:String = "";
@@ -24,7 +24,7 @@ package saz.test {
 		 * 初期化＆処理開始.
 		 * @param	dsp
 		 */
-		static public function init(dsp:DisplayObject):void {
+		public static function init(dsp:DisplayObject):void {
 			$dsp = dsp;
 			start();
 		}
@@ -32,14 +32,14 @@ package saz.test {
 		/**
 		 * 出力処理開始. （init()をコールすると自動で開始するので、通常使いません)
 		 */
-		static public function start():void {
+		public static function start():void {
 			$dsp.addEventListener(Event.ENTER_FRAME, $loop);
 		}
 		
 		/**
 		 * 出力処理停止. ただし停止中もlog()で受け取ったメッセージは、バッファに溜めてる. 
 		 */
-		static public function stop():void {
+		public static function stop():void {
 			$dsp.removeEventListener(Event.ENTER_FRAME, $loop);
 		}
 		
@@ -47,7 +47,7 @@ package saz.test {
 		 * 出力. 
 		 * @param	value
 		 */
-		static public function log(value:*):void {
+		public static function log(value:*):void {
 			$isUpdate = true;
 			$msgs += value.toString() + "\r";
 		}

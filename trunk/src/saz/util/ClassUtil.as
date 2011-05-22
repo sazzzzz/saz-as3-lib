@@ -15,7 +15,7 @@ package saz.util {
 		 * @param	className	クラス名.
 		 * @return
 		 */
-		static public function extractClass(loaderInfo:LoaderInfo, className:String):Class {
+		public static function extractClass(loaderInfo:LoaderInfo, className:String):Class {
 			return loaderInfo.applicationDomain.getDefinition(className) as Class;
 		}
 		
@@ -26,7 +26,7 @@ package saz.util {
 		 * @param	className	クラス名のリスト.
 		 * @return	クラスのリスト.
 		 */
-		static public function extractClasses(loaderInfo:LoaderInfo, classNames:Array):/*Class*/Array {
+		public static function extractClasses(loaderInfo:LoaderInfo, classNames:Array):/*Class*/Array {
 			var res:/*Class*/Array = new Array();
 			for each(var p in classNames) {
 				res.push(loaderInfo.applicationDomain.getDefinition(p) as Class);

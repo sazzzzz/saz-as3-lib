@@ -7,8 +7,8 @@ package saz.util {
 	 */
 	public class RectangleUtil {
 		
-		static public var innterFit:Function = inscribe;
-		static public var outerFit:Function = circumscribe;
+		public static var innterFit:Function = inscribe;
+		public static var outerFit:Function = circumscribe;
 		
 		/**
 		 * targetの縦横比で、frameに内接するRectangleを返す。
@@ -16,7 +16,7 @@ package saz.util {
 		 * @param	frame	
 		 * @return
 		 */
-		static public function inscribe(target:Rectangle, frame:Rectangle):Rectangle {
+		public static function inscribe(target:Rectangle, frame:Rectangle):Rectangle {
 			var scale:Number = (target.width / target.height < frame.width / frame.height)? frame.height / target.height : frame.width / target.width;
 			return fit(target, frame, scale);
 		}
@@ -27,7 +27,7 @@ package saz.util {
 		 * @param	frame	
 		 * @return
 		 */
-		static public function circumscribe(target:Rectangle, frame:Rectangle):Rectangle {
+		public static function circumscribe(target:Rectangle, frame:Rectangle):Rectangle {
 			//var srcScale:Number = target.width / target.height;
 			//var frameScale:Number = frame.width / frame.height;
 			//var scale:Number = (srcScale > frameScale)? frame.height / target.height : frame.width / target.width;
@@ -35,7 +35,7 @@ package saz.util {
 			return fit(target, frame, scale);
 		}
 		
-		static public function fit(target:Rectangle, frame:Rectangle, scale:Number):Rectangle {
+		public static function fit(target:Rectangle, frame:Rectangle, scale:Number):Rectangle {
 			return new Rectangle(
 				frame.x - Math.round((target.width * scale-frame.width) / 2)
 				,frame.y - Math.round((target.height * scale-frame.height) / 2)

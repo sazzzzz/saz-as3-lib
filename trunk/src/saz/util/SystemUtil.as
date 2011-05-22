@@ -11,7 +11,7 @@
 		 * ブラウザで実行中かどうか。
 		 * @return	ブラウザで実行中ならtrue。
 		 */
-		static public function isBrowser():Boolean {
+		public static function isBrowser():Boolean {
 			return ( Capabilities.playerType == "ActiveX" || Capabilities.playerType == "PlugIn" );
 		}
 		

@@ -38,7 +38,7 @@ package saz.util {
 		 * @return
 		 * @see	#registerExternalFont
 		 */
-		static public function getFont(name:String):Font {
+		public static function getFont(name:String):Font {
 			return ($fonts) ? $fonts[name] : null;
 		}
 		
@@ -48,7 +48,7 @@ package saz.util {
 		 * @param	name	
 		 * @see	#registerExternalFont
 		 */
-		static public function setFont(font:Font, name:String = ""):void {
+		public static function setFont(font:Font, name:String = ""):void {
 			if ("" == name) name = font.fontName;
 			if (!$fonts)$fonts = new Object();
 			$fonts[name] = font;
@@ -87,7 +87,7 @@ package saz.util {
 		 * @see	http://www.adobe.com/jp/newsletters/edge/october2009/articles/article2/
 		 * @see	http://loftimg.jp/blog/actionscript/post-13.php
 		 */
-		static public function registerExternalFont(loaderInfo:LoaderInfo, fontName:String):Class {
+		public static function registerExternalFont(loaderInfo:LoaderInfo, fontName:String):Class {
 			//var FontClass:Class = loaderInfo.applicationDomain.getDefinition(fontName) as Class;
 			//var FontClass:Class = DisplayUtil.getExternalClass(loaderInfo, fontName);
 			var FontClass:Class = ClassUtil.extractClass(loaderInfo, fontName);

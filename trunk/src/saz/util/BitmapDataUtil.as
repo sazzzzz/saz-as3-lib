@@ -8,7 +8,7 @@
 	 */
 	public class BitmapDataUtil {
 		
-		static public const VER9_MAX_SIZE:int = 2880;
+		public static const VER9_MAX_SIZE:int = 2880;
 		
 		static private var $newPoint:Point;
 		static private var $newRectangle:Rectangle;
@@ -22,7 +22,7 @@
 		 * @param	size
 		 * @return
 		 */
-		static public function createRectangleParticlesFromBitmapData(src:BitmapData, size:uint):Object {
+		public static function createRectangleParticlesFromBitmapData(src:BitmapData, size:uint):Object {
 			var sw:int = src.width;
 			var sh:int = src.height;
 			
@@ -60,7 +60,7 @@
 			
 			return { points:points, bmps:bmps };
 		}
-		/*static public function createRectangleParticlesFromBitmapData(src:BitmapData, size:uint):Object {
+		/*public static function createRectangleParticlesFromBitmapData(src:BitmapData, size:uint):Object {
 			var sw:int = src.width;
 			var sh:int = src.height;
 			
@@ -127,7 +127,7 @@
 		 * @param	smoothing	（オプション）スムージング。
 		 * @return
 		 */
-		static public function reduce(src:BitmapData, width:int, height:int, smoothing:Boolean = true):BitmapData {
+		public static function reduce(src:BitmapData, width:int, height:int, smoothing:Boolean = true):BitmapData {
 			var res:BitmapData;
 			var bmp1:BitmapData, bmp2:BitmapData;
 			var last:BitmapData;
