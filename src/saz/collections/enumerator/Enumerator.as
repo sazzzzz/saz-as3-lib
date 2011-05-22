@@ -32,6 +32,20 @@ package saz.collections.enumerator {
 			return new Enumerable(this);
 		}
 		
+		/* INTERFACE saz.collections.enumerator.IEnumerator */
+		
+		public function equals(item:*):Boolean {
+			return (this === item);
+		}
+		
+		public function clone():* {
+			return new Enumerator($component);
+		}
+		
+		public function destroy():void {
+			$component = null;
+		}
+		
 	}
 
 }

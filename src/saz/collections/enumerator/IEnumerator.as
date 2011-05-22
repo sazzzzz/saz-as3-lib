@@ -1,4 +1,5 @@
 package saz.collections.enumerator {
+	import saz.ICore;
 	
 	/**
 	 * Enumeratorインターフェース。
@@ -10,6 +11,7 @@ package saz.collections.enumerator {
 	 * </listing>
 	 */
 	public interface IEnumerator {
+	//public interface IEnumerator extends ICore {
 		/**
 		 * 各要素について関数を実行します。
 		 * 順番は保障されません。
