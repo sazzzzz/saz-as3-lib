@@ -44,7 +44,7 @@
 		 * @param	target	対象とするObject。
 		 * @return	プロパティ名を含むArray. 順不同. 
 		 */
-		static public function propNames(target:Object):Array {
+		public static function propNames(target:Object):Array {
 			var res:Array = new Array();
 			for (var p:* in target) {
 				res.push(p);
@@ -58,7 +58,7 @@
 		 * @param	target	対象とするObject。
 		 * @return
 		 */
-		static public function deepClone(target:Object):* {
+		public static function deepClone(target:Object):* {
 			var ba:ByteArray = new ByteArray();
 			ba.writeObject(target);
 			ba.position = 0;
@@ -100,7 +100,7 @@
 		 * @return
 		 * @see	http://www.func09.com/wordpress/archives/152
 		 */
-		static public function getClassName(target:*):String {
+		public static function getClassName(target:*):String {
 			return String(describeType(target).@name).match(/::(.*)/)[1];
 		}
 		
@@ -156,7 +156,7 @@
 		/**
 		 * Object の中身をStringにして返す. dumpのエイリアス.
 		 */
-		static public var toString:Function = dump;
+		public static var toString:Function = dump;
 		
 		
 		/**
@@ -164,7 +164,7 @@
 		 * @param	target
 		 * @param	indent
 		 */
-		static public function dump2(target:Object, indent:String = ""):void {
+		public static function dump2(target:Object, indent:String = ""):void {
 			var item:*;
 			for(var p:String in target){
 				item = target[p];
@@ -188,7 +188,7 @@
 		 * trace(ObjectUtil.dump(obj));
 		 * </listing>
 		 */
-		static public function dump(target:*):String {
+		public static function dump(target:*):String {
 			return $dump(target,"");
 		}
 		

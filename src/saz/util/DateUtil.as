@@ -57,7 +57,7 @@ package saz.util {
 		 * @param	time	ミリ秒。
 		 * @return	日時分秒を格納したObject。{ date:日, hours:時, minutes:分, seconds:秒, milliseconds:ミリ秒 }。
 		 */
-		static public function timeToObject(time:Number):Object {
+		public static function timeToObject(time:Number):Object {
 			return {
 				date:Math.floor(time / TIME_DATE)
 				,hours:Math.floor(time / TIME_HOUR) % 24

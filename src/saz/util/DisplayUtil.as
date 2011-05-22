@@ -15,12 +15,12 @@
 		/**
 		 * 最小フレーム。
 		 */
-		static public const MIN_FRAME:int = 1;
+		public static const MIN_FRAME:int = 1;
 		/**
 		 * 最大フレーム数。
 		 * @see	http://kb2.adobe.com/jp/cps/228/228626.html
 		 */
-		static public const MAX_FRAME:int = 16000 - 10;
+		public static const MAX_FRAME:int = 16000 - 10;
 		
 		/**
 		 * generateLayoutCode用プロパティ名のリスト. 
@@ -67,7 +67,7 @@
 		 * @param	className	クラス名.
 		 * @return
 		 */
-		/*static public function getExternalClass(loaderInfo:LoaderInfo, className:String):Class {
+		/*public static function getExternalClass(loaderInfo:LoaderInfo, className:String):Class {
 			return loaderInfo.applicationDomain.getDefinition(className) as Class;
 		}*/
 		
@@ -174,7 +174,7 @@
 		 * @param	dsp	DisplayObjectインスタンス.
 		 * @return
 		 */
-		static public function isLocal(dsp:DisplayObject):Boolean {
+		public static function isLocal(dsp:DisplayObject):Boolean {
 			return ( 0 == dsp.loaderInfo.url.indexOf("file:///"));
 		}
 		
@@ -184,7 +184,7 @@
 		 * @return	親SWFならtrue。
 		 * @see	http://www.imajuk.com/blog/archives/2008/01/as3root_1.html
 		 */
-		static public function isRootDocument(document:DisplayObjectContainer):Boolean {
+		public static function isRootDocument(document:DisplayObjectContainer):Boolean {
 			return document.parent is Stage;
 		}
 		
@@ -255,7 +255,7 @@
 		 * @example <listing version="3.0" >
 		 * </listing>
 		 */
-		static public function eachChildren(target:DisplayObjectContainer, iterator:Function):void {
+		public static function eachChildren(target:DisplayObjectContainer, iterator:Function):void {
 			var num:int = target.numChildren;
 			var item:DisplayObject;
 			for (var i:int = 0; i < num; i++) {
@@ -269,7 +269,7 @@
 		 * @param	target
 		 * @return
 		 */
-		static public function childrenToArray(target:DisplayObjectContainer):Array {
+		public static function childrenToArray(target:DisplayObjectContainer):Array {
 			var res:Array = new Array();
 			eachChildren(target, function(item:DisplayObject, index:int, collection:DisplayObjectContainer):void {
 				res.push(item);
@@ -283,7 +283,7 @@
 		 * @param	iterator	（オプション）DisplayObject→String変換関数。
 		 * @return
 		 */
-		static public function childrenToString(target:DisplayObjectContainer, iterator:Function = null):String {
+		public static function childrenToString(target:DisplayObjectContainer, iterator:Function = null):String {
 			if (null == iterator) iterator = $childToString;
 			var res:String = "";
 			eachChildren(target, function(item:DisplayObject, index:int, collection:DisplayObjectContainer):void {
@@ -299,7 +299,7 @@
 		 * @param	collection
 		 * @return
 		 */
-		static public function $childToString(item:DisplayObject, index:int, collection:DisplayObjectContainer):String {
+		public static function $childToString(item:DisplayObject, index:int, collection:DisplayObjectContainer):String {
 			return item.name + "\r";
 		}
 		
@@ -307,7 +307,7 @@
 		 * DisplayObjectContainerの子リストをtrace。
 		 * @param	target
 		 */
-		static public function dumpChildren(target:DisplayObjectContainer):void {
+		public static function dumpChildren(target:DisplayObjectContainer):void {
 			trace(childrenToString(target, function(item:DisplayObject, index:int, collection:DisplayObjectContainer):String {
 				return "[" + ObjectUtil.getClassName(item) + "]" + "\t" + item.name + "\r";
 			}));
@@ -326,7 +326,7 @@
 		 * @param	rect
 		 * @deprecated	GeomUtil.setRectangle へ移行。
 		 */
-		/*static public function setPropsByRectangle(target:DisplayObject, rect:Rectangle):void {
+		/*public static function setPropsByRectangle(target:DisplayObject, rect:Rectangle):void {
 			target.x = rect.x;
 			target.y = rect.y;
 			target.width = rect.width;
@@ -339,7 +339,7 @@
 		 * @return	
 		 * @deprecated	GeomUtil.setRectangle へ。
 		 */
-		/*static public function displayObjectToRectangle(target:DisplayObject):Rectangle {
+		/*public static function displayObjectToRectangle(target:DisplayObject):Rectangle {
 			return new Rectangle(
 				target.x
 				,target.y

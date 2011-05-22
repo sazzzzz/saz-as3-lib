@@ -8,16 +8,16 @@ package saz.test {
 	 */
 	public class TestUtil {
 		
-		//static public const FORMAT_BENCH_MEMORY:String = "Memory: %m bytes";
-		static public const FORMAT_BENCH_TIME:String = "Time: %t ms";
-		static public const FORMAT_BENCH:String = "Memory: %m bytes\rTime: %t ms";
+		//public static const FORMAT_BENCH_MEMORY:String = "Memory: %m bytes";
+		public static const FORMAT_BENCH_TIME:String = "Time: %t ms";
+		public static const FORMAT_BENCH:String = "Memory: %m bytes\rTime: %t ms";
 		
 		/**
 		 * 指定したFunctionの実行時間を計測して返す。
 		 * @param	func	計測する関数。
 		 * @return	msec。
 		 */
-		static public function meansureTime(func:Function):Number {
+		public static function meansureTime(func:Function):Number {
 			var start:Number, end:Number;
 			start = new Date().time;
 			func();
@@ -30,8 +30,8 @@ package saz.test {
 		 * @param	func
 		 * @return	msec。
 		 */
-		//static public function formatMeansureTime(func:Function, format:String="Time: %tms"):String {
-		static public function formatMeansureTime(func:Function, format:String = FORMAT_BENCH_TIME):String {
+		//public static function formatMeansureTime(func:Function, format:String="Time: %tms"):String {
+		public static function formatMeansureTime(func:Function, format:String = FORMAT_BENCH_TIME):String {
 			return format.replace("%t", "" + meansureTime(func));
 		}
 		
@@ -41,7 +41,7 @@ package saz.test {
 		 * @param	func	計測する関数。
 		 * @return	実行時間とメモリ消費を返す。{ time:ttt, memory:mmm }
 		 */
-		static public function benchmark(func:Function):Object {
+		public static function benchmark(func:Function):Object {
 			var start:Number, end:Number;
 			var smem:Number, emem:Number;
 			smem = System.totalMemory;
@@ -57,7 +57,7 @@ package saz.test {
 		 * @param	func
 		 * @return	msec。
 		 */
-		static public function formatBenchmark(func:Function, format:String = FORMAT_BENCH):String {
+		public static function formatBenchmark(func:Function, format:String = FORMAT_BENCH):String {
 			var res:Object = benchmark(func);
 			return format.replace("%m", StringUtil.addComma("" + res.memory)).replace("%t", StringUtil.addComma("" + res.time));
 		}
@@ -68,7 +68,7 @@ package saz.test {
 		 * @param	count	実行回数。
 		 * @return	msec。
 		 */
-		/*static public function benchmarkLoop(func:Function, count:uint = 1):Number {
+		/*public static function benchmarkLoop(func:Function, count:uint = 1):Number {
 			var start:Number, end:Number;
 			start = new Date().time;
 			while (count > 0) {
