@@ -22,7 +22,58 @@ package saz.collections.list {
 		public function LinkedList() {
 		}
 		
-		// TODO	Queue インターフェースを実装すべき
+		// TODO	キュー、スタックを実装すべき。
+		// TODO	高速化のためにインスタンスプールを使用？
+		
+		
+		/* http://ja.wikipedia.org/wiki/%E9%80%A3%E7%B5%90%E3%83%AA%E3%82%B9%E3%83%88 */
+		/*
+		 * （片方向リストは）逆方向に繰り返すことができないので、"insertBefore" や "removeBefore" といった操作を効率的に実装することはできない。
+		 * 片方向リストの操作は先頭ノードの扱いが特殊であるが、先頭にダミー要素を追加することでこれを排除できる。
+		 * これによって、"insertBeginning()" や "removeBeginning()" が不要となる。
+		 * この場合、最初のデータを持ったノードは "list.firstNode.next" で参照可能である。
+		 * 
+		 * 双方向リストでは…特殊ケースの関数が不要になる。ノードには前の要素を指す "prev" フィールドが追加される。
+		 * また リスト構造の "lastNode" が最後尾のノードを指す。空のリストの場合、"list.firstNode" も "list.lastNode" も "null" である。
+		 */
+		
+		/*private function _loop():void {
+			var e:Element = _first;
+			while (e != null) {
+				// do something
+				
+				e = e.next;
+			}
+		}
+		// newElementをelementの次に挿入
+		private function _insertAfter(element:Element, newElement:Element):void {
+			newElement.next = element.next;
+			element.next = newElement;
+			newElement.prev = element.prev;
+			element.prev = newElement;
+		}
+		// 現在の先頭ノードの前にノードを挿入
+		private function _insertBeginning(newElement:Element):void {
+			_first.prev = newElement;
+			newElement.next = _first;
+			_first = newElement;
+		}
+		// このノードの次のノードを削除
+		private function _removeAfter(element:Element):void {
+			var obsolete:Element = element.next;	//いらないもの
+			element.next = element.next.next;
+			element.next.prev = element;
+			obsolete.destroy();
+		}
+		// 先頭ノードを削除
+		private function _removeBeginning():void {
+			var obsolete:Element = _first;	//いらないもの
+			_first = _first.next;
+			_first.next.prev = _first;
+			obsolete.destroy();
+		}*/
+		
+		
 		
 		/* INTERFACE saz.collections.list.IList */
 		
