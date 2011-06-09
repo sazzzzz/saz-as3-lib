@@ -21,7 +21,7 @@ package saz.display {
 			super();
 			
 			$initHaldlers();
-			mouseEnabled = true;
+			//mouseEnabled = true;
 			buttonMode = true;
 		}
 		
