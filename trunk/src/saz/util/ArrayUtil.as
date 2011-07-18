@@ -183,11 +183,33 @@
 		//}
 		
 		/**
+		 * いわゆるmap(). 
+		 * @param	target	対象配列. 
+		 * @param	iterator	イテレータ. funciton(item:*)
+		 * @see	http://blog.livedoor.jp/dankogai/archives/50614134.html
+		 */
+		public static function map(target:Array, iterator:Function):Array {
+			var res:Array = [];
+			for (var i:int = 0, len:int=target.length; i < len; i++) {
+				res[i] = iterator(target[i]);
+			}
+			return res;
+		}
+		
+		/**
 		 * 配列の要素をシャッフルする。
+		 * @param	target
+		 */
+		public static function shuffle(target:Array):void {
+			return shuffleFY(target);
+		}
+		
+		/**
+		 * 配列の要素をFisher-Yates法でシャッフルする。
 		 * @param	target
 		 * @see	http://blog.livedoor.jp/dankogai/archives/50614134.html
 		 */
-		public static function shuffle(target:Array):void {
+		public static function shuffleFY(target:Array):void {
 			// Fisher-Yates法だそうです。
 			var i:int = target.length;
 			var j:int, t:*;
@@ -198,6 +220,7 @@
 				target[j] = t;
 			}
 		}
+		
 		
 		/**
 		 * 指定した値で埋める。
