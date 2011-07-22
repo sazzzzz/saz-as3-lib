@@ -1,6 +1,6 @@
 package saz.collections {
 	/**
-	 * Arrayヘルパ.
+	 * 超個人的Arrayヘルパ.
 	 * メソッドがわかりやすい. 負のインデックスが使える.
 	 * @author saz
 	 */
