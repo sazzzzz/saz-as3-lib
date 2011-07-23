@@ -26,7 +26,7 @@ package saz.outside.progression4 {
 		public var drawColor:uint = 0x000000;
 		public var drawAlpha:Number = 1.0;
 		
-		private var _isDrawn:Boolean = false;
+		protected var _isDrawn:Boolean = false;
 		
 		/**
 		 * 新しい RectCastButton インスタンスを作成します。
