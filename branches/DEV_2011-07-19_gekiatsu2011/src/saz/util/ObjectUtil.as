@@ -134,35 +134,31 @@
 		//
 		//--------------------------------------------------------------------------
 		
+		// TODO:	出力用メソッドが乱立しとる！整理したい！
 		
-		
-		public static function propertiesToString(target:Object, names:Array, separator:String = ": "):String {
-			var res:String = "";
-			names.forEach(function(item:String, index:int, arr:Array):void {
-				res += item + separator + target[item] + "\n";
-			});
-			return res;
-			
+		/**
+		 * Objectの中身を、trace()する. toStringをtraceしてるだけ.
+		 * @param	target	対象Object. 
+		 */
+		public static function log(target:Object):void {
+			trace(toString(target));
 		}
 		
 		/**
 		 * Objectの中身を、trace()する. toStringをtraceしてる.
-		 * @param	target
+		 * @param	target	対象Object. 
+		 * @deprecated	log()を使え. 
 		 */
 		public static function traceObject(target:Object):void {
 			trace(toString(target));
 		}
 		
-		/**
-		 * Object の中身をStringにして返す. dumpのエイリアス.
-		 */
-		public static var toString:Function = dump;
-		
 		
 		/**
 		 * Objectの中身を、trace()する。
-		 * @param	target
+		 * @param	target	対象Object. 
 		 * @param	indent
+		 * @deprecated	log()を使え. 
 		 */
 		public static function dump2(target:Object, indent:String = ""):void {
 			var item:*;
@@ -179,20 +175,50 @@
 			}
 		}
 		
+		
+		
 		/**
-		 * Object　の中身をStringにして返す。ダンプ用。
-		 * @param	target
+		 * 指定プロパティをStringにして返す（みたい）. 
+		 * toString()とは別系統. 
+		 * @param	target	対象Object. 
+		 * @param	names	プロパティ名の配列
+		 * @param	separator
+		 * @return
+		 */
+		public static function propertiesToString(target:Object, names:Array, separator:String = ": "):String {
+			var res:String = "";
+			names.forEach(function(item:String, index:int, arr:Array):void {
+				res += item + separator + target[item] + "\n";
+			});
+			return res;
+			
+		}
+		
+		/**
+		 * Object の中身をStringにして返す. 
+		 * @param	target	対象Object. 
 		 * @return
 		 * 
 		 * @example <listing version="3.0" >
-		 * trace(ObjectUtil.dump(obj));
+		 * trace(ObjectUtil.toString(obj));
 		 * </listing>
+		 */
+		public static function toString(target:*):String {
+			return $dump(target,"");
+		}
+		
+		
+		/**
+		 * Object　の中身をStringにして返す. toString()を使え. 
+		 * @param	target	対象Object. 
+		 * @return
+		 * @deprecated	toString()を使え. 
 		 */
 		public static function dump(target:*):String {
 			return $dump(target,"");
 		}
 		
-		static private function $dump(target:*,indent:String):String {
+		static private function $dump(target:*, indent:String):String {
 			var res:String = "";
 			var item:*;
 			res += indent + "{\n";
