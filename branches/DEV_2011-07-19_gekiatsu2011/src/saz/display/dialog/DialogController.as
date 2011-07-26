@@ -31,7 +31,7 @@ package saz.display.dialog {
 		
 		public var isReady:Boolean = false;
 		
-		static private var $instance:DialogController = null;
+		//static private var $instance:DialogController = null;
 		
 		private var $dias:Object;
 		private var $showCount:int = 0;
