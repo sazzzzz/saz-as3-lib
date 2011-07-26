@@ -5,6 +5,7 @@ package saz.display.dialog {
 	import jp.progression.commands.lists.*;
 	/**
 	 * ダイアログコントローラ.
+	 * FIXME	Compositeパターンにすればよかった. 失敗した. 
 	 * @author saz
 	 * 
 	 * @example <listing version="3.0" >
