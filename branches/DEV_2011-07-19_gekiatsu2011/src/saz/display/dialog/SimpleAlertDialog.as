@@ -50,7 +50,6 @@ package saz.display.dialog {
 		 */
 		override protected function atCastRemoved():void {
 			// 消す時の処理を記述します。
-			//var scope:SimpleAlertDialog = this;
 			addCommand(
 				new DoTweener(this, { time:1.0, alpha:0.0, transition:"linear" } )
 			);
