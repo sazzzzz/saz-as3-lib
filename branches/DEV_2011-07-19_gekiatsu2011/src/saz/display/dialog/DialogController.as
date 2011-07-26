@@ -155,6 +155,7 @@ package saz.display.dialog {
 			if ($isBackgroundShown) return;
 			if (container.contains(background)) return;
 			$isBackgroundShown = true;
+			
 			new AddChildAt(container, background, 0).execute();
 		}
 		
@@ -165,7 +166,12 @@ package saz.display.dialog {
 			if (!$isBackgroundShown) return;
 			if (!container.contains(background)) return;
 			$isBackgroundShown = false;
-			new RemoveChild(container, background).execute();
+			
+			//new RemoveChild(container, background).execute();
+			var slist:SerialList = new SerialList(null
+				,new RemoveChild(container, background)
+			);
+			slist.execute();
 		}
 		
 		
