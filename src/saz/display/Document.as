@@ -7,7 +7,8 @@ package saz.display {
 	 * ドキュメントベースクラス.
 	 * @author saz
 	 */
-	public class Document extends Sprite{
+	//public class Document extends Sprite{
+	public class Document extends MovieClip{
 		
 		private var $isReady:Boolean = false;
 		public function get isReady():Boolean { return $isReady; }
