@@ -1,11 +1,11 @@
 package  {
-	import saz.display.DocumentBase;
+	import saz.display.Document;
 	
 	/**
 	 * ...
 	 * @author saz
 	 */
-	public class MyDocument extends DocumentBase{
+	public class MyDocument extends Document{
 		
 		public function MyDocument() {
 			super();
