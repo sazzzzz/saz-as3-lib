@@ -69,7 +69,8 @@ package saz.media {
 		 * @return
 		 */
 		public function play(startTime:Number = 0.0, loops:int = 0, sndTransform:SoundTransform = null):SoundChannel {
-			if (!$sound || $isPlaying) return null;
+			//if (!$sound || $isPlaying) return null;
+			if (!$sound) return null;
 			
 			$isPlaying = true;
 			$isLoop = (0 != loops);

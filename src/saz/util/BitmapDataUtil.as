@@ -1,5 +1,6 @@
 ﻿package saz.util {
 	import flash.display.*;
+	import flash.filters.ColorMatrixFilter;
 	import flash.geom.*;
 	
 	/**
@@ -14,6 +15,79 @@
 		static private var $newRectangle:Rectangle;
 		static private var $newMatrix:Matrix;
 		static private var $newColorTransform:ColorTransform;
+		
+		// drawHistogram用テンポラリBitmdapData
+		static private var $histogramTmp:BitmapData;
+		
+		
+		/**
+		 * レベル補正. 
+		 * @param	src	元画像
+		 * @param	dst	出力先画像
+		 * @param	shadow	シャドウ. 0～255. デフォルトは0.
+		 * @param	middle	中間調（ガンマ）. 0～255. デフォルトは128.
+		 * @param	hilite	ハイライト. 0～255. デフォルトは255.
+		 * @see	http://d.hatena.ne.jp/nitoyon/20071009/as3_histogram3
+		 */
+		static public function applyLevels(src:BitmapData, dst:BitmapData, shadow:int = 0, middle:int = 128, hilite:int = 255):void {
+			var gamma:Number = Math.log((middle - shadow) / (hilite - shadow)) / Math.log(0.5);
+			var mapR:Array = [], mapG:Array = [], mapB:Array = [];
+			for (var i:int = 0; i < 0x100; i++) {
+				mapB[i] = i < shadow ? 0 : i > hilite ? 0xFF : 255 * Math.pow((i - shadow) / (hilite - shadow), 1 / gamma);
+				mapG[i] = mapB[i] << 8;
+				mapR[i] = mapB[i] << 16;
+			}
+			dst.paletteMap(src, src.rect, getNewPoint(), mapR, mapG, mapB);
+		}
+		
+		
+		
+		/**
+		 * ヒストグラムを描画する
+		 * @param	bmp	対象となるBitmapData
+		 * @param	graphics	描画する対象. 原点から右上方向に描画する. 
+		 * @param	color	描画する色. デフォルトは0x000000. 
+		 * @param	alpha	描画する際のアルファ. デフォルトは1.0. 
+		 * @param	height	グラフの最大高さ. デフォルトは100. 
+		 * @see	http://d.hatena.ne.jp/nitoyon/20071009/as3_histogram1
+		 */
+		static public function drawHistogram(bmp:BitmapData, graphics:Graphics, color:uint = 0x000000, alpha:Number = 1.0, height:int = 100):void {
+			var values:Array = getHistogramData(bmp);
+			//描画
+			//var ratio:Number = height / max;
+			var max:int = bmp.width * bmp.height / 50;
+			graphics.lineStyle(1, color, alpha);
+			var i:int, value:uint;
+			for (i = 0; i < 0x100; i++) {
+				graphics.moveTo(i, 0);
+				graphics.lineTo(i, Math.max( -height, - values[i] / max * height));
+			}
+		}
+		
+		/**
+		 * ヒストグラム用データを得る
+		 * @param	bmp	対象となるBitmapData.
+		 * @return	使用回数の配列.
+		 */
+		static public function getHistogramData(bmp:BitmapData):Array {
+			var tmp:BitmapData = bmp.clone();
+			//グレースケールに
+			tmp.applyFilter(tmp, tmp.rect, getNewPoint(), new ColorMatrixFilter(
+				[1 / 3, 1 / 3, 1 / 3, 0, 0,
+				1 / 3, 1 / 3, 1 / 3, 0, 0,
+				1 / 3, 1 / 3, 1 / 3, 0, 0,
+				0, 0, 0, 1, 0]
+			));
+			//カウント
+			var values:Array = new Array(0x100);
+			var i:int, value:uint;
+			for ( i = 0; i < 0x100; i++) {
+				value = tmp.threshold(tmp, tmp.rect, getNewPoint(), "==", i, 0x000000, 0xFF, false);
+				values[i] = value;
+			}
+			tmp.dispose();
+			return values;
+		}
 		
 		
 		/**

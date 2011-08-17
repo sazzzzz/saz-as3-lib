@@ -105,6 +105,16 @@ package saz.util {
 			return ObjectUtil.propertiesToString(target, TEXTFORMAT_PROPS);
 		}
 		
+		public static function dumpFonts(deviceFonts:Boolean = false):void {
+			var fonts:Array = Font.enumerateFonts(deviceFonts);
+			var logFont:Function = function(font:Font):void {
+				trace(font.fontName, font.fontStyle, font.fontType);
+			};
+			fonts.forEach(function(item:Font, index:int, arr:Array):void {
+				logFont(item);
+			});
+		}
+		
 	}
 
 }
