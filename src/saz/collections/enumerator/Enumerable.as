@@ -171,9 +171,9 @@ package saz.collections.enumerator {
 		 * @param	iterator
 		 * @param	thisObject = null
 		 */
-		/*public function forEach(iterator:Function, thisObject = null):void {
+		public function forEach(iterator:Function, thisObject = null):void {
 			$each(iterator, thisObject);
-		}*/
+		}
 		
 		/**
 		 * 「すべて」の要素が、テストをパスするかどうかをチェックする。

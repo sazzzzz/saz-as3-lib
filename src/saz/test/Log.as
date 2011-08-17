@@ -20,11 +20,19 @@ package saz.test {
 		static private var $msgs:String = "";
 		static private var $isUpdate:Boolean = false;
 		
+		static public function get isInit():Boolean {
+			return $isInit;
+		}
+		static private var $isInit:Boolean = false;
+		
 		/**
 		 * 初期化＆処理開始.
 		 * @param	dsp
 		 */
 		public static function init(dsp:DisplayObject):void {
+			if ($isInit) return;
+			
+			$isInit = true;
 			$dsp = dsp;
 			start();
 		}
@@ -66,6 +74,7 @@ package saz.test {
 				$msgs = "";
 			}
 		}
+		
 		
 	}
 

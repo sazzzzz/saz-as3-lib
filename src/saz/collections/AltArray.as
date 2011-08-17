@@ -1,10 +1,10 @@
 package saz.collections {
 	/**
-	 * Arrayヘルパ.
+	 * 超個人的Arrayヘルパ.
 	 * メソッドがわかりやすい. 負のインデックスが使える.
 	 * @author saz
 	 */
-	public class ArrayHelper {
+	public class AltArray {
 		
 		/**
 		 * 配列インデックスの最大値.
@@ -21,7 +21,7 @@ package saz.collections {
 		 * コンストラクタ.
 		 * @param	arr	対象とする配列を指定.
 		 */
-		public function ArrayHelper(arr:Array) {
+		public function AltArray(arr:Array) {
 			array = arr;
 		}
 		
