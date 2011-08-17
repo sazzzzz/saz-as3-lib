@@ -28,7 +28,7 @@ package saz.util {
 		 */
 		public static function extractClasses(loaderInfo:LoaderInfo, classNames:Array):/*Class*/Array {
 			var res:/*Class*/Array = new Array();
-			for each(var p in classNames) {
+			for each(var p:* in classNames) {
 				res.push(loaderInfo.applicationDomain.getDefinition(p) as Class);
 			}
 			return res;

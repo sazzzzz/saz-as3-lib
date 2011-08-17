@@ -1,7 +1,7 @@
 package saz.collections.iterator {
 	import saz.errors.IllegalStateError;
 	import saz.errors.NoSuchElementError;
-	import saz.collections.ArrayHelper;
+	import saz.collections.AltArray;
 	
 	/**
 	 * Array用、無限ループIterator逆順版.
@@ -14,7 +14,7 @@ package saz.collections.iterator {
 		 * コンストラクタ.
 		 * @copy ArrayLoopIterator
 		 */
-		public function ArrayLoopReverseIterator(collection:Array, start:int = ArrayHelper.MAX_INDEX) {
+		public function ArrayLoopReverseIterator(collection:Array, start:int = AltArray.MAX_INDEX) {
 			super(collection, start);
 		}
 		

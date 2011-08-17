@@ -1,7 +1,7 @@
 package saz.collections.iterator {
 	import saz.errors.IllegalStateError;
 	import saz.errors.NoSuchElementError;
-	import saz.collections.ArrayHelper;
+	import saz.collections.AltArray;
 	/**
 	 * Array用、周回数指定Iterator逆順版.
 	 * @author saz
@@ -15,7 +15,7 @@ package saz.collections.iterator {
 		 * コンストラクタ.
 		 * @copy	ArrayCycleIterator
 		 */
-		public function ArrayCycleReverseIterator(collection:Array, start:int = ArrayHelper.MAX_INDEX, cycleCount:int = 1) {
+		public function ArrayCycleReverseIterator(collection:Array, start:int = AltArray.MAX_INDEX, cycleCount:int = 1) {
 			$cycleCount = cycleCount;
 			
 			super(collection, Math.min(collection.length - 1, start));

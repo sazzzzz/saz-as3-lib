@@ -166,7 +166,7 @@
 		public static function asNumber(value:Object):*{
 			// http://cuaoar.jp/2006/01/is.html
 			var str:String = value.toString();
-			var num = Number(str);
+			var num:Number = Number(str);
 			return isNaN(num) ? str : num;
 		}
 		
