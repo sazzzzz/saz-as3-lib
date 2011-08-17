@@ -1,7 +1,8 @@
 ﻿package saz.group {
 	import flash.events.*;
 	import saz.events.GroupEvent;
-	import saz.IteratorBreakError;
+	//import saz.IteratorBreakError;
+	import saz.errors.IteratorBreakError;
 	import saz.util.ArrayUtil;
 	
 	/**

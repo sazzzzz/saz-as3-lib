@@ -1,6 +1,6 @@
 package saz.dev.format {
 	/**
-	 * Dateフォーマッタ.
+	 * Dateフォーマッタ. 全然途中です. 
 	 * @author saz
 	 * @see	http://www.adobe.com/livedocs/flex/3_jp/langref/index.html?mx/formatters/package-detail.html&mx/formatters/class-list.html
 	 */
@@ -22,7 +22,7 @@ package saz.dev.format {
 		 * @return
 		 */
 		public function format(value:Object):String {
-			
+			return "";
 		}
 		
 		/**
@@ -31,7 +31,7 @@ package saz.dev.format {
 		 * @return
 		 */
 		public function parseDateString(str:String):Date {
-			
+			return new Date();
 		}
 		
 		/**

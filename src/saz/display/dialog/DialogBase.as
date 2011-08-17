@@ -10,6 +10,7 @@ package saz.display.dialog {
 	import jp.progression.data.*;
 	import jp.progression.events.*;
 	import jp.progression.scenes.*;
+	import flash.ui.ContextMenu;
 	
 	/**
 	 * ...
@@ -44,6 +45,13 @@ package saz.display.dialog {
 			// 表示を消したいときは、DialogEvent.CLOSEイベントを発行する。
 			dispatchEvent(new DialogEvent(DialogEvent.CLOSE, result));
 		}
+		
+		/*override public function get contextMenu () : ContextMenu {
+			return new ContextMenu();
+		}
+		override public function set contextMenu (value:ContextMenu) : void {
+			
+		}*/
 		
 	}
 }

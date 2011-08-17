@@ -15,7 +15,6 @@
   <classpaths>
     <class path="src" />
     <class path="libs" />
-    <class path="C:\Program Files\Adobe\Adobe Flash CS3\ja\Configuration\ActionScript 3.0\Classes" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -49,7 +48,11 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path=".\src" />
+    <element path=".\libs" />
+    <element path=".\swc" />
+    <element path="C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP9" />
+    <element path="C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\AIR2.5" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

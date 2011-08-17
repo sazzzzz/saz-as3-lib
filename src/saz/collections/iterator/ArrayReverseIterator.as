@@ -1,6 +1,6 @@
 package saz.collections.iterator {
 	import saz.errors.IllegalStateError;
-	import saz.collections.ArrayHelper;
+	import saz.collections.AltArray;
 	/**
 	 * Array用逆順Iterator. 要素がなくなったら終了.
 	 * @author saz
@@ -17,7 +17,7 @@ package saz.collections.iterator {
 	 */
 	public class ArrayReverseIterator extends ArrayIteratorBase{
 		
-		public function ArrayReverseIterator(collection:Array, start:int = ArrayHelper.MAX_INDEX) {
+		public function ArrayReverseIterator(collection:Array, start:int = AltArray.MAX_INDEX) {
 			super(collection, Math.min(collection.length - 1, start));
 		}
 		

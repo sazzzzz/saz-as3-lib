@@ -1,7 +1,7 @@
 ﻿package saz.load {
 	import flash.display.*;
 	import flash.events.*;
-	import saz.StageReference;
+	import saz.display.StageReference;
 	
 	// FIXME	イベント仕様とか間違ってる。flash.events.Eventを使用すべきだ。
 	/**
@@ -21,7 +21,7 @@
 		public static var EVENT_COMPLETE:String = "onComplete";
 		
 		
-		private var $target:Sprite;
+		private var $target:DisplayObject;
 		
 		/**
 		 * コンストラクタ。

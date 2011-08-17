@@ -8,7 +8,6 @@
 	import org.libspark.thread.threads.net.URLLoaderThread;
 	import org.libspark.thread.threads.display.LoaderThread;
 	import org.libspark.thread.utils.SerialExecutor;	
-	import saz.StageReference;
 	/**
 	 * 画像をロードして貯める。BitmapDataとして取り出せる。
 	 * @author saz
