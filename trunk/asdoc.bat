@@ -1,21 +1,17 @@
 @ECHO OFF
 
-REM "C:\ols\flex_sdk_4.1\bin\asdoc.exe" -main-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP10" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\AIR2.5" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false  -compiler.show-actionscript-warnings=false
-REM "C:\ols\flex_sdk_4.1\bin\asdoc.exe" -main-title "sazLib_as3" -title "sazLib_as3" -window-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP10" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\AIR2.5" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false
-
-REM クラス除外＞失敗
-REM "C:\ols\flex_sdk_4.1\bin\asdoc.exe" -main-title "sazLib_as3" -title "sazLib_as3" -window-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP9" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false -exclude-classes saz.display.dialog.DialogBackgroundBase -exclude-classes saz.display.dialog.DialogBase -exclude-classes saz.outside.progression4.RectCastButton
-
 REM FP9
 "C:\ols\flex_sdk_3.5\bin\asdoc.exe" -main-title "sazLib_as3" -title "sazLib_as3" -window-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP10" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false
 
-REM Flex4のほうがエラーチェックが厳しいらしい…
+REM Flex4のasdocはエラーチェックが厳しいらしい…
+REM 　〃　はコメント中のHTMLタグにエラーを出す。http://kcw-diary.blogspot.com/2011/01/asdoc.html
+
 
 REM AIR2.5
 REM "C:\ols\flex_sdk_4.1\bin\asdoc.exe" -main-title "sazLib_as3" -title "sazLib_as3" -window-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\AIR2.5" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false
 
 REM 
-REM "C:\ols\flex_sdk_4.1\bin\asdoc.exe" -main-title "sazLib_as3" -title "sazLib_as3" -window-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP10" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\AIR2.5" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false -exclude-sources saz\display\dialog\DialogBackgroundBase.as saz\display\dialog\DialogBase.as saz\outside\progression4\RectCastButton.as
+REM "C:\ols\flex_sdk_4.1\bin\asdoc.exe" -main-title "sazLib_as3" -title "sazLib_as3" -window-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP10" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\AIR2.5" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false
 PAUSE
 
 
