@@ -12,7 +12,7 @@ package saz.display.dialog {
 	import jp.progression.scenes.*;
 	
 	/**
-	 * ダイアログサンプル。OK&CANCELボタンを持つ. 
+	 * ダイアログサンプル。OK＆CANCELボタンを持つ. 
 	 * @author saz
 	 */
 	public class SimpleConfirmDialog extends DialogBase {

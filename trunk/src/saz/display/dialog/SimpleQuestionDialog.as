@@ -12,7 +12,7 @@ package saz.display.dialog {
 	import jp.progression.scenes.*;
 	
 	/**
-	 * ダイアログサンプル。YES&NOボタンを持つ. 
+	 * ダイアログサンプル。YES＆NOボタンを持つ. 
 	 * @author saz
 	 */
 	public class SimpleQuestionDialog extends DialogBase {

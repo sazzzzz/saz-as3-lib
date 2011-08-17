@@ -1,8 +1,32 @@
 @ECHO OFF
 
 REM "C:\ols\flex_sdk_4.1\bin\asdoc.exe" -main-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP10" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\AIR2.5" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false  -compiler.show-actionscript-warnings=false
-"C:\ols\flex_sdk_4.1\bin\asdoc.exe" -main-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP9" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\AIR2.5" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false
+REM "C:\ols\flex_sdk_4.1\bin\asdoc.exe" -main-title "sazLib_as3" -title "sazLib_as3" -window-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP10" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\AIR2.5" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false
+
+REM ÉNÉâÉXèúäOÅÑé∏îs
+REM "C:\ols\flex_sdk_4.1\bin\asdoc.exe" -main-title "sazLib_as3" -title "sazLib_as3" -window-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP9" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false -exclude-classes saz.display.dialog.DialogBackgroundBase -exclude-classes saz.display.dialog.DialogBase -exclude-classes saz.outside.progression4.RectCastButton
+
+REM FP9
+"C:\ols\flex_sdk_3.5\bin\asdoc.exe" -main-title "sazLib_as3" -title "sazLib_as3" -window-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP10" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false
+
+REM Flex4ÇÃÇŸÇ§Ç™ÉGÉâÅ[É`ÉFÉbÉNÇ™åµÇµÇ¢ÇÁÇµÇ¢Åc
+
+REM AIR2.5
+REM "C:\ols\flex_sdk_4.1\bin\asdoc.exe" -main-title "sazLib_as3" -title "sazLib_as3" -window-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\AIR2.5" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false
+
+REM 
+REM "C:\ols\flex_sdk_4.1\bin\asdoc.exe" -main-title "sazLib_as3" -title "sazLib_as3" -window-title "sazLib_as3" -output "E:\_saz\LIB\saz\as3\doc" -doc-sources "E:\_saz\LIB\saz\as3\work\src\saz" -source-path "E:\_saz\LIB\saz\as3\work\src" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP10" -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\AIR2.5" -library-path "E:\_saz\LIB\saz\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false -exclude-sources saz\display\dialog\DialogBackgroundBase.as saz\display\dialog\DialogBase.as saz\outside\progression4\RectCastButton.as
 PAUSE
+
+
+REM ÉVÉOÉlÉ`ÉÉÇ™Ç«Ç§ÇÃÉGÉâÅ[
+REM saz.display.dialog.DialogBackgroundBase saz.display.dialog.DialogBase saz.outside.progression4.RectCastButton
+
+REM AIR
+REM E:\_saz\LIB\saz\as3\work\src\saz\util\FilesystemUtil.as
+REM E:\_saz\LIB\saz\as3\work\src\saz\outside\progression4\AsyncWriteFile.as
+
+
 
 REM ê‡ñæ
 REM "C:\ols\flex_sdk_4.1\bin\asdoc.exe"
@@ -13,6 +37,10 @@ REM -source-path "E:\_saz\LIB\saz\as3\work\src"		ëŒè€Ç∆Ç∑ÇÈasÉtÉ@ÉCÉãÇ÷ÇÃÉpÉXÅiÅ
 REM -library-path "C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP10" 	ëŒè€Ç∆Ç∑ÇÈswcÉtÉ@ÉCÉãÇ÷ÇÃÉpÉXÅiÉhÉLÉÖÉÅÉìÉgÇÕê∂ê¨ÇµÇ»Ç¢Åj
 REM -compiler.strict=false								ÉGÉâÅ[É`ÉFÉbÉNÇÇ‰ÇÈÇ≠
 REM -compiler.show-actionscript-warnings=false			ÅH
+REM -lenient		HTMLÉ^ÉOÇÃï¬Ç∂É^ÉOÇ…É~ÉXÇ™Ç†Ç¡ÇƒÇ‡ÅAASDocÇçÏê¨ÇµÇƒÇ≠ÇÍÇ‹Ç∑
+REM					http://flabaka.com/blog/?p=2444
+
+REM -templates-path string	ASDocÉeÉìÉvÉåÅ[ÉgÇ÷ÇÃÉpÉX
 
 
 REM ÉâÉCÉuÉâÉäÉpÉX
@@ -21,6 +49,7 @@ REM C:\Program Files\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3
 
 
 REM éQçlï∂å£
+REM http://livedocs.adobe.com/flex/3_jp/html/help.html?content=asdoc_9.html
 REM http://blog.yaimo.net/tag/asdoc/
 REM http://www.nilab.info/zurazure2/000852.html
 REM http://ja.w3support.net/index.php?db=so&id=853683
