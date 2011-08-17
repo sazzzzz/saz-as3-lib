@@ -5,6 +5,7 @@ package saz.display.dialog {
 	import jp.progression.commands.lists.*;
 	/**
 	 * ダイアログコントローラ.
+	 * FIXME	Compositeパターンにすればよかった. 失敗した. 
 	 * @author saz
 	 * 
 	 * @example <listing version="3.0" >
@@ -31,7 +32,7 @@ package saz.display.dialog {
 		
 		public var isReady:Boolean = false;
 		
-		static private var $instance:DialogController = null;
+		//static private var $instance:DialogController = null;
 		
 		private var $dias:Object;
 		private var $showCount:int = 0;
@@ -155,6 +156,7 @@ package saz.display.dialog {
 			if ($isBackgroundShown) return;
 			if (container.contains(background)) return;
 			$isBackgroundShown = true;
+			
 			new AddChildAt(container, background, 0).execute();
 		}
 		
@@ -165,7 +167,12 @@ package saz.display.dialog {
 			if (!$isBackgroundShown) return;
 			if (!container.contains(background)) return;
 			$isBackgroundShown = false;
-			new RemoveChild(container, background).execute();
+			
+			//new RemoveChild(container, background).execute();
+			var slist:SerialList = new SerialList(null
+				,new RemoveChild(container, background)
+			);
+			slist.execute();
 		}
 		
 		

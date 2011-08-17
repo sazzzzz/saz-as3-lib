@@ -23,12 +23,8 @@ package saz.display.dialog {
 		public function DialogBase( initObject:Object = null ) {
 			// 親クラスを初期化します。
 			super( initObject );
-			
-			//$initHook();
 		}
 		
-		/*protected function $initHook():void{
-		}*/
 		
 		final protected function $initButton(btn:CastButton, result:String):void {
 			btn.addEventListener(CastMouseEvent.CAST_MOUSE_UP, function(e:CastMouseEvent):void {
