@@ -27,6 +27,16 @@ package saz.display.dialog {
 		}
 		
 		
+		//--------------------------------------
+		// ASDoc通す用ダミー！！！
+		//--------------------------------------
+		/*override public function get contextMenu () : ContextMenu {
+			return new ContextMenu();
+		}
+		override public function set contextMenu (value:ContextMenu) : void {
+		}*/
+		
+		
 		final protected function $initButton(btn:CastButton, result:String):void {
 			btn.addEventListener(CastMouseEvent.CAST_MOUSE_UP, function(e:CastMouseEvent):void {
 				close(result);
@@ -46,12 +56,6 @@ package saz.display.dialog {
 			dispatchEvent(new DialogEvent(DialogEvent.CLOSE, result));
 		}
 		
-		/*override public function get contextMenu () : ContextMenu {
-			return new ContextMenu();
-		}
-		override public function set contextMenu (value:ContextMenu) : void {
-			
-		}*/
 		
 	}
 }

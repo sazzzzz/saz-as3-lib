@@ -12,6 +12,7 @@ package saz.outside.progression4 {
 	import jp.progression.data.*;
 	import jp.progression.events.*;
 	import jp.progression.scenes.*;
+	import flash.ui.ContextMenu;
 	
 	/**
 	 * 四角いボタン.
@@ -37,6 +38,19 @@ package saz.outside.progression4 {
 			
 			addEventListener(Event.ADDED_TO_STAGE, _addedToStage);
 		}
+		
+		
+		
+		//--------------------------------------
+		// ASDoc通す用ダミー！！！
+		//--------------------------------------
+		/*override public function get contextMenu () : ContextMenu {
+			return new ContextMenu();
+		}
+		override public function set contextMenu (value:ContextMenu) : void {
+		}*/
+		
+		
 		
 		private function _addedToStage(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, _addedToStage);

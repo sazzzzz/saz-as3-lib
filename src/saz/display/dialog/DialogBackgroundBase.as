@@ -10,6 +10,7 @@ package saz.display.dialog {
 	import jp.progression.data.*;
 	import jp.progression.events.*;
 	import jp.progression.scenes.*;
+	import flash.ui.ContextMenu;
 	
 	/**
 	 * DialogController用背景ベースクラス.
@@ -40,6 +41,17 @@ package saz.display.dialog {
 			// 親クラスを初期化します。
 			super( initObject );
 		}
+		
+		
+		//--------------------------------------
+		// ASDoc通す用ダミー！！！
+		//--------------------------------------
+		/*override public function get contextMenu () : ContextMenu {
+			return new ContextMenu();
+		}
+		override public function set contextMenu (value:ContextMenu) : void {
+		}*/
+		
 		
 		private function $init():void {
 			$inited = true;
