@@ -44,6 +44,16 @@ package saz.controll {
 		
 		/* INTERFACE saz.IRunnable */
 		
+		/**
+		 * @copy	IRunnable#runnable
+		 */
+		public function get runnable():Boolean {
+			return !(_times <= _count);
+		}
+		
+		/**
+		 * @copy	IRunnable#run
+		 */
 		public function run():void {
 			if (_times <= _count) return;
 			_atRun();

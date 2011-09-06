@@ -233,6 +233,16 @@
 			});
 		}
 		
+		/**
+		 * 指定要素を削除する. 
+		 * @param	target
+		 * @param	startIndex	削除を開始するインデックス.
+		 * @param	count	削除する数.
+		 * @return	削除したエレメントを含む配列です.
+		 */
+		public static function remove(target:Array, startIndex:int, count:uint = 1):Array {
+			return target.splice(startIndex, count);
+		}
 		
 		/**
 		 * Array内のすべての要素を削除する。

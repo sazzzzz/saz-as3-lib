@@ -14,11 +14,11 @@ package saz.controll {
 		}
 		public function set atRun(value:Function):void {
 			_atRun = value;
-			_runned = false;
+			_runnable = true;
 		}
 		private var _atRun:Function;
 		
-		private var _runned:Boolean = false;
+		private var _runnable:Boolean = true;
 		
 		
 		/**
@@ -31,12 +31,22 @@ package saz.controll {
 		
 		/* INTERFACE saz.IRunnable */
 		
-		// こっちのシンプルな実装のほうが早い！関数呼び出しのオーバーヘッドが大きいのか？
-		// 47,48
+		/**
+		 * @copy	IRunnable#runnable
+		 */
+		public function get runnable():Boolean {
+			return _runnable;
+		}
+		
+		/**
+		 * @copy	IRunnable#run
+		 */
 		public function run():void {
-			if (_runned) return;
+			// こっちのシンプルな実装のほうが早い！関数呼び出しのオーバーヘッドが大きいのか？
+			// 47,48
+			if (!_runnable) return;
 			_atRun();
-			_runned = true;
+			_runnable = false;
 		}
 		
 	}
