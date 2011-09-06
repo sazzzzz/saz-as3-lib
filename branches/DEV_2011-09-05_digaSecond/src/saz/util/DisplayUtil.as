@@ -315,38 +315,32 @@
 		
 		
 		
+		//--------------------------------------
+		// MovieClip
+		//--------------------------------------
+		
+		/**
+		 * ラベル名からフレーム番号を返す.
+		 * @param	target	対象MovieClip. 
+		 * @param	label	フレームラベル名. 
+		 * @return	フレーム番号を返す. ラベルが見つからない場合は0を返す. 
+		 */
+		public static function labelToFrame(target:MovieClip, label:String):int {
+			var labels:Array = target.currentLabels;
+			for (var i:int = 0, n:int = labels.length, item:FrameLabel; i < n; i++) {
+				item = labels[i];
+				if (FrameLabel(item).name == label) return FrameLabel(item).frame;
+			}
+			return 0;
+		}
+		
 		
 		//--------------------------------------
 		// GeomUtilへ移動しました。
 		//--------------------------------------
 		
-		/**
-		 * DisplayObjectのx,y,width,heightをRectangleで指定。
-		 * @param	target
-		 * @param	rect
-		 * @deprecated	GeomUtil.setRectangle へ移行。
-		 */
-		/*public static function setPropsByRectangle(target:DisplayObject, rect:Rectangle):void {
-			target.x = rect.x;
-			target.y = rect.y;
-			target.width = rect.width;
-			target.height = rect.height;
-		}*/
-		
-		/**
-		 * DisplayObjectからRectangleを返す。
-		 * @param	target
-		 * @return	
-		 * @deprecated	GeomUtil.setRectangle へ。
-		 */
-		/*public static function displayObjectToRectangle(target:DisplayObject):Rectangle {
-			return new Rectangle(
-				target.x
-				,target.y
-				,target.width
-				,target.height
-			);
-		}*/
+		//public static function setPropsByRectangle(target:DisplayObject, rect:Rectangle):void {
+		//public static function displayObjectToRectangle(target:DisplayObject):Rectangle {
 		
 		
 	}

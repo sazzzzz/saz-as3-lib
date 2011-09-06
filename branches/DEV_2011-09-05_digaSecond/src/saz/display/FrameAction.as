@@ -9,11 +9,14 @@ package saz.display {
 	/**
 	 * MovieClipのタイムラインに、フレームアクションを追加する.
 	 * gotoAndPlay()で指定したフレームのアクションが実行されない！！！
-	 * @deprecated	MovieClip.addFrameScriptを使え.
 	 * @author saz
+	 * @see	http://blog.img8.com/archives/2009/01/004354.html
+	 * @see	http://blog.888-3.com/?eid=900817
 	 */
 	//public class FrameAction implements IStartable {
 	public class FrameAction {
+		
+		// TODO	拡張案：複数functionを登録可能にするとか
 		
 		/**
 		 * 対象とするMovieClip.
@@ -49,7 +52,7 @@ package saz.display {
 		
 		/**
 		 * ラベル名からフレーム番号を返す.
-		 * @param	label	
+		 * @param	label	フレームラベル名. 
 		 * @return	フレーム番号を返す. ラベルが見つからない場合は0を返す. 
 		 */
 		public function labelToFrame(label:String):int {
@@ -110,33 +113,28 @@ package saz.display {
 			return false;
 		}*/
 		
-		private function _runFuncs(funcs:Array):void {
+		//private function _runFuncs(funcs:Array):void {
 			// よくわからんエラーが。フォーカスの関係か？
 			// EvalError: Error #1066: function('function body') という書式はサポートされていません。
 			/*funcs.forEach(function(item:Function, index:int, arr:Array):void {
 				Function(item)();
 			});*/
-			for (var i:int = 0, n:int = funcs.length; i < n; i++) {
-				funcs[i]();
-			}
-		}
+			//for (var i:int = 0, n:int = funcs.length; i < n; i++) {
+				//funcs[i]();
+			//}
+		//}
 		
-		private function _testRun():void {
-			if (_actions[_target.currentFrame] == null) return;
-			var funcs:Array = _actions[_target.currentFrame];
-			for (var i:int = 0, n:int = funcs.length; i < n; i++) {
-				funcs[i]();
-			}
-		}
+		//private function _testRun():void {
+			//if (_actions[_target.currentFrame] == null) return;
+			//var funcs:Array = _actions[_target.currentFrame];
+			//for (var i:int = 0, n:int = funcs.length; i < n; i++) {
+				//funcs[i]();
+			//}
+		//}
 		
-		private function _target_enterFrame(e:Event):void {
-			_testRun();
-			trace(">",_target.currentFrame);
-		}
-		private function _target_enterFrame2(e:Event):void {
-			_testRun();
-			trace(">",_target.currentFrame);
-		}
+		//private function _target_enterFrame(e:Event):void {
+			//_testRun();
+		//}
 		
 		
 		/* INTERFACE saz.IStartable */
