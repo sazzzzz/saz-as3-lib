@@ -223,6 +223,18 @@
 		
 		
 		/**
+		 * fill用サポートメソッド. 値はfuncで与える. 
+		 * @param	target
+		 * @param	func	function(index:int)
+		 */
+		/*private static function _fill(target:Array, func:Function):void {
+			target.forEach(function(item:*, index:int, arr:Array):void {
+				target[index] = func(index);
+			});
+		}*/
+		
+		
+		/**
 		 * 指定した値で埋める。
 		 * @param	target
 		 * @param	value
@@ -231,7 +243,43 @@
 			target.forEach(function(item:*, index:int, arr:Array):void {
 				target[index] = value;
 			});
+			//_fill(target, function():*{ return value; } );
 		}
+		
+		
+		/**
+		 * 連番で埋める. 
+		 * value <= endValueになったら処理を中断するので、配列の最後の値＝endValueになるとは限らない. 
+		 * @param	target
+		 * @param	startValue
+		 * @param	endValue
+		 * @param	step
+		 * Rubyの[1..n]みたいに書きたかった.
+		 * var arr = [];
+		 * ArrayUtil.fillSerialInt(arr,1,6);
+		 * var factorial:int = new Enumerable().inject(null,function(result:int, item:int):int{
+		 * 	return result*item;
+		 * });
+		 * @see	http://www.4gamer.net/games/131/G013104/20110909047/screenshot.html?num=011
+		 */
+		public static function fillSerialInt(target:Array, startValue:int, endValue:int, step:int = 1):void {
+			if ((startValue < endValue && step < 0) || (startValue > endValue && step > 0)) throw new ArgumentError("ArrayUtil.fillSerialInt()");
+			
+			var i:int;
+			var value:int;
+			if (startValue < endValue) {
+				for (i = 0, value = startValue; value <= endValue; i++, value += step) {
+					target[i] = value;
+				}
+			}else{
+				for (i = 0, value = startValue; value >= endValue; i++, value += step) {
+					target[i] = value;
+				}
+			}
+		}
+		
+		
+		
 		
 		/**
 		 * 指定要素を削除する. 
