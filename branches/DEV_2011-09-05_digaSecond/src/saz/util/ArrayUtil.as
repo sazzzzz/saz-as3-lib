@@ -250,24 +250,28 @@
 		/**
 		 * 連番で埋める. 
 		 * value <= endValueになったら処理を中断するので、配列の最後の値＝endValueになるとは限らない. 
-		 * @param	target
-		 * @param	startValue
-		 * @param	endValue
-		 * @param	step
 		 * Rubyの[1..n]みたいに書きたかった.
+		 * @param	target	対象とする配列
+		 * @param	startValue
+		 * @param	endValue	startValue==endValueの場合、1つ目の要素のみ設定される. 
+		 * @param	step	増分. startValue<endValueならプラスの値を、startValue>endValueならマイナスの値を指定すること. 0を指定するとエラー. 
+		 * @example <listing version="3.0" >
 		 * var arr = [];
 		 * ArrayUtil.fillSerialInt(arr,1,6);
 		 * var factorial:int = new Enumerable().inject(null,function(result:int, item:int):int{
 		 * 	return result*item;
 		 * });
+		 * </listing>
 		 * @see	http://www.4gamer.net/games/131/G013104/20110909047/screenshot.html?num=011
 		 */
 		public static function fillSerialInt(target:Array, startValue:int, endValue:int, step:int = 1):void {
-			if ((startValue < endValue && step < 0) || (startValue > endValue && step > 0)) throw new ArgumentError("ArrayUtil.fillSerialInt()");
+			if (step == 0) throw new ArgumentError("ArrayUtil.fillSerialInt()");
 			
-			var i:int;
-			var value:int;
-			if (startValue < endValue) {
+			if ((startValue < endValue && step < 0) || (startValue > endValue && step > 0)) step = -step;
+			var i:int, value:int;
+			if (startValue == endValue) {
+				target[0] = startValue;
+			}else if (startValue < endValue) {
 				for (i = 0, value = startValue; value <= endValue; i++, value += step) {
 					target[i] = value;
 				}
@@ -283,7 +287,7 @@
 		
 		/**
 		 * 指定要素を削除する. 
-		 * @param	target
+		 * @param	target	対象とする配列
 		 * @param	startIndex	削除を開始するインデックス.
 		 * @param	count	削除する数.
 		 * @return	削除したエレメントを含む配列です.
