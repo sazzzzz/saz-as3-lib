@@ -1,6 +1,7 @@
 package saz.external.google {
 	import flash.display.*;
 	import com.google.analytics.*;
+	import flash.external.ExternalInterface;
 	
 	/**
 	 * GoogleアナリティクスのAS3版プロクシクラス.
@@ -69,7 +70,7 @@ package saz.external.google {
 		 * @param	webPropertyId	ウェブプロパティID（ex.UA-12345-22） または、ブリッジモードでは "window.pageTracker". 
 		 * @param	mode	トラッキングモードの指定. AS3モードとブリッジモードがある. "AS3"または"Bridge". 
 		 * @param	isDebug	デバッグモード.
-		 * @return	常にtrueを返す. 
+		 * @return	初期化できたらtrueを返す. 
 		 * 
 		 * @example <listing version="3.0" >
 		 * // AS3モード
@@ -89,11 +90,16 @@ package saz.external.google {
 		 * @see	http://code.google.com/intl/ja/apis/analytics/docs/tracking/flashTrackingIntro.html
 		 */
 		public function init(dsp:DisplayObject, webPropertyId:String, mode:String = "AS3", isDebug:Boolean = false):Boolean {
-			if (_isInit) return true;
-			_isInit = true;
+			if (_isInit) return false;
+			if (mode == MODE_BRIDGE && !ExternalInterface.available) return false;
 			
+			_isInit = true;
 			//_isDebug = isDebug;
-			_tracker = new GATracker(dsp, webPropertyId, mode, isDebug);
+			try{
+				_tracker = new GATracker(dsp, webPropertyId, mode, isDebug);
+			}catch (e:Error) {
+				trace(e);
+			}
 			return true;
 		}
 		
