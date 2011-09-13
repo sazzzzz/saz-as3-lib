@@ -21,10 +21,10 @@ package saz.external.google {
 		public static const MODE_BRIDGE:String = "Bridge";
 		
 		
-		public function get isInit():Boolean {
+		public static function get isInit():Boolean {
 			return _isInit;
 		}
-		private var _isInit:Boolean = false;
+		private static var _isInit:Boolean = false;
 		
 		private var _tracker:GATracker;
 		//private var _isDebug:Boolean = false;
@@ -89,7 +89,7 @@ package saz.external.google {
 		 * @see	http://code.google.com/intl/ja/apis/analytics/docs/tracking/flashTrackingIntro.html
 		 */
 		public function init(dsp:DisplayObject, webPropertyId:String, mode:String = "AS3", isDebug:Boolean = false):Boolean {
-			if (_isInit) return;
+			if (_isInit) return true;
 			_isInit = true;
 			
 			//_isDebug = isDebug;

@@ -8,7 +8,7 @@ package saz.external.google {
 	 */
 	public class GoogleAnalyticsJSProxy {
 		
-		public function get isInit():Boolean {
+		public static function get isInit():Boolean {
 			return _isInit;
 		}
 		private var _isInit:Boolean = false;
