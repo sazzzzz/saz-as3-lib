@@ -53,6 +53,11 @@ package saz.display {
 		}
 		
 		
+		/**
+		 * フレームラベルまたはフレーム数をフレーム数に変換. 
+		 * @param	frame	フレーム番号を表す数値、またはフレームのラベルを表すストリング.
+		 * @return
+		 */
 		private function _frameobjToFrame(frame:Object):int {
 			return (frame is String) ? labelToFrame(String(frame)) : int(frame);
 		}
@@ -66,11 +71,6 @@ package saz.display {
 		 * @return	フレーム番号を返す. ラベルが見つからない場合は0を返す. 
 		 */
 		public function labelToFrame(label:String):int {
-			/*if (_labelsEnum == null) _labelsEnum = new Enumerable(_target.currentLabels);
-			var fl:FrameLabel = _labelsEnum.detect(function(item:FrameLabel, index:int):Boolean {
-				return FrameLabel(item).name == label;
-			});
-			return fl != null ? fl.frame : 0;*/
 			// Objectにキャッシュ
 			if (_labelCache == null) _labelCache = DisplayUtil.cacheLabelToFrame(_target);
 			return _labelCache[label];
