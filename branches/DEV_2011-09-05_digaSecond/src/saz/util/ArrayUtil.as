@@ -144,6 +144,71 @@
 		
 		
 		/**
+		 * Objectの配列から、指定プロパティのリストを生成. 
+		 * @param	target
+		 * @param	propName
+		 * @return
+		 * @example <listing version="3.0" >
+		 * // フレームラベル名->フレーム数変換用のキャッシュオブジェクトを生成
+		 * var labelCache:Object = ArrayUtil.arrayToObject(ArrayUtil.propertyList(mc.currentLabels, "name"), ArrayUtil.propertyList(mc.currentLabels, "frame"));
+		 * </listing>
+		 */
+		public static function propertyList(target:Array, propName:String):Array {
+			var res:Array = new Array(target.length);
+			for (var i:int = 0, n:int = target.length; i < n; i++) {
+				res[i] = target[i][propName];
+			}
+			return res;	
+		}
+		
+		/**
+		 * Objectの配列から、指定メソッドの結果のリストを生成. 
+		 * @param	target
+		 * @param	methodName
+		 * @param	args	メソッドの引数. nullまたはArray. nullの場合は引数なし. 長さ1の配列なら全て同じ引数を使う. 長さ1以上の配列なら各要素を使用. 
+		 * @return	メソッドを実行した結果を格納した配列. 
+		 */
+		public static function methodList(target:Array, methodName:String, args:Array = null):Array {
+			var res:Array = new Array(target.length);
+			var i:int, n:int;
+			if (args == null) {
+				for (i = 0, n = target.length; i < n; i++) {
+					res[i] = target[i][methodName]();
+				}
+			}else if (args.length == 1) {
+				for (i = 0, n = target.length; i < n; i++) {
+					res[i] = target[i][methodName](args[0]);
+				}
+			}else {
+				for (i = 0, n = target.length; i < n; i++) {
+					res[i] = target[i][methodName](args[i]);
+				}
+			}
+			return res;	
+		}
+		
+		
+		/**
+		 * キーのリストと値のリストから、Objectを生成. （キャッシュ用）
+		 * @param	names	キーのリスト. 
+		 * @param	values	値のリスト. 
+		 * @return	キャッシュ用のObject. 
+		 * @example <listing version="3.0" >
+		 * // フレームラベル名->フレーム数変換用のキャッシュオブジェクトを生成
+		 * var labelCache:Object = ArrayUtil.arrayToObject(ArrayUtil.propertyList(mc.currentLabels, "name"), ArrayUtil.propertyList(mc.currentLabels, "frame"));
+		 * </listing>
+		 */
+		public static function arrayToObject(names:Array, values:Array):Object {
+			var res:Object = { };
+			for (var i:int = 0, n:int = names.length; i < n; i++) {
+				res[names[i]] = values[i];
+			}
+			return res;
+		}
+		
+		
+		
+		/**
 		 * 配列内の要素をランダムに返す.
 		 * @param	target
 		 * @return

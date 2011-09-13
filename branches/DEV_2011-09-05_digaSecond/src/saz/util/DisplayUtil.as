@@ -320,6 +320,25 @@
 		//--------------------------------------
 		
 		/**
+		 * ラベル名からフレーム番号に変換用に、キャッシュObjectを生成. 
+		 * @param	target
+		 * @return
+		 */
+		public static function cacheLabelToFrame(target:MovieClip):Object {
+			// 62msec @9999回ループ
+			var res:Object = { };
+			var labels:Array = target.currentLabels;
+			for (var i:int = 0, n:int = labels.length, item:FrameLabel; i < n; i++) {
+				item = labels[i];
+				res[item.name] = item.frame;
+			}
+			return res;
+			// 92msec @9999回ループ
+			//var labels:Array = target.currentLabels;
+			//return ArrayUtil.arrayToObject(ArrayUtil.propertyList(labels, "name"), ArrayUtil.propertyList(labels, "frame"));
+		}
+		
+		/**
 		 * ラベル名からフレーム番号を返す.
 		 * @param	target	対象MovieClip. 
 		 * @param	label	フレームラベル名. 

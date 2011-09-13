@@ -4,6 +4,8 @@ package saz.display {
 	import flash.events.Event;
 	import saz.collections.enumerator.Enumerable;
 	import saz.IStartable;
+	import saz.util.ArrayUtil;
+	import saz.util.DisplayUtil;
 	import saz.util.VarDefault;
 	
 	/**
@@ -17,6 +19,7 @@ package saz.display {
 	public class FrameAction {
 		
 		// TODO	拡張案：複数functionを登録可能にするとか
+		// FunctionをArrayに突っ込んで保存、Function配列を実行するメソッドを作ればいい. 
 		
 		/**
 		 * 対象とするMovieClip.
@@ -36,6 +39,10 @@ package saz.display {
 		private var _actions:Object;
 		private var _labelsEnum:Enumerable;
 		
+		/**
+		 * labelToFrame用キャッシュ. 
+		 */
+		private var _labelCache:Object;
 		
 		/**
 		 * コンストラクタ. 
@@ -50,17 +57,23 @@ package saz.display {
 			return (frame is String) ? labelToFrame(String(frame)) : int(frame);
 		}
 		
+		
+		
+		
 		/**
 		 * ラベル名からフレーム番号を返す.
 		 * @param	label	フレームラベル名. 
 		 * @return	フレーム番号を返す. ラベルが見つからない場合は0を返す. 
 		 */
 		public function labelToFrame(label:String):int {
-			if (_labelsEnum == null) _labelsEnum = new Enumerable(_target.currentLabels);
+			/*if (_labelsEnum == null) _labelsEnum = new Enumerable(_target.currentLabels);
 			var fl:FrameLabel = _labelsEnum.detect(function(item:FrameLabel, index:int):Boolean {
 				return FrameLabel(item).name == label;
 			});
-			return fl != null ? fl.frame : 0;
+			return fl != null ? fl.frame : 0;*/
+			// Objectにキャッシュ
+			if (_labelCache == null) _labelCache = DisplayUtil.cacheLabelToFrame(_target);
+			return _labelCache[label];
 		}
 		
 		/**
