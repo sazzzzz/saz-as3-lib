@@ -137,6 +137,18 @@
 		// main
 		//--------------------------------------
 		
+		/**
+		 * 対象DisplayObjectからルートに至るまで、全てのDisplayObjectに対してプロパティを設定. 
+		 * @param	target
+		 * @param	name
+		 * @param	value
+		 */
+		public static function setPropertyToAllParent(target:DisplayObject, name:String, value:Object):void {
+			while (target != null && !(target is Stage)) {
+				target[name] = value;
+				target = target.parent;
+			}
+		}
 		
 		
 		/**
@@ -147,11 +159,11 @@
 		public static function forceMouseEnabled(target:DisplayObject, value:Boolean = false):void {
 			while (target != null && !(target is Stage)) {
 				if (target is InteractiveObject) {
-					//trace(target, InteractiveObject(target).mouseEnabled);
 					InteractiveObject(target).mouseEnabled = value;
 				}
 				target = target.parent;
 			}
+			//setPropertyToAllParent(target, "mouseEnabled", value);
 		}
 		
 		
