@@ -1,11 +1,36 @@
 ﻿package saz.util {
 	import flash.net.URLRequest;
+	import flash.ui.Keyboard;
 	
 	/**
 	 * Stringユーティリティ。
 	 * @author saz
 	 */
 	public class StringUtil {
+		
+		private static const KEY2STR_TBL:Object = {
+			48:"0",		// フルキーの0
+			49:"1",
+			50:"2",
+			51:"3",
+			52:"4",
+			53:"5",
+			54:"6",
+			55:"7",
+			56:"8",
+			57:"9",
+			96:"0",		// Keyboard.NUMPAD_0:"0",
+			97:"1", 	// Keyboard.NUMPAD_1:"1",
+			98:"2",		// Keyboard.NUMPAD_2:"2",
+			99:"3",		// Keyboard.NUMPAD_3:"3",
+			100:"4",	// Keyboard.NUMPAD_4:"4",
+			101:"5",	// Keyboard.NUMPAD_5:"5",
+			102:"6",	// Keyboard.NUMPAD_6:"6",
+			103:"7",	// Keyboard.NUMPAD_7:"7",
+			104:"8",	// Keyboard.NUMPAD_8:"8",
+			105:"9",	// Keyboard.NUMPAD_9:"9",
+			0:""
+		};
 		
 		/**
 		 * CR。0x0D。
@@ -15,6 +40,18 @@
 		 * LF。0x0A。
 		 */
 		public static var LF:String = String.fromCharCode(10);	//0x0A
+		
+		
+		/**
+		 * キーコードから対応するStringを返す. とりあえずフルキーの0~9とテンキーの0~9のみ. 
+		 * @param	kcode	キーコード. 
+		 * @return	String. 
+		 */
+		public static function fromKeyCode(kcode:uint):String {
+			var res:String = KEY2STR_TBL[kcode];
+			return res == null ? "" : res;
+		}
+		
 		
 		
 		/**
