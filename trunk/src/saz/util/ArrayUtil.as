@@ -144,6 +144,71 @@
 		
 		
 		/**
+		 * Objectの配列から、指定プロパティのリストを生成. 
+		 * @param	target
+		 * @param	propName
+		 * @return
+		 * @example <listing version="3.0" >
+		 * // フレームラベル名->フレーム数変換用のキャッシュオブジェクトを生成
+		 * var labelCache:Object = ArrayUtil.arrayToObject(ArrayUtil.propertyList(mc.currentLabels, "name"), ArrayUtil.propertyList(mc.currentLabels, "frame"));
+		 * </listing>
+		 */
+		public static function propertyList(target:Array, propName:String):Array {
+			var res:Array = new Array(target.length);
+			for (var i:int = 0, n:int = target.length; i < n; i++) {
+				res[i] = target[i][propName];
+			}
+			return res;	
+		}
+		
+		/**
+		 * Objectの配列から、指定メソッドの結果のリストを生成. 
+		 * @param	target
+		 * @param	methodName
+		 * @param	args	メソッドの引数. nullまたはArray. nullの場合は引数なし. 長さ1の配列なら全て同じ引数を使う. 長さ1以上の配列なら各要素を使用. 
+		 * @return	メソッドを実行した結果を格納した配列. 
+		 */
+		public static function methodList(target:Array, methodName:String, args:Array = null):Array {
+			var res:Array = new Array(target.length);
+			var i:int, n:int;
+			if (args == null) {
+				for (i = 0, n = target.length; i < n; i++) {
+					res[i] = target[i][methodName]();
+				}
+			}else if (args.length == 1) {
+				for (i = 0, n = target.length; i < n; i++) {
+					res[i] = target[i][methodName](args[0]);
+				}
+			}else {
+				for (i = 0, n = target.length; i < n; i++) {
+					res[i] = target[i][methodName](args[i]);
+				}
+			}
+			return res;	
+		}
+		
+		
+		/**
+		 * キーのリストと値のリストから、Objectを生成. （キャッシュ用）
+		 * @param	names	キーのリスト. 
+		 * @param	values	値のリスト. 
+		 * @return	キャッシュ用のObject. 
+		 * @example <listing version="3.0" >
+		 * // フレームラベル名->フレーム数変換用のキャッシュオブジェクトを生成
+		 * var labelCache:Object = ArrayUtil.arrayToObject(ArrayUtil.propertyList(mc.currentLabels, "name"), ArrayUtil.propertyList(mc.currentLabels, "frame"));
+		 * </listing>
+		 */
+		public static function arrayToObject(names:Array, values:Array):Object {
+			var res:Object = { };
+			for (var i:int = 0, n:int = names.length; i < n; i++) {
+				res[names[i]] = values[i];
+			}
+			return res;
+		}
+		
+		
+		
+		/**
 		 * 配列内の要素をランダムに返す.
 		 * @param	target
 		 * @return
@@ -223,6 +288,18 @@
 		
 		
 		/**
+		 * fill用サポートメソッド. 値はfuncで与える. 
+		 * @param	target
+		 * @param	func	function(index:int)
+		 */
+		/*private static function _fill(target:Array, func:Function):void {
+			target.forEach(function(item:*, index:int, arr:Array):void {
+				target[index] = func(index);
+			});
+		}*/
+		
+		
+		/**
 		 * 指定した値で埋める。
 		 * @param	target
 		 * @param	value
@@ -231,8 +308,58 @@
 			target.forEach(function(item:*, index:int, arr:Array):void {
 				target[index] = value;
 			});
+			//_fill(target, function():*{ return value; } );
 		}
 		
+		
+		/**
+		 * 連番で埋める. 
+		 * value <= endValueになったら処理を中断するので、配列の最後の値＝endValueになるとは限らない. 
+		 * Rubyの[1..n]みたいに書きたかった.
+		 * @param	target	対象とする配列
+		 * @param	startValue
+		 * @param	endValue	startValue==endValueの場合、1つ目の要素のみ設定される. 
+		 * @param	step	増分. startValue<endValueならプラスの値を、startValue>endValueならマイナスの値を指定すること. 0を指定するとエラー. 
+		 * @example <listing version="3.0" >
+		 * var arr = [];
+		 * ArrayUtil.fillSerialInt(arr,1,6);
+		 * var factorial:int = new Enumerable().inject(null,function(result:int, item:int):int{
+		 * 	return result*item;
+		 * });
+		 * </listing>
+		 * @see	http://www.4gamer.net/games/131/G013104/20110909047/screenshot.html?num=011
+		 */
+		public static function fillSerialInt(target:Array, startValue:int, endValue:int, step:int = 1):void {
+			if (step == 0) throw new ArgumentError("ArrayUtil.fillSerialInt()");
+			
+			if ((startValue < endValue && step < 0) || (startValue > endValue && step > 0)) step = -step;
+			var i:int, value:int;
+			if (startValue == endValue) {
+				target[0] = startValue;
+			}else if (startValue < endValue) {
+				for (i = 0, value = startValue; value <= endValue; i++, value += step) {
+					target[i] = value;
+				}
+			}else{
+				for (i = 0, value = startValue; value >= endValue; i++, value += step) {
+					target[i] = value;
+				}
+			}
+		}
+		
+		
+		
+		
+		/**
+		 * 指定要素を削除する. 
+		 * @param	target	対象とする配列
+		 * @param	startIndex	削除を開始するインデックス.
+		 * @param	count	削除する数.
+		 * @return	削除したエレメントを含む配列です.
+		 */
+		public static function remove(target:Array, startIndex:int, count:uint = 1):Array {
+			return target.splice(startIndex, count);
+		}
 		
 		/**
 		 * Array内のすべての要素を削除する。
