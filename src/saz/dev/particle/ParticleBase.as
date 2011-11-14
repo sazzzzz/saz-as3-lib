@@ -1,4 +1,4 @@
-package saz.display.particle {
+package saz.dev.particle {
 	import jp.progression.casts.*;
 	import jp.progression.commands.display.*;
 	import jp.progression.commands.lists.*;
@@ -13,8 +13,9 @@ package saz.display.particle {
 	import saz.controll.Pool;
 	
 	/**
-	 * パーティクル（キラキラ）ベースクラス. 
-	 * 初出：KHABiz、未テスト。
+	 * パーティクル（キラキラ）ベースクラス. これを親としてパーティクルクラスを作る. <br/>
+	 * 初出：KHABiz、未テスト. <br/>
+	 * 要progression4. <br/>
 	 * @author saz
 	 */
 	public class ParticleBase extends CastSprite {
@@ -25,6 +26,13 @@ package saz.display.particle {
 		
 		/**
 		 * 新しい ParticleBase インスタンスを作成します。
+		 * @param	initObject
+		 * @example <listing version="3.0" >
+		 * _parCon = new ParticleController(this, frame);
+		 * _parCon.add(new ParticlePool(PanelKira));
+		 * _parCon.delay = 2 / 30 * 1000;
+		 * _parCon.start();
+		 * </listing>
 		 */
 		public function ParticleBase( initObject:Object = null ) {
 			// 親クラスを初期化します。
@@ -32,8 +40,21 @@ package saz.display.particle {
 			
 			mouseEnabled = false;
 			mouseChildren = false;
+			
+			// 子クラスでメソッドがオーバーライドされてるかどうかを判別したい...
+			//trace(this.initHook);
+			//trace(this.initHook.toString() == "function Function() {}");
+			//trace("" + this.initHook == "function Function() {}");
+			//trace("" + this.castAddedHook == "function Function() {}");
+			//trace(super.initHook);
+			//trace(this.initHook == super.initHook);
 		}
 		
+		/**
+		 * 指定時間後にRemoveChildを実行. <br/>
+		 * 表示を消すには、このメソッドを使うかRemoveChildを実行する. <br/>
+		 * @param	wait	wait時間を秒単位で指定. デフォルトは1/30. 
+		 */
 		protected function waitAndRemove(wait:Number = 1 / 30):void {
 			var self:ParticleBase = this;
 			new SerialList(null,
@@ -48,8 +69,17 @@ package saz.display.particle {
 		// オーバーライド用
 		//--------------------------------------
 		
+		/**
+		 * 初期化用. 最初のatCastAdded時に呼ばれる. 
+		 */
 		protected function initHook():void { }
+		/**
+		 * atCastAddedフック. 
+		 */
 		protected function castAddedHook():void { }
+		/**
+		 * atCastRemovedフック. 
+		 */
 		protected function castRemovedHook():void { }
 		
 		
