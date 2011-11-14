@@ -1,4 +1,4 @@
-package saz.outside.progression4 {
+package saz.external.progression4 {
 	import flash.display.Graphics;
 	import flash.events.Event;
 	import jp.progression.casts.*;

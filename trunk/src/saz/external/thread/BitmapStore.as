@@ -1,4 +1,4 @@
-﻿package saz.outside.thread {
+﻿package saz.external.thread {
 	import flash.display.*;
 	import flash.errors.IOError;
 	import flash.events.*;

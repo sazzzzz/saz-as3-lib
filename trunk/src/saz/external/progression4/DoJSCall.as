@@ -1,4 +1,4 @@
-package saz.outside.progression4 {
+package saz.external.progression4 {
 	import jp.progression.casts.*;
 	import jp.progression.commands.display.*;
 	import jp.progression.commands.lists.*;

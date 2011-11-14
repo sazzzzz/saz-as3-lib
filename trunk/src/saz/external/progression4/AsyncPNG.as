@@ -1,4 +1,4 @@
-package saz.outside.progression4 {
+package saz.external.progression4 {
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.events.ProgressEvent;
