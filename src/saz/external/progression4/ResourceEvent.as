@@ -1,4 +1,4 @@
-package saz.outside.progression4 {
+package saz.external.progression4 {
 	import flash.events.*;
 	import jp.progression.data.Resource;
 	
