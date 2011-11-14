@@ -1,4 +1,4 @@
-package saz.display.particle {
+package saz.dev.particle {
 	import flash.display.*;
 	import flash.events.TimerEvent;
 	import flash.geom.Rectangle;
@@ -8,8 +8,9 @@ package saz.display.particle {
 	import saz.controll.Pool;
 	import saz.util.VarDefault;
 	/**
-	 * パーティクルコントロール.
-	 * 初出：KHABiz、未テスト。
+	 * パーティクルコントロール.<br/>
+	 * 初出：KHABiz、未テスト.<br/>
+	 * 要progression4. <br/>
 	 * TODO	仕様がイマイチ。
 	 * @author saz
 	 */
@@ -39,8 +40,8 @@ package saz.display.particle {
 		
 		/**
 		 * コンストラクタ. 
-		 * @param	canvas
-		 * @param	area
+		 * @param	canvas	パーティクルをAddChildするDisplayObjectContainer. 
+		 * @param	area	パーティクルを生成する範囲を表すDisplayObject. 
 		 * @example <listing version="3.0" >
 		 * _parCon = new ParticleController(this, frame);
 		 * _parCon.add(new ParticlePool(PanelKira));
