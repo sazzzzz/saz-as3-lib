@@ -288,27 +288,21 @@
 		
 		
 		/**
-		 * fill用サポートメソッド. 値はfuncで与える. 
-		 * @param	target
-		 * @param	func	function(index:int)
-		 */
-		/*private static function _fill(target:Array, func:Function):void {
-			target.forEach(function(item:*, index:int, arr:Array):void {
-				target[index] = func(index);
-			});
-		}*/
-		
-		
-		/**
 		 * 指定した値で埋める。
 		 * @param	target
 		 * @param	value
 		 */
 		public static function fill(target:Array, value:*):void {
-			target.forEach(function(item:*, index:int, arr:Array):void {
+			// forがいちばん早い
+			// for			477
+			// forEach		2197
+			// join&split	4999
+			/*target.forEach(function(item:*, index:int, arr:Array):void {
 				target[index] = value;
-			});
-			//_fill(target, function():*{ return value; } );
+			});*/
+			for (var i:int = 0, n:int = target.length, item:*; i < n; i++) {
+				target[i] = value;
+			}
 		}
 		
 		
