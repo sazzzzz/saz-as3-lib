@@ -3,6 +3,7 @@ package saz.dev {
 	 * 型つき値保持クラス. <br/>
 	 * ValueHolderを型指定したくて作ってみたけど、インターフェースが違うから意味なさそう. 
 	 * @author saz
+	 * @deprecated	ClassedValueHolderができたので廃止予定.
 	 */
 	public class TypedValueHolder extends ValueHolder {
 		

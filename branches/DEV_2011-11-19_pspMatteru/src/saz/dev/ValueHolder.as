@@ -34,12 +34,12 @@ package saz.dev {
 		/**
 		 * コンストラクタ. 
 		 * @param	val	初期値. 
-		 * @param	name	名前. 
+		 * @param	name	名前. イベント発行時にWatchEvent.keyとして使われる. 
 		 */
 		public function ValueHolder(val:*, valueName:String = "") {
 			super();
 			
-			if (val != undefined)_value = val;
+			if (val != undefined) value = val;
 			if (valueName != "") name = valueName;
 		}
 		
