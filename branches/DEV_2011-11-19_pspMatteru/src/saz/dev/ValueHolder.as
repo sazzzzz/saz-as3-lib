@@ -1,7 +1,9 @@
 package saz.dev {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	import saz.events.WatchEvent;
+	import saz.util.ObjectUtil;
 	
 	/**
 	 * 値に書き込みがあった. 
@@ -29,26 +31,22 @@ package saz.dev {
 	 * @see	http://nicoden.zxq.net/index.php?Flex%2FPureMVC%2F%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB#q626d7d7
 	 * @see	http://d.hatena.ne.jp/sumim/20110513
 	 */
-	public class ValueHolder extends EventDispatcher {
+	public class ValueHolder extends EventDispatcher implements IValue, IEventDispatcher {
 		
-		private var _value:*;
+		
+		
+		/* INTERFACE saz.dev.IValue */
 		
 		/**
 		 * 名前. イベント発行時にWatchEvent.keyとして使われる. 
 		 */
-		public var name:String = "ValueHolder";
-		
-		/**
-		 * コンストラクタ. 
-		 * @param	val	初期値. 
-		 * @param	name	名前. イベント発行時にWatchEvent.keyとして使われる. 
-		 */
-		public function ValueHolder(val:*, valueName:String = "") {
-			super();
-			
-			if (val != undefined) value = val;
-			if (valueName != "") name = valueName;
+		public function get name():String {
+			return _name;
 		}
+		//public var name:String = "ValueHolder";
+		private var _name:String = "ValueHolder";
+		
+		
 		
 		/**
 		 * 値を取得する. 
@@ -70,10 +68,30 @@ package saz.dev {
 				dispatchEvent(new WatchEvent(WatchEvent.CHANGE, name, old, val));
 			}
 		}
+		private var _value:*;
 		
+		
+		
+		
+		/**
+		 * コンストラクタ. 
+		 * @param	val	初期値. 
+		 * @param	name	名前. イベント発行時にWatchEvent.keyとして使われる. 
+		 */
+		public function ValueHolder(val:*, valueName:String = "") {
+			super();
+			
+			if (val != undefined) value = val;
+			if (valueName != "") _name = valueName;
+		}
+		
+		
+		
+		/* flash.events.EventDispatcher */
 		
 		override public function toString():String {
-			return "[ValueHolder: " + value + "]";
+			//return "[ValueHolder: " + value + "]";
+			return ObjectUtil.formatToString(this, "ValueHolder", "value", "name");
 		}
 		
 		

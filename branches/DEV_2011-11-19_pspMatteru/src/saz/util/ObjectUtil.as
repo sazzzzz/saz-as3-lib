@@ -127,6 +127,27 @@
 		}
 		
 		
+		/**
+		 * シンプルな toString() メソッドの実装を提供.
+		 * @param	target	対象インスタンス
+		 * @param	className	対象となるクラス名
+		 * @param	names	プロパティ名
+		 * @return
+		 */
+		public static function formatToString( target:*, className:String, ... names:Array ):String {
+			var res:String = "[" +className;
+			var i:int, n:int, name:String, value:*;
+			for (i = 0, n = names.length; i < n; i++) {
+				name = names[i];
+				value = target[name];
+				if (value is String) {
+					res += " " + name + "=\"" + value + "\"";
+				}else {
+					res += " " + name + "=" + value;
+				}
+			}
+			return res + "]";
+		}
 		
 		//--------------------------------------------------------------------------
 		//
@@ -206,6 +227,8 @@
 		public static function toString(target:*):String {
 			return $dump(target,"");
 		}
+		
+		
 		
 		
 		/**

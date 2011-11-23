@@ -1,9 +1,11 @@
 package saz.dev {
+	import flash.events.IEventDispatcher;
 	/**
 	 * 型指定あり値保持クラス.
 	 * @author saz
 	 */
-	public class TypedValueHolder extends ValueHolder {
+	//public class TypedValueHolder extends ValueHolder {
+	public class TypedValueHolder extends ValueHolder implements IValue, IEventDispatcher {
 		
 		/**
 		 * 型として指定されたクラス. 
