@@ -2,6 +2,7 @@ package saz.dev.slideshow {
 	import caurina.transitions.Tweener;
 	import flash.display.BitmapData;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
@@ -9,7 +10,7 @@ package saz.dev.slideshow {
 	 * ...
 	 * @author saz
 	 */
-	public class SlideshowController {
+	public class SlideshowController extends EventDispatcher {
 		
 		public var target:BitmapData;
 		public var time:Number = 1.0;
@@ -27,6 +28,9 @@ package saz.dev.slideshow {
 		public var atStart:Function = function():void{};
 		public var atStop:Function = function():void{};
 		
+		public function get index():int {
+			return _index;
+		}
 		private var _index:int = 0;
 		
 		private var _bmps:Array = [];
@@ -35,6 +39,8 @@ package saz.dev.slideshow {
 		private var _timer:Timer;
 		
 		public function SlideshowController(targetBitmapData:BitmapData) {
+			super();
+			
 			target = targetBitmapData;
 		}
 		
@@ -52,12 +58,17 @@ package saz.dev.slideshow {
 			//var outBmp:BitmapData = dstBmp.clone();
 			var inBmp:BitmapData = getItemAt(inIndex);
 			var self:SlideshowController = this;
+			
 			_tweenTarget.value = 0.0;
+			dispatchEvent(new SlideshowEvent(SlideshowEvent.FADE_START));
 			
 			Tweener.addTween(_tweenTarget, {
 				time:time, value:1.0, transition:transition,
 				onUpdate:function():void {
 					self.atFade(dstBmp, _tweenTarget.value, outBmp, inBmp);
+				},
+				onComplete:function():void {
+					self.dispatchEvent(new SlideshowEvent(SlideshowEvent.FADE_COMPLETE));
 				}
 			} );
 		}
@@ -66,13 +77,21 @@ package saz.dev.slideshow {
 			return _bmps.length;
 		}
 		
-		public function addItem(bmp:BitmapData):void {
-			_bmps.push(bmp);
-		}
+		
+		
 		
 		public function getItemAt(index:int):BitmapData {
 			return _bmps[index];
 		}
+		
+		public function addItem(bmp:BitmapData):void {
+			_bmps.push(bmp);
+		}
+		
+		public function clearItem():void {
+			_bmps.length = 0;
+		}
+		
 		
 		private function _timer_timer(e:TimerEvent):void {
 			next();
@@ -99,7 +118,8 @@ package saz.dev.slideshow {
 		}
 		
 		public function gotoAt(index:int):void {
-			_makeFader(_index, index);
+			//_makeFader(_index, index);
+			_draw(_index);
 		}
 		
 		
