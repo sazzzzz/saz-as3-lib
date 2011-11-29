@@ -37,6 +37,10 @@ package saz.util {
 		//
 		//--------------------------------------------------------------------------
 		
+		//--------------------------------------
+		// 以下テストしてない
+		//--------------------------------------
+		
 		/**
 		 * 絶対値. 高速版. 
 		 * @param	value
@@ -55,7 +59,7 @@ package saz.util {
 		 * @see	http://wonderfl.net/c/vDJ2/
 		 */
 		static public function max(num1:Number, num2:Number):Number {
-			(num2 < num1) ? num1 : num2;
+			return (num2 < num1) ? num1 : num2;
 		}
 		
 		/**
@@ -65,8 +69,8 @@ package saz.util {
 		 * @return
 		 * @see	http://wonderfl.net/c/vDJ2/
 		 */
-		static public function max(num1:Number, num2:Number):Number {
-			(num2 > num1) ? num1 : num2;
+		static public function min(num1:Number, num2:Number):Number {
+			return (num2 > num1) ? num1 : num2;
 		}
 		
 		
@@ -100,9 +104,9 @@ package saz.util {
 		 * 
 		 * @see	http://actionscript.g.hatena.ne.jp/ConquestArrow/20070621/1182359767
 		 */
-		static public function equalSignInt(a:int, b:int):Boolean {
-			return a ^ b >= 0;
-		}
+		//static public function equalSignInt(a:int, b:int):Boolean {
+			//return a ^ b >= 0;
+		//}
 		
 	}
 
