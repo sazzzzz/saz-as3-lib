@@ -138,6 +138,37 @@
 		//--------------------------------------
 		
 		/**
+		 * 中心のx座標.
+		 * @param	target
+		 * @return
+		 */
+		static public function center (target:DisplayObject):Number {
+			return target.x + (target.width / 2);
+		}
+		
+		/**
+		 * 中心のy座標. 
+		 * @param	target
+		 * @return
+		 */
+		static public function middle(target:DisplayObject):Number {
+			return target.y + (target.height / 2);
+		}
+		
+		/**
+		 * 中心の座標をPointで. 
+		 * @param	target
+		 * @return
+		 */
+		static public function centerPoint(target:DisplayObject):Point {
+			return new Point(center(target), middle(target));
+		}
+		
+		
+		
+		
+		
+		/**
 		 * 対象DisplayObjectからルートに至るまで、全てのDisplayObjectに対してプロパティを設定. 
 		 * @param	target
 		 * @param	name
