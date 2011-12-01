@@ -47,9 +47,9 @@ package saz.external.progression4 {
 		
 		// デタッチもできるといいなあ…
 		// TODO	dettachを実装！
-		public function dettach(target:IEventDispatcher, eventType:String, pageName:String):void {
-			
-		}
+		//public function dettach(target:IEventDispatcher, eventType:String, pageName:String):void {
+			//
+		//}
 		
 	}
 
