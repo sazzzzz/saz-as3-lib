@@ -1,5 +1,6 @@
 ﻿package saz.util {
 	import flash.display.*;
+	import flash.filters.BitmapFilter;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.*;
 	
@@ -18,6 +19,21 @@
 		
 		// drawHistogram用テンポラリBitmdapData
 		static private var $histogramTmp:BitmapData;
+		
+		/**
+		 * ビットマップにフィルターを掛け、ぴったりのサイズにトリミングしたBitmapDataを返す. 
+		 * @param	src	元画像. 
+		 * @param	filter	フィルター. 
+		 * @param	transparent	ビットマップイメージがピクセル単位の透明度をサポートするかどうか. デフォルト値は true です (透明).
+		 * @param	fillColor	ビットマップイメージ領域を塗りつぶすのに使用する 32 ビット ARGB カラー値です。デフォルト値は 0xFFFFFFFF (白) です.
+		 * @return
+		 */
+		public static function filterAndTrim(src:BitmapData, filter:BitmapFilter, transparent:Boolean = true, fillColor:uint = 0xFFFFFFFF):BitmapData {
+			var rect:Rectangle = src.generateFilterRect(src.rect, filter);
+			var res:BitmapData = new BitmapData(rect.width, rect.height, transparent, fillColor);
+			res.applyFilter(src, src.rect, new Point( -rect.x, -rect.y), filter);
+			return res;
+		}
 		
 		
 		/**
