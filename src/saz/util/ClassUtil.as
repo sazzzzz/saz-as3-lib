@@ -16,6 +16,7 @@ package saz.util {
 		 * @return
 		 */
 		public static function extractClass(loaderInfo:LoaderInfo, className:String):Class {
+			if (null == loaderInfo) throw new ArgumentError("ClassUtil.extractClass: loaderInfoがnullです。");
 			return loaderInfo.applicationDomain.getDefinition(className) as Class;
 		}
 		

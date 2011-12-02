@@ -6,6 +6,31 @@ package saz.util {
 	 */
 	public class GeomUtil {
 		
+		
+		
+		/**
+		 * 2つのPoint間の距離. Point.distance()の高速版. 
+		 * @param	pt1
+		 * @param	pt2
+		 * @return
+		 * @see	http://wonderfl.net/c/97BW/
+		 */
+		static public function distance(pt1:Point, pt2:Point):Number {
+			var dx:Number = pt1.x - pt2.x;
+			var dy:Number = pt1.y - pt2.y;
+			return Math.sqrt(dx * dx + dy * dy);
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		//--------------------------------------
 		// BitmapDataUtilから移動
 		//--------------------------------------

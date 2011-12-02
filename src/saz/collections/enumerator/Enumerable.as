@@ -307,7 +307,7 @@ package saz.collections.enumerator {
 		 * この場合、要素が 1 つしかなければブロックを実行せずに最初の要素を返します。要素が空なら null を返します。
 		 * @param	init	（オプション）初期値。
 		 * @param	iterator
-		 * function(result:*, item:*):*
+		 * function(result:\*, item:\*):\*
 		 * @return
 		 * @example <listing version="3.0" >
 		 * // 数値の合計を求める。

@@ -64,6 +64,20 @@
 			return ( 0 == urlStr.indexOf("file:///"));
 		}
 		
+		
+		
+		
+		/**
+		 * 頭文字だけ大文字、他は小文字に. 
+		 * @param	value	文字列. 
+		 * @return
+		 */
+		public static function toTitleCase(value:String):String {
+			return value.substr(0, 1).toUpperCase() + value.substr(1).toLowerCase();
+		}
+		
+		
+		
 		/**
 		 * 左端から指定された長さの文字をコピーし、Stringにして返す. 
 		 * @param	target	対象とするString

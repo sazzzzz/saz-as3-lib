@@ -12,6 +12,7 @@ package saz.external.progression4 {
 	import jp.progression.data.*;
 	import jp.progression.events.*;
 	import jp.progression.scenes.*;
+	import psp.main.view.gacha.DrawingCardView;
 	import saz.display.FrameAction;
 	
 	/**
@@ -40,9 +41,25 @@ package saz.external.progression4 {
 		 */
 		public var autoStop:Boolean = true;
 		
-		
+		/**
+		 * targetのcurrentFrameをチェックして停止してたらplay()するフラグ. 
+		 */
+		public var forcePlay:Boolean = false;
 		
 		private var _frameAction:FrameAction;
+		
+		
+		
+		private var _frame:int = 0;
+		
+		// カレントフレームをチェック
+		private function _target_enterFrame(e:Event):void {
+			// フレーム進んでなかったら、むりやり再生
+			if (_frame == target.currentFrame) target.play();
+			_frame = target.currentFrame;
+		}
+		
+		
 		
 		/**
 		 * 新しい DoTimeline インスタンスを作成します。
@@ -52,6 +69,8 @@ package saz.external.progression4 {
 			super( initObject );
 			
 			target = movieClip;
+			
+			if (forcePlay) target.addEventListener(Event.ENTER_FRAME, _target_enterFrame);
 			
 			var self:DoTimeline = this;
 			// 実行したいコマンド群を登録します。
@@ -79,14 +98,20 @@ package saz.external.progression4 {
 					// フレームアクションを削除
 					_frameAction.removeAction(completeLabel);
 					DoTimeline(self).removeEventListener(ExecuteEvent.EXECUTE_INTERRUPT, DoTimeline(self)._onInterrupt);
+					target.removeEventListener(Event.ENTER_FRAME, DoTimeline(self)._target_enterFrame);
 				}
 			);
 		}
+		
+		
+		
+		
 		
 		// 中断された時の処理. 
 		private function _onInterrupt(e:Event):void {
 			_frameAction.removeAction(completeLabel);
 			removeEventListener(ExecuteEvent.EXECUTE_INTERRUPT, arguments.callee);
+			target.removeEventListener(Event.ENTER_FRAME, _target_enterFrame);
 		}
 		
 		/**
