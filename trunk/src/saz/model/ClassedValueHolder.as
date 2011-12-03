@@ -3,8 +3,8 @@ package saz.model {
 	/**
 	 * 型指定あり値保持クラス.
 	 * @author saz
+	 * @deprecated	結局クラスでは型指定できてないので、意味ないような。TypedValueHolderと共に有意性要検討. 
 	 */
-	//public class ClassedValueHolder extends ValueHolder {
 	public class ClassedValueHolder extends ValueHolder implements IValue, IEventDispatcher {
 		
 		/**
