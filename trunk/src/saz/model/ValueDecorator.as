@@ -5,13 +5,13 @@ package saz.model {
 	import saz.util.ObjectUtil;
 	
 	/**
-	 * ValueHolderをウォッチする.<br/>
+	 * ValueHolderをdecorateし、主に値変更に対する制限手段を提供する.<br/>
 	 * これがDecoratorパターンか. 
 	 * @author saz
 	 * @see	http://help.adobe.com/ja_JP/AS2LCR/Flash_10.0/help.html?content=00001438.html
 	 * @see	http://fumiononaka.com/TechNotes/Flash/FN0310001.html
 	 */
-	public class ValueWatcher extends EventDispatcher implements IValue, IEventDispatcher {
+	public class ValueDecorator extends EventDispatcher implements IValue, IEventDispatcher {
 		
 		/**
 		 * ウォッチ対象のValueHolderインスタンス. 
@@ -68,7 +68,7 @@ package saz.model {
 		 * var str1:IValue = new ValueHolder("A", "str1");
 		 * str1.value = "B";
 		 * str1.value = 0;
-		 * var w1:ValueWatcher = new ValueWatcher(str1, function(name:String, oldVal:*, newVal:*, userData:Object):* {
+		 * var w1:ValueDecorator = new ValueDecorator(str1, function(name:String, oldVal:*, newVal:*, userData:Object):* {
 		 * 	// Stringだけに制限
 		 * 	if (typeof newVal == userData) return newVal;
 		 * 	return oldVal;
@@ -77,11 +77,11 @@ package saz.model {
 		 * w1.value = 0;
 		 * </listing>
 		 */
-		public function ValueWatcher(targetValue:IValue, callbackFnc:Function, userData:Object = null) {
+		public function ValueDecorator(targetValue:IValue, callbackFnc:Function, userData:Object = null) {
 			super();
 			
 			target = targetValue;
-			var self:ValueWatcher = this;
+			var self:ValueDecorator = this;
 			EventDispatcher(target).addEventListener(WatchEvent.UPDATE, function(e:WatchEvent):void {
 				self.dispatchEvent(e);
 			});
@@ -100,7 +100,7 @@ package saz.model {
 		/* flash.events.EventDispatcher */
 		
 		override public function toString():String {
-			return ObjectUtil.formatToString(this, "ValueWatcher", "value", "name");
+			return ObjectUtil.formatToString(this, "ValueDecorator", "value", "name");
 		}
 		
 	}
