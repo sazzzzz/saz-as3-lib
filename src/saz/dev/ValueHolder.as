@@ -25,11 +25,11 @@ package saz.dev {
 	
 	
 	/**
-	 * 値保持クラス.
+	 * 値保持クラス. クラス名はSqueakから. 
 	 * @author saz
+	 * @see	http://d.hatena.ne.jp/sumim/20110513
 	 * @see	http://www.ua-labo.com/entries/pid000032.html
 	 * @see	http://nicoden.zxq.net/index.php?Flex%2FPureMVC%2F%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB#q626d7d7
-	 * @see	http://d.hatena.ne.jp/sumim/20110513
 	 */
 	public class ValueHolder extends EventDispatcher implements IValue, IEventDispatcher {
 		
