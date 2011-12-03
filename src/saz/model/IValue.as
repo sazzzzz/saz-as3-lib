@@ -1,4 +1,4 @@
-package saz.dev {
+package saz.model {
 	import flash.events.IEventDispatcher;
 	
 	/**

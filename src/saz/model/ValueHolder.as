@@ -1,5 +1,4 @@
-package saz.dev {
-	import flash.events.Event;
+package saz.model {
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import saz.events.WatchEvent;
