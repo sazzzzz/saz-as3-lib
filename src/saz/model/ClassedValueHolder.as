@@ -4,8 +4,8 @@ package saz.model {
 	 * 型指定あり値保持クラス.
 	 * @author saz
 	 */
-	//public class TypedValueHolder extends ValueHolder {
-	public class TypedValueHolder extends ValueHolder implements IValue, IEventDispatcher {
+	//public class ClassedValueHolder extends ValueHolder {
+	public class ClassedValueHolder extends ValueHolder implements IValue, IEventDispatcher {
 		
 		/**
 		 * 型として指定されたクラス. 
@@ -18,7 +18,7 @@ package saz.model {
 		 * @param	valClass	型として指定するクラス. インスタンスではなく、クラスを指定すること. （String, Booleanなど）
 		 * @param	valueName	名前. イベント発行時にWatchEvent.keyとして使われる. 
 		 * @example <listing version="3.0" >
-		 * var str3:ValueHolder = new TypedValueHolder("A", String, "str3");
+		 * var str3:ValueHolder = new ClassedValueHolder("A", String, "str3");
 		 * str3.addEventListener(WatchEvent.UPDATE, valOnUpdate);
 		 * str3.addEventListener(WatchEvent.CHANGE, valOnChange);
 		 * str3.value = "A";
@@ -26,7 +26,7 @@ package saz.model {
 		 * str3.value = 0;			// 型が違います
 		 * </listing>
 		 */
-		public function TypedValueHolder(val:*, valClass:Class, valueName:String = "") {
+		public function ClassedValueHolder(val:*, valClass:Class, valueName:String = "") {
 			_class = valClass;			// superよりこっちが先
 			super(val, valueName);
 		}
@@ -43,7 +43,7 @@ package saz.model {
 		 * @copy	ValueHolder#set value
 		 */
 		override public function set value(val:*):void {
-			if (!(val is _class)) throw new ArgumentError("TypedValueHolder.value: 型が違います");
+			if (!(val is _class)) throw new ArgumentError("ClassedValueHolder.value: 型が違います");
 			super.value = val;
 		}
 		
