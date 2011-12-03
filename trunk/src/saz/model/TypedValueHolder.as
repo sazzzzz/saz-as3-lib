@@ -1,4 +1,4 @@
-package saz.dev {
+package saz.model {
 	import flash.events.IEventDispatcher;
 	/**
 	 * 型指定あり値保持クラス.
