@@ -13,27 +13,6 @@ package saz.model {
 	 */
 	public class ValueDecorator extends EventDispatcher implements IValue, IEventDispatcher {
 		
-		/**
-		 * ウォッチ対象のValueHolderインスタンス. 
-		 */
-		//public function get target():IValue {
-			//return _target;
-		//}
-		//private var _target:IValue;
-		public var target:IValue;
-		
-		/**
-		 * コールバック関数. valueを書き換えようとしたとき呼ばれる. <br/>
-		 * 仕様はAS2のObject.watchと同じ. <br/>
-		 * function (name:String, oldVal:*, newVal:*, userData:Object):* { return newVal; }
-		 */
-		public var callback:Function;
-		
-		/**
-		 * ユーザー定義データ. callbackに引数で渡される. 
-		 */
-		public var data:Object;
-		
 		
 		/* INTERFACE saz.dev.IValue */
 		
@@ -57,6 +36,27 @@ package saz.model {
 		public function set value(val:*):void {
 			target.value = callback(target.name, target.value, val, data);
 		}
+		
+		
+		
+		/* ORIGINAL */
+		
+		/**
+		 * ウォッチ対象のValueHolderインスタンス. 
+		 */
+		public var target:IValue;
+		
+		/**
+		 * コールバック関数. valueを書き換えようとしたとき呼ばれる. <br/>
+		 * 仕様はAS2のObject.watchと同じ. <br/>
+		 * function (name:String, oldVal:*, newVal:*, userData:Object):* { return newVal; }
+		 */
+		public var callback:Function;
+		
+		/**
+		 * ユーザー定義データ. callbackに引数で渡される. 
+		 */
+		public var data:Object;
 		
 		
 		/**
