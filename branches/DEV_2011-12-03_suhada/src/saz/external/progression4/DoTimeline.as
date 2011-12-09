@@ -12,7 +12,6 @@ package saz.external.progression4 {
 	import jp.progression.data.*;
 	import jp.progression.events.*;
 	import jp.progression.scenes.*;
-	import psp.main.view.gacha.DrawingCardView;
 	import saz.display.FrameAction;
 	
 	/**
