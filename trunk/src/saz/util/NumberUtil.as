@@ -18,6 +18,56 @@ package saz.util {
 		public static const EPSILON:Number = 2.22044604925031e-16;
 		
 		
+		/**
+		 * 重複がない総当り.
+		 * @param	count	チーム数. 
+		 * @param	callback	コールバック. function(a:int, b:int):void
+		 */
+		//* @param	includeSelf	自分同士の組み合わせを含めるかどうか. 
+		//static public function roundRobin(count:int, callback:Function, includeSelf:Boolean = false):void
+		static public function roundRobin(count:int, callback:Function):void
+		{
+			var i:int, j:int;
+			for(i = 0; i < count; i++) {
+				for(j = 0; j < i; j++) {
+					// do it
+					callback(i,j);
+					callback(j,i);
+				}
+			}
+			
+			/*var i:int, j:int;
+			var n:int, m:int;
+			for(i = 0, n = count; i < n; i++)
+			{
+				for(j = i + 1, m = count; j < m; j++)
+				{
+					// something
+					callback(i, j);
+					callback(j, i);
+				}
+			}*/
+			/*for(i = 0, n = count; i < n; i++)
+			{
+				for(j = i, m = count; j < m; j++)
+				{
+					if (i == j)
+					{
+						// self
+						if(includeSelf)
+						{
+							callback(i, j);
+						}
+					}
+					else
+					{
+						// something
+						callback(i, j);
+						callback(j, i);
+					}
+				}
+			}*/
+		}
 		
 		//--------------------------------------------------------------------------
 		//
