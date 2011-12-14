@@ -1,0 +1,61 @@
+saz.collectionsをまた整理
+
+■パッケージ
+saz.collections.generic（予定）
+
+■IIterator
+
+インターフェースは.NETのIEnumerator。ただし名前はかぶるので変えた。
+
+▽IEnumerator(T) インターフェイス
+http://msdn.microsoft.com/ja-jp/library/78dfe2yb.aspx
+
+.NETのIEnumerableには、実装することでforeachが使えるというメリットがある。
+http://smdn.jp/programming/netfx/enumeration/
+
+
+■リンクリスト
+
+Wikipediaが詳しい。
+
+▽連結リスト - Wikipedia
+http://ja.wikipedia.org/wiki/%E9%80%A3%E7%B5%90%E3%83%AA%E3%82%B9%E3%83%88
+▽双方向連結リスト (アルゴリズムとデータ構造)
+http://ufcpp.net/study/algorithm/col_blist.html
+▽アルゴリズムとデータ構造編　第１０章　線形リスト
+http://www.geocities.jp/ky_webid/algorithm/010.html
+▽連結リスト
+http://wwws.kobe-c.ac.jp/deguchi/c/list/llistp.html
+▽Linuxをはじめよう！:双方向連結リスト
+http://blog.livedoor.jp/hiroumauma/archives/1371959.html
+
+▽F-site | [AS3] 連結リストとVectorによるエレメントの追加と削除
+http://f-site.org/articles/2010/10/12235843.html
+▽FN1010001 - 連結リスト(linked list) - Flash : テクニカルノート
+http://www.fumiononaka.com/TechNotes/Flash/FN1010001.html
+
+
+
+◎ループ記述
+var list:LinkedList = new LinkedList();
+...
+var item = list.first;
+do{
+	//
+}while(item = list.next)
+-----------------
+for(item = list.first; list.current != null; item = list.next){
+	//
+}
+
+
+
+◎IF
+LinkedList
+	first
+	last
+
+LinkedListNode
+	next
+	prev
+	value
