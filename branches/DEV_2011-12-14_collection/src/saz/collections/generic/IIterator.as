@@ -5,29 +5,21 @@ package saz.collections.generic {
 	 * @author saz
 	 * 
 	 * @example <listing version="3.0" >
-	 * //i.reset()
+	 * // Iteratorはダミークラス
+	 * var i:IIterator = new ArrayIterator(collection);
 	 * var item;
-	 * do{
+	 * while(i.next()){
 	 *   item = i.current;
 	 *   // do something...
 	 *   
-	 * }while(i.next())
-	 * </listing>
-	 * @example <listing version="3.0" >
-	 * //i.reset()
-	 * var item;
-	 * while(i.current){
-	 *   item = i.current;
-	 *   // do something...
-	 *   
-	 *   i.next();
 	 * }
 	 * </listing>
 	 */
 	public interface IIterator {
 		
 		/**
-		 * コレクション内の現在の要素を取得します。
+		 * コレクション内の現在の要素を取得します。<br/>
+		 * 列挙子を作成した後や Reset メソッドを呼び出した後に、コレクションの最初の要素に列挙子を進めるためには、Current プロパティの値を読み取る前に MoveNext メソッドを呼び出す必要があります。そうしない場合、Current は未定義になります。<br/>
 		 */
 		function get current():Object;
 		
