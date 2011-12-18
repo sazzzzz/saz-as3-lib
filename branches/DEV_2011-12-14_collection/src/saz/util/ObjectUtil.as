@@ -11,6 +11,35 @@
 		
 		//public static function listDefferenceProperties(target:Object,names:Array):
 		
+		
+		/**
+		 * Objectのプロパティを配列にして返す. 
+		 * @param	target
+		 * @return
+		 * 
+		 * @see	saz.collections.generic.ObjectIterator#_toArray
+		 */
+		static public function toArray(target:Object):Array {
+			// ▽ループ　ActionScript3.0 Flash CS3
+			// http://1art.jp/flash9/chapter/125/
+			var res:Array = [];
+			var item:Object;
+			// for in
+			/*for (var p:String in _target) {
+				//
+				item = obj[p];
+				res.push(item);
+			}*/
+			
+			// for each
+			for each(item in _target){
+				//
+				res.push(item);
+			}
+			return res;
+		}
+		
+		
 		/**
 		 * 指定プロパティの値を配列にして返す.
 		 * @param	target	対象オブジェクト.
