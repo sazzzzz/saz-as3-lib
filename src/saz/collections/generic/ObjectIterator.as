@@ -5,13 +5,48 @@ package saz.collections.generic
 	public class ObjectIterator implements IIterator
 	{
 		private var _target:Object;
-		private var _targetLength:int;
-		private var _index:int = -1;
+		//private var _index:int = -1;
+		
+		//private var _array:Array;
+		private var _iterator:IIterator;
+		private var _inited:Boolean = false;
 		
 		public function ObjectIterator(target:Object)
 		{
 			_target = target;
+		}
+		
+		private function _init():void {
+			_inited = true;
+			//_array = _toArray(_target);
+			_iterator = new ArrayIterator(_toArray(_target));
+		}
+		
+		/**
+		 * object -> array
+		 * @param	obj
+		 * @return
+		 * 
+		 * @see	saz.util.ObjectUtil#toArray
+		 */
+		private function _toArray(obj:Object):Array {
+			// ▽ループ　ActionScript3.0 Flash CS3
+			// http://1art.jp/flash9/chapter/125/
+			var res:Array = [];
+			var item:Object;
 			
+			// for in
+			/*for (var p:String in _target) {
+				//
+				item = obj[p];
+				res.push(item);
+			}*/
+			
+			// for each
+			for each(item in _target){
+				res.push(item);
+			}
+			return res;
 		}
 		
 		/**
@@ -19,9 +54,8 @@ package saz.collections.generic
 		 */		
 		public function get current():Object
 		{
-			if(_index >= _targetLength) throw new IllegalOperationError("対象コレクションの末尾を過ぎました。");
-			
-			return _target[_index];
+			if (!_inited) _init();
+			return _iterator.current;
 		}
 		
 		/**
@@ -29,10 +63,8 @@ package saz.collections.generic
 		 */		
 		public function next():Boolean
 		{
-			if(_targetLength != _target.length) throw new IllegalOperationError("対象コレクションの要素が変更されました。");
-			
-			_index++;
-			return _index < _targetLength;
+			if (!_inited) _init();
+			return _iterator.next();
 		}
 		
 		/**
@@ -40,9 +72,8 @@ package saz.collections.generic
 		 */		
 		public function reset():void
 		{
-			if(_targetLength != _target.length) throw new IllegalOperationError("対象コレクションの要素が変更されました。");
-			
-			_index = -1;
+			if (!_inited) _init();
+			_iterator.reset();
 		}
 	}
 }
