@@ -38,7 +38,7 @@ package saz.collections.generic
 		/**
 		 * @see IIterator#current
 		 */		
-		public function get current():Object
+		public function get current():*
 		{
 			if(_index >= _targetLength) throw new IllegalOperationError("対象コレクションの末尾を過ぎました。");
 			
