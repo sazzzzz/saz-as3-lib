@@ -25,15 +25,13 @@
 			var res:Array = [];
 			var item:Object;
 			// for in
-			/*for (var p:String in _target) {
-				//
+			/*for (var p:String in target) {
 				item = obj[p];
 				res.push(item);
 			}*/
 			
-			// for each
-			for each(item in _target){
-				//
+			// for each		こっちが早い
+			for each(item in target){
 				res.push(item);
 			}
 			return res;

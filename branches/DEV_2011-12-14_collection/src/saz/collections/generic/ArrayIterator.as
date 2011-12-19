@@ -12,6 +12,12 @@ package saz.collections.generic
 		{
 			_target = target;
 			_targetLength = target.length;
+			
+			// for in に対応する試み…
+			/*for(var i:int = 0, n:int = target.length; i < n; i++){
+				//this["" + i] = target[i];								// #1056: saz.collections.generic.ArrayIterator のプロパティ 0 を作成できません。
+				this.prototype["" + i] = target[i];					// #1119: 未定義である可能性が高いプロパティ prototype に静的型 saz.collections.generic:ArrayIterator の参照を使用してアクセスしています。
+			}*/
 		}
 		
 		/**

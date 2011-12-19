@@ -30,19 +30,9 @@ package saz.collections.generic
 		 * @see	saz.util.ObjectUtil#toArray
 		 */
 		private function _toArray(obj:Object):Array {
-			// ▽ループ　ActionScript3.0 Flash CS3
-			// http://1art.jp/flash9/chapter/125/
 			var res:Array = [];
 			var item:Object;
-			
-			// for in
-			/*for (var p:String in _target) {
-				//
-				item = obj[p];
-				res.push(item);
-			}*/
-			
-			// for each
+			// for each		for inより早い
 			for each(item in _target){
 				res.push(item);
 			}
