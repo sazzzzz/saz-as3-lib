@@ -105,6 +105,7 @@ package saz.collections.generic
 			
 			_index = -1;
 			_count = 0;
+			_source.reset();		// 必要？
 		}
 	}
 }
