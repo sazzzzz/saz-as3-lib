@@ -1,6 +1,8 @@
 package saz.events {
 	import flash.events.Event;
 	
+	import saz.util.ObjectUtil;
+	
 	/**
 	 * 実行時に任意のプロパティを設定できるイベント。
 	 * Flexのまね。
@@ -16,7 +18,9 @@ package saz.events {
 		} 
 		
 		public override function clone():Event { 
-			return new DynamicEvent(type, bubbles, cancelable);
+			var res:Event = new DynamicEvent(type, bubbles, cancelable);
+			ObjectUtil.setProperties(res, this);
+			return res;
 		} 
 		
 		public override function toString():String { 
