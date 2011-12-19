@@ -11,6 +11,22 @@ package saz.collections.generic
 		private var _iterator:IIterator;
 		private var _inited:Boolean = false;
 		
+		
+		/**
+		 * コンストラクタ. 
+		 * @param target	対象とするObject（コレクション）インスタンス. 
+		 * 
+		 * @example <listing version="3.0" >
+		 * // Iteratorはダミークラス
+		 * var i:IIterator = new ObjectIterator(collection);
+		 * var item;
+		 * while(i.next()){
+		 *   item = i.current;
+		 *   // do something...
+		 *   
+		 * }
+		 * </listing>
+		 */
 		public function ObjectIterator(target:Object)
 		{
 			_target = target;

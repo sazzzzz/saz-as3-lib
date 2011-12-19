@@ -8,6 +8,21 @@ package saz.collections.generic
 		private var _targetLength:int;
 		private var _index:int = -1;
 		
+		/**
+		 * コンストラクタ. 
+		 * @param target	対象とするArray（コレクション）インスタンス. 
+		 * 
+		 * @example <listing version="3.0" >
+		 * // Iteratorはダミークラス
+		 * var i:IIterator = new ArrayIterator(collection);
+		 * var item;
+		 * while(i.next()){
+		 *   item = i.current;
+		 *   // do something...
+		 *   
+		 * }
+		 * </listing>
+		 */		
 		public function ArrayIterator(target:Array)
 		{
 			_target = target;
