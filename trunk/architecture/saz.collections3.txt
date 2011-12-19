@@ -1,5 +1,9 @@
 saz.collectionsをまた整理
 
+■TODO
+Object#propertyIsEnumerableについて調べるべき
+http://livedocs.adobe.com/flash/9.0_jp/ActionScriptLangRefV3/Object.html#propertyIsEnumerable()
+
 ■パッケージ
 saz.collections.generic（予定）
 
