@@ -1,7 +1,7 @@
 package saz.collections.generic
 {
 	import flash.errors.IllegalOperationError;
-
+	
 	public class ArrayIterator implements IIterator
 	{
 		private var _target:Array;
