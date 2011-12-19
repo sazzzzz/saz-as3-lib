@@ -22,7 +22,7 @@ package saz.collections.generic {
 		 * 列挙子を作成した後や reset メソッドを呼び出した後に、コレクションの最初の要素に列挙子を進めるためには、current プロパティの値を読み取る前に next メソッドを呼び出す必要があります。<br/>
 		 * そうしない場合、current は未定義になります。<br/>
 		 */
-		function get current():Object;
+		function get current():*;
 		
 		/**
 		 * 列挙子をコレクションの次の要素に進めます。<br/>
