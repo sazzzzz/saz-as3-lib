@@ -5,9 +5,7 @@ package saz.collections.generic
 	public class ObjectIterator implements IIterator
 	{
 		private var _target:Object;
-		//private var _index:int = -1;
 		
-		//private var _array:Array;
 		private var _iterator:IIterator;
 		private var _inited:Boolean = false;
 		
@@ -34,7 +32,6 @@ package saz.collections.generic
 		
 		private function _init():void {
 			_inited = true;
-			//_array = _toArray(_target);
 			_iterator = new ArrayIterator(_toArray(_target));
 		}
 		
@@ -58,7 +55,7 @@ package saz.collections.generic
 		/**
 		 * @see IIterator#current
 		 */		
-		public function get current():Object
+		public function get current():*
 		{
 			if (!_inited) _init();
 			return _iterator.current;
