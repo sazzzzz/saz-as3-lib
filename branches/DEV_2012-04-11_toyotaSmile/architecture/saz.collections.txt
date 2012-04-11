@@ -1,0 +1,42 @@
+saz.collections
+
+●インターフェース
+
+○IIterator
+hasNext():Boolean
+next():*
+remove():void	nextメソッドで取得できた要素を削除
+var item:Foo, i:int = 0;
+while (iterator.hasNext()) {
+	item = Foo(iterator.next());
+	item.bar();
+	i++;
+}
+
+○IHasIterator
+getIterator():IIterator
+
+○IEnumerator
+forEach(iterator:Function):void
+list.forEach(function(item:*, index:int, enu:IEnumerator):void{
+	trace(item,index);
+});
+
+○IEnumerable
+getEnumerator():IEnumerator
+
+●実装
+
+○Enumerable
+all()
+any()
+...
+http://www.ruby-lang.org/ja/man/html/Enumerable.html
+var enum = new Enumerable(new Array()); //Decoratorパターン
+trace(enum.all());
+
+○IteratorArray
+Arrayのラップ
+○EnumObject
+Objectのラップ
+とか
