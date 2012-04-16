@@ -32,7 +32,8 @@ package saz.collections {
 		 */
 		public function register(item:*, id:String = null):Boolean {
 			if (item == null) throw new ArgumentError("IdCollection.register():引数が正しくありません。");
-			if (getItem(id) != null) return false;
+			//if (getItem(id) != null) return false;
+			if (getItem(id) != null) throw new ArgumentError("IdCollection.register():指定されたidは既に使われています。");
 			
 			if (id != null) {
 				_items[id] = item;
