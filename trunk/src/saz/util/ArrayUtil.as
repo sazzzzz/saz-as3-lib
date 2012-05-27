@@ -143,6 +143,18 @@
 		//--------------------------------------
 		
 		
+		
+		/**
+		 * src配列から、dst配列に要素をコピー.dstに上書きされる.
+		 * @param src	コピー元配列.
+		 * @param dst	コピー先配列.
+		 */
+		public static function copy(src:Array, dst:Array):void{
+			for (var i:int=0, n:int=src.length; i < n; i++) {
+				dst[i]=src[i];
+			}
+		}
+		
 		/**
 		 * Objectの配列から、指定プロパティのリストを生成. 
 		 * @param	target
