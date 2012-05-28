@@ -5,7 +5,8 @@ package saz.media
 	import saz.util.ObjectUtil;
 
 	/**
-	 * Sound.play()前にSoundTransformのプロパティを預かる
+	 * Sound.play()前にSoundTransformのプロパティを預かる。…Sound.play()の引数にSoundTransformを指定できるからいらないじゃん！
+	 * @deprecated	Sound.play()の引数にSoundTransformを指定できるからいらないじゃん！
 	 * @author saz
 	 */
 	public class SoundTransformRegister
@@ -20,20 +21,30 @@ package saz.media
 		public function set sound(value:Sound):void
 		{
 			_sound = value;
+			soundHoldings.sound = value;
 		}
 		
-		private var _soundChannel:SoundChannel;
+		
+		public function get soundHoldings():SoundHoldings
+		{
+			if(!_soundHoldings) _soundHoldings = new SoundHoldings(sound);
+			return _soundHoldings;
+		}
+		private var _soundHoldings:SoundHoldings;
+		
+		
+		
+		
+		
 		public function get soundChannel():SoundChannel
 		{
-			return _soundChannel;
+			return soundHoldings.soundChannel;
 		}
 		
-		private var _soundTransform:SoundTransform;
 		public function get soundTransform():SoundTransform
 		{
-			return soundChannel ? soundChannel.soundTransform : null;
+			return soundHoldings.soundTransform;
 		}
-		
 		
 		
 		private var _sndTransProps:Object = {};
@@ -82,8 +93,6 @@ package saz.media
 			var st:SoundTransform = soundTransform;
 			ObjectUtil.setProperties(st, _sndTransProps);
 			soundChannel.soundTransform = st;
-//			var sth:SoundTransformableHelper = new SoundTransformableHelper(soundChannel);
-//			sth.setProperties(_sndTransProps);
 		}
 		
 		
@@ -105,7 +114,7 @@ package saz.media
 		 */
 		public function play(startTime:Number = 0, loops:int = 0, sndTransform:SoundTransform = null):SoundChannel
 		{
-			_soundChannel = sound.play(startTime, loops, sndTransform);
+			soundHoldings.play(startTime, loops, sndTransform);
 			update();
 			return soundChannel;
 		}

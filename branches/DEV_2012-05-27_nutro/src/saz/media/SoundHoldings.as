@@ -20,6 +20,8 @@ package saz.media
 		public function set sound(value:Sound):void
 		{
 			_sound = value;
+			_soundChannel = null;
+			_soundTransform = null;
 		}
 		private var _sound:Sound;
 		
@@ -39,7 +41,19 @@ package saz.media
 		 */
 		public function get soundTransform():SoundTransform
 		{
-			return soundChannel ? soundChannel.soundTransform : null;
+			/*if(soundChannel){
+				return soundChannel.soundTransform;
+			}else{
+				if(!_soundTransform) _soundTransform = new SoundTransform();
+				return _soundTransform;
+			}*/
+			if(!_soundTransform) _soundTransform = new SoundTransform();
+			return _soundTransform;
+		}
+		public function set soundTransform(value:SoundTransform):void
+		{
+			_soundTransform = value;
+			if(soundChannel) soundChannel.soundTransform = _soundTransform;
 		}
 		private var _soundTransform:SoundTransform;
 		
@@ -53,6 +67,22 @@ package saz.media
 			sound = targetSound;
 		}
 		
+		/**
+		 * soundChannelからSoundTransformをコピー
+		 */
+		public function pullSoundTransform():void
+		{
+			if(soundChannel) _soundTransform = soundChannel.soundTransform;
+		}
+		
+		/**
+		 * プロパティsoundTransformをsoundChannelに設定
+		 */
+		public function pushSoundTransform():void
+		{
+			if(soundChannel) soundChannel.soundTransform = _soundTransform;
+		}
+		
 		
 		/**
 		 * サウンドを再生する SoundChannel オブジェクトを新しく作成します。サウンド再生には必ずこのメソッドを使うこと！
@@ -63,7 +93,7 @@ package saz.media
 		 */
 		public function play(startTime:Number = 0, loops:int = 0, sndTransform:SoundTransform = null):SoundChannel
 		{
-			_soundChannel = sound.play(startTime, loops, sndTransform);
+			_soundChannel = sound.play(startTime, loops, sndTransform ? sndTransform : soundTransform);
 			return soundChannel;
 		}
 		
