@@ -3,27 +3,27 @@ package saz.media
 	import flash.media.*;
 	
 	/**
-	 * Sound関連インスタンスへの参照まとめ。
+	 * Sound関連インスタンスへの参照まとめ。SoundTransformの保持と、play,stopを1つのクラスで。
 	 * @author saz
 	 */
 	public class SoundHoldings
 	{
 		
 		/**
-		 * Sound。
+		 * Sound。（あるいはplayメソッドを持つオブジェクト）
 		 * @return 
 		 */
-		public function get sound():Sound
+		public function get sound():Object
 		{
 			return _sound;
 		}
-		public function set sound(value:Sound):void
+		public function set sound(value:Object):void
 		{
 			_sound = value;
-			_soundChannel = null;
-			_soundTransform = null;
+			_channel = null;
+			// SoundTransformは使いまわす
 		}
-		private var _sound:Sound;
+		private var _sound:Object;
 		
 		/**
 		 * SoundChannel。
@@ -31,9 +31,9 @@ package saz.media
 		 */
 		public function get soundChannel():SoundChannel
 		{
-			return _soundChannel;
+			return _channel;
 		}
-		private var _soundChannel:SoundChannel;
+		private var _channel:SoundChannel;
 		
 		/**
 		 * SoundTransform。
@@ -41,28 +41,22 @@ package saz.media
 		 */
 		public function get soundTransform():SoundTransform
 		{
-			/*if(soundChannel){
-				return soundChannel.soundTransform;
-			}else{
-				if(!_soundTransform) _soundTransform = new SoundTransform();
-				return _soundTransform;
-			}*/
-			if(!_soundTransform) _soundTransform = new SoundTransform();
-			return _soundTransform;
+			if(!_transform) _transform = new SoundTransform();
+			return _transform;
 		}
 		public function set soundTransform(value:SoundTransform):void
 		{
-			_soundTransform = value;
-			if(soundChannel) soundChannel.soundTransform = _soundTransform;
+			_transform = value;
+			pushSoundTransform();
 		}
-		private var _soundTransform:SoundTransform;
+		private var _transform:SoundTransform;
 		
 		
 		/**
 		 * コンストラクタ.
 		 * @param targetSound	対象Sound.
 		 */
-		public function SoundHoldings(targetSound:Sound)
+		public function SoundHoldings(targetSound:Object)
 		{
 			sound = targetSound;
 		}
@@ -72,7 +66,7 @@ package saz.media
 		 */
 		public function pullSoundTransform():void
 		{
-			if(soundChannel) _soundTransform = soundChannel.soundTransform;
+			if(soundChannel) _transform = soundChannel.soundTransform;
 		}
 		
 		/**
@@ -80,7 +74,7 @@ package saz.media
 		 */
 		public function pushSoundTransform():void
 		{
-			if(soundChannel) soundChannel.soundTransform = _soundTransform;
+			if(soundChannel) soundChannel.soundTransform = _transform;
 		}
 		
 		
@@ -88,15 +82,22 @@ package saz.media
 		 * サウンドを再生する SoundChannel オブジェクトを新しく作成します。サウンド再生には必ずこのメソッドを使うこと！
 		 * @param startTime
 		 * @param loops
-		 * @param sndTransform
+		 * @param sndTransform	指定しなかった場合、内部で保持しているSoundTransformを使用します。
 		 * @return 
 		 */
 		public function play(startTime:Number = 0, loops:int = 0, sndTransform:SoundTransform = null):SoundChannel
 		{
-			_soundChannel = sound.play(startTime, loops, sndTransform ? sndTransform : soundTransform);
-			return soundChannel;
+			//再生中なら停止
+			if(soundChannel) stop();
+			
+			if(!sndTransform) sndTransform = soundTransform;
+			_channel = sound.play(startTime, loops, sndTransform);
+			return _channel;
 		}
 		
+		/**
+		 * サウンド停止。
+		 */
 		public function stop():void
 		{
 			if(soundChannel) soundChannel.stop();
