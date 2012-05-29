@@ -55,6 +55,8 @@ package saz.media
 		
 		public function set volume(value:Number):void
 		{
+			// TODO changeイベントが欲しい…
+			// TODO	pushをフレームに1回だけやるように改良とか。
 			holdings.soundTransform.volume = value;
 			holdings.pushSoundTransform();
 		}
