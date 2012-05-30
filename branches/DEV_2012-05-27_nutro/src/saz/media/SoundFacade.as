@@ -1,6 +1,9 @@
 package saz.media
 {
+	import flash.events.Event;
 	import flash.media.*;
+	
+	import saz.display.StageReference;
 	
 	/**
 	 * Sound関連クラスまとめFacade。よく使う機能を提供。
@@ -58,7 +61,7 @@ package saz.media
 			// TODO changeイベントが欲しい…
 			// TODO	pushをフレームに1回だけやるように改良とか。
 			holdings.soundTransform.volume = value;
-			holdings.pushSoundTransform();
+			setNeedPush();
 		}
 		
 		
@@ -74,7 +77,8 @@ package saz.media
 		public function set pan(value:Number):void
 		{
 			holdings.soundTransform.pan = value;
-			holdings.pushSoundTransform();
+//			holdings.pushSoundTransform();
+			setNeedPush();
 		}
 		
 		
@@ -105,6 +109,9 @@ package saz.media
 		
 		
 		
+		
+		
+		
 		/**
 		 * コンストラクタ。
 		 * @param targetSound	対象Sound。
@@ -116,8 +123,20 @@ package saz.media
 		
 		
 		
+		public function setNeedPush():void
+		{
+			if(StageReference.stage){
+				StageReference.stage.addEventListener(Event.ENTER_FRAME, _push);
+			}else{
+				holdings.pushSoundTransform();
+			}
+		}
 		
-		
+		protected function _push(event:Event):void
+		{
+			holdings.pushSoundTransform();
+			if(StageReference.stage) StageReference.stage.removeEventListener(Event.ENTER_FRAME, _push);
+		}		
 		
 		
 		/**

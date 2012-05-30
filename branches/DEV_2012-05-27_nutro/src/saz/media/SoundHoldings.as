@@ -36,7 +36,7 @@ package saz.media
 		private var _channel:SoundChannel;
 		
 		/**
-		 * SoundTransform。
+		 * SoundTransform。SoundTransformのプロパティを変更したら、pushSoundTransform()を実行しないと値は反映されない。
 		 * @return 
 		 */
 		public function get soundTransform():SoundTransform
@@ -62,7 +62,7 @@ package saz.media
 		}
 		
 		/**
-		 * soundChannelからSoundTransformをコピー
+		 * soundChannelからSoundTransformをコピー。
 		 */
 		public function pullSoundTransform():void
 		{
@@ -70,7 +70,7 @@ package saz.media
 		}
 		
 		/**
-		 * プロパティsoundTransformをsoundChannelに設定
+		 * プロパティsoundTransformをsoundChannelに設定。
 		 */
 		public function pushSoundTransform():void
 		{
