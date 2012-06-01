@@ -69,11 +69,24 @@ package saz.media
 		}
 		
 		/**
-		 * サウンドを再生する SoundChannel オブジェクトを新しく作成します。サウンド再生には必ずこのメソッドを使うこと！
+		 * （通常のplay）サウンドを再生する SoundChannel オブジェクトを新しく作成します。サウンド再生には必ずこのメソッドを使うこと！
 		 * @param startTime	再生を開始する初期位置 (ミリ秒単位) です。
-		 * @param loops	サウンドチャネルの再生が停止するまで startTime 値に戻ってサウンドの再生を繰り返す回数を定義します。[拡張]-1を指定した場合無限ループ。
+		 * @param loops	サウンドチャネルの再生が停止するまで startTime 値に戻ってサウンドの再生を繰り返す回数を定義します。
 		 * @param sndTransform	サウンドチャンネルに割り当てられた初期 SoundTransform オブジェクトです。
-		 * @return 
+		 * @return SoundChannel。
+		 */
+		public function normalPlay(startTime:Number = 0, loops:int = 0, sndTransform:SoundTransform = null):SoundChannel
+		{
+			//実装してません
+			return _channel;
+		}
+		
+		/**
+		 * 再開できるモードで、サウンドを再生する SoundChannel オブジェクトを新しく作成します。サウンド再生には必ずこのメソッドを使うこと！
+		 * @param startTime	再生を開始する初期位置 (ミリ秒単位) です。
+		 * @param loops	サウンドチャネルの再生が停止するまで startTime 値に戻ってサウンドの再生を繰り返す回数を定義します。［拡張］-1を指定した場合無限ループ。
+		 * @param sndTransform	サウンドチャンネルに割り当てられた初期 SoundTransform オブジェクトです。
+		 * @return SoundChannel。
 		 */
 		public function play(startTime:Number = 0, loops:int = 0, sndTransform:SoundTransform = null):SoundChannel
 		{

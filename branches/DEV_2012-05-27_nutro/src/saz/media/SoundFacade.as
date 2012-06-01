@@ -141,8 +141,19 @@ package saz.media
 		
 		/**
 		 * @copy	SoundResumer#play
+		 * （通常のplay）サウンドを再生する SoundChannel オブジェクトを新しく作成します。サウンド再生には必ずこのメソッドを使うこと！
 		 */
 		public function play(startTime:Number = 0, loops:int = 0, sndTransform:SoundTransform = null):SoundChannel
+		{
+			//実装してません
+			return resumer.play(startTime, loops, sndTransform);
+		}
+		
+		/**
+		 * @copy	SoundResumer#play
+		 * 再開可能なplay
+		 */
+		public function resumablePlay(startTime:Number = 0, loops:int = 0, sndTransform:SoundTransform = null):SoundChannel
 		{
 			return resumer.play(startTime, loops, sndTransform);
 		}
