@@ -78,7 +78,7 @@
 		}
 		
 		/**
-		 * スペース区切りをパスカルケース（単語の頭大文字）に。
+		 * スペース区切りをパスカルケース（単語の頭大文字。like "CamelCase"）に。
 		 * @param value
 		 * @return 
 		 */
@@ -88,6 +88,21 @@
 			for (var i:int = 0, n:int = arr.length; i < n; i++) 
 			{
 				arr[i] = toTitleCase(arr[i]);
+			}
+			return arr.join(""); 
+		}
+		
+		/**
+		 * スペース区切りをキャメルケース（like "camelCase"）に。
+		 * @param value
+		 * @return 
+		 */
+		public static function spaceSeparatedToCamelCase(value:String):String
+		{
+			var arr:Array = value.split(" ");
+			for (var i:int = 0, n:int = arr.length; i < n; i++) 
+			{
+				if (i > 0) arr[i] = toTitleCase(arr[i]);
 			}
 			return arr.join(""); 
 		}
