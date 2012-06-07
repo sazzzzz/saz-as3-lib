@@ -7,15 +7,31 @@ package saz.video
 	
 	import saz.events.DynamicEvent;
 	
+	/**
+	 * 
+	 * @author saz
+	 */
 	public class FLVPBackloader extends EventDispatcher
 	{
+		/**
+		 * 
+		 * @default 
+		 */
 		public static const EVENT_LOADED:String = "loaded";
 		
 		private var _flvp:FLVPlayback;
+		/**
+		 * 
+		 * @return 
+		 */
 		public function get flvp():FLVPlayback
 		{
 			return _flvp;
 		}
+		/**
+		 * 
+		 * @param value
+		 */
 		public function set flvp(value:FLVPlayback):void
 		{
 			if(_flvp == value)return;
@@ -23,9 +39,20 @@ package saz.video
 			_init();
 		}
 		
-		private var _urls:Array = [];
 		private var _vpman:FLVPVideoPlayerManager;
+		public function get videoPlayerManager():FLVPVideoPlayerManager
+		{
+			if(!_vpman) _vpman = new FLVPVideoPlayerManager(_flvp);
+			return _vpman;
+		}
+
 		
+		private var _urls:Array = [];
+		
+		/**
+		 * 
+		 * @param flvPlayback
+		 */
 		public function FLVPBackloader(flvPlayback:FLVPlayback = null)
 		{
 			super();
@@ -37,8 +64,7 @@ package saz.video
 		private function _init():void
 		{
 			_urls.length = 0;
-			if(!_vpman) _vpman = new FLVPVideoPlayerManager();
-			_vpman.flvp = _flvp;
+			videoPlayerManager.flvp = _flvp;
 		}
 		
 		
@@ -55,6 +81,10 @@ package saz.video
 			_urls[index] = url;
 		}
 		
+		/**
+		 * 
+		 * @param event
+		 */
 		protected function _videoPlayer_progress(event:VideoProgressEvent):void
 		{
 			//trace("FLVPBackloader._videoPlayer_progress(event)");
@@ -67,6 +97,11 @@ package saz.video
 		}
 		
 		
+		/**
+		 * ロード開始。
+		 * @param url
+		 * @return 
+		 */
 		public function start(url:String):int
 		{
 			trace("FLVPBackloader.start("+url);
@@ -75,7 +110,7 @@ package saz.video
 			//if(getIndex(url) > -1) return getIndex(url);
 			
 			// videoPlayerを確保
-			var idx:int = _vpman.acquire();
+			var idx:int = videoPlayerManager.acquire();
 			trace("使用VideoPlayer",idx);
 			_setUrl(url, idx);
 			_saveActiveIndex(idx, function():void{
@@ -86,12 +121,17 @@ package saz.video
 			return idx;
 		}
 		
+		/**
+		 * ロード停止。
+		 * @param index
+		 * @return 
+		 */
 		public function stopAt(index:int):Boolean
 		{
 			trace("FLVPBackloader.stopAt("+index);
 			
 			// videoPlayerを開放
-			_vpman.release(index);
+			videoPlayerManager.release(index);
 			
 			var res:Boolean;
 			_saveActiveIndex(index, function():void{
@@ -114,11 +154,22 @@ package saz.video
 			return res;
 		}
 		
+		/**
+		 * ロード停止。
+		 * @param url
+		 * @return 
+		 */
 		public function stop(url:String):Boolean
 		{
 			return stopAt(getIndex(url));
 		}
 		
+		
+		
+		/**
+		 * 他のをロード停止。
+		 * @param index
+		 */
 		public function stopOthersAt(index:int):void
 		{
 			for(var i:int = 0, n:int = _urls.length; i < n; i++)
@@ -127,6 +178,10 @@ package saz.video
 			}
 		}
 		
+		/**
+		 * 他のをロード停止。
+		 * @param url
+		 */
 		public function stopOthers(url:String):void
 		{
 			stopOthersAt(getIndex(url));
@@ -134,6 +189,11 @@ package saz.video
 		
 		
 		
+		/**
+		 * URLからインデックスを返す。見つからない場合は-1を返す。
+		 * @param url
+		 * @return 
+		 */
 		public function getIndex(url:String):int
 		{
 			return _urls.indexOf(url);
@@ -144,7 +204,7 @@ package saz.video
 		
 		override public function toString():String
 		{
-			return _vpman.toString();
+			return videoPlayerManager.toString();
 		}
 		
 	}
