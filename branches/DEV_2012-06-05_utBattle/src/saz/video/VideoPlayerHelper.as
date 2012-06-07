@@ -29,7 +29,7 @@ package saz.video
 		
 		
 		/**
-		 * ロード完了イベントを発行する
+		 * VideoPlayer用ヘルパ。（今のところ）ロード完了イベントを発行するだけ。
 		 * @param vdoPlayer
 		 */
 		public function VideoPlayerHelper(vdoPlayer:VideoPlayer = null)

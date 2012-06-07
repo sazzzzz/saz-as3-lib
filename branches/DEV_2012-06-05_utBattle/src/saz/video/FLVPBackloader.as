@@ -47,7 +47,17 @@ package saz.video
 		}
 
 		
+//		private var _helper:VideoPlayerHelper;
+//
+//		public function get helper():VideoPlayerHelper
+//		{
+//			if(!_helper)_helper = new VideoPlayerHelper();
+//			return _helper;
+//		}
+		
+		
 		private var _urls:Array = [];
+		private var _helpers:Array = [];
 		
 		/**
 		 * 
@@ -81,20 +91,39 @@ package saz.video
 			_urls[index] = url;
 		}
 		
+		private function _getHepler(index:int):VideoPlayerHelper
+		{
+			if(!_helpers[index]){
+				_saveActiveIndex(index, function():void{
+					var vph:VideoPlayerHelper = new VideoPlayerHelper(flvp.getVideoPlayer(index));
+					vph.addEventListener(VideoPlayerHelper.EVENT_LOADED, _videoPlayer_loaded);
+					_helpers[index] = vph;
+				});
+			}
+			return _helpers[index]
+		}
+		
+		protected function _videoPlayer_loaded(event:Event):void
+		{
+			dispatchEvent(
+				new DynamicEvent(
+					EVENT_LOADED, false, false, {vp: getIndex(VideoPlayerHelper(event.target).videoPlayer.source)}
+				)
+			);
+		}
+		
 		/**
 		 * 
 		 * @param event
 		 */
-		protected function _videoPlayer_progress(event:VideoProgressEvent):void
+		/*protected function _videoPlayer_progress(event:VideoProgressEvent):void
 		{
-			//trace("FLVPBackloader._videoPlayer_progress(event)");
-			//trace(event);
 			// VideoProgressEvent.vpはあてにならない。いつも0みたい。
 			if(VideoPlayer(event.target).bytesLoaded == VideoPlayer(event.target).bytesTotal){
 				// ロード完了
 				dispatchEvent(new DynamicEvent(EVENT_LOADED, false, false, {vp: getIndex(VideoPlayer(event.target).source)}));
 			}
-		}
+		}*/
 		
 		
 		/**
@@ -117,7 +146,8 @@ package saz.video
 				flvp.autoPlay = false;
 				flvp.source = url;
 			});
-			flvp.getVideoPlayer(idx).addEventListener(VideoProgressEvent.PROGRESS, _videoPlayer_progress);
+			//flvp.getVideoPlayer(idx).addEventListener(VideoProgressEvent.PROGRESS, _videoPlayer_progress);
+			_getHepler(idx);
 			return idx;
 		}
 		
