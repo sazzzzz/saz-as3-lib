@@ -1,10 +1,6 @@
 package saz.video
 {
-	import fl.video.FLVPlayback;
-	
-	import jp.nium.utils.ObjectUtil;
-	
-	import saz.collections.enumerator.Enumerable;
+	import fl.video.*;
 
 	public class FLVPVideoPlayerManager
 	{
@@ -16,10 +12,12 @@ package saz.video
 		}
 		public function set flvp(value:FLVPlayback):void
 		{
+			if(_flvp == value)return;
 			_flvp = value;
+			_init();
 		}
 		
-		private var _max:int = 8;
+		/*private var _max:int = 8;
 		public function get max():int
 		{
 			return _max;
@@ -27,14 +25,14 @@ package saz.video
 		public function set max(value:int):void
 		{
 			_max = value;
-		}
+		}*/
 		
-		private var _enumerable:Enumerable;
+		/*private var _enumerable:Enumerable;
 		public function get enumerable():Enumerable
 		{
 			if(!_enumerable) _enumerable = new Enumerable(_usings);
 			return _enumerable;
-		}
+		}*/
 
 		
 		private var _usings:Array = [];
@@ -45,6 +43,11 @@ package saz.video
 			if(flvPlayback) flvp = flvPlayback;
 		}
 		
+		
+		private function _init():void
+		{
+			_usings.length = 0;
+		}
 		
 		/**
 		 * 探す。
