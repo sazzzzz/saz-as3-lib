@@ -9,7 +9,7 @@ package saz.collections.enumerator {
 	public class Enumerable {
 		
 		private var $target:Object;
-		private var $method:String;
+		//private var $method:String;
 		private var $each:Function;
 		
 		/**
@@ -32,10 +32,7 @@ package saz.collections.enumerator {
 		 * enu.setTarget(arr);
 		 * </listing>
 		 */
-		//public function Enumerable(collection:IEnumerator) {
 		public function Enumerable(collection:Object = null, methodName:String = "forEach") {
-			//$target = collection;
-			//target = collection;
 			if(collection) setTarget(collection, methodName);
 		}
 		
@@ -55,8 +52,8 @@ package saz.collections.enumerator {
 		 */
 		public function setTarget(collection:Object, methodName:String = "forEach"):void {
 			$target = collection;
-			$method = methodName;
-			$each = $target[$method];
+			//$method = methodName;
+			$each = $target[methodName];
 		}
 		
 		
@@ -131,7 +128,6 @@ package saz.collections.enumerator {
 		 * @see	http://livedocs.adobe.com/flash/9.0_jp/ActionScriptLangRefV3/package.html#Boolean()
 		 */
 		static private function $iterateBoolean(item:Boolean, index:int):Boolean {
-			trace("Enumerable.$iterateBoolean(", arguments);
 			return Boolean(item);
 		}
 		
@@ -191,10 +187,8 @@ package saz.collections.enumerator {
 		public function all(iterator:Function = null):Boolean {
 			if (null == iterator) iterator = $iterateBoolean;
 			var res:Boolean = true;
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
-				if (!iterator(item, index)) {
-					res = false;
-				}
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
+				if (!iterator(item, index)) res = false;
 			}]);
 			/*$each(function(item:*, index:int, collection:Object):void {
 				//if (false == iterator(item, index)) {
@@ -215,11 +209,8 @@ package saz.collections.enumerator {
 		public function any(iterator:Function = null):Boolean {
 			if (null == iterator) iterator = $iterateBoolean;
 			var res:Boolean = false;
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
-				//if (true == iterator(item, index)) {
-				if (iterator(item, index)) {
-					res = true;
-				}
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
+				if (iterator(item, index)) res = true;
 			}]);
 			return res;
 		}
@@ -234,7 +225,7 @@ package saz.collections.enumerator {
 		public function map(iterator:Function):EnumerableArray {
 			//if (null == iterator) iterator = $iterateItem;
 			var res:EnumerableArray = new EnumerableArray();
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
 				res.push(iterator(item, index));
 			}]);
 			return res;
@@ -250,11 +241,8 @@ package saz.collections.enumerator {
 		 */
 		public function detect(iterator:Function):* {
 			var res:*= null;
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
-				//if (null == res && true == iterator(item, index)) {
-				if (null == res && iterator(item, index)) {
-					res = item;
-				}
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
+				if (null == res && iterator(item, index)) res = item;
 			}]);
 			return res;
 		}
@@ -269,11 +257,8 @@ package saz.collections.enumerator {
 		 */
 		public function select(iterator:Function):EnumerableArray {
 			var res:EnumerableArray = new EnumerableArray();
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
-				//if (true == iterator(item, index)) {
-				if (iterator(item, index)) {
-					res.push(item);
-				}
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
+				if (iterator(item, index)) res.push(item);
 			}]);
 			return res;
 		}
@@ -290,11 +275,8 @@ package saz.collections.enumerator {
 		public function grep(pattern:RegExp, iterator:Function = null):EnumerableArray {
 			if (null == iterator) iterator = $iterateItem;
 			var res:EnumerableArray = new EnumerableArray();
-			$each.apply($target,[function(item:String, index:int, collection:Object):void {
-				//if (true == pattern.test(item)) {
-				if (pattern.test(item)) {
-					res.push(iterator(item, index));
-				}
+			$each.apply($target, [function(item:String, index:int, collection:Object):void {
+				if (pattern.test(item)) res.push(iterator(item, index));
 			}]);
 			return res;
 		}
@@ -333,7 +315,7 @@ package saz.collections.enumerator {
 		 */
 		private function $injectWithInit(init:*, iterator:Function):*{
 			var res:*= init;
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
 				res = iterator(res, item);
 			}]);
 			return res;
@@ -357,7 +339,7 @@ package saz.collections.enumerator {
 				res = iterator(res, item);
 			};
 			var func:Function = firstFunc;
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
 				func(item, index, collection);
 			}]);
 			return res;
@@ -372,10 +354,8 @@ package saz.collections.enumerator {
 		 */
 		public function member(value:*):Boolean {
 			var res:Boolean = false;
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
-				if (value == item) {
-					res = true;
-				}
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
+				if (value == item) res = true;
 			}]);
 			return res;
 		}
@@ -413,7 +393,7 @@ package saz.collections.enumerator {
 				if (res < item) res = item;
 			};
 			var func:Function = firstFunc;
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
 				func(item, index, collection);
 			}]);
 			return res;
@@ -444,12 +424,10 @@ package saz.collections.enumerator {
 				//}else {
 					//throw new TypeError("Enumerable.max: 評価式の戻り値がintではありません。");
 				//}
-				if (0 > comp) {
-					res = item;
-				}
+				if (0 > comp) res = item;
 			};
 			var func:Function = firstFunc;
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
 				func(item, index, collection);
 			}]);
 			return res;
@@ -498,7 +476,7 @@ package saz.collections.enumerator {
 				if (res > item) res = item;
 			};
 			var func:Function = firstFunc;
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
 				func(item, index, collection);
 			}]);
 			return res;
@@ -520,7 +498,6 @@ package saz.collections.enumerator {
 			};
 			// 2回目以降用
 			var mainFunc:Function = function(item:*, index:int, collection:Object):void {
-				//trace("mainFunc(", arguments);
 				// a>b のとき正、a==b のとき 0、a<b のとき負の整数
 				comp = compareFunction(res, item);
 				// FIXME	「ブロックが整数以外を返したときは 例外 TypeError が発生します。」実装できてない。
@@ -528,12 +505,10 @@ package saz.collections.enumerator {
 				//}else {
 					//throw new TypeError("Enumerable.max: 評価式の戻り値がintではありません。");
 				//}
-				if (0 < comp) {
-					res = item;
-				}
+				if (0 < comp) res = item;
 			};
 			var func:Function = firstFunc;
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
 				func(item, index, collection);
 			}]);
 			return res;
@@ -562,14 +537,13 @@ package saz.collections.enumerator {
 		public function partition(iterator:Function):EnumerableArray {
 			var trueRes:EnumerableArray = new EnumerableArray();
 			var falseRes:EnumerableArray = new EnumerableArray();
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
 				if (iterator(item, index)) {
 					trueRes.push(item);
 				}else {
 					falseRes.push(item);
 				}
 			}]);
-			//return [trueRes, falseRes];
 			return new EnumerableArray(trueRes, falseRes);
 		}
 		
@@ -582,10 +556,8 @@ package saz.collections.enumerator {
 		 */
 		public function reject(iterator:Function):EnumerableArray {
 			var res:EnumerableArray = new EnumerableArray();
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
-				if (false == iterator(item, index)) {
-					res.push(item);
-				}
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
+				if (false == iterator(item, index)) res.push(item);
 			}]);
 			return res;
 		}
@@ -632,7 +604,7 @@ package saz.collections.enumerator {
 		 */
 		public function entries():EnumerableArray {
 			var res:EnumerableArray = new EnumerableArray();
-			$each.apply($target,[function(item:*, index:int, collection:Object):void {
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
 				res.push(item);
 			}]);
 			return res;
@@ -670,14 +642,14 @@ package saz.collections.enumerator {
 			if (last is Function) {
 				// 関数あり
 				arrs = rest.slice(0, rest.length - 1);
-				$each.apply($target,[function(item:*, index:int, collection:Object):void {
+				$each.apply($target, [function(item:*, index:int, collection:Object):void {
 					res.push([item].concat($zipArrays(index, arrs)));
 				}]);
 				return res.map(last, null);
 			}else {
 				// 関数なし
 				arrs = rest;
-				$each.apply($target,[function(item:*, index:int, collection:Object):void {
+				$each.apply($target, [function(item:*, index:int, collection:Object):void {
 					res.push([item].concat($zipArrays(index, arrs)));
 				}]);
 				return res;
