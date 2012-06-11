@@ -31,6 +31,7 @@ package saz.media
 		 */
 		public function get soundChannel():SoundChannel
 		{
+			// TODO	Sound.play()前に、soundChannelにaddEventListenerしたい。
 			return _channel;
 		}
 		private var _channel:SoundChannel;
