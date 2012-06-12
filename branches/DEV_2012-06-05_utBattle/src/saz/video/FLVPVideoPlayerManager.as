@@ -56,9 +56,6 @@ package saz.video
 		 */
 		private function _search(value:Boolean = false):int
 		{
-			/*return enumerable.detect(function(item:Boolean, index:int):Boolean{
-				return item;
-			});*/
 			return _usings.indexOf(value);
 		}
 		
@@ -73,11 +70,21 @@ package saz.video
 		}
 		
 		
+		/**
+		 * 使用中かどうかを調べる。
+		 * @param index
+		 * @return 
+		 */
 		private function _getUsing(index:int):Boolean
 		{
 			return _usings[index];
 		}
 		
+		/**
+		 * 使用フラグをセットする。
+		 * @param index	インデックス。
+		 * @param value	使用中はtrue、使用してないはfalse。
+		 */
 		private function _setUsing(index:int, value:Boolean):void
 		{
 			_usings[index] = value;
@@ -87,6 +94,10 @@ package saz.video
 		
 		
 		
+		/**
+		 * 使用してないVideoPlayerを確保しインデックスを返す。
+		 * @return 
+		 */
 		public function acquire():int
 		{
 			var idx:int = _search();
@@ -98,10 +109,24 @@ package saz.video
 			return idx;
 		}
 		
+		/**
+		 * VideoPlayerを解放する。
+		 * @param index
+		 */
 		public function release(index:int):void
 		{
 			_setUsing(index, false);
 		}
+		
+		
+		public function releaseAll():void
+		{
+			for(var i:int = 0, n:int = _usings.length; i < n; i++)
+			{
+				_setUsing(i, false);
+			}
+		}
+		
 		
 		
 		public function toString():String

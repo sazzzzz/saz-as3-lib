@@ -47,13 +47,6 @@ package saz.video
 		}
 
 		
-//		private var _helper:VideoPlayerHelper;
-//
-//		public function get helper():VideoPlayerHelper
-//		{
-//			if(!_helper)_helper = new VideoPlayerHelper();
-//			return _helper;
-//		}
 		
 		
 		private var _urls:Array = [];
@@ -69,6 +62,8 @@ package saz.video
 			
 			if(flvPlayback) flvp = flvPlayback;
 		}
+		
+		
 		
 		
 		private function _init():void
@@ -112,18 +107,6 @@ package saz.video
 			);
 		}
 		
-		/**
-		 * 
-		 * @param event
-		 */
-		/*protected function _videoPlayer_progress(event:VideoProgressEvent):void
-		{
-			// VideoProgressEvent.vpはあてにならない。いつも0みたい。
-			if(VideoPlayer(event.target).bytesLoaded == VideoPlayer(event.target).bytesTotal){
-				// ロード完了
-				dispatchEvent(new DynamicEvent(EVENT_LOADED, false, false, {vp: getIndex(VideoPlayer(event.target).source)}));
-			}
-		}*/
 		
 		
 		/**
@@ -146,7 +129,6 @@ package saz.video
 				flvp.autoPlay = false;
 				flvp.source = url;
 			});
-			//flvp.getVideoPlayer(idx).addEventListener(VideoProgressEvent.PROGRESS, _videoPlayer_progress);
 			_getHepler(idx);
 			return idx;
 		}
@@ -217,6 +199,24 @@ package saz.video
 			stopOthersAt(getIndex(url));
 		}
 		
+		
+		
+		/**
+		 * 全部停止。
+		 */
+		public function stopAll():void
+		{
+			for(var i:int = 0, n:int = _urls.length; i < n; i++)
+			{
+				stopAt(i);
+			}
+		}
+		
+		public function reset():void
+		{
+			stopAll();
+			videoPlayerManager.releaseAll();
+		}
 		
 		
 		/**

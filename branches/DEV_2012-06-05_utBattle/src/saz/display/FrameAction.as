@@ -79,7 +79,7 @@ package saz.display {
 		/**
 		 * フレームアクションを追加する. 
 		 * @param	frame	フレーム番号を表す数値、またはフレームのラベルを表すストリング.
-		 * @param	func	追加するアクション. 
+		 * @param	func	追加するアクション. function():void
 		 */
 		public function addAction(frame:Object, func:Function):void {
 			_target.addFrameScript(_frameobjToFrame(frame) - 1, func);
