@@ -116,14 +116,14 @@ package saz.video
 		 */
 		public function start(url:String):int
 		{
-			trace("FLVPBackloader.start("+url);
+//			trace("FLVPBackloader.start("+url);
 			
 			// すでにロード中なら、該当インデックスを返す
 			//if(getIndex(url) > -1) return getIndex(url);
 			
 			// videoPlayerを確保
 			var idx:int = videoPlayerManager.acquire();
-			trace("使用VideoPlayer",idx);
+//			trace("使用VideoPlayer",idx);
 			_setUrl(url, idx);
 			_saveActiveIndex(idx, function():void{
 				flvp.autoPlay = false;
@@ -140,7 +140,7 @@ package saz.video
 		 */
 		public function stopAt(index:int):Boolean
 		{
-			trace("FLVPBackloader.stopAt("+index);
+//			trace("FLVPBackloader.stopAt("+index);
 			
 			// videoPlayerを開放
 			videoPlayerManager.release(index);
