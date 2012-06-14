@@ -74,26 +74,25 @@ package saz.external.google {
 		 * 初期化. 
 		 * @param	dsp	なんかDisplayObjectへの参照が必要らしい. 
 		 * @param	webPropertyId	ウェブプロパティID（ex.UA-12345-22） または、ブリッジモードでは "window.pageTracker". 
-		 * @param	mode	トラッキングモードの指定. AS3モードとブリッジモードがある. "AS3"または"Bridge". 
+		 * @param	mode	トラッキングモードの指定. AS3モードとブリッジモードがある. "AS3"または"Bridge".
+		 * 					トラッキングモードについては、「Adobe Flash 向け Google Analytics トラッキング - Google アナリティクス - Google Code」参照
 		 * @param	isDebug	デバッグモード.
 		 * @return	初期化できたらtrueを返す. 
+		 * 
+		 * @see	http://code.google.com/intl/ja/apis/analytics/docs/tracking/flashTrackingIntro.html
 		 * 
 		 * @example <listing version="3.0" >
 		 * // AS3モード
 		 * GoogleAnalyticsProxy.getInstance().init( this, "UA-12345-22", GoogleAnalyticsProxy.MODE_AS3, false );
-		 * </listing>
-		 * @example <listing version="3.0" >
+		 * 
 		 * // ブリッジモード 一般的な方法
 		 * // Google Analytics トラッキング コード オブジェクトが、pageTracker などの独自の名前でページ上に存在する場合。
 		 * GoogleAnalyticsProxy.getInstance().init( this, "window.pageTracker", GoogleAnalyticsProxy.MODE_BRIDGE, false );
-		 * </listing>
-		 * @example <listing version="3.0" >
+		 * 
 		 * // ブリッジモード 別の方法
 		 * // ページ上にページ トラッキング オブジェクトをまだ作成していない場合
 		 * GoogleAnalyticsProxy.getInstance().init( this, "UA-12345-22", "Bridge", false );
 		 * </listing>
-		 * トラッキングモードについては、「Adobe Flash 向け Google Analytics トラッキング - Google アナリティクス - Google Code」参照
-		 * @see	http://code.google.com/intl/ja/apis/analytics/docs/tracking/flashTrackingIntro.html
 		 */
 		public function init(dsp:DisplayObject, webPropertyId:String, mode:String = "AS3", isDebug:Boolean = false):Boolean {
 			if (_isInit) return false;
