@@ -12,6 +12,12 @@ package saz.external.google {
 	 */
 	public class GoogleAnalyticsProxy {
 		
+		
+		/**
+		 * ブリッジモード用ウェブプロパティID。ブリッジモード時に、init()の引数 webPropertyId に指定する。
+		 */
+		public static const WINDOW_PAGETRACKER:String = "window.pageTracker";
+		
 		/**
 		 * AS3モード指定用定数. 
 		 */
