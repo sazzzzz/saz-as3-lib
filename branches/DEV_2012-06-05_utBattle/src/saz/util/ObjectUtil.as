@@ -176,57 +176,10 @@
 			return res + "]";
 		}
 		
-		//--------------------------------------------------------------------------
-		//
-		//  テスト用
-		//
-		//--------------------------------------------------------------------------
-		
-		// TODO:	出力用メソッドが乱立しとる！整理したい！
-		
-		/**
-		 * Objectの中身を、trace()する. toStringをtraceしてるだけ.
-		 * @param	target	対象Object. 
-		 */
-		public static function log(target:Object):void {
-			trace(toString(target));
-		}
-		
-		/**
-		 * Objectの中身を、trace()する. toStringをtraceしてる.
-		 * @param	target	対象Object. 
-		 * @deprecated	log()を使え. 
-		 */
-		public static function traceObject(target:Object):void {
-			trace(toString(target));
-		}
 		
 		
 		/**
-		 * Objectの中身を、trace()する。
-		 * @param	target	対象Object. 
-		 * @param	indent
-		 * @deprecated	log()を使え. 
-		 */
-		public static function dump2(target:Object, indent:String = ""):void {
-			var item:*;
-			for(var p:String in target){
-				item = target[p];
-				if (typeof(item) == "object") {
-				//if(item is Object){
-					trace(indent + p + ":{");
-					arguments.callee(item, indent + "  ");
-					trace(indent + "}");
-				}else{
-					trace(indent + p + ":", item);
-				}
-			}
-		}
-		
-		
-		
-		/**
-		 * 指定プロパティをStringにして返す（みたい）. 
+		 * 指定プロパティのみをStringにして返す（みたい）. 
 		 * toString()とは別系統. 
 		 * @param	target	対象Object. 
 		 * @param	names	プロパティ名の配列
@@ -242,32 +195,161 @@
 			
 		}
 		
+		//--------------------------------------------------------------------------
+		//
+		//  テスト用
+		//
+		//--------------------------------------------------------------------------
+		
+		// TODO:	出力用メソッドが乱立しとる！整理したい！
+		
+		
+		
+		
+		
+		
+		
+		
+		/**
+		 * for in で列挙できるかどうか（仮実装）。
+		 * @param item
+		 * @return 
+		 */
+		public static function isEnumerable(item:Object):Boolean
+		{
+			return typeof(item) == "object";
+		}
+		
+		
+		
+		/**
+		 * Objectの中身を、trace()する. toStringをtraceしてる.
+		 * @param	target	対象Object. 
+		 */
+		public static function traceObject(target:Object):void {
+			trace(toString(target));
+		}
+		
+		/**
+		 * for in で列挙できるObjectの中身をStringにして返す。
+		 * @param target
+		 * @return 
+		 */
+		public static function toObjectString(target:Object, indent:String = "  "):String
+		{
+			return _startToObjectString(target, "", indent);
+		}
+		
+		
+		
+		
+		
+		
+		private static function _startToObjectString(target:Object, curIndent:String = "", indent:String = "  "):String {
+			if(!target) return "null";
+			var res:String = "";
+			res += "{\n";
+			res += _toObjectString(target, curIndent + indent, indent);
+			res += "}";
+			return res;
+		}
+		
+		
+		private static function _toObjectStringEnum(target:Object, name:String, curIndent:String = "", indent:String = "  "):String
+		{
+			var res:String = "";
+			res += curIndent + name + ": {\n";
+			res += _toObjectString(target, curIndent + indent, indent);
+			res += curIndent + "}\n";
+			return res;
+		}
+		
+		private static function _toObjectStringItem(item:Object, name:String, curIndent:String = "", indent:String = "  "):String
+		{
+			return curIndent + name + ": " + item + "\n";
+		}
+		
+		// toString用サブメソッド。
+		private static function _toObjectString(target:Object, curIndent:String = "", indent:String = "  "):String {
+			var res:String = "";
+			var item:*;
+			for(var p:String in target){
+				item = target[p];
+				if (isEnumerable(item)) {
+					res += _toObjectStringEnum(item, p, curIndent, indent);
+				}else{
+					res += _toObjectStringItem(item, p, curIndent, indent);
+				}
+			}
+			return res;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/**
+		 * Objectの中身を、trace()する. toStringをtraceしてるだけ.
+		 * @param	target	対象Object. 
+		 * @deprecated	traceObject()を使え. 
+		 */
+		public static function log(target:Object):void {
+			trace(toString(target));
+		}
+		
+		/**
+		 * Objectの中身を、trace()する。
+		 * @param	target	対象Object. 
+		 * @param	indent
+		 * @deprecated	traceObject()を使え. 
+		 */
+		public static function dump2(target:Object, indent:String = "  "):void {
+			trace(toObjectString(target, indent));
+		}
+		
+		
+		
 		/**
 		 * Object の中身をStringにして返す. 
 		 * @param	target	対象Object. 
 		 * @return
+		 * 
+		 * @deprecated	toObjectString()を使え. 
 		 * 
 		 * @example <listing version="3.0" >
 		 * trace(ObjectUtil.toString(obj));
 		 * </listing>
 		 */
 		public static function toString(target:*):String {
-			return $dump(target,"");
+			//return $dump(target,"");
+			return toObjectString(target);
 		}
-		
-		
-		
 		
 		/**
 		 * Object　の中身をStringにして返す. toString()を使え. 
 		 * @param	target	対象Object. 
 		 * @return
-		 * @deprecated	toString()を使え. 
+		 * @deprecated	toObjectString()を使え. 
 		 */
 		public static function dump(target:*):String {
-			return $dump(target,"");
+			//return $dump(target,"");
+			return toObjectString(target);
 		}
-		
+		/*
 		static private function $dump(target:*, indent:String):String {
 			var res:String = "";
 			var item:*;
@@ -286,7 +368,7 @@
 			res += indent + "}\n";
 			return res;
 		}
-		
+		*/
 	}
 	
 }
