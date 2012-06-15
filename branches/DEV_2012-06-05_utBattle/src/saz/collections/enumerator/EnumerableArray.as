@@ -1,13 +1,10 @@
 package saz.collections.enumerator {
-	
+	import saz.collections.enumerator.IEnumerator;
 	/**
 	 * enumerator()メソッドを実装したArrayのサブクラス。Enumerable内部で使用。
 	 * @author saz
 	 */
-	//public dynamic class EnumerableArray extends Array implements IEnumeration, IEnumerable {
-	public dynamic class EnumerableArray extends Array implements IEnumeration {
-		// FIXME	突然エラーがでるようになったので、とりあえずインターフェースを外す
-		
+	public dynamic class EnumerableArray extends Array implements IEnumeration, IEnumerable {
 		
 		public function EnumerableArray(...args) {
 			// Array クラスの拡張
