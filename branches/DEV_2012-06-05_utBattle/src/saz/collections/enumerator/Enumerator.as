@@ -3,7 +3,9 @@ package saz.collections.enumerator {
 	 * IEnumerator実装用の、親クラス。サブクラスはforEach()をオーバーライドすること。
 	 * @author saz
 	 */
-	public class Enumerator implements IEnumerator, IEnumerable {
+	//public class Enumerator implements IEnumerator, IEnumerable {
+	public class Enumerator implements IEnumerator {
+		// FIXME	突然エラーがでるようになったので、とりあえずインターフェースを外す
 		
 		protected var $component:*;
 		
