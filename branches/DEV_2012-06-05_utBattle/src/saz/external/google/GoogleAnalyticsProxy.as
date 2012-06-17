@@ -110,7 +110,7 @@ package saz.external.google {
 		
 		/**
 		 * トラッキング. 
-		 * @param	pageName	仮想URL. 
+		 * @param	pageName	仮想URL. どうもブリッジモードでも相対パス不可のようなので、「/」はじまりが基本。
 		 */
 		public  function trackPageview(pageName:String):void {
 			if (_tracker == null) return;
