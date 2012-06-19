@@ -67,6 +67,58 @@
 		
 		
 		
+		
+		/**
+		 * スネークケース（アンダーバー区切り）をスペース区切りに。
+		 * @param value
+		 * @return 
+		 */
+		public static function snakeCaseToSpaceSeparated(value:String):String{
+			return value.split("_").join(" ");
+		}
+		
+		/**
+		 * スペース区切りをパスカルケース（単語の頭大文字。like "CamelCase"）に。
+		 * @param value
+		 * @return 
+		 */
+		public static function spaceSeparatedToPascalCase(value:String):String
+		{
+			var arr:Array = value.split(" ");
+			for (var i:int = 0, n:int = arr.length; i < n; i++) 
+			{
+				arr[i] = toTitleCase(arr[i]);
+			}
+			return arr.join(""); 
+		}
+		
+		/**
+		 * スペース区切りをキャメルケース（like "camelCase"）に。
+		 * @param value
+		 * @return 
+		 */
+		public static function spaceSeparatedToCamelCase(value:String):String
+		{
+			var arr:Array = value.split(" ");
+			for (var i:int = 0, n:int = arr.length; i < n; i++) 
+			{
+				if (i > 0) arr[i] = toTitleCase(arr[i]);
+			}
+			return arr.join(""); 
+		}
+		
+		/**
+		 * スネークケースをパスカルケースに。
+		 * @param value
+		 * @return 
+		 */
+		public static function snakeCaseToPascalCase(value:String):String
+		{
+			return spaceSeparatedToPascalCase(snakeCaseToSpaceSeparated(value));
+		}
+		
+		
+		
 		/**
 		 * 頭文字だけ大文字、他は小文字に. 
 		 * @param	value	文字列. 

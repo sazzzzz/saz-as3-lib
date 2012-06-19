@@ -1,12 +1,13 @@
 package saz.media
 {
+	import flash.events.EventDispatcher;
 	import flash.media.*;
 	
 	/**
 	 * Sound関連インスタンスへの参照まとめ。SoundTransformの保持と、play,stopを1つのクラスで。
 	 * @author saz
 	 */
-	public class SoundHoldings
+	public class SoundHoldings extends EventDispatcher
 	{
 		
 		/**
@@ -31,6 +32,7 @@ package saz.media
 		 */
 		public function get soundChannel():SoundChannel
 		{
+			// TODO	Sound.play()前に、soundChannelにaddEventListenerしたい。->自身がプロクシになればいい。
 			return _channel;
 		}
 		private var _channel:SoundChannel;
@@ -58,6 +60,8 @@ package saz.media
 		 */
 		public function SoundHoldings(targetSound:Object)
 		{
+			super();
+			
 			sound = targetSound;
 		}
 		

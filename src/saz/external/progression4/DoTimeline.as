@@ -1,17 +1,20 @@
 package saz.external.progression4 {
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	
+	import jp.nium.utils.ObjectUtil;
 	import jp.progression.casts.*;
+	import jp.progression.commands.*;
 	import jp.progression.commands.display.*;
 	import jp.progression.commands.lists.*;
 	import jp.progression.commands.managers.*;
 	import jp.progression.commands.media.*;
 	import jp.progression.commands.net.*;
 	import jp.progression.commands.tweens.*;
-	import jp.progression.commands.*;
 	import jp.progression.data.*;
 	import jp.progression.events.*;
 	import jp.progression.scenes.*;
+	
 	import saz.display.FrameAction;
 	
 	/**
@@ -71,33 +74,43 @@ package saz.external.progression4 {
 			
 			if (forcePlay) target.addEventListener(Event.ENTER_FRAME, _target_enterFrame);
 			
-			var self:DoTimeline = this;
+			var that:DoTimeline = this;
 			// 実行したいコマンド群を登録します。
 			addCommand(
 				// 準備
 				function():void {
-					_frameAction = new FrameAction(target);
+					if(!_frameAction) _frameAction = new FrameAction(target);
 					if (_frameAction.labelToFrame(startLabel) == 0 || _frameAction.labelToFrame(completeLabel) == 0)
 						throw new Error("DoTimeline.DoTimeline ラベルが存在しません");
 					if (_frameAction.labelToFrame(startLabel) > _frameAction.labelToFrame(completeLabel))
 						throw new Error("DoTimeline.DoTimeline ラベルの順番が逆です");
 					
-					target.gotoAndPlay(startLabel);
+					if (that.autoStop){
+						_frameAction.addAction(completeLabel, function():void {
+							target.stop();
+							that.dispatchEvent(new Event("resume"));
+						});
+					}else{
+						_frameAction.addAction(completeLabel, function():void {
+							//trace("completeLabel",completeLabel);
+							that.dispatchEvent(new Event("resume"));
+						});
+					}
 					
-					_frameAction.addAction(completeLabel, function():void {
-						if (self.autoStop) target.stop();
-						self.dispatchEvent(new Event("resume"));
-					});
-					this.listen(self, "resume");
-					DoTimeline(self).addEventListener(ExecuteEvent.EXECUTE_INTERRUPT, DoTimeline(self)._onInterrupt);
+					//trace(target+".currentFrame=", target.currentFrame);
+					target.gotoAndPlay(startLabel);
+					//trace(target+".currentFrame=", target.currentFrame);
+					
+					Func(this).listen(that, "resume");
+					DoTimeline(that).addEventListener(ExecuteEvent.EXECUTE_INTERRUPT, DoTimeline(that)._onInterrupt);
 				},
 				
 				// 後処理
 				function():void {
 					// フレームアクションを削除
 					_frameAction.removeAction(completeLabel);
-					DoTimeline(self).removeEventListener(ExecuteEvent.EXECUTE_INTERRUPT, DoTimeline(self)._onInterrupt);
-					target.removeEventListener(Event.ENTER_FRAME, DoTimeline(self)._target_enterFrame);
+					DoTimeline(that).removeEventListener(ExecuteEvent.EXECUTE_INTERRUPT, DoTimeline(that)._onInterrupt);
+					target.removeEventListener(Event.ENTER_FRAME, DoTimeline(that)._target_enterFrame);
 				}
 			);
 		}
@@ -112,6 +125,12 @@ package saz.external.progression4 {
 			removeEventListener(ExecuteEvent.EXECUTE_INTERRUPT, arguments.callee);
 			target.removeEventListener(Event.ENTER_FRAME, _target_enterFrame);
 		}
+		
+		override public function toString():String
+		{
+			return ObjectUtil.formatToString(this, "DoTimeline", "target", "startLabel", "completeLabel", "state");
+		}
+		
 		
 		/**
 		 * インスタンスのコピーを作成して、各プロパティの値を元のプロパティの値と一致するように設定します。
