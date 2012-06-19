@@ -12,9 +12,10 @@ package saz.events {
 	 */
 	dynamic public class DynamicEvent extends Event {
 		
-		public function DynamicEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) { 
+		public function DynamicEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false, initObject:Object = null) { 
 			super(type, bubbles, cancelable);
 			
+			if (initObject) ObjectUtil.setProperties(this, initObject);
 		} 
 		
 		public override function clone():Event { 
