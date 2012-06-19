@@ -5,6 +5,11 @@ package saz.video
 	public class FLVPVideoPlayerManager
 	{
 		
+		public static const STATE_NOTUSE:int = 0;
+		public static const STATE_USING:int = 1;
+		public static const STATE_RESERVE:int = 2;
+		
+		
 		private var _flvp:FLVPlayback;
 		public function get flvp():FLVPlayback
 		{
@@ -56,7 +61,8 @@ package saz.video
 		 */
 		private function _search(value:Boolean = false):int
 		{
-			return _usings.indexOf(value);
+			//return _usings.indexOf(value);
+			return _usings.indexOf(value ? STATE_USING : STATE_NOTUSE);
 		}
 		
 		/**
@@ -66,7 +72,8 @@ package saz.video
 		 */
 		private function _add(value:Boolean):int
 		{
-			return _usings.push(value) - 1;
+			//return _usings.push(value) - 1;
+			return _usings.push(value ? STATE_USING : STATE_NOTUSE) - 1;
 		}
 		
 		
@@ -77,7 +84,8 @@ package saz.video
 		 */
 		private function _getUsing(index:int):Boolean
 		{
-			return _usings[index];
+			//return _usings[index];
+			return STATE_NOTUSE < _usings[index];
 		}
 		
 		/**
@@ -87,11 +95,25 @@ package saz.video
 		 */
 		private function _setUsing(index:int, value:Boolean):void
 		{
-			_usings[index] = value;
+			//_usings[index] = value;
+			if(1 < _usings[index]) return;
+			_usings[index] = value ? STATE_USING : STATE_NOTUSE;
 		}
 		
 		
 		
+		/**
+		 * 使わないフラグをセットする。
+		 * @param index
+		 * @return 
+		 */
+		public function keep(index:int):int
+		{
+			if(index < 0) return index;
+			
+			_usings[index] = STATE_RESERVE;
+			return index;
+		}
 		
 		
 		/**

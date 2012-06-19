@@ -68,8 +68,11 @@ package saz.video
 		
 		private function _init():void
 		{
-			_urls.length = 0;
+			_urls.length = 1;
 			videoPlayerManager.flvp = _flvp;
+			// 0番を確保
+			videoPlayerManager.keep(0);
+			trace(videoPlayerManager);
 		}
 		
 		
@@ -127,7 +130,9 @@ package saz.video
 			_setUrl(url, idx);
 			_saveActiveIndex(idx, function():void{
 				flvp.autoPlay = false;
-				flvp.source = url;
+				//flvp.source = url;
+				//flvp.getVideoPlayer(idx).load(url);
+				flvp.load(url);
 			});
 			_getHepler(idx);
 			return idx;
@@ -142,18 +147,15 @@ package saz.video
 		{
 //			trace("FLVPBackloader.stopAt("+index);
 			
-			// videoPlayerを開放
-			videoPlayerManager.release(index);
-			
 			var res:Boolean;
-			_saveActiveIndex(index, function():void{
+			/*_saveActiveIndex(index, function():void{
 				if(flvp.source == "" || flvp.source == null){
 					res = false;
 				}else{
 					res = true;
 					try{
 						// 初期値は""
-						flvp.source = " ";
+						flvp.source = " ";			// HTMLをロードしちゃう
 					}catch(e:VideoError){
 						// なにもしない
 					}catch(e:Error){
@@ -162,7 +164,22 @@ package saz.video
 						// なにもしない
 					}
 				}
+			});*/
+			//flvp.getVideoPlayer(index).close();	// ダメ。一見動くけど、キューポイントでエラーが発生。他の機能との整合性がとれなくなるようだ。
+			
+			_saveActiveIndex(index, function():void{
+				if(flvp.state == VideoState.DISCONNECTED)
+				{
+					res = false;
+				}else{
+					res = true;
+					flvp.closeVideoPlayer(index);
+				}
 			});
+			
+			// videoPlayerを開放
+			videoPlayerManager.release(index);
+			
 			return res;
 		}
 		
@@ -184,7 +201,9 @@ package saz.video
 		 */
 		public function stopOthersAt(index:int):void
 		{
-			for(var i:int = 0, n:int = _urls.length; i < n; i++)
+			//for(var i:int = 0, n:int = _urls.length; i < n; i++)
+			// 0は使用しない
+			for(var i:int = 1, n:int = _urls.length; i < n; i++)
 			{
 				if(i != index) stopAt(i);
 			}
@@ -206,7 +225,9 @@ package saz.video
 		 */
 		public function stopAll():void
 		{
-			for(var i:int = 0, n:int = _urls.length; i < n; i++)
+			//for(var i:int = 0, n:int = _urls.length; i < n; i++)
+			// 0は使用しない
+			for(var i:int = 1, n:int = _urls.length; i < n; i++)
 			{
 				stopAt(i);
 			}
