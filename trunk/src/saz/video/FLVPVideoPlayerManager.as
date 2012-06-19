@@ -1,7 +1,8 @@
 package saz.video
 {
 	import fl.video.*;
-
+	
+	// TODO	イベントも管理対象にしたい
 	public class FLVPVideoPlayerManager
 	{
 		
