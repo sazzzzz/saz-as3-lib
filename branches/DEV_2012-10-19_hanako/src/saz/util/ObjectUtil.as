@@ -11,6 +11,18 @@
 		
 		//public static function listDefferenceProperties(target:Object,names:Array):
 		
+		/**
+		 * Objectのメンバを全て削除する. for...inで実装. 
+		 * @param target
+		 * 
+		 */
+		static public function clear(target:Object):void {
+			for (var p:String in target) {
+				delete target[p];
+			}
+		}
+		
+		
 		
 		/**
 		 * Objectのプロパティを配列にして返す. 

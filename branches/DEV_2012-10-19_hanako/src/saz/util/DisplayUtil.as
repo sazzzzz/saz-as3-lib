@@ -137,6 +137,29 @@
 		// main
 		//--------------------------------------
 		
+		
+		/**
+		 * センタリングする. getBounds()を利用. 
+		 * @param target
+		 * @param centerX
+		 * @param centerY
+		 * 
+		 */
+		static public function centering(target:DisplayObject, centerX:Number = 0, centerY:Number = 0):void
+		{
+			/*if (parentObject == null)
+			{
+				if (target.parent == null) throw new ArgumentError("座標系の基準となるDisplayObjectが指定されていません。");
+				
+				parentObject = target.parent;
+			}*/
+			
+			var bounds:Rectangle = target.getBounds(target);
+			target.x = centerX - Math.round(bounds.x + bounds.width / 2);
+			target.y = centerY - Math.round(bounds.y + bounds.height / 2);
+		}
+		
+		
 		/**
 		 * 中心のx座標.
 		 * @param	target
