@@ -145,7 +145,7 @@
 		 * @param centerY
 		 * 
 		 */
-		static public function centering(target:DisplayObject, centerX:Number = 0, centerY:Number = 0):void
+		static public function centeringByBounds(target:DisplayObject, centerX:Number = 0, centerY:Number = 0):void
 		{
 			/*if (parentObject == null)
 			{
