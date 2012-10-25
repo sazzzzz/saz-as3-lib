@@ -10,6 +10,7 @@ package saz.display {
 	 * カーソルマネージャ.
 	 * サブクラスを作って、シングルトンにして、カーソル名はconstにするといいんじゃね？
 	 * @author saz
+	 * 
 	 * @example <listing version="3.0" >
 	 * var sp = new Sprite();	// 専用コンテナを用意.
 	 * stage.addChild(sp);		// コンテナはstageにaddChild()しないと、ボタンが押せない（？）
@@ -19,7 +20,7 @@ package saz.display {
 	 * cm.container = sp;
 	 * cm.add(rect,"rect");
 	 * cm.add(new Circle(),"circle");
-	 * 
+	 * ...
 	 * cm.change("rect");
 	 * </listing>
 	 */
@@ -92,7 +93,9 @@ package saz.display {
 		}
 		
 		/**
-		 * カーソルを表示するためのDisplayObjectContainer. mouseEnabled、mouseChildrenを変更するので専用のほうが良い.
+		 * カーソルを表示するためのDisplayObjectContainer. 
+		 * mouseEnabled、mouseChildrenを変更するので専用のほうが良い.
+		 * stageにaddChildしないとボタンが押せなくなるみたい….
 		 */
 		public function get container():DisplayObjectContainer { return $container; }
 		
