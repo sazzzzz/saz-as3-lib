@@ -11,8 +11,8 @@ package saz.display {
 	 * サブクラスを作って、シングルトンにして、カーソル名はconstにするといいんじゃね？
 	 * @author saz
 	 * @example <listing version="3.0" >
-	 * var sp = new Sprite();	//専用コンテナを用意.
-	 * addChild(sp);
+	 * var sp = new Sprite();	// 専用コンテナを用意.
+	 * stage.addChild(sp);		// コンテナはstageにaddChild()しないと、ボタンが押せない（？）
 	 * 
 	 * var cm = new CursorManager();
 	 * cm.stage = stage;
