@@ -7,6 +7,7 @@ package saz.math
 	 * 
 	 * @see	https://github.com/keijiro/unity-perlin/blob/master/Assets/Perlin.js
 	 * @see	http://mrl.nyu.edu/~perlin/noise/
+	 * @see	http://ja.wikipedia.org/wiki/%E9%9D%9E%E6%95%B4%E6%95%B0%E3%83%96%E3%83%A9%E3%82%A6%E3%83%B3%E9%81%8B%E5%8B%95
 	 */
 	public class PerlinNoise1D
 	{

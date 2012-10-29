@@ -2,6 +2,11 @@ package saz.math
 {
 	import flash.geom.Point;
 
+	/**
+	 * パーリンノイズ2D. 
+	 * @author saz
+	 * 
+	 */
 	public class PerlinNoise2D extends PerlinNoise1D
 	{
 		

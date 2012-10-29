@@ -2,6 +2,11 @@ package saz.math
 {
 	import flash.geom.Vector3D;
 
+	/**
+	 * パーリンノイズ3D. 
+	 * @author saz
+	 * 
+	 */
 	public class PerlinNoise3D extends PerlinNoise1D
 	{
 		
