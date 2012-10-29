@@ -12,6 +12,12 @@ package saz.math
 	public class PerlinNoise1D
 	{
 		
+		/**
+		 * パーリンノイズ. 
+		 * @param x
+		 * @return 
+		 * 
+		 */
 		public static function noise(x:Number):Number
 		{
 			var X:int = Math.floor(x) as int;
@@ -23,9 +29,13 @@ package saz.math
 		
 		/**
 		 * Fractional Brownian motion（非整数ブラウン運動）関数.
-		 * @param x
-		 * @param octave
-		 * @return 
+		 * ・0 付近を行ったり来たりする。
+		 * ・大きな動きと小さな動きがまんべんなく混ざっている。
+		 * ・どの時点を切り出しても、同じようなランダムな動きをする。
+		 * ・連続性がある（値が飛んだりしない）。
+		 * @param x			元になる値
+		 * @param octave	不明
+		 * @return 最大値はよくわからない
 		 * 
 		 */
 		public static function fbm(x:Number, octave:int):Number

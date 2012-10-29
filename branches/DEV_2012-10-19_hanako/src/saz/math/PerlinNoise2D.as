@@ -10,6 +10,9 @@ package saz.math
 	public class PerlinNoise2D extends PerlinNoise1D
 	{
 		
+		/**
+		 * @copy PerlinNoise1D#noise
+		 */
 		public static function noise(x:Number, y:Number):Number
 		{
 			var X:int = Math.floor(x) as int;
@@ -27,12 +30,7 @@ package saz.math
 		}
 		
 		/**
-		 * Fractional Brownian motion（非整数ブラウン運動）関数.
-		 * @param x
-		 * @param y
-		 * @param octave
-		 * @return 
-		 * 
+		 * @copy PerlinNoise1D#fbm
 		 */
 		public static function fbm(x:Number, y:Number, octave:int):Number
 		{
