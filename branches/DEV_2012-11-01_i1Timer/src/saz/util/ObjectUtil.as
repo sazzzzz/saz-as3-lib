@@ -128,7 +128,9 @@
 		 * @see	http://www.func09.com/wordpress/archives/152
 		 */
 		public static function getClassName(target:*):String {
-			return String(describeType(target).@name).match(/::(.*)/)[1];
+			var res:Array = String(describeType(target).@name).match(/::(.*)/);
+			if (res == null) return "???";
+			return res[1];
 		}
 		
 		
