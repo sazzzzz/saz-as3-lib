@@ -129,8 +129,8 @@
 		 */
 		public static function getClassName(target:*):String {
 			var res:Array = String(describeType(target).@name).match(/::(.*)/);
-			if (res == null) return "???";
-			return res[1];
+			// FlexGlobals.topLevelApplication.systemManagerの場合nullが返ってくる
+			return (res == null) ? "???" : res[1];
 		}
 		
 		
