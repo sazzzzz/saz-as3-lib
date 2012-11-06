@@ -102,7 +102,7 @@ package saz.media
 		public function stop():void
 		{
 			_pausePosition = 0;
-			_channel.stop();
+			if (_channel != null) _channel.stop();
 		}
 		
 		/**
