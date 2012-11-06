@@ -15,7 +15,6 @@ package saz.controll {
 		
 		
 		public function Pool(createFnc:Function = null) {
-			//atCreate = (null != createFnc) ? createFnc : $atCreate;
 			$initHook(createFnc);
 			
 			if (!$items) $items = new Array();
@@ -26,7 +25,6 @@ package saz.controll {
 		 * コンストラクタに引数を渡したい場合は、共通引数argsを指定できる。
 		 * @return	インスタンス.
 		 */
-		//public function getItem():Object {
 		public function getItem():* {
 			if ($items.length > 0) {
 				return $items.pop();
@@ -66,6 +64,10 @@ package saz.controll {
 		protected function $atCreate(...args):Object {
 			return { };
 		}
+		
+		
+		
+		
 		
 		/**
 		 * プールされている数.
