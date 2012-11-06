@@ -9,7 +9,7 @@ package saz.collections.enumerator {
 	public class Enumerable {
 		
 		private var $target:Object;
-		//private var $method:String;
+		
 		private var $each:Function;
 		
 		/**
