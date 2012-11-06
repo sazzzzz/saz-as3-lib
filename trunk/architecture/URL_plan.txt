@@ -1,0 +1,65 @@
+URL.as（仮）
+
+URL表現クラス
+
+■コンセプト
+
+URLRequestを保持して欲しい
+URLを扱いやすく
+URLのパース（エラーも発生）
+絶対パスと相対パス両方対応
+ローカルも対応（ローカル時はクエリ無視？）
+
+
+■仕様検討
+
+◎
+
+http://www.example.com:8080/foo/bar/index.html
+
+protocol
+       host----------+
+	                   port
+					       path----+
+						   file--------------+
+						            filename
+						                  extention
+
+◎メンバ
+
+protocol
+host
+port:int
+path
+file
+filename
+extention
+hash
+vars:URL
+
+特殊
+separator
+
+getNameByIndex(index)
+
+
+
+■参考
+
+flash.net.URLRequest
+jp.progression.scenes.SceneId
+saz.string.Location
+
+
+▽Uniform Resource Locator - Wikipedia
+http://ja.wikipedia.org/wiki/Uniform_Resource_Locator
+
+（スキーム名）:（スキームごとに定められた何かの表現形式）
+
+//<user>:<password>@<host>:<port>/<url-path>
+
+
+
+▽JavaのURLクラスを使いこなす：ウェブへ簡単にアクセス - builder
+http://builder.japan.zdnet.com/tool/20363188/
+
