@@ -233,7 +233,7 @@
 		/**
 		 * "0"で埋める。ゼロパディング。
 		 * @param	value	対象とする数字
-		 * @param	digit	桁数。ただし30以下であること。
+		 * @param	digit	桁数。ただし30以下であること。0なら単にStringにして返す。
 		 * @return	String
 		 */
 		//public static function zeroPadding(value:String, digit:int):String {
@@ -243,6 +243,7 @@
 			// Math.pow(10, digit).toFixed()でいける。ただしdigit=33から計算誤差。
 			// Math.pow(10, 33).toFixed() = "1000000000000000100000000000000000";
 			// "0123456789".slice(-4) = "6789"
+			if (digit == 0) return value.toString();
 			return (Math.pow(10, digit).toFixed() + value.toString()).slice( -digit);
 		}
 		
