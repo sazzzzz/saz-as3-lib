@@ -11,7 +11,7 @@
 	 */
 	public class MyEvent extends Event {
 		
-		static public const EVENTTYPE:String = "eventType";
+		public static const EVENTTYPE:String = "eventType";
 		
 		public var prop:*;
 		
@@ -21,11 +21,11 @@
 			this.prop = prop;
 		}
 		
-		override public function clone():Event {
+		public override function clone():Event {
 			return new MyEvent(type, bubbles, cancelable);
 		}
 		
-		override public function toString():String {
+		public override function toString():String {
 			return formatToString("MyEvent", "type", "bubbles", "cancelable", "eventPhase", "prop"); 
 		}
 		

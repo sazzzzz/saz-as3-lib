@@ -1,5 +1,5 @@
 package saz.collections {
-	//import saz.IBasic;
+	import saz.IBasic;
 	
 	/**
 	 * Listインターフェース

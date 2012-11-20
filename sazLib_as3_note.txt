@@ -14,15 +14,6 @@ r = va.zip(vb).inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
 戻り値をArrayじゃなくて、Enumerableにしないと。
 http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18848
 
-↓
-r = va.zip(vb).getXXX().inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
-ならできるんじゃね？
-Enumerableを返すメソッドを追加した、Arrayのサブクラスを作り、
-EnumerableのメソッドはArrayではなくEnumerableArrayを返せばよい。
-
-r = va.zip(vb).getEnumerator().getEnumerable().inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
-r = new Enumerable(va.zip(vb).getEnumerator()).inject(0,function(s:Number,v:Array):*{return s+v[0]*v[1]});
-
 
 ◎EnumerableArray（仮称）が作れるのか？
 →Proxyを使う
@@ -117,8 +108,8 @@ while (iterator.hasNext()) {
 	i++;
 }
 
-○IIteration
-iterator():IIterator
+○Iterable
+getIterator():IIterator
 
 ○IEnumerator
 forEach(iterator:Function):void
@@ -126,11 +117,8 @@ list.forEach(function(item:*, index:int, enu:IEnumerator):void{
 	trace(item,index);
 });
 
-○IEnumeration
-enumerator():IEnumerator
-
 ○IEnumerable
-enumerable():Enumerable
+getEnumerator():IEnumerator
 
 ●実装
 

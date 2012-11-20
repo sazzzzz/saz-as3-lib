@@ -2,29 +2,13 @@
 	import flash.events.*;
 	
 	/**
-	 * watchイベント.
+	 * ...
 	 * @author saz
 	 */
 	public class WatchEvent extends Event {
 		
-		/**
-		 * 値が変更される直前. 
-		 */
-		public static const WATCH:String = "watch";
-		
-		/**
-		 * 値に変化があった. 
-		 */
 		public static const CHANGE:String = "change";
-		
-		/**
-		 * 値が変更された. 
-		 */
 		public static const UPDATE:String = "update";
-		
-		/**
-		 * 完了. 
-		 */
 		public static const COMPLETE:String = "complete";
 		
 		public var key:String;

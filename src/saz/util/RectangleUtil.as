@@ -3,47 +3,8 @@ package saz.util {
 	/**
 	 * Rectangleユーティリティー
 	 * @author saz
-	 * @deprecated	GeomUtilに変名。
 	 */
 	public class RectangleUtil {
-		
-		public static var innterFit:Function = inscribe;
-		public static var outerFit:Function = circumscribe;
-		
-		/**
-		 * targetの縦横比で、frameに内接するRectangleを返す。
-		 * @param	target	
-		 * @param	frame	
-		 * @return
-		 */
-		public static function inscribe(target:Rectangle, frame:Rectangle):Rectangle {
-			var scale:Number = (target.width / target.height < frame.width / frame.height)? frame.height / target.height : frame.width / target.width;
-			return fit(target, frame, scale);
-		}
-		
-		/**
-		 * targetの縦横比で、frameに外接するRectangleを返す。
-		 * @param	target	
-		 * @param	frame	
-		 * @return
-		 */
-		public static function circumscribe(target:Rectangle, frame:Rectangle):Rectangle {
-			//var srcScale:Number = target.width / target.height;
-			//var frameScale:Number = frame.width / frame.height;
-			//var scale:Number = (srcScale > frameScale)? frame.height / target.height : frame.width / target.width;
-			var scale:Number = (target.width / target.height > frame.width / frame.height)? frame.height / target.height : frame.width / target.width;
-			return fit(target, frame, scale);
-		}
-		
-		public static function fit(target:Rectangle, frame:Rectangle, scale:Number):Rectangle {
-			return new Rectangle(
-				frame.x - Math.round((target.width * scale-frame.width) / 2)
-				,frame.y - Math.round((target.height * scale-frame.height) / 2)
-				,target.width * scale
-				,target.height * scale
-			);
-		}
-		
 		
 		/**
 		 * Rectangle配列を、左から順に並べる。
