@@ -20,7 +20,7 @@ package saz.external.progression4
 		public function ProgressionChildDocument(managerId:String=null, rootClass:Class=null, config:Configuration=null, initObject:Object=null)
 		{
 			super(managerId, rootClass, config, initObject);
-			trace("ProgressionChildDocument.ProgressionChildDocument(" + managerId, rootClass, config, initObject);
+//			trace("ProgressionChildDocument.ProgressionChildDocument(" + managerId, rootClass, config, initObject);
 			
 			
 //			addEventListener(Event.ADDED_TO_STAGE, _addedToStage);
@@ -34,7 +34,7 @@ package saz.external.progression4
 		 */
 		public function start():void
 		{
-			trace("ProgressionChildDocument.start(");
+//			trace("ProgressionChildDocument.start(");
 			
 			if (_started) return;
 			_started = true;
