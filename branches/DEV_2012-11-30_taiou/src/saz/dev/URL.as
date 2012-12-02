@@ -3,7 +3,7 @@ package saz.dev
 	import flash.net.URLRequest;
 
 	/**
-	 * URLを表す。完成にはほど遠い。
+	 * URLを表す。directoryとfilnameぐらいしかテストしてない。完成にはほど遠い。
 	 * @author saz
 	 * 
 	 * 
