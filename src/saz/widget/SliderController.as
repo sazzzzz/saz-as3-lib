@@ -1,8 +1,9 @@
 package saz.widget
 {
 	import flash.display.DisplayObjectContainer;
+	import flash.events.EventDispatcher;
 
-	public class SliderController implements IRange
+	public class SliderController extends EventDispatcher implements IRange
 	{
 		
 		public function get value():Number
@@ -61,6 +62,8 @@ package saz.widget
 		
 		public function SliderController()
 		{
+			super();
+			
 			onChange = function(val:Number):void{};
 		}
 		
