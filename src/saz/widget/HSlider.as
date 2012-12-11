@@ -38,6 +38,16 @@ package saz.widget
 			_cnt.maximum = val;
 		}
 		
+
+		public function get snapInterval():Number
+		{
+			return _cnt.snapInterval;
+		}
+		public function set snapInterval(val:Number):void
+		{
+			_cnt.snapInterval = val;
+		}
+		
 		
 		//--------------------------------------
 		// 独自
