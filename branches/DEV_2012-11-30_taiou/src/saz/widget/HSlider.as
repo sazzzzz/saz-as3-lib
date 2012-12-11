@@ -4,6 +4,9 @@ package saz.widget
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import saz.events.DynamicEvent;
+	import saz.events.WatchEvent;
+	
 	public class HSlider extends Sprite implements IRange
 	{
 
@@ -17,7 +20,10 @@ package saz.widget
 		}
 		public function set value(val:Number):void
 		{
+			pendingValue = val;
+			if (isDragging) return;
 			_cnt.value = val;
+			thum.x = val / (maximum - minimum) * size + initPos;
 		}
 		
 		public function get minimum():Number
@@ -62,7 +68,9 @@ package saz.widget
 		private var initPos:Number = 0;
 		private var startMousePos:Number = 0;
 		private var posDiff:Number = 0;
+		private var pendingValue:Number = 0;
 		
+		private var isDragging:Boolean = false;
 		
 		
 		
@@ -86,6 +94,7 @@ package saz.widget
 		
 		protected function thum_mouseDown(event:MouseEvent):void
 		{
+			isDragging = true;
 			startMousePos = thum.parent.mouseX;
 			posDiff = thum.x - startMousePos;
 			
@@ -97,18 +106,22 @@ package saz.widget
 		
 		protected function thum_mouseUp(event:MouseEvent):void
 		{
+			isDragging = false;
 			thum.removeEventListener(MouseEvent.MOUSE_UP, thum_mouseUp);
 			thum.stage.removeEventListener(MouseEvent.MOUSE_UP, thum_mouseUp);
 			
 			thum.stage.removeEventListener(MouseEvent.MOUSE_MOVE, dragLoop);
 			
-			_cnt.value = valueForController(thum.x);
+			var nv:Number = valueForController(thum.x);
+			trace(nv);
+			_cnt.value = nv;
+			dispatchEvent(new DynamicEvent(Event.CHANGE, false, false, {value:nv}));
 		}
 		
 		protected function dragLoop(event:Event):void
 		{
-//			thum.x = _cnt.clipValue(valueForController(startMousePos + thum.parent.mouseX - startMousePos + posDiff)) + initPos;
-			thum.x = _cnt.clipValue(_cnt.calcForValue(startMousePos + thum.parent.mouseX - startMousePos + posDiff, initPos, initPos + size)) + initPos
+//			thum.x = _cnt.clipValue(_cnt.calcForValue(startMousePos + thum.parent.mouseX - startMousePos + posDiff, initPos, initPos + size)) + initPos;
+			thum.x = Math.max(initPos, Math.min(startMousePos + thum.parent.mouseX - startMousePos + posDiff, initPos + size));
 		}
 		
 		protected function valueForController(val:Number):Number

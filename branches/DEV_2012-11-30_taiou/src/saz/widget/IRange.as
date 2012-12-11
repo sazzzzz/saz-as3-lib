@@ -1,6 +1,8 @@
 package saz.widget
 {
-	public interface IRange
+	import flash.events.IEventDispatcher;
+
+	public interface IRange extends IEventDispatcher
 	{
 		
 		function get value():Number;
