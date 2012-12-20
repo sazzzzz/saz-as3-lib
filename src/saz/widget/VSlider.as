@@ -2,27 +2,26 @@ package saz.widget
 {
 	import flash.display.InteractiveObject;
 	
-	public class HSlider extends SliderBase
+	public class VSlider extends SliderBase
 	{
-		
-		public function HSlider(thumObj:InteractiveObject)
+		public function VSlider(thumObj:InteractiveObject)
 		{
 			super(thumObj);
 		}
 		
 		override protected function getThumPosition():Number
 		{
-			return thum.x;
+			return thum.y;
 		}
 		
 		override protected function setThumPosition(value:Number):void
 		{
-			thum.x = value;
+			thum.y = value;
 		}
 		
 		override protected function getMousePosition():Number
 		{
-			return thum.parent.mouseX;
+			return thum.parent.mouseY;
 		}
 	}
 }
