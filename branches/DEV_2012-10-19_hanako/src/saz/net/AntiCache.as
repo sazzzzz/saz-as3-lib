@@ -131,7 +131,7 @@ package saz.net
 		 * URLにキャッシュ対策用パラメータを付与して返す。
 		 * @param url
 		 * @return 
-		 * 
+		 * Progression4を使う場合は、こっちを使うと内部キャッシュが効かなくなるので、decorateRequestの利用を推奨。
 		 */
 		public function decorateUrl(url:String):String
 		{
