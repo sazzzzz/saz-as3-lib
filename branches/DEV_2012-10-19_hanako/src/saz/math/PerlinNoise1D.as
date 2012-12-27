@@ -33,9 +33,9 @@ package saz.math
 		 * ・大きな動きと小さな動きがまんべんなく混ざっている。
 		 * ・どの時点を切り出しても、同じようなランダムな動きをする。
 		 * ・連続性がある（値が飛んだりしない）。
-		 * @param x			元になる値
-		 * @param octave	不明
-		 * @return 最大値はよくわからない
+		 * @param x			元になる値。0.001ぐらいずつ変化させると良さ気。
+		 * @param octave	不明。どうやら大きいほうがなめらかになる？http://blog.livedoor.jp/toropippi/archives/91389.html
+		 * @return 最大値はよくわからない。
 		 * 
 		 */
 		public static function fbm(x:Number, octave:int):Number
