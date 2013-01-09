@@ -23,6 +23,7 @@ package saz.external.progression4
 	 * 状態に応じて、各状態用の表示オブジェクトを切り替えるボタン。
 	 * @author saz
 	 * 
+	 * イベントリスナで実装してるので、サブクラスではat...メソッドが自由に使える。
 	 */
 	public class CastSymbolButton extends CastButton
 	{
@@ -81,6 +82,16 @@ package saz.external.progression4
 		}
 		
 		
+		public function destroy():void
+		{
+			_sm.removeEventListener(WatchEvent.CHANGE, _sm_change);
+			
+			removeEventListener(CastEvent.CAST_ADDED, _castAdded);
+			removeEventListener(CastMouseEvent.CAST_MOUSE_DOWN, _castMouseDown);
+			removeEventListener(CastMouseEvent.CAST_MOUSE_UP, _castMouseUp);
+			removeEventListener(CastMouseEvent.CAST_ROLL_OVER, _castRollOver);
+			removeEventListener(CastMouseEvent.CAST_ROLL_OUT, _castRollOut);
+		}
 		
 		
 		protected function init():void
