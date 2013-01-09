@@ -2,12 +2,25 @@ package saz.display
 {
 	import saz.model.FiniteAutomaton;
 	
+	/**
+	 * いずれかのプロパティに変化があった場合に、送出されます。
+	 * @eventType saz.events.WatchEvent.CHANGE
+	 */
+	[Event(name = "change", type = "saz.events.WatchEvent")]
+	
+	/**
+	 * ボタン用ステート管理クラス。…必要か？
+	 * @author saz
+	 * 
+	 */
 	public class ButtonStateMachine extends FiniteAutomaton
 	{
 		
-		protected static const STATE_NORMAL:String = "normal";
-		protected static const STATE_HOVER:String = "hover";
-		protected static const STATE_PRESS:String = "press";
+		public static const STATE_NORMAL:String = "normal";
+		public static const STATE_HOVER:String = "hover";
+		public static const STATE_PRESS:String = "press";
+//		public static const STATE_DISABLE:String = "disable";
+		
 
 		public function get hovering():Boolean
 		{
@@ -17,6 +30,7 @@ package saz.display
 		public function set hovering(value:Boolean):void
 		{
 			_hovering = value;
+			update();
 		}
 		private var _hovering:Boolean = false;
 		
@@ -33,17 +47,33 @@ package saz.display
 			update();
 		}
 		private var _pressing:Boolean = false;
+		
+		
+		public var onNormal:Function;
+		public var onHover:Function;
+		public var onPress:Function;
 
 		
 		public function ButtonStateMachine(current:String="")
 		{
 			super(current);
+			
+			onNormal = function(name:String, oldVal:Object, newVal:Object):void{};
+			onHover = function(name:String, oldVal:Object, newVal:Object):void{};
+			onPress = function(name:String, oldVal:Object, newVal:Object):void{};
+			
 			update();
 		}
 		
+		
+		
+		
 		public function update():void
 		{
+			var old:String = state;
 			transition(detectState());
+			//callback
+			detectCallback(state)("state", old, state);
 		}
 		
 		protected function detectState():String
@@ -51,6 +81,20 @@ package saz.display
 			if (hovering && pressing) return STATE_PRESS;
 			if (hovering && !pressing) return STATE_HOVER;
 			return STATE_NORMAL;
+		}
+		
+		protected function detectCallback(name:String):Function
+		{
+			switch (name)
+			{
+				case STATE_HOVER:
+					return onHover;
+				case STATE_PRESS:
+					return onPress;
+				case STATE_NORMAL:
+				default:
+					return onNormal;
+			}
 		}
 		
 	}
