@@ -53,19 +53,9 @@
 		}
 		
 		
-		
-		/**
-		 * 指定URLがローカルかどうか. ＝"file:///"を含むかどうか. 
-		 * @param	urlStr	URL文字列.
-		 * @return
-		 */
-		public static function isLocal(urlStr:String):Boolean {
-			//trace(urlStr.indexOf("file:///"));
-			return ( 0 == urlStr.indexOf("file:///"));
-		}
-		
-		
-		
+		//--------------------------------------
+		// case...
+		//--------------------------------------
 		
 		
 		/**
@@ -128,6 +118,52 @@
 			return value.substr(0, 1).toUpperCase() + value.substr(1).toLowerCase();
 		}
 		
+		
+		
+		
+		//--------------------------------------
+		// seacrh...
+		//--------------------------------------
+		
+		
+		
+		/**
+		 * 指定URLがローカルかどうか. ＝"file:///"を含むかどうか. 
+		 * @param	urlStr	URL文字列.
+		 * @return
+		 * @departed	これ酷いな。廃止しよう。
+		 */
+		public static function isLocal(urlStr:String):Boolean {
+			return ( 0 == urlStr.indexOf("file:///"));
+		}
+		
+		
+		
+		/**
+		 * 前方一致するかどうか。
+		 * @param target
+		 * @param search	検索文字列。
+		 * @return			 一致すればtrue。しなければfalse。
+		 * 
+		 */
+		public static function leftHandMatch(target:String, search:String):Boolean
+		{
+			return target.substr(0, search.length) == search;
+		}
+		
+		
+		
+		/**
+		 * 後方一致するかどうか。
+		 * @param target
+		 * @param search	検索文字列。
+		 * @return			 一致すればtrue。しなければfalse。
+		 * 
+		 */
+		public static function rightHandMatch(target:String, search:String):Boolean
+		{
+			return target.substr(-search.length) == search;
+		}
 		
 		
 		/**
