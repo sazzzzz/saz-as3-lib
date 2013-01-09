@@ -1,6 +1,7 @@
 package saz.external.progression4
 {
 	import flash.display.*;
+	import flash.events.Event;
 	
 	import jp.progression.casts.*;
 	import jp.progression.commands.*;
@@ -14,6 +15,9 @@ package saz.external.progression4
 	import jp.progression.events.*;
 	import jp.progression.scenes.*;
 	
+	import saz.display.ButtonStateMachine;
+	import saz.events.WatchEvent;
+	
 
 	/**
 	 * 状態に応じて、各状態用の表示オブジェクトを切り替えるボタン。
@@ -22,11 +26,6 @@ package saz.external.progression4
 	 */
 	public class CastSymbolButton extends CastButton
 	{
-		
-		protected static const STATE_NORMAL:String = "normal";
-		protected static const STATE_HOVER:String = "hover";
-		protected static const STATE_PRESS:String = "press";
-		protected static const STATE_DISABLE:String = "disable";
 		
 		
 		public function get buttonEnabled():Boolean
@@ -37,7 +36,14 @@ package saz.external.progression4
 		{
 			_buttonEnabled = value;
 			super.mouseEnabled = value;
-			setState(value ? STATE_NORMAL : STATE_DISABLE);
+			
+			if (disable)
+			{
+				changeSymbol(value ? normal : disable);
+				alpha = 1.0;
+			}else{
+				alpha = value ? 1.0 : 0.5;
+			}
 		}
 		private var _buttonEnabled:Boolean = true;
 
@@ -63,6 +69,8 @@ package saz.external.progression4
 		
 		protected var _state:String = "";
 		
+		protected var _symbol:DisplayObject;
+		protected var _sm:ButtonStateMachine;
 		
 		
 		public function CastSymbolButton(initObject:Object=null)
@@ -79,38 +87,28 @@ package saz.external.progression4
 		{
 			buttonMode = true;
 			
-			setState(STATE_NORMAL);
+			_sm = new ButtonStateMachine();
+			_sm.addEventListener(WatchEvent.CHANGE, _sm_change);
+			
+			changeSymbol(normal);
 		}
 		
-		
-		protected function setState(state:String):void
+		protected function _sm_change(event:WatchEvent):void
 		{
-			if (state == _state) return;
-			
-			var old:String = _state;
-			var res:Boolean = changeSymbol(state);
-			if (state == STATE_DISABLE && res == false) alpha = 0.5;
-			if (old == STATE_DISABLE) alpha = 1.0;
-		}
+			changeSymbol(getSymbol(event.newValue));
+		}		
 		
 		
-		protected function changeSymbol(state:String):Boolean
+		
+		protected function changeSymbol(disp:DisplayObject):void
 		{
-			var old:String = _state;
-			_state = state;
+			if (disp == null) return;
 			
-			// 古いのを消す
-			if (old != STATE_NORMAL)
-			{
-				var os:DisplayObject = getSymbol(old);
-				if (os && os.parent == this) removeChild(os);
-			}
+			var old:DisplayObject = _symbol;
+			_symbol = disp;
 			
-			// 新しいの表示
-			var ns:DisplayObject = getSymbol(state);
-			if (ns && ns.parent != this) addChild(ns);
-			
-			return ns != null;
+			if (old && old.parent == this) removeChild(old);
+			if (disp && disp.parent != this) addChild(disp);
 		}
 		
 		
@@ -124,29 +122,16 @@ package saz.external.progression4
 		{
 			switch(state)
 			{
-				case STATE_NORMAL:
+				case ButtonStateMachine.STATE_NORMAL:
 					return normal;
-				case STATE_HOVER:
+				case ButtonStateMachine.STATE_HOVER:
 					return hover;
-				case STATE_PRESS:
+				case ButtonStateMachine.STATE_PRESS:
 					return press;
-				case STATE_DISABLE:
-					return disable;
 			}
 			return null;
 		}
 		
-		
-		/*protected function atButtonDisable():void
-		{
-			if (disable) addChild(
-			normal.visible = false;
-		}
-		
-		protected function atButtonEnable():void
-		{
-			normal.visible = true;
-		}*/
 		
 		
 		
@@ -155,7 +140,8 @@ package saz.external.progression4
 		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
 		 */
 		override protected function atCastAdded():void {
-			setState(STATE_NORMAL);
+			_sm.pressing = false;
+			_sm.hovering = false;
 		}
 		
 		/**
@@ -170,7 +156,7 @@ package saz.external.progression4
 		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
 		 */
 		override protected function atCastMouseDown():void {
-			setState(STATE_PRESS);
+			_sm.pressing = true;
 		}
 		
 		/**
@@ -178,7 +164,7 @@ package saz.external.progression4
 		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
 		 */
 		override protected function atCastMouseUp():void {
-			if (_state != STATE_NORMAL) setState(STATE_HOVER);
+			_sm.pressing = false;
 		}
 		
 		/**
@@ -186,7 +172,7 @@ package saz.external.progression4
 		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
 		 */
 		override protected function atCastRollOver():void {
-			setState(STATE_HOVER);
+			_sm.hovering = true;
 		}
 		
 		/**
@@ -194,7 +180,7 @@ package saz.external.progression4
 		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
 		 */
 		override protected function atCastRollOut():void {
-			setState(STATE_NORMAL);
+			_sm.hovering = false;
 		}
 		
 	}
