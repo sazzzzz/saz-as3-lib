@@ -90,13 +90,14 @@ package saz.external.progression4
 			_sm = new ButtonStateMachine();
 			_sm.addEventListener(WatchEvent.CHANGE, _sm_change);
 			
+			addEventListener(CastEvent.CAST_ADDED, _castAdded);
+			addEventListener(CastMouseEvent.CAST_MOUSE_DOWN, _castMouseDown);
+			addEventListener(CastMouseEvent.CAST_MOUSE_UP, _castMouseUp);
+			addEventListener(CastMouseEvent.CAST_ROLL_OVER, _castRollOver);
+			addEventListener(CastMouseEvent.CAST_ROLL_OUT, _castRollOut);
+			
 			changeSymbol(normal);
 		}
-		
-		protected function _sm_change(event:WatchEvent):void
-		{
-			changeSymbol(getSymbol(event.newValue));
-		}		
 		
 		
 		
@@ -132,56 +133,43 @@ package saz.external.progression4
 			return null;
 		}
 		
+		//--------------------------------------
+		// listeners
+		//--------------------------------------
+		
+		protected function _sm_change(event:WatchEvent):void
+		{
+			changeSymbol(getSymbol(event.newValue));
+		}		
 		
 		
-		
-		/**
-		 * IExecutable オブジェクトが AddChild コマンド、または AddChildAt コマンド経由で表示リストに追加された場合に送出されます。
-		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
-		 */
-		override protected function atCastAdded():void {
+		protected function _castAdded(event:CastEvent):void
+		{
 			_sm.pressing = false;
 			_sm.hovering = false;
 		}
 		
-		/**
-		 * IExecutable オブジェクトが RemoveChild コマンド、または RemoveAllChild コマンド経由で表示リストから削除された場合に送出されます。
-		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
-		 */
-		override protected function atCastRemoved():void {
-		}
-		
-		/**
-		 * Flash Player ウィンドウの CastButton インスタンスの上でユーザーがポインティングデバイスのボタンを押すと送出されます。
-		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
-		 */
-		override protected function atCastMouseDown():void {
+		protected function _castMouseDown(event:CastMouseEvent):void
+		{
 			_sm.pressing = true;
 		}
 		
-		/**
-		 * ユーザーが CastButton インスタンスからポインティングデバイスを離したときに送出されます。
-		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
-		 */
-		override protected function atCastMouseUp():void {
+		protected function _castMouseUp(event:CastMouseEvent):void
+		{
 			_sm.pressing = false;
 		}
 		
-		/**
-		 * ユーザーが CastButton インスタンスにポインティングデバイスを合わせたときに送出されます。
-		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
-		 */
-		override protected function atCastRollOver():void {
+		protected function _castRollOver(event:CastMouseEvent):void
+		{
 			_sm.hovering = true;
 		}
 		
-		/**
-		 * ユーザーが CastButton インスタンスからポインティングデバイスを離したときに送出されます。
-		 * このイベント処理の実行中には、ExecutorObject を使用した非同期処理が行えます。
-		 */
-		override protected function atCastRollOut():void {
+		protected function _castRollOut(event:CastMouseEvent):void
+		{
 			_sm.hovering = false;
 		}
+		
+		
 		
 	}
 }
