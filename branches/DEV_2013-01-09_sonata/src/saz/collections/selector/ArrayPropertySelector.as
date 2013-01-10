@@ -3,7 +3,7 @@ package saz.collections.selector {
 	 * プロパティを変更するSelector.
 	 * @author saz
 	 */
-	public class ArrayPropertySelector extends ArraySelector{
+	public class ArrayPropertySelector extends ArraySelectorBase{
 		
 		public var propertyName:String;
 		public var selectValue:*;
@@ -24,19 +24,20 @@ package saz.collections.selector {
 			unselectValue = unselectVal;
 		}
 		
+		
 		/**
-		 * atSelectのデフォルト.サブクラス用.
-		 * @param	item
+		 * @copy	ArraySelectorBase#atSelect
 		 */
-		override protected function $atSelect(item:Object):void {
+		override protected function atSelect(item:Object):void
+		{
 			item[propertyName] = selectValue;
 		}
 		
 		/**
-		 * atUnselectのデフォルト.サブクラス用.
-		 * @param	item
+		 * @copy	ArraySelectorBase#atUnselect
 		 */
-		override protected function $atUnselect(item:Object):void {
+		override protected function atUnselect(item:Object):void
+		{
 			item[propertyName] = unselectValue;
 		}
 		
