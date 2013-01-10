@@ -3,7 +3,7 @@ package saz.collections.selector {
 	 * メソッドを実行するSelector.
 	 * @author saz
 	 */
-	public class ArrayMethodSelector extends ArraySelector{
+	public class ArrayMethodSelector extends ArraySelectorBase{
 		
 		public var selectMethodName:String;
 		public var unselectMethodName:String;
@@ -12,13 +12,13 @@ package saz.collections.selector {
 		
 		/**
 		 * コンストラクタ.
-		 * @param	target			対象とするArray.指定しなければ自動的に生成.
-		 * @param	selectName		選択時に実行するメソッド名.nullを指定した場合は、選択時に何もしない.
-		 * @param	unselectName	非選択時に実行するメソッド名.nullを指定した場合は、非選択時に何もしない.
+		 * @param	target			（オプション）対象とするArray.
+		 * @param	selectName		（オプション）選択時に実行するメソッド名.nullを指定した場合は、選択時に何もしない.
+		 * @param	unselectName	（オプション）非選択時に実行するメソッド名.nullを指定した場合は、非選択時に何もしない.
 		 * @param	selectArgs		（オプション）選択時の引数.
 		 * @param	unselectArgs	（オプション）非選択時の引数.
 		 */
-		public function ArrayMethodSelector(target:Array = null, selectName:String = null, unselectName:String = null, selectArgs:Array = null, unselectArgs:Array = null) {
+		public function ArrayMethodSelector(target:Array = null, selectName:String = "select", unselectName:String = "unselect", selectArgs:Array = null, unselectArgs:Array = null) {
 			super(target);
 			
 			selectMethodName = selectName;
@@ -29,22 +29,23 @@ package saz.collections.selector {
 		
 		
 		/**
-		 * atSelectのデフォルト.サブクラス用.
-		 * @param	item
+		 * @copy	ArraySelectorBase#atSelect
 		 */
-		override protected function $atSelect(item:Object):void {
+		override protected function atSelect(item:Object):void
+		{
 			if (!selectMethodName) return;
 			item[selectMethodName].apply(null, selectMethodArgs);
 		}
 		
 		/**
-		 * atUnselectのデフォルト.サブクラス用.
-		 * @param	item
+		 * @copy	ArraySelectorBase#atUnselect
 		 */
-		override protected function $atUnselect(item:Object):void {
+		override protected function atUnselect(item:Object):void
+		{
 			if (!unselectMethodName) return;
 			item[unselectMethodName].apply(null, unselectMethodArgs);
 		}
+		
 		
 	}
 
