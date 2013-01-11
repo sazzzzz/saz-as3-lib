@@ -20,6 +20,7 @@ package saz.collections.selector {
 		public function set target(value:Array):void
 		{
 			_target = value;
+			enumerable.setTarget(_target);
 		}
 		protected var _target:/*Object*/Array;
 		
@@ -51,7 +52,7 @@ package saz.collections.selector {
 		 * @return 
 		 * 
 		 */
-		protected function get enum():Enumerable
+		protected function get enumerable():Enumerable
 		{
 			if (_enum == null && target != null) _enum = new Enumerable(target);
 			return _enum;
@@ -84,19 +85,21 @@ package saz.collections.selector {
 		/**
 		 * アイテム指定で選択。
 		 * @param item	選択するアイテム。targetに含まれないアイテムを指定すると非選択状態に。
+		 * @return 選択したアイテム。
 		 * 
 		 */
-		public function select(item:Object):void
+		public function select(item:Object):Object
 		{
-			selectAt(target.indexOf(item));
+			return selectAt(target.indexOf(item));
 		}
 		
 		/**
 		 * インデックス指定で選択。
 		 * @param index	インデックス。範囲外を指定すると非選択状態に。
+		 * @return 選択したアイテム。
 		 * 
 		 */
-		public function selectAt(index:int):void
+		public function selectAt(index:int):Object
 		{
 //			if (index < 0 || target.length <= index) throw new ArgumentError("インデックスが範囲外です。");
 			
@@ -112,18 +115,22 @@ package saz.collections.selector {
 			{
 				_selectedIndex = index;
 				atSelect(target[index]);
+				return target[index];
 			}
+			
+			return null;
 		}
 		
 		/**
 		 * プロパティ指定で選択。
 		 * @param value	値。
 		 * @param name	プロパティ名。
+		 * @return 選択したアイテム。
 		 * 
 		 */
-		public function selectByProperty(value:Object, name:String = "name"):void
+		public function selectByProperty(value:Object, name:String = "name"):Object
 		{
-			select(enum.detect(function(item:Object, index:int):Boolean
+			return select(enumerable.detect(function(item:Object, index:int):Boolean
 			{
 				return item[name] == value;
 			}));
@@ -163,11 +170,9 @@ package saz.collections.selector {
 		
 		
 		
-		/*protected function unselectCurrent():void
-		{
-			
-		}*/
-		
+		//--------------------------------------
+		// for subclass
+		//--------------------------------------
 		
 		
 		
