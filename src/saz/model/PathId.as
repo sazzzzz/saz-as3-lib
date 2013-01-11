@@ -133,6 +133,11 @@ package saz.model
 			return new PathId(fullPath);
 		}
 		
+		public function toArray():Array
+		{
+			return _names;
+		}
+		
 		public function toString():String
 		{
 			return fullPath;
