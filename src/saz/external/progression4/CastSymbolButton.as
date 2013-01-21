@@ -68,7 +68,7 @@ package saz.external.progression4
 		public var disable:DisplayObject;
 		
 		
-		protected var _state:String = "";
+//		protected var _state:String = "";
 		
 		protected var _symbol:DisplayObject;
 		protected var _sm:ButtonStateMachine;

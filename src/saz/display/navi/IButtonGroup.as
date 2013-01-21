@@ -2,6 +2,11 @@ package saz.display.navi
 {
 	import saz.model.PathId;
 	
+	/**
+	 * Navi用ボタングループインタフェース。
+	 * @author saz
+	 * 
+	 */
 	public interface IButtonGroup
 	{
 		function get pathId():PathId;

@@ -9,7 +9,7 @@ package saz.display
 	[Event(name = "change", type = "saz.events.WatchEvent")]
 	
 	/**
-	 * ボタン用ステート管理クラス。…必要か？
+	 * ボタン用ステート管理クラス。ホバー状態とプレス状態からステートに変換。…必要か？
 	 * @author saz
 	 * 
 	 */
@@ -75,6 +75,8 @@ package saz.display
 			//callback
 			detectCallback(state)("state", old, state);
 		}
+		
+		
 		
 		protected function detectState():String
 		{
