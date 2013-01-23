@@ -16,6 +16,7 @@ package saz.external.progression4
 	import jp.progression.scenes.*;
 	
 	import saz.display.ButtonStateMachine;
+	import saz.display.SymbolButtonController;
 	import saz.events.WatchEvent;
 	
 
@@ -28,26 +29,11 @@ package saz.external.progression4
 	public class CastSymbolButton extends CastButton
 	{
 		
+		protected static const STATE_NORMAL:String = "stateNormal";
+		protected static const STATE_HOVER:String = "stateHover";
+		protected static const STATE_PRESS:String = "statePress";
+		protected static const STATE_DISABLE:String = "stateDisable";
 		
-		public function get buttonEnabled():Boolean
-		{
-			return _buttonEnabled;
-		}
-		public function set buttonEnabled(value:Boolean):void
-		{
-			_buttonEnabled = value;
-			super.mouseEnabled = value;
-			
-			if (disable)
-			{
-				changeSymbol(value ? normal : disable);
-				alpha = 1.0;
-			}else{
-				alpha = value ? 1.0 : 0.5;
-			}
-		}
-		private var _buttonEnabled:Boolean = true;
-
 		
 		/**
 		 * 通常時シンボル。
@@ -68,116 +54,81 @@ package saz.external.progression4
 		public var disable:DisplayObject;
 		
 		
-//		protected var _state:String = "";
+		public function get buttonEnabled():Boolean
+		{
+			return _buttonEnabled;
+		}
+		public function set buttonEnabled(value:Boolean):void
+		{
+			_buttonEnabled = value;
+			super.mouseEnabled = super.mouseChildren = value;
+			
+			if (disable)
+			{
+				_symbolController.setState(value ? STATE_NORMAL : STATE_DISABLE);
+				alpha = 1.0;
+			}else{
+				alpha = value ? 1.0 : 0.5;
+			}
+		}
+		private var _buttonEnabled:Boolean = true;
+
 		
-		protected var _symbol:DisplayObject;
-		protected var _sm:ButtonStateMachine;
+		private var _inited:Boolean = false;
+		private var _symbolController:SymbolButtonController;
 		
 		
 		public function CastSymbolButton(initObject:Object=null)
 		{
 			super(initObject);
 			
-			init();
+//			init();
+			addEventListener(CastEvent.CAST_ADDED, _added);
 		}
 		
+		
+		public function init():void
+		{
+			if (_inited) return;
+			_inited = true;
+			
+			buttonMode = true;
+			
+			_symbolController = new SymbolButtonController(this);
+			if (normal) _symbolController.registState(STATE_NORMAL, normal);
+			if (hover) _symbolController.registState(STATE_HOVER, hover);
+			if (press) _symbolController.registState(STATE_PRESS, press);
+			if (disable) _symbolController.registState(STATE_DISABLE, disable);
+			
+			_symbolController.attachEvent(this, CastMouseEvent.CAST_MOUSE_DOWN, STATE_PRESS);
+			_symbolController.attachEvent(this, CastMouseEvent.CAST_MOUSE_UP, STATE_HOVER);
+			_symbolController.attachEvent(this, CastMouseEvent.CAST_ROLL_OVER, STATE_HOVER);
+			_symbolController.attachEvent(this, CastMouseEvent.CAST_ROLL_OUT, STATE_NORMAL);
+			
+			_symbolController.setState(STATE_NORMAL);
+		}
 		
 		public function destroy():void
 		{
-			_sm.removeEventListener(WatchEvent.CHANGE, _sm_change);
+			removeEventListener(Event.ADDED_TO_STAGE, _added);
 			
-			removeEventListener(CastEvent.CAST_ADDED, _castAdded);
-			removeEventListener(CastMouseEvent.CAST_MOUSE_DOWN, _castMouseDown);
-			removeEventListener(CastMouseEvent.CAST_MOUSE_UP, _castMouseUp);
-			removeEventListener(CastMouseEvent.CAST_ROLL_OVER, _castRollOver);
-			removeEventListener(CastMouseEvent.CAST_ROLL_OUT, _castRollOut);
+			_symbolController.detachEvent(this, CastMouseEvent.CAST_MOUSE_DOWN, STATE_PRESS);
+			_symbolController.detachEvent(this, CastMouseEvent.CAST_MOUSE_UP, STATE_HOVER);
+			_symbolController.detachEvent(this, CastMouseEvent.CAST_ROLL_OVER, STATE_HOVER);
+			_symbolController.detachEvent(this, CastMouseEvent.CAST_ROLL_OUT, STATE_NORMAL);
 		}
 		
 		
-		protected function init():void
-		{
-			buttonMode = true;
-			
-			_sm = new ButtonStateMachine();
-			_sm.addEventListener(WatchEvent.CHANGE, _sm_change);
-			
-			addEventListener(CastEvent.CAST_ADDED, _castAdded);
-			addEventListener(CastMouseEvent.CAST_MOUSE_DOWN, _castMouseDown);
-			addEventListener(CastMouseEvent.CAST_MOUSE_UP, _castMouseUp);
-			addEventListener(CastMouseEvent.CAST_ROLL_OVER, _castRollOver);
-			addEventListener(CastMouseEvent.CAST_ROLL_OUT, _castRollOut);
-			
-			changeSymbol(normal);
-		}
-		
-		
-		
-		protected function changeSymbol(disp:DisplayObject):void
-		{
-			if (disp == null) return;
-			
-			var old:DisplayObject = _symbol;
-			_symbol = disp;
-			
-			if (old && old.parent == this) removeChild(old);
-			if (disp && disp.parent != this) addChild(disp);
-		}
-		
-		
-		protected function existSymbol(state:String):Boolean
-		{
-			return getSymbol(state) != null;
-		}
-		
-		
-		protected function getSymbol(state:String):DisplayObject
-		{
-			switch(state)
-			{
-				case ButtonStateMachine.STATE_NORMAL:
-					return normal;
-				case ButtonStateMachine.STATE_HOVER:
-					return hover;
-				case ButtonStateMachine.STATE_PRESS:
-					return press;
-			}
-			return null;
-		}
 		
 		//--------------------------------------
 		// listeners
 		//--------------------------------------
 		
-		protected function _sm_change(event:WatchEvent):void
-		{
-			changeSymbol(getSymbol(event.newValue));
-		}		
 		
 		
-		protected function _castAdded(event:CastEvent):void
+		protected function _added(event:Event):void
 		{
-			_sm.pressing = false;
-			_sm.hovering = false;
-		}
-		
-		protected function _castMouseDown(event:CastMouseEvent):void
-		{
-			_sm.pressing = true;
-		}
-		
-		protected function _castMouseUp(event:CastMouseEvent):void
-		{
-			_sm.pressing = false;
-		}
-		
-		protected function _castRollOver(event:CastMouseEvent):void
-		{
-			_sm.hovering = true;
-		}
-		
-		protected function _castRollOut(event:CastMouseEvent):void
-		{
-			_sm.hovering = false;
+			init();
 		}
 		
 		
