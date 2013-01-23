@@ -6,6 +6,11 @@ package saz.display
 	
 	import saz.util.ObjectUtil;
 	
+	/**
+	 * 状態に応じて、各状態用の表示オブジェクトを切り替えるボタン。
+	 * @author saz
+	 * 
+	 */
 	public class SymbolButton extends Sprite
 	{
 		
@@ -42,11 +47,11 @@ package saz.display
 		public function set buttonEnabled(value:Boolean):void
 		{
 			_buttonEnabled = value;
-			super.mouseEnabled = value;
+			super.mouseEnabled = super.mouseChildren = value;
 			
 			if (disable)
 			{
-				_symbolController.setState(STATE_DISABLE);
+				_symbolController.setState(value ? STATE_NORMAL : STATE_DISABLE);
 				alpha = 1.0;
 			}else{
 				alpha = value ? 1.0 : 0.5;
@@ -76,16 +81,16 @@ package saz.display
 			
 			buttonMode = true;
 			
-			addEventListener(MouseEvent.MOUSE_DOWN, _mouseDown);
-			addEventListener(MouseEvent.MOUSE_UP, _mouseUp);
-			addEventListener(MouseEvent.ROLL_OVER, _rollOver);
-			addEventListener(MouseEvent.ROLL_OUT, _rollOut);
-			
 			_symbolController = new SymbolButtonController(this);
 			if (normal) _symbolController.registState(STATE_NORMAL, normal);
 			if (hover) _symbolController.registState(STATE_HOVER, hover);
 			if (press) _symbolController.registState(STATE_PRESS, press);
 			if (disable) _symbolController.registState(STATE_DISABLE, disable);
+			
+			_symbolController.attachEvent(this, MouseEvent.MOUSE_DOWN, STATE_PRESS);
+			_symbolController.attachEvent(this, MouseEvent.MOUSE_UP, STATE_HOVER);
+			_symbolController.attachEvent(this, MouseEvent.ROLL_OVER, STATE_HOVER);
+			_symbolController.attachEvent(this, MouseEvent.ROLL_OUT, STATE_NORMAL);
 			
 			_symbolController.setState(STATE_NORMAL);
 		}
@@ -94,10 +99,10 @@ package saz.display
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, _added);
 			
-			removeEventListener(MouseEvent.MOUSE_DOWN, _mouseDown);
-			removeEventListener(MouseEvent.MOUSE_UP, _mouseUp);
-			removeEventListener(MouseEvent.ROLL_OVER, _rollOver);
-			removeEventListener(MouseEvent.ROLL_OUT, _rollOut);
+			_symbolController.detachEvent(this, MouseEvent.MOUSE_DOWN, STATE_PRESS);
+			_symbolController.detachEvent(this, MouseEvent.MOUSE_UP, STATE_HOVER);
+			_symbolController.detachEvent(this, MouseEvent.ROLL_OVER, STATE_HOVER);
+			_symbolController.detachEvent(this, MouseEvent.ROLL_OUT, STATE_NORMAL);
 		}
 		
 		
@@ -114,24 +119,5 @@ package saz.display
 		}
 		
 		
-		protected function _mouseDown(event:MouseEvent):void
-		{
-			_symbolController.setState(STATE_PRESS);
-		}
-		
-		protected function _mouseUp(event:MouseEvent):void
-		{
-			_symbolController.setState(STATE_HOVER);
-		}
-		
-		protected function _rollOver(event:MouseEvent):void
-		{
-			_symbolController.setState(STATE_HOVER);
-		}
-		
-		protected function _rollOut(event:MouseEvent):void
-		{
-			_symbolController.setState(STATE_NORMAL);
-		}
 	}
 }

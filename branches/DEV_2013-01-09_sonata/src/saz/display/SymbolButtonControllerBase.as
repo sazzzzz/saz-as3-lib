@@ -3,6 +3,7 @@ package saz.display
 	import flash.display.*;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
 	
 	import saz.display.ButtonStateMachine;
@@ -30,7 +31,7 @@ package saz.display
 		
 		/**
 		 * 状態が登録ずみかどうか。
-		 * @param state
+		 * @param state	状態。
 		 * @return 
 		 * 
 		 */
@@ -40,7 +41,7 @@ package saz.display
 		}
 		
 		/**
-		 * 状態を返す。
+		 * 現在の状態を返す。
 		 * @return 
 		 * 
 		 */
@@ -50,8 +51,8 @@ package saz.display
 		}
 		
 		/**
-		 * 状態を設定。
-		 * @param state
+		 * 現在の状態を変更する（状態を設定する）。
+		 * @param state	状態。
 		 * 
 		 */
 		public function setState(state:String):void
@@ -75,18 +76,86 @@ package saz.display
 		
 		/**
 		 * 状態を登録する。stateが登録済みの場合は、上書きされる。最初に登録されたものがデフォルトとして扱われる。
-		 * @param state
-		 * @param display
+		 * @param state	状態。
+		 * @param display	対応するDisplayObject。
+		 * @return stateが登録されてなければtrue、登録済みで上書きしたらfalse。
 		 * 
 		 */
-		public function registState(state:String, display:DisplayObject):void
+		public function registState(state:String, display:DisplayObject):Boolean
 		{
-			entries[state] = {
+			var ret:Boolean = !containState(state);
+			var entry:Object = {
 				state:state,
 				display:display
 			};
-			if (_default == null) _default = entries[state];
+			entries[state] = entry;
+			
+			// はじめてならデフォルトとして登録。
+			if (_default == null) _default = entry;
+			return ret;
 		}
+		
+		
+		
+		
+		
+		
+		/**
+		 * イベントと状態を結びつける。
+		 * @param dispatcher	イベント発生源オブジェクト。
+		 * @param eventType	イベントの種類。
+		 * @param state	状態。
+		 * 
+		 */
+		public function attachEvent(dispatcher:IEventDispatcher, eventType:String, state:String):void
+		{
+			if (containState(state) == false) return;
+			
+			var entry:Object = entries[state];
+			var self:SymbolButtonControllerBase = this;
+			var handler:Function = function(event:Event):void
+			{
+				self.setState(state);
+			};
+			dispatcher.addEventListener(eventType, handler);
+			entry[detectHandlerName(dispatcher, eventType)] = handler;
+		}
+		
+		/**
+		 * attachEventを解除。
+		 * @param dispatcher	イベント発生源オブジェクト。
+		 * @param eventType	イベントの種類。
+		 * @param state	状態。
+		 * 
+		 */
+		public function detachEvent(dispatcher:IEventDispatcher, eventType:String, state:String):void
+		{
+			var entry:Object = entries[state];
+			var hname:String = detectHandlerName(dispatcher, eventType);
+			if (entry == null || entry[hname] == null) return;
+			
+			dispatcher.removeEventListener(eventType, entry[hname]);
+			entry[hname] = null;
+		}
+		
+		
+		// イベントハンドラ名を決める…こんな実装で大丈夫か？
+		protected function detectHandlerName(dispatcher:IEventDispatcher, eventType:String):String
+		{
+			var dis:String = "";
+			if (dispatcher["name"] != null)
+			{
+				dis += dispatcher["name"];
+			} else if (dispatcher["toString"] is Function)
+			{
+				dis += dispatcher["toString"]();
+			} else {
+				dis += "object";
+			}
+			
+			return dis + "_" + eventType;
+		}
+		
 		
 		
 		//--------------------------------------
