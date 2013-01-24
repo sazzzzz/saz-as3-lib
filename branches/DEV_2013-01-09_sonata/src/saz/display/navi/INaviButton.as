@@ -13,6 +13,7 @@ package saz.display.navi
 	{
 		function get pathId():PathId;
 		function set pathId(value:PathId):void;
+		function get selected():Boolean;
 		
 		function select():void;
 		function unselect():void;
