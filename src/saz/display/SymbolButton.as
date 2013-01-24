@@ -54,9 +54,9 @@ package saz.display
 		private var _buttonEnabled:Boolean = true;
 		
 		
-		private var _inited:Boolean = false;
-		private var _symbolController:SymbolButtonController;
+		protected var symbolController:SymbolButtonController;
 		
+		private var _inited:Boolean = false;
 		
 		
 		
@@ -93,20 +93,20 @@ package saz.display
 		{
 			buttonMode = true;
 			
-			_symbolController = new SymbolButtonController(this);
-			if (normal) _symbolController.registState(STATE_NORMAL, normal);
-			if (hover) _symbolController.registState(STATE_HOVER, hover);
-			if (press) _symbolController.registState(STATE_PRESS, press);
-			if (disable) _symbolController.registState(STATE_DISABLE, disable);
+			symbolController = new SymbolButtonController(this);
+			if (normal) symbolController.registState(STATE_NORMAL, normal);
+			if (hover) symbolController.registState(STATE_HOVER, hover);
+			if (press) symbolController.registState(STATE_PRESS, press);
+			if (disable) symbolController.registState(STATE_DISABLE, disable);
 			
-			_symbolController.attachEvent(this, MouseEvent.MOUSE_DOWN, STATE_PRESS);
-			_symbolController.attachEvent(this, MouseEvent.MOUSE_UP, STATE_HOVER);
-			_symbolController.attachEvent(this, MouseEvent.ROLL_OVER, STATE_HOVER);
-			_symbolController.attachEvent(this, MouseEvent.ROLL_OUT, STATE_NORMAL);
+			symbolController.attachEvent(this, MouseEvent.MOUSE_DOWN, STATE_PRESS);
+			symbolController.attachEvent(this, MouseEvent.MOUSE_UP, STATE_HOVER);
+			symbolController.attachEvent(this, MouseEvent.ROLL_OVER, STATE_HOVER);
+			symbolController.attachEvent(this, MouseEvent.ROLL_OUT, STATE_NORMAL);
 			
 			initHook();
 			
-			_symbolController.setState(STATE_NORMAL);
+			symbolController.setState(STATE_NORMAL);
 		}
 		
 		
@@ -114,10 +114,10 @@ package saz.display
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, _added);
 			
-			_symbolController.detachEvent(this, MouseEvent.MOUSE_DOWN, STATE_PRESS);
-			_symbolController.detachEvent(this, MouseEvent.MOUSE_UP, STATE_HOVER);
-			_symbolController.detachEvent(this, MouseEvent.ROLL_OVER, STATE_HOVER);
-			_symbolController.detachEvent(this, MouseEvent.ROLL_OUT, STATE_NORMAL);
+			symbolController.detachEvent(this, MouseEvent.MOUSE_DOWN, STATE_PRESS);
+			symbolController.detachEvent(this, MouseEvent.MOUSE_UP, STATE_HOVER);
+			symbolController.detachEvent(this, MouseEvent.ROLL_OVER, STATE_HOVER);
+			symbolController.detachEvent(this, MouseEvent.ROLL_OUT, STATE_NORMAL);
 			
 			finHook();
 		}
@@ -147,7 +147,7 @@ package saz.display
 		{
 			if (disable)
 			{
-				_symbolController.setState(value ? STATE_NORMAL : STATE_DISABLE);
+				symbolController.setState(value ? STATE_NORMAL : STATE_DISABLE);
 				alpha = 1.0;
 			}else{
 				alpha = value ? 1.0 : 0.5;

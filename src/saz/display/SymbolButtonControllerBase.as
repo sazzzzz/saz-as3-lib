@@ -18,6 +18,10 @@ package saz.display
 	public class SymbolButtonControllerBase extends EventDispatcher
 	{
 		
+		/**
+		 * setStateが有効かどうか。
+		 */
+		public var setEnabled:Boolean = true;
 		
 		protected var _state:String = "";
 		protected var _default:Object;
@@ -57,7 +61,7 @@ package saz.display
 		 */
 		public function setState(state:String):void
 		{
-			if (_state == state) return;
+			if (setEnabled == false || _state == state) return;
 			
 			var oe:Object = entries[_state];
 			var ns:String = state;
