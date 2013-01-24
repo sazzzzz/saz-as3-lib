@@ -24,27 +24,28 @@ package saz.display.navi
 		
 		/**
 		 * 指定されたbuttonに、NaviEventを発行するようにセット。
-		 * @param button
-		 * @param path
+		 * @param button	INaviButton。
+		 * @param path	（オプション）PathId。デフォルトではbutton.pathIdを使用。
 		 * 
 		 */
 		public static function initButton(button:INaviButton, path:PathId = null):void
 		{
+			
 			if (buttons[button] != null) return;
 			if (path == null && button.pathId == null) return;
 			
-			path ||= button.pathId;
+			var pi:PathId = path || button.pathId;
 			var click:Function = function(e:MouseEvent):void
 			{
-				button.dispatchEvent(new NaviEvent(NaviEvent.NAVI_CLICK, path));
+				button.dispatchEvent(new NaviEvent(NaviEvent.NAVI_CLICK, pi));
 			};
 			var rollOver:Function = function(e:MouseEvent):void
 			{
-				button.dispatchEvent(new NaviEvent(NaviEvent.NAVI_ROLL_OVER, path));
+				button.dispatchEvent(new NaviEvent(NaviEvent.NAVI_ROLL_OVER, pi));
 			};
 			var rollOut:Function = function(e:MouseEvent):void
 			{
-				button.dispatchEvent(new NaviEvent(NaviEvent.NAVI_ROLL_OUT, path));
+				button.dispatchEvent(new NaviEvent(NaviEvent.NAVI_ROLL_OUT, pi));
 			};
 			
 			button.addEventListener(MouseEvent.CLICK, click);
