@@ -15,9 +15,7 @@ package saz.external.progression4
 	import jp.progression.events.*;
 	import jp.progression.scenes.*;
 	
-	import saz.display.ButtonStateMachine;
 	import saz.display.SymbolButtonController;
-	import saz.events.WatchEvent;
 	
 
 	/**
@@ -54,6 +52,7 @@ package saz.external.progression4
 		public var disable:DisplayObject;
 		
 		
+		
 		public function get buttonEnabled():Boolean
 		{
 			return _buttonEnabled;
@@ -63,13 +62,7 @@ package saz.external.progression4
 			_buttonEnabled = value;
 			super.mouseEnabled = super.mouseChildren = value;
 			
-			if (disable)
-			{
-				_symbolController.setState(value ? STATE_NORMAL : STATE_DISABLE);
-				alpha = 1.0;
-			}else{
-				alpha = value ? 1.0 : 0.5;
-			}
+			buttonEnabledHook(value);
 		}
 		private var _buttonEnabled:Boolean = true;
 
@@ -86,12 +79,26 @@ package saz.external.progression4
 			addEventListener(CastEvent.CAST_ADDED, _added);
 		}
 		
-		
 		public function init():void
 		{
 			if (_inited) return;
 			_inited = true;
 			
+			_init();
+		}
+		public function destroy():void
+		{
+			if (!_inited) return;
+			
+			_fin();
+		}
+		
+		
+		
+		
+		
+		protected function _init():void
+		{
 			buttonMode = true;
 			
 			_symbolController = new SymbolButtonController(this);
@@ -105,10 +112,12 @@ package saz.external.progression4
 			_symbolController.attachEvent(this, CastMouseEvent.CAST_ROLL_OVER, STATE_HOVER);
 			_symbolController.attachEvent(this, CastMouseEvent.CAST_ROLL_OUT, STATE_NORMAL);
 			
+			initHook();
+			
 			_symbolController.setState(STATE_NORMAL);
 		}
 		
-		public function destroy():void
+		protected function _fin():void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, _added);
 			
@@ -116,6 +125,8 @@ package saz.external.progression4
 			_symbolController.detachEvent(this, CastMouseEvent.CAST_MOUSE_UP, STATE_HOVER);
 			_symbolController.detachEvent(this, CastMouseEvent.CAST_ROLL_OVER, STATE_HOVER);
 			_symbolController.detachEvent(this, CastMouseEvent.CAST_ROLL_OUT, STATE_NORMAL);
+			
+			finHook();
 		}
 		
 		
@@ -132,6 +143,23 @@ package saz.external.progression4
 		}
 		
 		
+		//--------------------------------------
+		// subclass
+		//--------------------------------------
+		
+		protected function initHook():void {}
+		protected function finHook():void {}		
+		
+		protected function buttonEnabledHook(value:Boolean):void
+		{
+			if (disable)
+			{
+				_symbolController.setState(value ? STATE_NORMAL : STATE_DISABLE);
+				alpha = 1.0;
+			}else{
+				alpha = value ? 1.0 : 0.5;
+			}
+		}
 		
 	}
 }
