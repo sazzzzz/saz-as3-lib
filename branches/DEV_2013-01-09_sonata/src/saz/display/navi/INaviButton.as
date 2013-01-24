@@ -11,10 +11,10 @@ package saz.display.navi
 	 */
 	public interface INaviButton extends IEventDispatcher
 	{
-		function get pathId():PathId;
-//		function set pathId(value:PathId):void;
 		function get path():String;
 		function set path(value:String):void;
+		function get pathId():PathId;
+//		function set pathId(value:PathId):void;
 		function get selected():Boolean;
 		
 		function select():void;
