@@ -12,9 +12,10 @@ package saz.display.navi
 		function get pathId():PathId;
 		function set pathId(value:PathId):void;
 
-		function show():void;
-		function hide():void;
+		function show(callback:Function = null):void;
+		function hide(callback:Function = null):void;
 		function selectAt(index:int):void;
-		function selectByName(name:String):void;
+//		function selectByName(name:String):void;
+		function selectByPath(path:String):void;
 	}
 }
