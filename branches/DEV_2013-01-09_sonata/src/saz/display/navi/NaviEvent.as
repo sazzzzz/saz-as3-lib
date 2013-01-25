@@ -3,6 +3,7 @@ package saz.display.navi
 	import flash.events.Event;
 	
 	import saz.model.PathId;
+	import saz.util.ObjectUtil;
 	
 	/**
 	 * Navi用イベント。
@@ -29,6 +30,12 @@ package saz.display.navi
 			super(type, true, false);
 			
 			_pathId = path;
+		}
+		
+		
+		override public function toString():String
+		{
+			return ObjectUtil.formatToString(this, "NaviEvent", ["pathId"]);
 		}
 		
 	}

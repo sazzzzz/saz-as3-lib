@@ -16,8 +16,10 @@ package saz.display.navi
 
 		function show(callback:Function = null):void;
 		function hide(callback:Function = null):void;
+		
 		function selectAt(index:int):void;
 //		function selectByName(name:String):void;
 		function selectByPath(path:String):void;
+		function unselectAll():void;
 	}
 }
