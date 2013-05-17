@@ -139,6 +139,17 @@
 		
 		
 		/**
+		 * フルスクリーンかどうか。
+		 * @param stage
+		 * @return 
+		 * 
+		 */
+		public static function isFullScreen(stage:Stage):Boolean
+		{
+			return stage.displayState == StageDisplayState.FULL_SCREEN;
+		}
+		
+		/**
 		 * センタリングする. getBounds()を利用. 
 		 * @param target
 		 * @param centerX
