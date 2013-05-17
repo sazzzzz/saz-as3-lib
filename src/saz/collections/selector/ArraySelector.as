@@ -3,6 +3,7 @@ package saz.collections.selector {
 	/**
 	 * Selector基本クラス.
 	 * @author saz
+	 * @departed	ArraySelectroBaseに移行予定。
 	 */
 	public class ArraySelector {
 		

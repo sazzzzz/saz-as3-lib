@@ -12,12 +12,12 @@ package saz.external.progression4
 	import jp.progression.core.proto.Configuration;
 	import jp.progression.scenes.*;
 	
-	public class ProgressionChildDocument extends CastDocument
+	public class CastChildDocument extends CastDocument
 	{
 		
 		private var _started:Boolean = false;
 		
-		public function ProgressionChildDocument(managerId:String=null, rootClass:Class=null, config:Configuration=null, initObject:Object=null)
+		public function CastChildDocument(managerId:String=null, rootClass:Class=null, config:Configuration=null, initObject:Object=null)
 		{
 			super(managerId, rootClass, config, initObject);
 			

@@ -11,7 +11,7 @@
 	 * ループする時。
 	 * @eventType	saz.events.LoopEvent.LOOP
 	 */
-	[LoopEvent(name = "loop", type = "saz.events.LoopEvent")];
+	[Event(name = "loop", type = "saz.events.LoopEvent")];
 	
 	/**
 	 * isLoop=falseの場合、アニメーション完了時に。
