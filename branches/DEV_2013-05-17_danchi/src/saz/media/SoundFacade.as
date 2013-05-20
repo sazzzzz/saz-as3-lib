@@ -9,7 +9,7 @@ package saz.media
 	 * Sound関連クラスまとめFacade。よく使う機能を提供。
 	 * @author saz
 	 */
-	public class SoundFacade
+	public class SoundFacade implements ISoundFacade
 	{
 		
 		/**

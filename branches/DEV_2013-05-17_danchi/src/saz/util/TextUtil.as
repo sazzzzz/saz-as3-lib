@@ -1,8 +1,11 @@
 package saz.util {
+	import flash.display.DisplayObject;
 	import flash.display.LoaderInfo;
+	import flash.geom.Rectangle;
 	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+
 	/**
 	 * テキスト用ユーティリティークラス.
 	 * @author saz
@@ -15,6 +18,29 @@ package saz.util {
 		public static const TEXTFORMAT_PROPS:Array = ["align", "blockIndent", "bold", "bullet", "color", "font", "indent", "italic", "kerning", "leading", "leftMargin", "letterSpacing", "rightMargin", "size", "tabStops", "target", "underline", "url"];
 		
 		static private var $fonts:Object;
+		
+		
+		
+		/**
+		 * TextFieldの領域を定義する矩形を返します。TextField.getCharIndexAtPoint()を利用し、がんばって表示に近い値を返します。
+		 * @param textField
+		 * @param targetCoordinateSpace
+		 * @return 
+		 * 
+		 */
+		public static function getCharsBounds(textField:TextField, targetCoordinateSpace:DisplayObject):Rectangle
+		{
+			var res:Rectangle = textField.getCharBoundaries(0) || new Rectangle();
+			for (var i:int = 1; i < textField.length; i++) 
+			{
+				res = res.union(textField.getCharBoundaries(i));
+			}
+			
+			var b:Rectangle = textField.getBounds(targetCoordinateSpace);
+			res.offset(b.x, b.y);
+			
+			return res;
+		}
 		
 		
 		/**
