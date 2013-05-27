@@ -139,6 +139,17 @@
 		
 		
 		/**
+		 * エラーにならないよう、parentチェックしてからremoveChild()。
+		 * @param parentDisp
+		 * @param childDisp
+		 * 
+		 */
+		public static function silentRemoveChild(parentDisp:DisplayObjectContainer, childDisp:DisplayObject):void
+		{
+			if (childDisp.parent == parentDisp) parentDisp.removeChild(childDisp);
+		}
+		
+		/**
 		 * フルスクリーンかどうか。
 		 * @param stage
 		 * @return 
