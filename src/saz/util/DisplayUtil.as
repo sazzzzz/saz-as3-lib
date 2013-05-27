@@ -142,11 +142,14 @@
 		 * エラーにならないよう、parentチェックしてからremoveChild()。
 		 * @param parentDisp
 		 * @param childDisp
+		 * @return parentDispが親ならtrue、親じゃなきゃfalseを返す。
 		 * 
 		 */
-		public static function silentRemoveChild(parentDisp:DisplayObjectContainer, childDisp:DisplayObject):void
+		public static function silentRemoveChild(parentDisp:DisplayObjectContainer, childDisp:DisplayObject):Boolean
 		{
-			if (childDisp.parent == parentDisp) parentDisp.removeChild(childDisp);
+			var p:Boolean = childDisp.parent == parentDisp;
+			if (p) parentDisp.removeChild(childDisp);
+			return p;
 		}
 		
 		/**
