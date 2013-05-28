@@ -7,7 +7,6 @@ package saz.display
 
 	public class DocumentKicker
 	{
-		
 		private var _doc:DisplayObjectContainer;
 		private var _callback:Function;
 		
@@ -21,12 +20,14 @@ package saz.display
 		 * public function Document()
 		 * {
 		 * 	super();
-		 * 	var kicker:DocumentKicker = new DocumentKicker(this, atRead);
+		 * 	new DocumentKicker(this, atRead);
 		 */
-		public function DocumentKicker(target:DisplayObjectContainer, callback:Function)
+		public function DocumentKicker(target:DisplayObjectContainer, callback:Function, autoStart:Boolean=true)
 		{
 			_doc = target;
 			_callback = callback;
+			
+			if (autoStart) start();
 		}
 		
 		
