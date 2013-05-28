@@ -123,7 +123,7 @@ package saz.display
 		
 		private function _docIsAdded():Boolean
 		{
-			return _doc.parent != null;
+			return _doc.stage != null;
 		}
 		
 	}
