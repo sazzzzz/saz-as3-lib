@@ -59,12 +59,20 @@ package saz.util {
 		}
 		
 		
-		
 		/*public static function get url(flags:String = null):RegExp {
 			if (null == $url) $url = new RegExp("((https?|ftp)://[0-9a-zA-Z,;:~&=@_'%?+\-/$.!*()]+)", flags);
 			return $url;
 		}*/
 		
+		public static function getHiragana():RegExp
+		{
+			return /[ぁ-ん]/g;
+		}
+		
+		public static function getKatakana():RegExp
+		{
+			return /[ァ-ヶ]/g;
+		}
 	}
 
 }
