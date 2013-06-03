@@ -57,7 +57,7 @@ package saz.test {
 		 */
 		public static function log(value:*):void {
 			$isUpdate = true;
-			$msgs += value.toString() + "\r";
+			$msgs += value.toString() + "\n";
 		}
 		
 		static private function $loop(e:Event):void {
