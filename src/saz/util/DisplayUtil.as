@@ -139,6 +139,20 @@
 		
 		
 		/**
+		 * エラーにならないよう、parentチェックしてからremoveChild()。
+		 * @param parentDisp
+		 * @param childDisp
+		 * @return parentDispが親ならtrue、親じゃなきゃfalseを返す。
+		 * 
+		 */
+		public static function silentRemoveChild(parentDisp:DisplayObjectContainer, childDisp:DisplayObject):Boolean
+		{
+			var p:Boolean = childDisp.parent == parentDisp;
+			if (p) parentDisp.removeChild(childDisp);
+			return p;
+		}
+		
+		/**
 		 * フルスクリーンかどうか。
 		 * @param stage
 		 * @return 

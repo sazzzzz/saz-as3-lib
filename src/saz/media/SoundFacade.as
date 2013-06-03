@@ -1,6 +1,7 @@
 package saz.media
 {
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.media.*;
 	
 	import saz.display.StageReference;
@@ -9,7 +10,7 @@ package saz.media
 	 * Sound関連クラスまとめFacade。よく使う機能を提供。
 	 * @author saz
 	 */
-	public class SoundFacade
+	public class SoundFacade extends EventDispatcher implements ISoundFacade
 	{
 		
 		/**
@@ -118,6 +119,8 @@ package saz.media
 		 */
 		public function SoundFacade(targetSound:Sound)
 		{
+			super();
+			
 			sound = targetSound;
 		}
 		
