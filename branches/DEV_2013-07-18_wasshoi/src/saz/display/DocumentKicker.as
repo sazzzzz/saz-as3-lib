@@ -20,7 +20,7 @@ package saz.display
 		 * public function Document()
 		 * {
 		 * 	super();
-		 * 	new DocumentKicker(this, atRead);
+		 * 	new DocumentKicker(this, atReady);
 		 */
 		public function DocumentKicker(target:DisplayObjectContainer, callback:Function, autoStart:Boolean=true)
 		{
