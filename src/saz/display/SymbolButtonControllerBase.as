@@ -18,12 +18,18 @@ package saz.display
 	public class SymbolButtonControllerBase extends EventDispatcher
 	{
 		
+		/*protected function get locking():Boolean
+		{
+			return _lockingState != "";
+		}*/
+		
 		/**
 		 * setStateが有効かどうか。
 		 */
 		public var setEnabled:Boolean = true;
 		
 		protected var _state:String = "";
+//		protected var _lockingState:String = "";
 		protected var _default:Object;
 		protected var entries:Object = {};
 		
@@ -100,7 +106,16 @@ package saz.display
 		}
 		
 		
+		/*public function lock(state:String):void
+		{
+			if (setEnabled == false || _state == state) return;
+			
+		}
 		
+		public function unlock():void
+		{
+			
+		}*/
 		
 		
 		
