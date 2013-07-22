@@ -27,6 +27,17 @@ package saz.display
 		public static const BASE_STAGE:String = "stage";
 		public static const BASE_CONTENT:String = "content";
 		
+		
+		
+
+		public function get running():Boolean
+		{
+			return _running;
+		}
+		private var _running:Boolean = false;
+		
+		
+		
 		private var _stage:Stage;
 		
 		private var _stageRect:Rectangle;
@@ -56,13 +67,6 @@ package saz.display
 			_circumscribed = new ArrayCompositeHelper();
 		}
 		
-		protected function _stage_resize(event:Event):void
-		{
-			_updateStageRect();
-			_updateContentRect();
-			layout();
-		}
-		
 		private function _updateStageRect():void
 		{
 			_stageRect.x = 0;
@@ -73,10 +77,33 @@ package saz.display
 		
 		private function _updateContentRect():void
 		{
+			trace("ResizeHelper._updateContentRect()");
+			
 			centerRect(_contentRect, _stageRect);
 		}
 		
+		/**
+		 * まとめて更新。
+		 */
+		private function _update():void
+		{
+			_updateStageRect();
+			_updateContentRect();
+			layout();
+		}
 		
+		//--------------------------------------
+		// handler
+		//--------------------------------------
+		
+		protected function _stage_resize(event:Event):void
+		{
+			_update();
+		}
+		
+		//--------------------------------------
+		// public
+		//--------------------------------------
 		
 		
 		public function addPosition(disp:DisplayObject, base:String, align:String, diffx:Number=0, diffy:Number=0):void
@@ -131,11 +158,14 @@ package saz.display
 		
 		public function start():void
 		{
+			_update();
+			if (running) return;
 			_stage.addEventListener(Event.RESIZE, _stage_resize);
 		}
 		
 		public function stop():void
 		{
+			if (!running) return;
 			_stage.removeEventListener(Event.RESIZE, _stage_resize);
 		}
 		
