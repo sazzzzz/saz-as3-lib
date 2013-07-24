@@ -139,6 +139,18 @@
 		
 		
 		/**
+		 * DisplayObjectContainerが、マウスイベントを受け取るかどうかを設定。
+		 * @param container
+		 * @param value
+		 * 
+		 */
+		public static function setMouseEventEnabled(target:InteractiveObject, value:Boolean):void
+		{
+			target.mouseEnabled = value;
+			if (target is DisplayObjectContainer) DisplayObjectContainer(target).mouseChildren = value;
+		}
+		
+		/**
 		 * エラーにならないよう、parentチェックしてからremoveChild()。
 		 * @param parentDisp
 		 * @param childDisp

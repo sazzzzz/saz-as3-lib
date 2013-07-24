@@ -285,11 +285,39 @@ package saz.util {
 		
 		
 		
+		/**
+		 * 内接するための比率を返す。
+		 * @param targetW
+		 * @param targetH
+		 * @param frameW
+		 * @param frameH
+		 * @return 
+		 * 
+		 */
+		public static function inscribeScale(targetW:Number, targetH:Number, frameW:Number, frameH:Number):Number
+		{
+			return (targetW / targetH < frameW / frameH) ? frameH / targetH : frameW / targetW;
+		}
+		
+		/**
+		 * 外接するための比率を返す。
+		 * @param targetW
+		 * @param targetH
+		 * @param frameW
+		 * @param frameH
+		 * @return 
+		 * 
+		 */
+		public static function circumscribeScale(targetW:Number, targetH:Number, frameW:Number, frameH:Number):Number
+		{
+			return (targetW / targetH > frameW / frameH) ? frameH / targetH : frameW / targetW;
+		}
 		
 		
 		
-		public static var innterFit:Function = inscribe;
-		public static var outerFit:Function = circumscribe;
+		
+		public static var innterFit:Function = inscribeRect;
+		public static var inscribe = inscribeRect;
 		
 		/**
 		 * targetの縦横比で、frameに内接するRectangleを返す。
@@ -297,19 +325,25 @@ package saz.util {
 		 * @param	frame	枠Rectangle。
 		 * @return
 		 */
-		public static function inscribe(target:Rectangle, frame:Rectangle):Rectangle {
-			var scale:Number = (target.width / target.height < frame.width / frame.height)? frame.height / target.height : frame.width / target.width;
+		public static function inscribeRect(target:Rectangle, frame:Rectangle):Rectangle {
+//			var scale:Number = (target.width / target.height < frame.width / frame.height)? frame.height / target.height : frame.width / target.width;
+			var scale:Number = inscribeScale(target.width, target.height, frame.width, frame.height);
 			return fit(target, frame, scale);
 		}
 		
+		
+		
+		public static var outerFit:Function = circumscribeRect;
+		public static var circumscribe = circumscribeRect;
 		/**
 		 * targetの縦横比で、frameに外接するRectangleを返す。
 		 * @param	target	対象Rectangle。
 		 * @param	frame	枠Rectangle。
 		 * @return
 		 */
-		public static function circumscribe(target:Rectangle, frame:Rectangle):Rectangle {
-			var scale:Number = (target.width / target.height > frame.width / frame.height)? frame.height / target.height : frame.width / target.width;
+		public static function circumscribeRect(target:Rectangle, frame:Rectangle):Rectangle {
+//			var scale:Number = (target.width / target.height > frame.width / frame.height)? frame.height / target.height : frame.width / target.width;
+			var scale:Number = circumscribeScale(target.width, target.height, frame.width, frame.height);
 			return fit(target, frame, scale);
 		}
 		

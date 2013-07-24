@@ -39,7 +39,7 @@ package saz.widget
 		private var _max:Number = 100;
 		
 		
-		public var snapInterval:Number = 1;
+		public var snapInterval:Number = 0.1;
 		
 		/**
 		 * 未実装。
@@ -77,6 +77,7 @@ package saz.widget
 		{
 			if (val < _min) return _min;
 			if (_max < val) return _max;
+			if (snapInterval == 0) return val;
 			return Math.round(val / snapInterval) * snapInterval;
 		}
 		
