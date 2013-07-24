@@ -317,7 +317,7 @@ package saz.util {
 		
 		
 		public static var innterFit:Function = inscribeRect;
-		public static var inscribe = inscribeRect;
+		public static var inscribe:Function = inscribeRect;
 		
 		/**
 		 * targetの縦横比で、frameに内接するRectangleを返す。
@@ -334,7 +334,7 @@ package saz.util {
 		
 		
 		public static var outerFit:Function = circumscribeRect;
-		public static var circumscribe = circumscribeRect;
+		public static var circumscribe:Function = circumscribeRect;
 		/**
 		 * targetの縦横比で、frameに外接するRectangleを返す。
 		 * @param	target	対象Rectangle。
