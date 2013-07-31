@@ -2,6 +2,7 @@
 	import flash.display.*;
 	import flash.geom.*;
 	
+	
 	/**
 	 * ...
 	 * @author saz
@@ -137,6 +138,42 @@
 		// main
 		//--------------------------------------
 		
+		
+		/**
+		 * ボタンSpriteの当たり判定用に別のSpriteを設定。
+		 * @param button
+		 * @param hit
+		 * 
+		 */
+		public static function setHitArea(button:Sprite, hit:Sprite):void
+		{
+			button.hitArea = hit;
+			hit.mouseEnabled = false;
+		}
+		
+		/**
+		 * 再帰的に全ての子をstop
+		 * @param target
+		 * 
+		 */
+		public static function stopAll(target:DisplayObjectContainer):void
+		{
+			var dsp:DisplayObject;
+			for (var i:int = 0, n:int = target.numChildren; i < n; i++) 
+			{
+				dsp = target.getChildAt(i);
+				trace(dsp);
+				
+				if (dsp is DisplayObjectContainer)
+				{
+					// 子を持つ
+					if (dsp is MovieClip) MovieClip(dsp).stop();
+					stopAll(dsp as DisplayObjectContainer);
+				}else{
+					// 子はない
+				}
+			}
+		}
 		
 		/**
 		 * DisplayObjectContainerが、マウスイベントを受け取るかどうかを設定。
