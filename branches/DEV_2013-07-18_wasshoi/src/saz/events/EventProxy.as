@@ -27,9 +27,9 @@ package saz.events
 			if (_target == value) return;
 			
 			// 旧ターゲットのリスナを削除
-			if (_target != null) removeEventListenersAll(_target);
+			if (_target != null) removeAllEventListeners(_target);
 			// リスナ登録
-			if (value != null) addEventListenersAll(value);
+			if (value != null) addAllEventListeners(value);
 			
 			
 			_target = value;
@@ -101,26 +101,35 @@ package saz.events
 			if (target != null) target.addEventListener(eventType, target_handler);
 		}
 		
-		/*public function listenEvents(eventTypes:Array):void
+		public function listenEvents(eventTypes:Array):void
 		{
-			
-		}*/
+			eventTypes.forEach(function(item:String, index:int, arr:Array):void
+			{
+				listen(item);
+			});
+		}
 		
 		
-		/*public function unlisten(eventType:String):void
+		public function unlisten(eventType:String):void
 		{
+			if (target != null) target.removeEventListener(eventType, target_handler);
 			
+			removeEntry(eventType);
 		}
 		
 		public function unlistenEvents(eventTypes:Array):void
 		{
-			
+			eventTypes.forEach(function(item:String, index:int, arr:Array):void
+			{
+				unlisten(item);
+			});
 		}
 		
-		public function unlistenAll(dispatcher:EventDispatcher):void
+		public function unlistenAll():void
 		{
-			
-		}*/
+			removeAllEventListeners(target);
+			removeAllEntries();
+		}
 		
 		
 		//--------------------------------------
@@ -129,9 +138,9 @@ package saz.events
 		
 		
 		
-		private function addEventListenersAll(dispatcher:EventDispatcher):void
+		private function addAllEventListeners(dispatcher:EventDispatcher):void
 		{
-			trace("EventProxy.addEventListenersAll(", dispatcher);
+			trace("EventProxy.addAllEventListeners(", dispatcher);
 			
 			entries.forEach(function(item:Object, index:int, arr:Array):void
 			{
@@ -140,9 +149,9 @@ package saz.events
 			});
 		}
 		
-		private function removeEventListenersAll(dispatcher:EventDispatcher):void
+		private function removeAllEventListeners(dispatcher:EventDispatcher):void
 		{
-			trace("EventProxy.removeEventListenersAll(", dispatcher);
+			trace("EventProxy.removeAllEventListeners(", dispatcher);
 			
 			entries.forEach(function(item:Object, index:int, arr:Array):void
 			{
@@ -159,7 +168,17 @@ package saz.events
 		
 		private function removeEntry(eventType:String):void
 		{
-			entries[eventType] = null;
+			var idx:int;
+			entries.forEach(function(item:Object, index:int, arr:Array):void
+			{
+				if (item.eventType == eventType) idx = index;
+			});
+			ArrayUtil.remove(entries, idx);
+		}
+		
+		private function removeAllEntries():void
+		{
+			entries.length = 0;
 		}
 		
 		
