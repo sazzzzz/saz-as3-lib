@@ -23,12 +23,14 @@ package saz.events
 		 * @return 
 		 * 
 		 */
-		public function get target():EventDispatcher
+		public function get target():IEventDispatcher
 		{
 			return _target;
 		}
-		public function set target(value:EventDispatcher):void
+		public function set target(value:IEventDispatcher):void
 		{
+			trace("♪", name, "EventProxy.target(", value);
+			
 			if (_target == value) return;
 			
 			// 旧ターゲットのリスナを削除
@@ -39,7 +41,7 @@ package saz.events
 			
 			_target = value;
 		}
-		private var _target:EventDispatcher;
+		private var _target:IEventDispatcher;
 		
 		
 
@@ -66,7 +68,7 @@ package saz.events
 		private var _eventCurrentTarget:Object;
 
 
-		
+		public var name:String = "";
 		
 		
 		private function get enum():Enumerable
@@ -80,6 +82,16 @@ package saz.events
 		private var entries:Array = [];
 		
 		
+		// FIXME:	デバッグ用
+		public function dump():void
+		{
+			var types:Array = [];
+			entries.forEach(function(item:Object, index:int, arr:Array):void
+			{
+				types.push(item.eventType);
+			});
+			trace(types);
+		}
 		
 		
 		/**
@@ -155,7 +167,7 @@ package saz.events
 		{
 			addEntry(eventType);
 			
-			if (target != null) target.addEventListener(eventType, target_handler);
+			if (target != null) target.addEventListener(eventType, target_handler, false, 0, false);
 		}
 		
 		/**
@@ -165,11 +177,10 @@ package saz.events
 		 */
 		public function listenEvents(eventTypes:Array):void
 		{
-			trace("EventProxy.listenEvents(", eventTypes);
+			trace("♪", name, "EventProxy.listenEvents(", eventTypes);
 			
 			eventTypes.forEach(function(item:String, index:int, arr:Array):void
 			{
-				trace(item);
 				listen(item);
 			});
 		}
@@ -182,6 +193,8 @@ package saz.events
 		 */
 		public function unlisten(eventType:String):void
 		{
+			trace("♪", name, "EventProxy.unlisten(", eventType);
+			
 			if (target != null) target.removeEventListener(eventType, target_handler);
 			
 			removeEntry(eventType);
@@ -194,6 +207,8 @@ package saz.events
 		 */
 		public function unlistenEvents(eventTypes:Array):void
 		{
+			trace("♪", name, "EventProxy.unlistenEvents(", eventTypes);
+			
 			eventTypes.forEach(function(item:String, index:int, arr:Array):void
 			{
 				unlisten(item);
@@ -206,6 +221,8 @@ package saz.events
 		 */
 		public function unlistenAll():void
 		{
+			trace("♪", name, "EventProxy.unlistenAll(");
+			
 			removeAllEventListeners(target);
 			removeAllEntries();
 		}
@@ -217,16 +234,20 @@ package saz.events
 		
 		
 		
-		private function addAllEventListeners(dispatcher:EventDispatcher):void
+		private function addAllEventListeners(dispatcher:IEventDispatcher):void
 		{
+			trace("♪", name, "EventProxy.addAllEventListeners(", dispatcher);
+			
 			entries.forEach(function(item:Object, index:int, arr:Array):void
 			{
-				dispatcher.addEventListener(item.eventType, target_handler);
+				dispatcher.addEventListener(item.eventType, target_handler, false, 0, false);
 			});
 		}
 		
-		private function removeAllEventListeners(dispatcher:EventDispatcher):void
+		private function removeAllEventListeners(dispatcher:IEventDispatcher):void
 		{
+			trace("♪", name, "EventProxy.removeAllEventListeners(", dispatcher);
+			
 			entries.forEach(function(item:Object, index:int, arr:Array):void
 			{
 				dispatcher.removeEventListener(item.eventType, target_handler);
@@ -255,6 +276,7 @@ package saz.events
 		}
 		
 		
+		
 		private function getEntryByType(eventType:String):Object
 		{
 			return enum.detect(function(item:Object, index:int):Boolean
@@ -277,10 +299,11 @@ package saz.events
 		
 		private function dispatch(event:Event):void
 		{
+			// やっぱりevent.targetとevent.currentTargetは、このインスタンスになるんで、保存しておく。
+			
 			_eventTarget = event.target;
 			_eventCurrentTarget = event.currentTarget;
 			
-			// やっぱりevent.targetとevent.currentTargetは、このインスタンスになる。
 			dispatchEvent(event);
 		}
 		
