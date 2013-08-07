@@ -165,8 +165,11 @@ package saz.events
 		 */
 		public function listenEvents(eventTypes:Array):void
 		{
+			trace("EventProxy.listenEvents(", eventTypes);
+			
 			eventTypes.forEach(function(item:String, index:int, arr:Array):void
 			{
+				trace(item);
 				listen(item);
 			});
 		}
@@ -216,22 +219,16 @@ package saz.events
 		
 		private function addAllEventListeners(dispatcher:EventDispatcher):void
 		{
-			trace("EventProxy.addAllEventListeners(", dispatcher);
-			
 			entries.forEach(function(item:Object, index:int, arr:Array):void
 			{
-				trace(item.eventType);
 				dispatcher.addEventListener(item.eventType, target_handler);
 			});
 		}
 		
 		private function removeAllEventListeners(dispatcher:EventDispatcher):void
 		{
-			trace("EventProxy.removeAllEventListeners(", dispatcher);
-			
 			entries.forEach(function(item:Object, index:int, arr:Array):void
 			{
-				trace(item.eventType);
 				dispatcher.removeEventListener(item.eventType, target_handler);
 			});
 		}
