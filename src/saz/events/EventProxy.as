@@ -77,11 +77,52 @@ package saz.events
 		
 		
 		
-		public function EventProxy(dispatcher:EventDispatcher=null)
+		/**
+		 * コンストラクタ。
+		 * 
+		 * @example The following code shows this function usage:
+		 * <listing version="3.0">
+		 * 
+		 * var bcp:BrightcovePlayer = new BrightcovePlayer();
+		 * var player:BrightcovePlayerWrapper = new BrightcovePlayerWrapper(bcp);
+		 * 
+		 * var content:ContentModule;
+		 * var experience:ExperienceModule;
+		 * 
+		 * player.addEventListener(ExperienceEvent.TEMPLATE_LOADED, function(event)
+		 * {
+		 * 	content = player.getModule(APIModules.CONTENT) as ContentModule;
+		 * 	experience = player.getModule(APIModules.EXPERIENCE) as ExperienceModule;
+		 * 	
+		 * 	// オリジナルのイベント発行元を後から指定できる。
+		 * 	expEventProxy.target = experience;
+		 * 	cntEventProxy.target = content;
+		 * });
+		 * 
+		 * 
+		 * var expEventProxy:EventProxy = new EventProxy();
+		 * expEventProxy.listen(ExperienceEvent.TEMPLATE_READY);
+		 * // 先にイベントリスナを受ける
+		 * expEventProxy.addEventListener(ExperienceEvent.TEMPLATE_READY, function(event)
+		 * {
+		 * 	// メディアDTOの取得。
+		 * 	content.getMediaAsynch(563297626002);
+		 * });
+		 * 
+		 * 
+		 * 	var cntEventProxy:EventProxy = new EventProxy();
+		 * cntEventProxy.listen(ContentEvent.MEDIA_LOAD);
+		 * cntEventProxy.addEventListener(ContentEvent.MEDIA_LOAD, function(event)
+		 * {
+		 *  // ビデオロード。
+		 * 	video.loadVideo(563297626002);
+		 * });
+		 * 
+		 * </listing>
+		 */
+		public function EventProxy()
 		{
 			super();
-			
-			if (dispatcher) target = dispatcher;
 		}
 		
 		
@@ -89,11 +130,22 @@ package saz.events
 		
 		
 		
+		/**
+		 * 指定したイベントタイプが登録済みかどうか。
+		 * @param eventType
+		 * @return 
+		 * 
+		 */
 		public function contains(eventType:String):Boolean
 		{
 			return getEntryByType(eventType) != null;
 		}
 		
+		/**
+		 * イベントタイプを登録。
+		 * @param eventType
+		 * 
+		 */
 		public function listen(eventType:String):void
 		{
 			addEntry(eventType);
@@ -101,6 +153,11 @@ package saz.events
 			if (target != null) target.addEventListener(eventType, target_handler);
 		}
 		
+		/**
+		 * イベントタイプをまとめて登録。
+		 * @param eventTypes
+		 * 
+		 */
 		public function listenEvents(eventTypes:Array):void
 		{
 			eventTypes.forEach(function(item:String, index:int, arr:Array):void
@@ -110,6 +167,11 @@ package saz.events
 		}
 		
 		
+		/**
+		 * イベントタイプを解放。
+		 * @param eventType
+		 * 
+		 */
 		public function unlisten(eventType:String):void
 		{
 			if (target != null) target.removeEventListener(eventType, target_handler);
@@ -117,6 +179,11 @@ package saz.events
 			removeEntry(eventType);
 		}
 		
+		/**
+		 * イベントタイプをまとめて解放。
+		 * @param eventTypes
+		 * 
+		 */
 		public function unlistenEvents(eventTypes:Array):void
 		{
 			eventTypes.forEach(function(item:String, index:int, arr:Array):void
@@ -125,6 +192,10 @@ package saz.events
 			});
 		}
 		
+		/**
+		 * すべてのイベントタイプを解放。
+		 * 
+		 */
 		public function unlistenAll():void
 		{
 			removeAllEventListeners(target);
