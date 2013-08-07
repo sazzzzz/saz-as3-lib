@@ -8,7 +8,7 @@ package saz.events
 	import saz.util.ArrayUtil;
 	
 	/**
-	 * イベントの発行を代理する。
+	 * 指定EventDisplatcherのイベントを、代理して発行する。
 	 * 対象オブジェクトが存在前にEventProxyインスタンスを生成しておいて、addEventListenerを受け付ける。対象オブジェクトを後から指定すると、イベントを中継してくれる。
 	 * @author saz
 	 * 
@@ -18,6 +18,11 @@ package saz.events
 		
 
 
+		/**
+		 * オリジナルのイベント発行元。
+		 * @return 
+		 * 
+		 */
 		public function get target():EventDispatcher
 		{
 			return _target;
