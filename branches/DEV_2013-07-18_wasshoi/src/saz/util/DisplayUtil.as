@@ -151,6 +151,22 @@
 			hit.mouseEnabled = false;
 		}
 		
+		
+		/**
+		 * すべての子をremoveChildする。
+		 * @param target
+		 * 
+		 */
+		public static function removeAllChildren(target:DisplayObjectContainer):void
+		{
+			var child:DisplayObject;
+			for (var i:int = target.numChildren - 1; i > 0; i--) 
+			{
+				child = target.getChildAt(i);
+				target.removeChild(child);
+			}
+		}
+		
 		/**
 		 * 再帰的に全ての子をstop
 		 * @param target
@@ -158,17 +174,17 @@
 		 */
 		public static function stopAll(target:DisplayObjectContainer):void
 		{
-			var dsp:DisplayObject;
+			var child:DisplayObject;
 			for (var i:int = 0, n:int = target.numChildren; i < n; i++) 
 			{
-				dsp = target.getChildAt(i);
-				trace(dsp);
+				child = target.getChildAt(i);
+				trace(child);
 				
-				if (dsp is DisplayObjectContainer)
+				if (child is DisplayObjectContainer)
 				{
 					// 子を持つ
-					if (dsp is MovieClip) MovieClip(dsp).stop();
-					stopAll(dsp as DisplayObjectContainer);
+					if (child is MovieClip) MovieClip(child).stop();
+					stopAll(child as DisplayObjectContainer);
 				}else{
 					// 子はない
 				}
