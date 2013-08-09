@@ -178,15 +178,12 @@
 			for (var i:int = 0, n:int = target.numChildren; i < n; i++) 
 			{
 				child = target.getChildAt(i);
-				trace(child);
 				
 				if (child is DisplayObjectContainer)
 				{
 					// 子を持つ
 					if (child is MovieClip) MovieClip(child).stop();
 					stopAll(child as DisplayObjectContainer);
-				}else{
-					// 子はない
 				}
 			}
 		}
