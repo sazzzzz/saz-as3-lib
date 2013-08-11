@@ -157,7 +157,7 @@
 		 * @param target
 		 * 
 		 */
-		public static function removeAllChildren(target:DisplayObjectContainer):void
+		public static function removeChildren(target:DisplayObjectContainer):void
 		{
 			var child:DisplayObject;
 			for (var i:int = target.numChildren - 1; i > 0; i--) 
