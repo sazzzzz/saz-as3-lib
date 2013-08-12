@@ -152,6 +152,33 @@
 		}
 		
 		
+		public static function removeAll(target:DisplayObjectContainer):void
+		{
+			if (target == null) return;
+			if (!(target is DisplayObjectContainer)) return;
+			
+			var children:Array = [];
+			var child:DisplayObject;
+			for (var i:int = target.numChildren - 1; i > 0; i--) 
+			{
+				child = target.getChildAt(i);
+				children.push(child);
+				
+				if (child is DisplayObjectContainer)
+				{
+					// 子を持つ
+					removeAll(child as DisplayObjectContainer);
+				}
+				
+				target.removeChild(child);
+			}
+			
+			children.forEach(function(item:DisplayObject, index:int, arr:Array):void
+			{
+				if (item.parent) item.parent.removeChild(item);
+			});
+		}
+		
 		/**
 		 * すべての子をremoveChildする。
 		 * @param target
@@ -160,6 +187,7 @@
 		public static function removeChildren(target:DisplayObjectContainer):void
 		{
 			var child:DisplayObject;
+			// 消すので、大きいインデックスから操作しないとエラーになるよ
 			for (var i:int = target.numChildren - 1; i > 0; i--) 
 			{
 				child = target.getChildAt(i);

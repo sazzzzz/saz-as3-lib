@@ -32,6 +32,7 @@ package saz.external.progression4
 		public function destroy():void
 		{
 			haltLastCommand(true);
+			lastCommand = null;
 		}
 		
 		
