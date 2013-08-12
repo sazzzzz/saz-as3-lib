@@ -7,7 +7,7 @@ package saz.collections
 	/**
 	 * Compositeパターンのコア。
 	 * @author saz
-	 * 
+	 * @departed	CompositeとTreeの混同。存在が中途半端。
 	 */
 	public class ArrayCompositeHelper
 	{
@@ -42,6 +42,11 @@ package saz.collections
 		{
 		}
 		
+		// FIXME:	GCのための暫定
+		public function removeAll():void
+		{
+			_entries.length = 0;
+		}
 		
 		
 		/**
@@ -64,7 +69,6 @@ package saz.collections
 			if (-1 < index) _entries.splice(indexOf(item), 1);
 			return index;
 		}
-		
 		
 		
 		public function getChildAt(index:int):Object

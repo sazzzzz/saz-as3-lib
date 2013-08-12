@@ -6,11 +6,12 @@ package saz.display
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import hsa.common.IDestroyable;
 	import hsa.main.Define;
 	
 	import saz.collections.ArrayCompositeHelper;
 
-	public class ResizeHelper
+	public class ResizeHelper implements IDestroyable
 	{
 		
 		
@@ -167,6 +168,15 @@ package saz.display
 		{
 			if (!running) return;
 			_stage.removeEventListener(Event.RESIZE, _stage_resize);
+		}
+		
+		
+		public function destroy():void
+		{
+			stop();
+			
+			_positions.removeAll();
+			_circumscribed.removeAll();
 		}
 		
 		
