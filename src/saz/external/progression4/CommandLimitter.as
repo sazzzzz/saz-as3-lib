@@ -25,8 +25,15 @@ package saz.external.progression4
 				,new Func(function():void
 				{
 					haltLastCommand(autoDispose);
+					
+					lastCommand = CommandList(this.parent);
 				})
 			);
+		}
+		
+		public function interruptLast(autoDispose:Boolean=true):void
+		{
+			haltLastCommand(autoDispose);
 		}
 		
 		public function destroy():void

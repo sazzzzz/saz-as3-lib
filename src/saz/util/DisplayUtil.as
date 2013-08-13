@@ -162,6 +162,8 @@
 			for (var i:int = target.numChildren - 1; i > 0; i--) 
 			{
 				child = target.getChildAt(i);
+				if (child == null) break;
+				
 				children.push(child);
 				
 				if (child is DisplayObjectContainer)
@@ -170,9 +172,10 @@
 					removeAll(child as DisplayObjectContainer);
 				}
 				
-				target.removeChild(child);
+				/*target.removeChild(child);*/
 			}
 			
+			// まとめてremoveChild
 			children.forEach(function(item:DisplayObject, index:int, arr:Array):void
 			{
 				if (item.parent) item.parent.removeChild(item);
