@@ -3,6 +3,8 @@ package saz.external.progression4
 	import jp.progression.commands.*;
 	import jp.progression.commands.lists.SerialList;
 	import jp.progression.executors.ExecutorObjectState;
+	
+	import saz.util.ObjectUtil;
 
 	/**
 	 * 同時に実行するコマンドを1つに制限する。
@@ -13,53 +15,85 @@ package saz.external.progression4
 	public class CommandLimitter
 	{
 		
-		protected var lastCommand:Command;
+		protected var lastExecutedCommand:CommandList;
+		protected var lastDefinedCommand:CommandList;
 		
 		public function CommandLimitter()
 		{
 		}
 		
+		
+		//--------------------------------------
+		// public
+		//--------------------------------------
+		
+		
+		/**
+		 * 新しいCommandListをつくる。
+		 * @param params
+		 * @param autoDispose	（実験的）コマンドを自動でdispose()する。
+		 * @return 
+		 * 
+		 */
 		public function createCommand(params:Object=null, autoDispose:Boolean=true):CommandList
 		{
-			return new SerialList(params
+			var opt:Object = {};
+			ObjectUtil.setProperties(opt, params);
+			
+			lastDefinedCommand = new SerialList(opt
 				,new Func(function():void
 				{
-					haltLastCommand(autoDispose);
+					interruptCommand(lastExecutedCommand);
+					if (autoDispose) disposeCommand(lastExecutedCommand);
 					
-					lastCommand = CommandList(this.parent);
+					lastExecutedCommand = CommandList(this.parent);
 				})
 			);
+			return lastDefinedCommand;
 		}
 		
-		public function interruptLast(autoDispose:Boolean=true):void
+		/**
+		 * 停止。
+		 * 
+		 */
+		public function interrupt():void
 		{
-			haltLastCommand(autoDispose);
+			interruptCommand(lastExecutedCommand);
 		}
 		
+		
+		/**
+		 * デストラクタ。
+		 * 
+		 */
 		public function destroy():void
 		{
-			haltLastCommand(true);
-			lastCommand = null;
+			interruptCommand(lastExecutedCommand);
+			disposeCommand(lastExecutedCommand);
+			lastExecutedCommand = null;
+			
+			interruptCommand(lastDefinedCommand);
+			disposeCommand(lastDefinedCommand);
+			lastDefinedCommand = null;
 		}
 		
 		
-		/*final protected function doInterruptExecuting(autoDispose:Boolean):Command
-		{
-			return new Func(function():void
-			{
-				haltLastCommand(autoDispose);
-			});
-		}*/
+		//--------------------------------------
+		// protected
+		//--------------------------------------
 		
-		protected function haltLastCommand(dispose:Boolean):void
+		
+		protected function interruptCommand(command:CommandList):void
 		{
-			if (lastCommand && lastCommand.state == ExecutorObjectState.EXECUTING)
+			if (command && command.state == ExecutorObjectState.EXECUTING)
 			{
-				// 停止
-				lastCommand.interrupt(true);
-				// 保持データを解放
-				if (dispose) lastCommand.dispose();
+				command.interrupt(false);
 			}
+		}
+		
+		protected function disposeCommand(command:CommandList):void
+		{
+			if (command) command.dispose();
 		}
 		
 	}
