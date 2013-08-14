@@ -12,13 +12,13 @@ package saz.external.progression4
 	 * @author saz
 	 * 
 	 */
-	public class CommandLimitter
+	public class CommandExcluder
 	{
 		
 		protected var lastExecutedCommand:CommandList;
 		protected var lastDefinedCommand:CommandList;
 		
-		public function CommandLimitter()
+		public function CommandExcluder()
 		{
 		}
 		
