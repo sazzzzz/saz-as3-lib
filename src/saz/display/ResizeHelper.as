@@ -6,12 +6,9 @@ package saz.display
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import hsa.common.IDestroyable;
-	import hsa.main.Define;
-	
 	import saz.collections.ArrayCompositeHelper;
 
-	public class ResizeHelper implements IDestroyable
+	public class ResizeHelper
 	{
 		
 		
@@ -48,19 +45,20 @@ package saz.display
 		private var _positions:ArrayCompositeHelper;
 		private var _circumscribed:ArrayCompositeHelper;
 		
-		public function ResizeHelper(stageRef:Stage)
+		public function ResizeHelper(stageRef:Stage, width:Number, height:Number)
 		{
 			_stage = stageRef;
-			_init();
+			_init(width, height);
 		}
 		
 		
-		private function _init():void
+		private function _init(width:Number, height:Number):void
 		{
 			_stageRect = new Rectangle();
 			_updateStageRect();
 			
-			_contentRect = new Rectangle(0, 0, Define.WIDTH, Define.HEIGHT);
+			/*_contentRect = new Rectangle(0, 0, Define.WIDTH, Define.HEIGHT);*/
+			_contentRect = new Rectangle(0, 0, width, height);
 			_baseRects[BASE_STAGE] = _stageRect;
 			_baseRects[BASE_CONTENT] = _contentRect;
 			
