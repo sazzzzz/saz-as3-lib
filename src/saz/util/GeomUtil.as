@@ -178,7 +178,7 @@ package saz.util {
 		 * @return 
 		 * 
 		 */
-		public function rectangleInflate(target:Rectangle, width:Number, height:Number):void
+		public static function rectangleInflate(target:Rectangle, width:Number, height:Number):void
 		{
 			target.inflate(
 				(width - target.width) / 2, (height - target.height) / 2
