@@ -136,7 +136,7 @@ package saz.util {
 			return new Rectangle(obj.x, obj.y, obj.width, obj.height);
 		}*/
 		
-		public static var objectToRectangle:Function = getRectangle;
+		/*public static var objectToRectangle:Function = getRectangle;*/
 		
 		/**
 		 * targetのx,y,width,heightをコピーしたRectangleを生成。
@@ -168,6 +168,27 @@ package saz.util {
 		
 		
 		
+		/**
+		 * Rectangleの中心のX座標。
+		 * @param rect
+		 * @return 
+		 * 
+		 */
+		public static function rectangleCenter(rect:Rectangle):Number
+		{
+			return rect.left + (rect.width / 2);
+		}
+		
+		/**
+		 * Rectangleの中心のY座標。
+		 * @param rect
+		 * @return 
+		 * 
+		 */
+		public static function rectangleMiddle(rect:Rectangle):Number
+		{
+			return rect.top + (rect.height / 2);
+		}
 		
 		
 		/**
