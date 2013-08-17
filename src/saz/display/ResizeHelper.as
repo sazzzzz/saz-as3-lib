@@ -76,8 +76,6 @@ package saz.display
 		
 		private function _updateContentRect():void
 		{
-			trace("ResizeHelper._updateContentRect()");
-			
 			centerRect(_contentRect, _stageRect);
 		}
 		

@@ -116,12 +116,12 @@ package saz.util {
 		 * @param	point
 		 * @return
 		 */
-		public static function normalizeVector(x:Number, y:Number):Point {
+		/*public static function normalizeVector(x:Number, y:Number):Point {
 			var len:Number = Math.sqrt((x * x) + (y * y));
 			return new Point(
 				x / len, y / len
 			);
-		}
+		}*/
 		
 		
 		
@@ -143,26 +143,49 @@ package saz.util {
 		 * @param	target
 		 * @return
 		 */
-		public static function getRectangle(target:Object):Rectangle {
+		/*public static function getRectangle(target:Object):Rectangle {
 			return new Rectangle(
 				target.x
 				,target.y
 				,target.width
 				,target.height
 			);
-		}
+		}*/
 		
 		/**
 		 * targetのx,y,width,heightをRectangleで指定。
 		 * @param	target
 		 * @param	rect
 		 */
-		public static function setRectangle(target:Object, rect:Rectangle):void {
+		/*public static function setRectangle(target:Object, rect:Rectangle):void {
 			target.x = rect.x;
 			target.y = rect.y;
 			target.width = rect.width;
 			target.height = rect.height;
+		}*/
+		
+		
+		
+		
+		
+		
+		
+		/**
+		 * 指定Rectangleを、中心点同じで指定サイズに変形する。
+		 * @param rect
+		 * @param width
+		 * @param height
+		 * @return 
+		 * 
+		 */
+		public function rectangleInflate(target:Rectangle, width:Number, height:Number):void
+		{
+			target.inflate(
+				(width - target.width) / 2, (height - target.height) / 2
+			);
 		}
+		
+		
 		
 		
 		
