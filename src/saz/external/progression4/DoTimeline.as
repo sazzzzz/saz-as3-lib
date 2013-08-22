@@ -131,7 +131,13 @@ package saz.external.progression4 {
 		
 		override public function toString():String
 		{
-			return ObjectUtil.formatToString(this, "DoTimeline", "target", "startLabel", "completeLabel", "state");
+			if (startLabel)
+			{
+				return ObjectUtil.formatToString(this, "DoTimeline", "target", "startLabel", "completeLabel", "state");
+			}else{
+				// dispose()後にエラーが出ることがあるので、それ対策
+				return ObjectUtil.formatToString(this, "DoTimeline");
+			}
 		}
 		
 		
