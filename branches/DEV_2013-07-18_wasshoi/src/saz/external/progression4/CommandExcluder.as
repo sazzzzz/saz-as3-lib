@@ -2,6 +2,7 @@ package saz.external.progression4
 {
 	import jp.progression.commands.*;
 	import jp.progression.commands.lists.SerialList;
+	import jp.progression.commands.tweens.DoTweener;
 	import jp.progression.executors.ExecutorObjectState;
 	
 	import saz.util.ObjectUtil;
@@ -37,6 +38,8 @@ package saz.external.progression4
 		 */
 		public function createCommand(params:Object=null, autoDispose:Boolean=true):CommandList
 		{
+			// あんまし関係ないみたい…
+			/*var opt:Object = {interruptType:CommandInterruptType.ABORT};*/
 			var opt:Object = {};
 			ObjectUtil.setProperties(opt, params);
 			
@@ -87,9 +90,28 @@ package saz.external.progression4
 		{
 			if (command && command.state == ExecutorObjectState.EXECUTING)
 			{
+				// 先にinterrupt()する
 				command.interrupt(false);
+				
+				// DoTweenerをremoveTweens()する ← これでエラーが抑制できた！
+				if (command is CommandList)
+				{
+					CommandUtil.removeAllDoTweener(command as CommandList);
+					/*CommandUtil.scanCommand(command as CommandList
+						,function(list:CommandList):void
+						{
+							trace("CommandList", list);
+						}
+						,function(cmd:Command):void
+						{
+							trace("Command", cmd);
+							if (cmd is DoTweener) CommandUtil.removeDoTweener(cmd as DoTweener);
+						}
+					);*/
+				}
 			}
 		}
+		
 		
 		protected function disposeCommand(command:CommandList):void
 		{
