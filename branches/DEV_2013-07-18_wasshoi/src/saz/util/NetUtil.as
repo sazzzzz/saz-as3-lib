@@ -30,7 +30,7 @@
 		{
 			var res:URLRequest = request || new URLRequest();
 			var vars:URLVariables = request.data as URLVariables || new URLVariables();
-			request.data = variablesAddParams(params, vars);
+			res.data = variablesAddParams(params, vars);
 			return res;
 		}
 		

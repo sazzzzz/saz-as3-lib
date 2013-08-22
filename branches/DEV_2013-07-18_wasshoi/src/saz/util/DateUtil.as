@@ -26,6 +26,10 @@ package saz.util {
 		 */
 		public static const TIME_DATE:int = TIME_HOUR * 24;
 		
+		
+		
+		
+		
 		/**
 		 * Dateループサンプル。
 		 * @example <listing version="3.0" >
@@ -40,6 +44,47 @@ package saz.util {
 		public function DateUtil() {
 		}
 		
+		
+		public static const YEAR:int = 0;
+		public static const MONTH:int = 1;
+		public static const DATE:int = 2;
+		public static const HOUR:int = 3;
+		public static const MINUTE:int = 4;
+		public static const SECOND:int = 5;
+		public static const MILLISECOND:int = 6;
+		
+		
+		
+		/**
+		 * キャッシュクリア用のDateを返す。
+		 * 
+		 * @param type	Dateプロパティのうちどこまで利用するか。ex.YEAR。
+		 * @param date	元になるDate。デフォルトはnew Date()つまり、現在時刻。
+		 * @return 
+		 * 
+		 */
+		public static function noCache(type:int=HOUR, date:Date=null):Date
+		{
+			var d:Date = date || new Date();
+			switch(type)
+			{
+				case YEAR:
+					throw new ArgumentError("type = YEARはサポートされません。");
+				case MONTH:
+					return new Date(d.fullYear, d.month);
+				case DATE:
+					return new Date(d.fullYear, d.month, d.date);
+				case HOUR:
+					return new Date(d.fullYear, d.month, d.date, d.hours);
+				case MINUTE:
+					return new Date(d.fullYear, d.month, d.date, d.hours, d.minutes);
+				case SECOND:
+					return new Date(d.fullYear, d.month, d.date, d.hours, d.minutes, d.seconds);
+				case MILLISECOND:
+				default:
+			}
+			return new Date(d.fullYear, d.month, d.date, d.hours, d.minutes, d.seconds, d.milliseconds);
+		}
 		
 		
 		/**
