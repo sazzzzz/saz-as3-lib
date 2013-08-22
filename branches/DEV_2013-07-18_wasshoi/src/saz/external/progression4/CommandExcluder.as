@@ -97,17 +97,6 @@ package saz.external.progression4
 				if (command is CommandList)
 				{
 					CommandUtil.removeAllDoTweener(command as CommandList);
-					/*CommandUtil.scanCommand(command as CommandList
-						,function(list:CommandList):void
-						{
-							trace("CommandList", list);
-						}
-						,function(cmd:Command):void
-						{
-							trace("Command", cmd);
-							if (cmd is DoTweener) CommandUtil.removeDoTweener(cmd as DoTweener);
-						}
-					);*/
 				}
 			}
 		}
