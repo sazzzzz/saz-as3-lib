@@ -34,10 +34,10 @@ package saz.external.progression4
 					// CommandList
 					scanCommand(cmd as CommandList, listIterator, commandIterator);
 					
-					if (listIterator) listIterator(cmd);
+					if (listIterator != null) listIterator(cmd);
 				}else{
 					// Command
-					if (commandIterator) commandIterator(cmd);
+					if (commandIterator != null) commandIterator(cmd);
 				}
 			}
 		}
