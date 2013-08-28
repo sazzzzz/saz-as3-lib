@@ -212,10 +212,10 @@ package saz.util {
 		 * @param	rectList	対象のRectangle配列。これを直接変更するので注意。
 		 */
 		public static function alignRectanglesToMiddle(rectList:/*Rectangle*/Array):void {
-			var baseRect:Rectangle = unionArray(rectList);
+			var baseRect:Rectangle = unionRectangles(rectList);
 			for (var i:int = 0, len:int = rectList.length, item:Rectangle; i < len; i++) {
 				item = rectList[i];
-				alignMiddle(item, baseRect);
+				alignRectangleToMiddle(item, baseRect);
 			}
 		}
 		
@@ -310,9 +310,9 @@ package saz.util {
 		 * @return 
 		 * 
 		 */
-		public static function circumscribeScaleWitcSafeArea(targetW:Number, targetH:Number, frameW:Number, frameH:Number, safe:Number):Number
+		public static function circumscribeScaleWithSafeArea(targetW:Number, targetH:Number, frameW:Number, frameH:Number, safe:Number):Number
 		{
-			var cscale:Number = circumscribeScaleWitcSafeArea(targetW, targetH, framwW, framwH);
+			var cscale:Number = circumscribeScale(targetW, targetH, frameW, frameH);
 			var wscale:Number = frameW / (targetW * safe);
 			var hscale:Number = frameH / (targetH * safe);
 			
@@ -359,7 +359,7 @@ package saz.util {
 		 * @return 
 		 */
 		public static function circumscribeRectWithSafeArea(target:Rectangle, frame:Rectangle, safe:Number):Rectangle {
-			return fit(target, frame, circumscribeScaleWitcSafeArea(target.width, target.height, frame.width, frame.height, safe));
+			return fit(target, frame, circumscribeScaleWithSafeArea(target.width, target.height, frame.width, frame.height, safe));
 		}
 		
 		
