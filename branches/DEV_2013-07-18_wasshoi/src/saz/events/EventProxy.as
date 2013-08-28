@@ -158,26 +158,35 @@ package saz.events
 		
 		/**
 		 * イベントタイプを登録。
+		 * 
 		 * @param eventType
+		 * @param useCapture
+		 * @param priority
+		 * @param useWeakReference
 		 * 
 		 */
-		public function listen(eventType:String):void
+		public function listen(eventType:String, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
 		{
 			addEntry(eventType);
 			
-			if (target != null) target.addEventListener(eventType, target_handler, false, 0, false);
+			// 
+			if (target != null) target.addEventListener(eventType, target_handler, useCapture, priority, useWeakReference);
 		}
 		
 		/**
 		 * イベントタイプをまとめて登録。
+		 * 
 		 * @param eventTypes
+		 * @param useCapture
+		 * @param priority
+		 * @param useWeakReference
 		 * 
 		 */
-		public function listenEvents(eventTypes:Array):void
+		public function listenEvents(eventTypes:Array, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
 		{
 			eventTypes.forEach(function(item:String, index:int, arr:Array):void
 			{
-				listen(item);
+				listen(item, useCapture, priority, useWeakReference);
 			});
 		}
 		
