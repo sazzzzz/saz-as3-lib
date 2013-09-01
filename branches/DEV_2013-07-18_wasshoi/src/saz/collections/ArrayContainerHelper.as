@@ -53,9 +53,10 @@ package saz.collections
 			return true;
 		}
 		
-		public function addItemAt(item:Object, index:int, name:String = ""):void
+		public function addItemAt(item:Object, index:int, name:String = ""):Boolean
 		{
 			throwError();
+			return false;
 		}
 		
 		/**
@@ -71,10 +72,27 @@ package saz.collections
 			return index;
 		}
 		
-		public function removeAt(index:int):void
+		/**
+		 * 
+		 * @param index
+		 * @return 指定された位置に以前あった要素。
+		 * 
+		 */
+		public function removeAt(index:int):Object
 		{
 			if (index < 0 || count - 1 < index) throw new ArgumentError("指定インデックスが範囲外です。");
-			_entries.splice(index, 1);
+			return _entries.splice(index, 1)[0];
+		}
+		
+		/**
+		 * 
+		 * @param name
+		 * @return 指定された位置に以前あった要素。
+		 * 
+		 */
+		public function removeByName(name:String):Object
+		{
+			return removeAt(indexOf(getItemByName(name)));
 		}
 		
 		public function removeAll():void
