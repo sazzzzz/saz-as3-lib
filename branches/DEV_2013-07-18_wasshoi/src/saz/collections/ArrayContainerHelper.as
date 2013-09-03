@@ -2,6 +2,7 @@ package saz.collections
 {
 	
 	import saz.collections.enumerator.*;
+	import saz.util.ArrayUtil;
 	import saz.util.ObjectUtil;
 	
 	public class ArrayContainerHelper
@@ -55,7 +56,7 @@ package saz.collections
 		
 		public function addItemAt(item:Object, index:int, name:String = ""):Boolean
 		{
-			throwError();
+			throwNotImplement();
 			return false;
 		}
 		
@@ -154,7 +155,20 @@ package saz.collections
 		}
 		
 		
-		
+		/**
+		 * Arrayに内容をコピーして返す。
+		 * @return 
+		 * 
+		 */
+		public function toArray():Array
+		{
+			var res:Array = [];
+			for (var i:int = 0; i < count; i++) 
+			{
+				res.push(getItemAt(i));
+			}
+			return res;
+		}
 		
 		
 		//--------------------------------------
@@ -203,7 +217,7 @@ package saz.collections
 			};
 		}
 		
-		private function throwError():void
+		private function throwNotImplement():void
 		{
 			throw new Error("未実装です。^^;");
 		}
