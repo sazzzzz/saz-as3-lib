@@ -55,6 +55,21 @@ package saz.external.progression4
 			return lastDefinedCommand;
 		}
 		
+		
+		
+		public function createAddCommand(params:Object=null, ...commands):CommandList
+		{
+			var cmd:CommandList = createCommand(params);
+			
+			commands.forEach(function(item:Object, index:int, arr:Array):void
+			{
+				cmd.addCommand(item);
+			});
+			
+			return cmd;
+		}
+		
+		
 		/**
 		 * 停止。
 		 * 
