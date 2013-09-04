@@ -102,8 +102,32 @@
 		
 		
 		/**
+		 * 配列同士の重複チェック。searchのそれぞれの要素と同じものが、targetに含まれるかを調べる。
+		 * @param target
+		 * @param search
+		 * @return {search:x, target:xx}。searchプロパティは、searchの中のどの要素を発見したかを表すインデックス。targetプロパティは、targetのどこで発見したかを表すインデックス。
+		 * 
+		 */
+		public static function findDuplicates(target:Array, search:Array):Object
+		{
+			var res:Object = {};
+			var fidx:int;
+			var item:Object;
+			for (var i:int = 0, n:int = search.length; i < n; i++) 
+			{
+				item = search[i];
+				fidx = target.indexOf(item);
+				if (fidx > -1){
+					return {search:i, target:fidx};
+				}
+			}
+			return null;
+		}
+		
+		
+		/**
 		 * 配列から指定されたものを探し、最初に見つかったインデックスを返す。
-		 * @param	targe
+		 * @param	target
 		 * @param	search
 		 * @return	インデックスを返す。見つからなかったら-1を返す。
 		 */
