@@ -36,11 +36,6 @@
 			// http://1art.jp/flash9/chapter/125/
 			var res:Array = [];
 			var item:Object;
-			// for in
-			/*for (var p:String in target) {
-				item = obj[p];
-				res.push(item);
-			}*/
 			
 			// for each		こっちが早い
 			for each(item in target){
@@ -229,7 +224,7 @@
 		 */
 		public static function isEnumerable(item:Object):Boolean
 		{
-			return typeof(item) == "object";
+			return item != null && typeof(item) == "object";
 		}
 		
 		
@@ -258,7 +253,7 @@
 		
 		
 		private static function _startToObjectString(target:Object, curIndent:String = "", indent:String = "  "):String {
-			if(!target) return "null";
+			if (target == null) return "null";
 			var res:String = "";
 			res += "{\n";
 			res += _toObjectString(target, curIndent + indent, indent);
@@ -347,7 +342,6 @@
 		 * </listing>
 		 */
 		public static function toString(target:*):String {
-			//return $dump(target,"");
 			return toObjectString(target);
 		}
 		
@@ -358,29 +352,8 @@
 		 * @deprecated	toObjectString()を使え. 
 		 */
 		public static function dump(target:*):String {
-			//return $dump(target,"");
 			return toObjectString(target);
 		}
-		/*
-		static private function $dump(target:*, indent:String):String {
-			var res:String = "";
-			var item:*;
-			res += indent + "{\n";
-			for (var name:String in target) {
-				item = target[name];
-				if (item is Boolean || item is int || item is Number || item is String || item is uint) {
-					res += indent + "  " + name + ": " + item +"\n";
-				}else {
-					//子を持つ
-					//res += indent + "  " + name + ":\n" + $dump(item, indent + "  ");
-					res += indent + "  " + name + ":\n";
-					res += $dump(item, indent + "  ");
-				}
-			}
-			res += indent + "}\n";
-			return res;
-		}
-		*/
 	}
 	
 }
