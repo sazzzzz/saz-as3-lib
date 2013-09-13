@@ -7,6 +7,30 @@
 	public class NetUtil
 	{
 		
+		/**
+		 * location.searchから、URLVariablesを生成。
+		 * @param search
+		 * @return 
+		 * 
+		 */
+		public static function searchToVariables(search:String):URLVariables
+		{
+			return new URLVariables(searchToQuery(search));
+		}
+		
+		/**
+		 * location.searchからクエリ部分だけ取り出して返す（"?"を削除）。
+		 * @param search
+		 * @return 
+		 * 
+		 */
+		public static function searchToQuery(search:String):String
+		{
+			var res:String = search;
+			if (res.substr(0, 1) == "?") res = res.substr(1);
+			return res;
+		}
+		
 		public static function urlAddParams(params:Object, url:String):String
 		{
 			var loc:Location = new Location(url);

@@ -167,6 +167,12 @@
 		//--------------------------------------
 		
 		
+		public static function clone(src:Array):Array{
+			/*var res:Array = [];
+			copy(src, res);
+			return res;*/
+			return src.concat();
+		}
 		
 		/**
 		 * src配列から、dst配列に要素をコピー.dstに上書きされる.

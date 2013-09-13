@@ -27,7 +27,8 @@ package saz.util {
 		public static const TIME_DATE:int = TIME_HOUR * 24;
 		
 		
-		
+		public static const DAY_TABLE_JP_SHORT:Array = ["日", "月", "火", "水", "木", "金", "土"];
+		public static const DAY_TABLE_EN_SHORT:Array = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 		
 		
 		/**
@@ -94,7 +95,8 @@ package saz.util {
 		 */
 		public static function clone(d:Date):Date {
 			//trace(d.getTime(), new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds()).getTime());
-			return new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
+			/*return new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());*/
+			return new Date(d.time);
 		}
 		
 		/**
