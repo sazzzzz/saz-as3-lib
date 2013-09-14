@@ -5,6 +5,7 @@ package saz.observ
 
 	/**
 	 * 指定したイベントの発生時に、ObjectWatcher.check()を実行する。
+	 * ENTER_FRAMEとかで定期的に実行するためのもの。
 	 * @author saz
 	 * 
 	 */
