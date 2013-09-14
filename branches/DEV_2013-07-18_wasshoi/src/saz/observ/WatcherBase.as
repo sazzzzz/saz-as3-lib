@@ -10,7 +10,7 @@ package saz.observ
 	 * @author saz
 	 * 
 	 */
-	public class WatcherBase extends EventDispatcher
+	public class WatcherBase extends EventDispatcher implements IObjectWatcher
 	{
 
 		/**
@@ -65,6 +65,7 @@ package saz.observ
 			
 			if (readySoon) ready();
 		}
+		
 		
 		/**
 		 * プロパティチェック前の準備を行う。
