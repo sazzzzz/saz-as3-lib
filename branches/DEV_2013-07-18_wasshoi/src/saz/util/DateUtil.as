@@ -87,6 +87,18 @@ package saz.util {
 			return new Date(d.fullYear, d.month, d.date, d.hours, d.minutes, d.seconds, d.milliseconds);
 		}
 		
+		/**
+		 * Dateから生成したキャッシュクリア用のStringを返す。なんでこっちをデフォルトにしなかったんだろう…
+		 * @param type
+		 * @param date
+		 * @return 
+		 * 
+		 */
+		public static function noCacheString(type:int=HOUR, date:Date=null):String
+		{
+			return noCache(type, date).time.toString();
+		}
+		
 		
 		/**
 		 * Dateインスタンスを複製する。
