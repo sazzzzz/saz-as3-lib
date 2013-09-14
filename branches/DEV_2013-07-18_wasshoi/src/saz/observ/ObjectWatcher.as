@@ -52,7 +52,8 @@ package saz.observ
 		 */
 		public function check():Boolean
 		{
-			return checkProps() || checkMethods();
+			var val:Boolean = checkProps();
+			return checkMethods() || val;
 		}
 		
 		
@@ -107,9 +108,12 @@ package saz.observ
 		 */
 		public function addMethods(names:Array, params:Array=null, paramFuncs:Array=null):void
 		{
+			var param:Array, func:Function;
 			names.forEach(function(item:String, index:int, arr:Array):void
 			{
-				addMethod(item, (params != null) ? params[index] : null, (paramFuncs != null) ? paramFuncs[index] : null);
+				param = (params != null) ? params[index] : null;
+				func = (paramFuncs != null) ? paramFuncs[index] : null;
+				addMethod(item, param, func);
 			});
 		}
 		
@@ -128,7 +132,7 @@ package saz.observ
 			
 			props.forEach(function(item:WatcherBase, index:int, arr:Array):void
 			{
-				res = res || item.check();
+				res = item.check() || res;
 			});
 			
 			return res;
@@ -140,7 +144,8 @@ package saz.observ
 			
 			methods.forEach(function(item:WatcherBase, index:int, arr:Array):void
 			{
-				res = res || item.check();
+				/*res = res || item.check();*/		// この書き方だと、res=trueのとき、item.check()が実行されない。
+				res = item.check() || res;
 			});
 			
 			return res;
