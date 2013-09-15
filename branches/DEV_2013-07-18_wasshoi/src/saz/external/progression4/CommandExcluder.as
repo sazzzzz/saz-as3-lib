@@ -16,6 +16,8 @@ package saz.external.progression4
 	public class CommandExcluder
 	{
 		
+		public var defaultParams:Object = {};
+		
 		protected var lastExecutedCommand:CommandList;
 		protected var lastDefinedCommand:CommandList;
 		
@@ -41,6 +43,7 @@ package saz.external.progression4
 			// あんまし関係ないみたい…
 			/*var opt:Object = {interruptType:CommandInterruptType.ABORT};*/
 			var opt:Object = {};
+			ObjectUtil.setProperties(opt, defaultParams);
 			ObjectUtil.setProperties(opt, params);
 			
 			lastDefinedCommand = new SerialList(opt
@@ -74,9 +77,10 @@ package saz.external.progression4
 		 * 停止。
 		 * 
 		 */
-		public function interrupt():void
+		public function interrupt(enforced:Boolean = false):void
 		{
-			interruptCommand(lastExecutedCommand);
+			interruptCommand(lastExecutedCommand, enforced);
+			interruptCommand(lastDefinedCommand, enforced);
 		}
 		
 		
@@ -101,12 +105,12 @@ package saz.external.progression4
 		//--------------------------------------
 		
 		
-		protected function interruptCommand(command:CommandList):void
+		protected function interruptCommand(command:CommandList, enforced:Boolean = false):void
 		{
 			if (command && command.state == ExecutorObjectState.EXECUTING)
 			{
 				// 先にinterrupt()する
-				command.interrupt(false);
+				command.interrupt(enforced);
 				
 				// DoTweenerをremoveTweens()する ← これでエラーが抑制できた！
 				if (command is CommandList)
