@@ -152,6 +152,25 @@
 		}
 		
 		
+		/**
+		 * DisplayObjectがaddChild()されていればremoveChild()する。
+		 * @param target	DisplayObject。
+		 * @return addChild()されていればtrue。
+		 * 
+		 */
+		public static function removeFromParent(target:DisplayObject):Boolean
+		{
+			if (target.parent == null) return false;
+			target.parent.removeChild(target);
+			return true;
+		}
+		
+		
+		/**
+		 * 再帰的にすべての子孫をremoveChild()する。
+		 * @param target
+		 * 
+		 */
 		public static function removeAll(target:DisplayObjectContainer):void
 		{
 			if (target == null) return;
@@ -183,7 +202,7 @@
 		}
 		
 		/**
-		 * すべての子をremoveChildする。
+		 * すべての子をremoveChild()する。
 		 * @param target
 		 * 
 		 */
