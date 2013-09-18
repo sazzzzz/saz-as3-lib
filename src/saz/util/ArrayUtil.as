@@ -313,15 +313,21 @@
 		
 		/**
 		 * 配列の要素をFisher-Yates法でシャッフルする。
-		 * @param	target
+		 * 
+		 * @param target	対象配列。
+		 * @param randomFnc	乱数生成関数を指定。デフォルトではMath.randomを使用。
+		 * 
 		 * @see	http://blog.livedoor.jp/dankogai/archives/50614134.html
 		 */
-		public static function shuffleFY(target:Array):void {
-			// Fisher-Yates法だそうです。
+		public static function shuffleFY(target:Array, randomFnc:Function=null):void {
+			
+			var rnd:Function = randomFnc || Math.random;
+			
 			var i:int = target.length;
 			var j:int, t:*;
 			while (i) {
-				j = Math.floor(Math.random() * i);
+				/*j = Math.floor(Math.random() * i);*/
+				j = Math.floor(rnd() * i);
 				t = target[--i];
 				target[i] = target[j];
 				target[j] = t;
@@ -339,10 +345,7 @@
 			// for			477
 			// forEach		2197
 			// join&split	4999
-			/*target.forEach(function(item:*, index:int, arr:Array):void {
-				target[index] = value;
-			});*/
-			for (var i:int = 0, n:int = target.length, item:*; i < n; i++) {
+			for (var i:int = 0, n:int = target.length; i < n; i++) {
 				target[i] = value;
 			}
 		}
