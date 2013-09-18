@@ -111,6 +111,62 @@ package saz.util {
 			return new Date(d.time);
 		}
 		
+		
+		/**
+		 * 曜日を文字列で。
+		 * @param date
+		 * @return 
+		 * 
+		 */
+		public static function formatDay(date:Date):String
+		{
+			return DAY_TABLE_JP_SHORT[date.day];
+		}
+		
+		/**
+		 * Dateの日にち部分を整形した文字列に。
+		 * 
+		 * @param d
+		 * @param zeroPadding
+		 * @param enableDay
+		 * @param dateSeparator
+		 * @return 
+		 * 
+		 */
+		public static function formatDate(d:Date, enableDay:Boolean=false, zeroPadding:Boolean=true, dateSeparator:String="/"):String
+		{
+			var arr:Array = zeroPadding ? [StringUtil.zeroPadding(d.fullYear, 4), StringUtil.zeroPadding(d.month+1, 2), StringUtil.zeroPadding(d.date, 2)] : [d.fullYear, d.month+1, d.date];
+			return arr.join(dateSeparator) + (enableDay ? " " + formatDay(d) : "");
+		}
+		
+		/**
+		 * 
+		 * @param d
+		 * @param timeSeparator
+		 * @return 
+		 * 
+		 */
+		/**
+		 * 
+		 * @param d
+		 * @param enableMillisecond
+		 * @param zeroPadding
+		 * @param timeSeparator
+		 * @return 
+		 * 
+		 */
+		public static function formatTime(d:Date, enableMillisecond:Boolean=false, zeroPadding:Boolean=true, timeSeparator:String=":"):String
+		{
+			var arr:Array = zeroPadding ? [StringUtil.zeroPadding(d.hours, 2), StringUtil.zeroPadding(d.minutes, 2), StringUtil.zeroPadding(d.seconds, 2)] : [d.hours, d.minutes, d.seconds];
+			return arr.join(timeSeparator) + (enableMillisecond ? "." + d.milliseconds : "");
+		}
+		
+		/*public static function format(d:Date, dateSeparator:String="/", timeSeparator:String=":"):String
+		{
+			return formatDate(d);
+		}*/
+		
+		
 		/**
 		 * ミリ秒を日時分秒に変換。
 		 * @param	time	ミリ秒。
