@@ -47,6 +47,10 @@ package saz.collections.array
 		public function LotteryBox(sourceArray:Array)
 		{
 			source = sourceArray;
+			
+			atInit();
+			
+			readyWork();
 		}
 		
 		/**
@@ -68,8 +72,10 @@ package saz.collections.array
 		 */
 		public function shuffle():void
 		{
-			shuffleWork();
+			readyWork();
 		}
+		
+		
 		
 		public function toString():String
 		{
@@ -97,8 +103,17 @@ package saz.collections.array
 		 */
 		private function readyWork():void
 		{
+			resetWork();
+			shuffleWork();
+		}
+		
+		/**
+		 * ワーク配列をリセット。
+		 * 
+		 */
+		private function resetWork():void
+		{
 			work = ArrayUtil.clone(source);
-			shuffle();
 		}
 		
 		/**
@@ -127,15 +142,22 @@ package saz.collections.array
 		
 		
 		/**
-		 * 要素が同じかどうかを判定する関数。
-		 * @param oldItem
-		 * @param newItem
+		 * 初期化フック。コンストラクタから呼ばれる。
+		 * 
+		 */
+		protected function atInit():void
+		{
+		}
+		
+		
+		/**
+		 * atShuffleで使用する乱数生成関数。
 		 * @return 
 		 * 
 		 */
-		protected function atEqual(oldItem:Object, newItem:Object):Boolean
+		protected function atRandom():Number
 		{
-			return oldItem == newItem;
+			return Math.random();
 		}
 		
 		/**
@@ -147,14 +169,17 @@ package saz.collections.array
 			ArrayUtil.shuffleFY(work, atRandom);
 		}
 		
+		
 		/**
-		 * atShuffleで使用する乱数生成関数。
+		 * neverRepeat=trueの時に使われる、要素が同じかどうかを判定する関数。
+		 * @param oldItem
+		 * @param newItem
 		 * @return 
 		 * 
 		 */
-		protected function atRandom():Number
+		protected function atEqual(oldItem:Object, newItem:Object):Boolean
 		{
-			return Math.random();
+			return oldItem == newItem;
 		}
 		
 	}

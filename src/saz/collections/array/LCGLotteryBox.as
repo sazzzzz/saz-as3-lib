@@ -11,13 +11,21 @@ package saz.collections.array
 	public class LCGLotteryBox extends LotteryBox
 	{
 
+		private var lcgSeed:int;
 		private var lcg:LCG;
+		
 		public function LCGLotteryBox(sourceArray:Array, seed:int = 1)
 		{
-			super(sourceArray);
+			lcgSeed = seed;
 			
-			lcg = new LCG(seed);
+			super(sourceArray);
 		}
+		
+		override protected function atInit():void
+		{
+			lcg = new LCG(lcgSeed);
+		}
+		
 		
 		override protected function atRandom():Number
 		{
