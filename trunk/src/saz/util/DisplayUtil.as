@@ -2,6 +2,7 @@
 	import flash.display.*;
 	import flash.geom.*;
 	
+	
 	/**
 	 * ...
 	 * @author saz
@@ -137,6 +138,117 @@
 		// main
 		//--------------------------------------
 		
+		
+		/**
+		 * ボタンSpriteの当たり判定用に別のSpriteを設定。
+		 * @param button
+		 * @param hit
+		 * 
+		 */
+		public static function setHitArea(button:Sprite, hit:Sprite):void
+		{
+			button.hitArea = hit;
+			hit.mouseEnabled = false;
+		}
+		
+		
+		/**
+		 * DisplayObjectがaddChild()されていればremoveChild()する。
+		 * @param target	DisplayObject。
+		 * @return addChild()されていればtrue。
+		 * 
+		 */
+		public static function removeFromParent(target:DisplayObject):Boolean
+		{
+			if (target.parent == null) return false;
+			target.parent.removeChild(target);
+			return true;
+		}
+		
+		
+		/**
+		 * 再帰的にすべての子孫をremoveChild()する。
+		 * @param target
+		 * 
+		 */
+		public static function removeAll(target:DisplayObjectContainer):void
+		{
+			if (target == null) return;
+			if (!(target is DisplayObjectContainer)) return;
+			
+			var children:Array = [];
+			var child:DisplayObject;
+			for (var i:int = target.numChildren - 1; i > 0; i--) 
+			{
+				child = target.getChildAt(i);
+				if (child == null) break;
+				
+				children.push(child);
+				
+				if (child is DisplayObjectContainer)
+				{
+					// 子を持つ
+					removeAll(child as DisplayObjectContainer);
+				}
+				
+				/*target.removeChild(child);*/
+			}
+			
+			// まとめてremoveChild
+			children.forEach(function(item:DisplayObject, index:int, arr:Array):void
+			{
+				if (item.parent) item.parent.removeChild(item);
+			});
+		}
+		
+		/**
+		 * すべての子をremoveChild()する。
+		 * @param target
+		 * 
+		 */
+		public static function removeChildren(target:DisplayObjectContainer):void
+		{
+			var child:DisplayObject;
+			// 消すので、大きいインデックスから操作しないとエラーになるよ
+			for (var i:int = target.numChildren - 1; i > 0; i--) 
+			{
+				child = target.getChildAt(i);
+				target.removeChild(child);
+			}
+		}
+		
+		/**
+		 * 再帰的に全ての子をstop
+		 * @param target
+		 * 
+		 */
+		public static function stopAll(target:DisplayObjectContainer):void
+		{
+			var child:DisplayObject;
+			for (var i:int = 0, n:int = target.numChildren; i < n; i++) 
+			{
+				child = target.getChildAt(i);
+				
+				if (child is DisplayObjectContainer)
+				{
+					// 子を持つ
+					if (child is MovieClip) MovieClip(child).stop();
+					stopAll(child as DisplayObjectContainer);
+				}
+			}
+		}
+		
+		/**
+		 * DisplayObjectContainerが、マウスイベントを受け取るかどうかを設定。
+		 * @param container
+		 * @param value
+		 * 
+		 */
+		public static function setMouseEventEnabled(target:InteractiveObject, value:Boolean):void
+		{
+			target.mouseEnabled = value;
+			if (target is DisplayObjectContainer) DisplayObjectContainer(target).mouseChildren = value;
+		}
 		
 		/**
 		 * エラーにならないよう、parentチェックしてからremoveChild()。

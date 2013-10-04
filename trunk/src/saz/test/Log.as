@@ -13,27 +13,46 @@ package saz.test {
 	 */
 	public class Log {
 		
-		public static var isTrace:Boolean = true;
-		public static var isFirebug:Boolean = false;
+
+		/**
+		 * メッセージをバッファして、ENTER_FRAMEでまとめて出力するか、すぐに出力するか。
+		 * @return 
+		 * 
+		 */
+		/*public static function get isBuffer():Boolean
+		{
+			return _isBuffer;
+		}
+		public static function set isBuffer(value:Boolean):void
+		{
+			_isBuffer = value;
+		}
+		private static var _isBuffer:Boolean = false;*/
+		public static var enableBuffer:Boolean = false;
+
 		
-		static private var $dsp:DisplayObject;
-		static private var $msgs:String = "";
-		static private var $isUpdate:Boolean = false;
+		public static var enableTrace:Boolean = true;
+		public static var enableFirebug:Boolean = false;
+		
+		private static var _running:Boolean = false;
+		private static var _dsp:DisplayObject;
+		private static var _msgs:Array = [];
+		private static var _needPrint:Boolean = false;
 		
 		static public function get isInit():Boolean {
-			return $isInit;
+			return _isInit;
 		}
-		static private var $isInit:Boolean = false;
+		private static var _isInit:Boolean = false;
 		
 		/**
 		 * 初期化＆処理開始.
 		 * @param	dsp
 		 */
 		public static function init(dsp:DisplayObject):void {
-			if ($isInit) return;
+			if (_isInit) return;
 			
-			$isInit = true;
-			$dsp = dsp;
+			_isInit = true;
+			_dsp = dsp;
 			start();
 		}
 		
@@ -41,14 +60,16 @@ package saz.test {
 		 * 出力処理開始. （init()をコールすると自動で開始するので、通常使いません)
 		 */
 		public static function start():void {
-			$dsp.addEventListener(Event.ENTER_FRAME, $loop);
+			_running = true;
+			_dsp.addEventListener(Event.ENTER_FRAME, $loop);
 		}
 		
 		/**
 		 * 出力処理停止. ただし停止中もlog()で受け取ったメッセージは、バッファに溜めてる. 
 		 */
 		public static function stop():void {
-			$dsp.removeEventListener(Event.ENTER_FRAME, $loop);
+			_running = false;
+			_dsp.removeEventListener(Event.ENTER_FRAME, $loop);
 		}
 		
 		/**
@@ -56,22 +77,25 @@ package saz.test {
 		 * @param	value
 		 */
 		public static function log(value:*):void {
-			$isUpdate = true;
-			$msgs += value.toString() + "\r";
+			_needPrint = true;
+			_msgs.push(value.toString());
+			
+			if (_running && !enableBuffer) $print();
 		}
 		
-		static private function $loop(e:Event):void {
-			if ($isUpdate) {
+		private static function $loop(e:Event):void {
+			if (_needPrint) {
 				$print();
 			}
 		}
 		
-		static private function $print():void {
-			if ($isUpdate) {
-				if (isTrace) trace($msgs);
-				if (isFirebug && ExternalInterface.available) ExternalInterface.call("console.log", $msgs);
-				$isUpdate = false;
-				$msgs = "";
+		private static function $print():void {
+			if (_needPrint) {
+				var msg:String = _msgs.join("\r");
+				if (enableTrace) trace(msg);
+				if (enableFirebug && ExternalInterface.available) ExternalInterface.call("console.log", msg);
+				_needPrint = false;
+				_msgs.length = 0;
 			}
 		}
 		

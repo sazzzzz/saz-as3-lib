@@ -31,8 +31,8 @@ package saz.display.pixel {
 		
 		
 		
-		override protected function $initHook(createFnc:Function = null):void {
-			atCreate = $atChatCreate;
+		override protected function initHook(createFnc:Function = null):void {
+			onCreate = $atChatCreate;
 		}
 		
 		//override protected function $atCreate(...args):Chat {		//1023: オーバーライドに対応していません。	⇒型が一致してないとダメ.
