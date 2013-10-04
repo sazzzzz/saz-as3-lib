@@ -6,16 +6,100 @@ package saz.util {
 	 */
 	public class NumberUtil {
 		
+		
+		//--------------------------------------------------------------------------
+		//
+		// Unity Mathf シリーズ
+		// http://unitygeek.hatenablog.com/entry/2013/01/08/180649
+		//
+		//--------------------------------------------------------------------------
+		
 		/**
-		 * 2つのNumber比較用の値。
-		 * @example <listing version="3.0" >
-		 * if(Math.abs(a-b) < NumberUtil.EPSILON) {
-		 * 	...
-		 * }
-		 * </listing>
-		 * @see	http://itpro.nikkeibp.co.jp/article/COLUMN/20071019/285010/?ST=oss&P=2
+		 * 最大・最小値でカット
+		 * @param value
+		 * @param min
+		 * @param max
+		 * @return 
+		 * 
 		 */
-		public static const EPSILON:Number = 2.22044604925031e-16;
+		public static function clamp(num:Number, min:Number=Number.MIN_VALUE, max:Number=Number.MAX_VALUE):Number
+		{
+			return clip(num, min, max);
+		}
+		
+		/**
+		 * 小数点切り上げ＆整数化
+		 * @param value
+		 * @return 
+		 * 
+		 */
+		public static function ceilToInt(num:Number):int
+		{
+			return Math.ceil(num) as int;
+		}
+		
+		/**
+		 * 小数点切捨て＆整数化
+		 * @param value
+		 * @return 
+		 * 
+		 */
+		public static function floorToInt(num:Number):int
+		{
+			return Math.floor(num) as int;
+		}
+		
+		/**
+		 * 小数点四捨五入＆整数化
+		 * @param value
+		 * @return 
+		 * 
+		 */
+		public static function roundToInt(num:Number):int
+		{
+			return Math.round(num) as int;
+		}
+		
+		
+		
+		/**
+		 * 符号（1または-1(Number))
+		 * @param num
+		 * @return 
+		 * 
+		 */
+		public static function sign(num:Number):Number
+		{
+			return (num < 0) ? -1.0 : 1.0;
+		}
+		
+		
+		/**
+		 * もっとも近い２のｎ乗の数値を返す
+		 * @param num
+		 * @return 
+		 * 
+		 */
+		public static function closestPowerOfTen(num:Number):Number
+		{
+			var res:Number;
+			
+			var i:int = 0;
+			var p:Number;
+			do
+			{
+				i++;
+				p = Math.pow(2, i);
+			}while(p > num)
+			var s:Number = Math.pow(2, i-1);
+			
+			return (p - num > num - s) ? s : p;
+		}
+		
+		
+		
+		
+		
 		
 		
 		/**
@@ -24,8 +108,8 @@ package saz.util {
 		 * @param	callback	コールバック. function(a:int, b:int):void
 		 */
 		//* @param	includeSelf	自分同士の組み合わせを含めるかどうか. 
-		//static public function roundRobin(count:int, callback:Function, includeSelf:Boolean = false):void
-		static public function roundRobin(count:int, callback:Function):void
+		//public static function roundRobin(count:int, callback:Function, includeSelf:Boolean = false):void
+		public static function roundRobin(count:int, callback:Function):void
 		{
 			var i:int, j:int;
 			for(i = 0; i < count; i++) {
@@ -115,6 +199,23 @@ package saz.util {
 				return arguments.callee(b, a % b);
 			}
 		}
+		
+		
+		
+		
+		
+		
+		
+		/**
+		 * 2つのNumber比較用の値。
+		 * @example <listing version="3.0" >
+		 * if(Math.abs(a-b) < NumberUtil.EPSILON) {
+		 * 	...
+		 * }
+		 * </listing>
+		 * @see	http://itpro.nikkeibp.co.jp/article/COLUMN/20071019/285010/?ST=oss&P=2
+		 */
+		public static const EPSILON:Number = 2.22044604925031e-16;
 		
 		/**
 		 * 2つのNumberが同じ値とみなしてよいかを返す。
