@@ -110,59 +110,50 @@ package saz.util {
 		
 		
 		
+		
+		
+		
+		
+		
 		/**
-		 * ベクトルを正規化. 向きはそのままで、長さ1にしたベクトルを返す.
-		 * Point.nomalize()を使えよ！
-		 * @param	point
-		 * @return
+		 * Rectangleの中心のX座標。
+		 * @param rect
+		 * @return 
+		 * 
 		 */
-		public static function normalizeVector(x:Number, y:Number):Point {
-			var len:Number = Math.sqrt((x * x) + (y * y));
-			return new Point(
-				x / len, y / len
+		public static function rectangleCenter(rect:Rectangle):Number
+		{
+			return rect.left + (rect.width / 2);
+		}
+		
+		/**
+		 * Rectangleの中心のY座標。
+		 * @param rect
+		 * @return 
+		 * 
+		 */
+		public static function rectangleMiddle(rect:Rectangle):Number
+		{
+			return rect.top + (rect.height / 2);
+		}
+		
+		
+		/**
+		 * 指定Rectangleを、中心点同じで指定サイズに変形する。
+		 * @param rect
+		 * @param width
+		 * @param height
+		 * @return 
+		 * 
+		 */
+		public static function rectangleInflate(target:Rectangle, width:Number, height:Number):void
+		{
+			target.inflate(
+				(width - target.width) / 2, (height - target.height) / 2
 			);
 		}
 		
 		
-		
-		
-		
-		/**
-		 * x,y,width,heightを持つObjectから、プロパティをコピーしたRectangleを生成。
-		 * @param	obj
-		 * @return
-		 */
-		/*public static function objectToRectangle(obj:Object):Rectangle {
-			return new Rectangle(obj.x, obj.y, obj.width, obj.height);
-		}*/
-		
-		public static var objectToRectangle:Function = getRectangle;
-		
-		/**
-		 * targetのx,y,width,heightをコピーしたRectangleを生成。
-		 * @param	target
-		 * @return
-		 */
-		public static function getRectangle(target:Object):Rectangle {
-			return new Rectangle(
-				target.x
-				,target.y
-				,target.width
-				,target.height
-			);
-		}
-		
-		/**
-		 * targetのx,y,width,heightをRectangleで指定。
-		 * @param	target
-		 * @param	rect
-		 */
-		public static function setRectangle(target:Object, rect:Rectangle):void {
-			target.x = rect.x;
-			target.y = rect.y;
-			target.width = rect.width;
-			target.height = rect.height;
-		}
 		
 		
 		
@@ -204,34 +195,31 @@ package saz.util {
 		}
 		
 		
-		public static var alignMiddle:Function = alignRectangleToMiddle;
-		public static var alignMiddleArray:Function = alignRectanglesToMiddle;
 		
 		/**
 		 * 高さ方向で真ん中ぞろえにする。
 		 * @param	target	対象のRectangle。これを直接変更するので注意。
 		 * @param	base	基準とするRectangle。
 		 */
-		//public static function alignMiddle(target:Rectangle, base:Rectangle):void {
 		public static function alignRectangleToMiddle(target:Rectangle, base:Rectangle):void {
 			target.y = getAlignMiddleY(target, base);
 		}
+		/*public static var alignMiddle:Function = alignRectangleToMiddle;
+		public static var alignMiddleArray:Function = alignRectanglesToMiddle;*/
 		
 		/**
 		 * Rectangle配列を、高さ方向で真ん中ぞろえにする。
 		 * @param	rectList	対象のRectangle配列。これを直接変更するので注意。
 		 */
-		//public static function alignMiddleArray(rectList:/*Rectangle*/Array):void {
 		public static function alignRectanglesToMiddle(rectList:/*Rectangle*/Array):void {
-			var baseRect:Rectangle = unionArray(rectList);
+			var baseRect:Rectangle = unionRectangles(rectList);
 			for (var i:int = 0, len:int = rectList.length, item:Rectangle; i < len; i++) {
 				item = rectList[i];
-				alignMiddle(item, baseRect);
+				alignRectangleToMiddle(item, baseRect);
 			}
 		}
 		
 		
-		public static var centering:Function = getCenteringPoint;
 		
 		/**
 		 * Rectangleをセンタリングするための座標を返す。
@@ -239,19 +227,16 @@ package saz.util {
 		 * @param	base	基準とするRectangle。
 		 * @return	baseに対してtargetをセンタリングした座標。
 		 */
-		//public static function centering(target:Rectangle, base:Rectangle):Point {
 		public static function getCenteringPoint(target:Rectangle, base:Rectangle):Point {
-			//return new Point(base.x + (base.width - target.width) / 2, base.y + (base.height - target.height) / 2);
 			return new Point(getAlignCenterX(target, base), getAlignMiddleY(target, base));
 		}
+		/*public static var centering:Function = getCenteringPoint;*/
 		
 		
 		
 		
 		
 		
-		public static var arrangeFromLeftArray:Function = arrangeRectanglesFromLeft;
-		public static var arrangeFromRightArray:Function = arrangeRectanglesFromRight;
 		
 		/**
 		 * Rectangle配列を、左から順に並べる。
@@ -259,7 +244,6 @@ package saz.util {
 		 * @param	left	開始位置。
 		 * @param	margin	マージン。
 		 */
-		//public static function arrangeFromLeftArray(rectList:/*Rectangle*/Array, left:Number = 0, margin:Number = 0):void {
 		public static function arrangeRectanglesFromLeft(rectList:/*Rectangle*/Array, left:Number = 0, margin:Number = 0):void {
 			var prev:Number = left;
 			rectList.forEach(function(item:*, index:int, arr:Array):void {
@@ -267,6 +251,7 @@ package saz.util {
 				prev += item.width + margin;
 			});
 		}
+		/*public static var arrangeFromLeftArray:Function = arrangeRectanglesFromLeft;*/
 		
 		/**
 		 * Rectangle配列を、右から順に並べる。
@@ -274,7 +259,6 @@ package saz.util {
 		 * @param	right	開始位置。
 		 * @param	margin	マージン。
 		 */
-		//public static function arrangeFromRightArray(rectList:/*Rectangle*/Array, right:Number = 0, margin:Number = 0):void {
 		public static function arrangeRectanglesFromRight(rectList:/*Rectangle*/Array, right:Number = 0, margin:Number = 0):void {
 			var prev:Number = right;
 			rectList.forEach(function(item:*, index:int, arr:Array):void {
@@ -282,14 +266,60 @@ package saz.util {
 				prev -= item.width + margin;
 			});
 		}
+		/*public static var arrangeFromRightArray:Function = arrangeRectanglesFromRight;*/
 		
 		
 		
+		/**
+		 * 内接するための比率を返す。
+		 * @param targetW
+		 * @param targetH
+		 * @param frameW
+		 * @param frameH
+		 * @return 
+		 * 
+		 */
+		public static function inscribeScale(targetW:Number, targetH:Number, frameW:Number, frameH:Number):Number
+		{
+			return (targetW / targetH < frameW / frameH) ? frameH / targetH : frameW / targetW;
+		}
+		
+		/**
+		 * 外接するための比率を返す。
+		 * @param targetW
+		 * @param targetH
+		 * @param frameW
+		 * @param frameH
+		 * @return 
+		 * 
+		 */
+		public static function circumscribeScale(targetW:Number, targetH:Number, frameW:Number, frameH:Number):Number
+		{
+			return (targetW / targetH > frameW / frameH) ? frameH / targetH : frameW / targetW;
+		}
 		
 		
 		
-		public static var innterFit:Function = inscribe;
-		public static var outerFit:Function = circumscribe;
+		/**
+		 * 外接するための比率を、セーフエリアありで計算する。
+		 * @param targetW
+		 * @param targetH
+		 * @param frameW
+		 * @param frameH
+		 * @param safe	セーフエリアを、対象のオリジナルサイズを1とした比率で指定。
+		 * @return 
+		 * 
+		 */
+		public static function circumscribeScaleWithSafeArea(targetW:Number, targetH:Number, frameW:Number, frameH:Number, safe:Number):Number
+		{
+			var cscale:Number = circumscribeScale(targetW, targetH, frameW, frameH);
+			var wscale:Number = frameW / (targetW * safe);
+			var hscale:Number = frameH / (targetH * safe);
+			
+			return Math.min(cscale, wscale, hscale);
+		}
+		
+		
 		
 		/**
 		 * targetの縦横比で、frameに内接するRectangleを返す。
@@ -297,10 +327,14 @@ package saz.util {
 		 * @param	frame	枠Rectangle。
 		 * @return
 		 */
-		public static function inscribe(target:Rectangle, frame:Rectangle):Rectangle {
-			var scale:Number = (target.width / target.height < frame.width / frame.height)? frame.height / target.height : frame.width / target.width;
+		public static function inscribeRect(target:Rectangle, frame:Rectangle):Rectangle {
+			var scale:Number = inscribeScale(target.width, target.height, frame.width, frame.height);
 			return fit(target, frame, scale);
 		}
+		/*public static var innterFit:Function = inscribeRect;
+		public static var inscribe:Function = inscribeRect;*/
+		
+		
 		
 		/**
 		 * targetの縦横比で、frameに外接するRectangleを返す。
@@ -308,10 +342,26 @@ package saz.util {
 		 * @param	frame	枠Rectangle。
 		 * @return
 		 */
-		public static function circumscribe(target:Rectangle, frame:Rectangle):Rectangle {
-			var scale:Number = (target.width / target.height > frame.width / frame.height)? frame.height / target.height : frame.width / target.width;
+		public static function circumscribeRect(target:Rectangle, frame:Rectangle):Rectangle {
+			var scale:Number = circumscribeScale(target.width, target.height, frame.width, frame.height);
 			return fit(target, frame, scale);
 		}
+		/*public static var outerFit:Function = circumscribeRect;
+		public static var circumscribe:Function = circumscribeRect;*/
+		
+		
+		/**
+		 * targetと同じ縦横比で、frameに外接するRectangleを、セーフエリアありで計算する。
+		 * 
+		 * @param target
+		 * @param frame
+		 * @param safe
+		 * @return 
+		 */
+		public static function circumscribeRectWithSafeArea(target:Rectangle, frame:Rectangle, safe:Number):Rectangle {
+			return fit(target, frame, circumscribeScaleWithSafeArea(target.width, target.height, frame.width, frame.height, safe));
+		}
+		
 		
 		
 		/**
@@ -334,14 +384,12 @@ package saz.util {
 		
 		
 		
-		public static var unionArray:Function = unionRectangles;
 		
 		/**
 		 * 配列で指定されたRectangleすべてを内包するRectangleを返す。
 		 * @param	rectList	対象のRectangle配列。
 		 * @return
 		 */
-		//public static function unionArray(rectList:/*Rectangle*/Array):Rectangle {
 		public static function unionRectangles(rectList:/*Rectangle*/Array):Rectangle {
 			var res:Rectangle = new Rectangle();
 			rectList.forEach(function(item:*, index:int, arr:Array):void {
@@ -349,6 +397,7 @@ package saz.util {
 			});
 			return res;
 		}
+		/*public static var unionArray:Function = unionRectangles;*/
 		
 		
 		

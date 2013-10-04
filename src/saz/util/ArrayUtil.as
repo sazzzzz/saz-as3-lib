@@ -102,8 +102,32 @@
 		
 		
 		/**
+		 * 配列同士の重複チェック。searchのそれぞれの要素と同じものが、targetに含まれるかを調べる。
+		 * @param target
+		 * @param search
+		 * @return {search:x, target:xx}。searchプロパティは、searchの中のどの要素を発見したかを表すインデックス。targetプロパティは、targetのどこで発見したかを表すインデックス。
+		 * 
+		 */
+		public static function findDuplicates(target:Array, search:Array):Object
+		{
+			var res:Object = {};
+			var fidx:int;
+			var item:Object;
+			for (var i:int = 0, n:int = search.length; i < n; i++) 
+			{
+				item = search[i];
+				fidx = target.indexOf(item);
+				if (fidx > -1){
+					return {search:i, target:fidx};
+				}
+			}
+			return null;
+		}
+		
+		
+		/**
 		 * 配列から指定されたものを探し、最初に見つかったインデックスを返す。
-		 * @param	targe
+		 * @param	target
 		 * @param	search
 		 * @return	インデックスを返す。見つからなかったら-1を返す。
 		 */
@@ -143,6 +167,12 @@
 		//--------------------------------------
 		
 		
+		public static function clone(src:Array):Array{
+			/*var res:Array = [];
+			copy(src, res);
+			return res;*/
+			return src.concat();
+		}
 		
 		/**
 		 * src配列から、dst配列に要素をコピー.dstに上書きされる.
@@ -283,15 +313,21 @@
 		
 		/**
 		 * 配列の要素をFisher-Yates法でシャッフルする。
-		 * @param	target
+		 * 
+		 * @param target	対象配列。
+		 * @param randomFnc	乱数生成関数を指定。デフォルトではMath.randomを使用。
+		 * 
 		 * @see	http://blog.livedoor.jp/dankogai/archives/50614134.html
 		 */
-		public static function shuffleFY(target:Array):void {
-			// Fisher-Yates法だそうです。
+		public static function shuffleFY(target:Array, randomFnc:Function=null):void {
+			
+			var rnd:Function = randomFnc || Math.random;
+			
 			var i:int = target.length;
 			var j:int, t:*;
 			while (i) {
-				j = Math.floor(Math.random() * i);
+				/*j = Math.floor(Math.random() * i);*/
+				j = Math.floor(rnd() * i);
 				t = target[--i];
 				target[i] = target[j];
 				target[j] = t;
@@ -309,10 +345,7 @@
 			// for			477
 			// forEach		2197
 			// join&split	4999
-			/*target.forEach(function(item:*, index:int, arr:Array):void {
-				target[index] = value;
-			});*/
-			for (var i:int = 0, n:int = target.length, item:*; i < n; i++) {
+			for (var i:int = 0, n:int = target.length; i < n; i++) {
 				target[i] = value;
 			}
 		}

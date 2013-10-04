@@ -28,10 +28,10 @@ package saz.external.google {
 		public static const MODE_BRIDGE:String = "Bridge";
 		
 		
-		public static function get isInit():Boolean {
+		public function get isInit():Boolean {
 			return _isInit;
 		}
-		private static var _isInit:Boolean = false;
+		private var _isInit:Boolean = false;
 		
 		private var _tracker:GATracker;
 		//private var _isDebug:Boolean = false;
