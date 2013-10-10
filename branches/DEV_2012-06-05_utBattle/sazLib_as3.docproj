@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<docProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <pageTitle>sazLib as3</pageTitle>
-  <classPaths>E:\_saz\LIB\saz\as3\work\src</classPaths>
-  <sourcesList />
-  <outputDirectory>E:\_saz\LIB\saz\as3\doc</outputDirectory>
-  <activeCompiler>1</activeCompiler>
-  <extraOptions>-title "sazLib as3" -window-title "sazLib as3" -compiler.strict=false -compiler.show-actionscript-warnings=false -source-path ./src -doc-sources ./src/saz -compiler.external-library-path ./swc</extraOptions>
-</docProject>
