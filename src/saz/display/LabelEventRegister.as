@@ -30,7 +30,7 @@ package saz.display
 			for (var i:int = 0, n:int = sel.length, label:FrameLabel; i < n; i++) 
 			{
 				label = sel[i];
-				fa.addAction(label.frame, _genLabelEventListener(target, label));
+				fa.setAction(label.frame, _genLabelEventListener(target, label));
 			}
 			return sel.length;
 		}

@@ -2,8 +2,9 @@ package saz.display {
 	import flash.display.FrameLabel;
 	import flash.display.MovieClip;
 	import flash.events.Event;
-	import saz.collections.enumerator.Enumerable;
+	
 	import saz.IStartable;
+	import saz.collections.enumerator.Enumerable;
 	import saz.util.ArrayUtil;
 	import saz.util.DisplayUtil;
 	import saz.util.VarDefault;
@@ -11,15 +12,14 @@ package saz.display {
 	/**
 	 * MovieClipのタイムラインに、フレームアクションを追加する.
 	 * gotoAndPlay()で指定したフレームのアクションが実行されない！！！
+	 * 
+	 * 
 	 * @author saz
 	 * @see	http://blog.img8.com/archives/2009/01/004354.html
 	 * @see	http://blog.888-3.com/?eid=900817
 	 */
-	//public class FrameAction implements IStartable {
 	public class FrameAction {
 		
-		// TODO	拡張案：複数functionを登録可能にするとか
-		// FunctionをArrayに突っ込んで保存、Function配列を実行するメソッドを作ればいい. 
 		
 		/**
 		 * 対象とするMovieClip.
@@ -32,12 +32,8 @@ package saz.display {
 		}
 		private var _target:MovieClip;
 		
-		/**
-		 * actionを格納するObject.
-		 * フレーム番号をキーとして、Functionの配列を格納. 
-		 */
-		private var _actions:Object;
-		private var _labelsEnum:Enumerable;
+		
+		private var _entries:Object;
 		
 		/**
 		 * labelToFrame用キャッシュ. 
@@ -46,12 +42,21 @@ package saz.display {
 		
 		/**
 		 * コンストラクタ. 
+		 * アンドキュメントなメソッドを使用しています（MovieClip.addFrameScript()）。
+		 * 
 		 * @param	target	対象とするMovieClip.
 		 */
 		public function FrameAction(target:MovieClip) {
 			this.target = target;
+			
+			_init();
 		}
 		
+		
+		private function _init():void
+		{
+			_entries = {};
+		}
 		
 		/**
 		 * フレームラベルまたはフレーム数をフレーム数に変換. 
@@ -60,6 +65,34 @@ package saz.display {
 		 */
 		private function _frameobjToFrame(frame:Object):int {
 			return (frame is String) ? labelToFrame(String(frame)) : int(frame);
+		}
+		
+		
+		
+		
+		private function _createEntry(frame:Object, func:Function):Entry
+		{
+			return new Entry(frame, func);
+		}
+		
+		private function _getEntry(frame:Object):Entry
+		{
+			return _entries[frame.toString()] as Entry;
+		}
+		
+		private function _addEntry(frame:Object, func:Function):void
+		{
+			_entries[frame.toString()] = _createEntry(frame, func);
+		}
+		
+		private function _removeEntry(frame:Object):Entry
+		{
+			var res:Entry = _getEntry(frame);
+			if (res == null) return null;
+			
+			/*_entries[frame.toString()] = null;*/		// nullじゃだめだよ
+			delete _entries[frame.toString()];			// deleteを使う
+			return res;
 		}
 		
 		
@@ -77,19 +110,18 @@ package saz.display {
 		}
 		
 		/**
-		 * フレームアクションを追加する. 
+		 * フレームアクションを追加する.
+		 * 該当フレームにあらかじめ設定されていた「フレームアクション」は消去されるみたい。FlashIDEで設定したものも消去されるみたい。
+		 * 
 		 * @param	frame	フレーム番号を表す数値、またはフレームのラベルを表すストリング.
 		 * @param	func	追加するアクション. function():void
 		 */
-		public function addAction(frame:Object, func:Function):void {
+		public function setAction(frame:Object, func:Function):void {
+			removeAction(frame);
+			
+			_addEntry(frame, func);
 			_target.addFrameScript(_frameobjToFrame(frame) - 1, func);
 		}
-		/*public function addAction(frame:Object, func:Function):void {
-			if (_actions == null) _actions = { };
-			var frameNum:int = _frameobjToFrame(frame);
-			if (_actions[frameNum] == null) _actions[frameNum] = [];
-			_actions[frameNum].push(func);
-		}*/
 		
 		/**
 		 * フレームアクションを削除する. 
@@ -97,77 +129,44 @@ package saz.display {
 		 */
 		public function removeAction(frame:Object):void {
 			_target.addFrameScript(_frameobjToFrame(frame) - 1, null);
+			_removeEntry(frame);
 		}
+		
 		/**
-		 * フレームアクションを削除する. 
-		 * @param	frame	フレーム番号を表す数値、またはフレームのラベルを表すストリング.
-		 * @param	func	削除するアクション. 省略した場合は、指定フレームのアクションすべてを削除. 
-		 * @return
+		 * すべてのフレームアクションを削除。
+		 * 
 		 */
-		/*public function removeAction(frame:Object, func:Function = null):Boolean {
-			if (_actions == null) return false;
-			var frameNum:int = _frameobjToFrame(frame);
-			
-			if (func != null) {
-				delete _actions[frameNum];
-				//_actions[frameNum] = null;
-				return true;
-			}else {
-				var removeIndex:int;
-				var funcs:Array = _actions[frameNum];
-				funcs.forEace(function(item:Function, index:int, arr:Array):void {
-					if (item == func) removeIndex = index;
-				});
-				if (removeIndex != VarDefault.INT) {
-					funcs.splice(removeIndex);
-					return true;
-				}
+		public function removeAll():void
+		{
+			var entry:Entry;
+			for (var key:String in _entries)
+			{
+				entry = _getEntry(key);
+				removeAction(entry.frame);
 			}
-			return false;
-		}*/
-		
-		//private function _runFuncs(funcs:Array):void {
-			// よくわからんエラーが。フォーカスの関係か？
-			// EvalError: Error #1066: function('function body') という書式はサポートされていません。
-			/*funcs.forEach(function(item:Function, index:int, arr:Array):void {
-				Function(item)();
-			});*/
-			//for (var i:int = 0, n:int = funcs.length; i < n; i++) {
-				//funcs[i]();
-			//}
-		//}
-		
-		//private function _testRun():void {
-			//if (_actions[_target.currentFrame] == null) return;
-			//var funcs:Array = _actions[_target.currentFrame];
-			//for (var i:int = 0, n:int = funcs.length; i < n; i++) {
-				//funcs[i]();
-			//}
-		//}
-		
-		//private function _target_enterFrame(e:Event):void {
-			//_testRun();
-		//}
-		
-		
-		/* INTERFACE saz.IStartable */
-		
-		/**
-		 * 処理開始.
-		 */
-		//public function start():void {
-			//if (_actions == null) _actions = { };
-			//_target.addEventListener(Event.ENTER_FRAME, _target_enterFrame);
-		//}
-		
-		/**
-		 * 処理終了.
-		 */
-		//public function stop():void {
-			//_target.removeEventListener(Event.ENTER_FRAME, _target_enterFrame);
-		//}
-		
-		
+		}
 	}
 
 }
+
+
+import saz.util.ObjectUtil;
+
+class Entry
+{
+	public var frame:Object;
+	public var func:Function;
+	
+	public function Entry(frame:Object, func:Function)
+	{
+		this.frame = frame;
+		this.func = func;
+	}
+	
+	public function toString():String
+	{
+		return ObjectUtil.formatToString(this, "Entry", ["frame"]);
+	}
+}
+
+
