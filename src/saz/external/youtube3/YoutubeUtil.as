@@ -23,7 +23,7 @@ package saz.external.youtube3
 		 * @return URLRequest。
 		 * 
 		 */
-		public function chromelessRequest():URLRequest
+		public static function chromelessRequest():URLRequest
 		{
 			return new URLRequest(CHROMELESS_URL);
 		}
@@ -38,7 +38,7 @@ package saz.external.youtube3
 		 * @see	https://developers.google.com/youtube/player_parameters?hl=ja
 		 * 
 		 */
-		public function embeddedRequest(videoId:String, params:Object=null):URLRequest
+		public static function embeddedRequest(videoId:String, params:URLVariables=null):URLRequest
 		{
 			// ex. http://youtube.googleapis.com/v/0tr10QN2R_g?version=3&rel=0&autoplay=1&hd=1&fs=1&showinfo=0
 			params ||= new URLVariables();
