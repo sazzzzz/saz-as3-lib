@@ -5,7 +5,7 @@ package saz.external.youtube3
 	 * @author saz
 	 * 
 	 */
-	public class YoutubeQuality
+	public class VideoQuality
 	{
 		
 		/**
