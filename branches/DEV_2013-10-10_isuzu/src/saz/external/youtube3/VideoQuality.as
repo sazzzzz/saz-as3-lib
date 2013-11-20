@@ -2,8 +2,9 @@ package saz.external.youtube3
 {
 	/**
 	 * 再生画質定数。
-	 * @author saz
 	 * 
+	 * @author saz
+	 * @see	https://developers.google.com/youtube/flash_api_reference?hl=ja#Playback_quality
 	 */
 	public class VideoQuality
 	{
