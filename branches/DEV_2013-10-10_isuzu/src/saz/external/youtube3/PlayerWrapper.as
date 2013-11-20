@@ -1,5 +1,12 @@
 package saz.external.youtube3
 {
+	/**
+	 * Youtubeプレーヤーのラッパ。
+	 * コードヒントを使うためのもの。今のところ一部メソッドのみ実装。
+	 * 
+	 * @author saz
+	 * @see	https://developers.google.com/youtube/flash_api_reference?hl=ja
+	 */
 	public class PlayerWrapper
 	{
 		
@@ -10,6 +17,64 @@ package saz.external.youtube3
 			player = youtubePlayer;
 		}
 		
+		public function destroy():void
+		{
+			player.destroy();
+			player = null;
+		}
+		
+		
+		//--------------------------------------
+		// キュー関数
+		//--------------------------------------
+		
+		/**
+		 * 指定された動画のサムネイルを読み込み、プレーヤーで動画を再生する準備をします。プレーヤーは、playVideo() または seekTo() が呼び出されるまで FLV をリクエストしません。
+		 * 
+		 * @param videoId	videoIdパラメータ（必須）には、再生する動画の YouTube 動画 ID を指定します。YouTube Data API 動画フィードでは、<yt:videoId> タグで ID を指定します。
+		 * @param startSeconds	startSecondsパラメータ（省略可能）には、playVideo() が呼び出されたときに動画の再生を開始する位置（時間）を浮動小数点数または整数で指定します。startSeconds の値を指定して seekTo() を呼び出すと、seekTo() の呼び出しで指定された時間からプレーヤーが再生を開始します。動画の頭出しをして再生の準備が整ったら、プレーヤーは動画の頭出しイベント（5）をブロードキャストします。
+		 * @param suggestedQuality	suggestedQualityパラメータ（省略可能）は、動画の推奨再生画質を指定します。再生画質について詳しくは、setPlaybackQuality 関数の定義をご覧ください。
+		 */
+		public function cueVideoById(videoId:String, startSeconds:Number=0, suggestedQuality:String="default"):void
+		{
+			player.cueVideoById(videoId, startSeconds, suggestedQuality);
+		}
+		
+		/**
+		 * 指定された動画を読み込んで再生します。
+		 * 
+		 * @param videoId	videoIdパラメータ（必須）には、再生する動画の YouTube 動画 ID を指定します。YouTube Data API 動画フィードでは、<yt:videoId> タグで ID を指定します。
+		 * @param startSeconds	startSecondsパラメータ（省略可能）は、浮動小数点数または整数で指定します。この値を指定すると、指定した時間に最も近いキーフレームから動画が再生されます。
+		 * @param suggestedQuality	suggestedQualityパラメータ（省略可能）は、動画の推奨再生画質を指定します。再生画質について詳しくは、setPlaybackQuality 関数の定義をご覧ください。
+		 */
+		public function loadVideoById(videoId:String, startSeconds:Number=0, suggestedQuality:String="default"):void
+		{
+			player.loadVideoById(videoId, startSeconds, suggestedQuality);
+		}
+		
+		/**
+		 * 指定された動画のサムネイルを読み込み、プレーヤーで動画を再生する準備をします。プレーヤーは、playVideo() または seekTo() が呼び出されるまで FLV をリクエストしません。
+		 * 
+		 * @param mediaContentUrl	mediaContentUrlは、YouTube プレーヤー URL の形式（http://www.youtube.com/v/VIDEO_ID）に完全に適合している必要があります。YouTube Data API 動画フィードでは、<media:content> タグの format 属性の値が 5 であれば、この形式に完全に適合したプレーヤー URL が url 属性に格納されます。
+		 * @param startSeconds	startSeconds パラメータには、playVideo() が呼び出されたときに動画の再生を開始する位置（時間）を浮動小数点数または整数で指定します。startSeconds の値を指定して seekTo() を呼び出すと、seekTo() では指定された時間からプレーヤーが再生を開始します。動画の頭出しをして再生の準備が整ったら、プレーヤーは動画の頭出しイベント（5）をブロードキャストします。
+		 * 
+		 */
+		public function cueVideoByUrl(mediaContentUrl:String, startSeconds:Number=0):void
+		{
+			player.cueVideoByUrl(mediaContentUrl, startSeconds);
+		}
+		
+		/**
+		 * 指定された動画を読み込んで再生します。
+		 * 
+		 * @param mediaContentUrl	mediaContentUrl は、YouTube プレーヤー URL の形式（http://www.youtube.com/v/VIDEO_ID）に完全に適合している必要があります。YouTube Data API 動画フィードでは、<media:content> タグの format 属性の値が 5 であれば、この形式に完全に適合したプレーヤー URL が url 属性に格納されます。
+		 * @param startSeconds	startSeconds パラメータには、動画の再生を開始する位置（時間）を浮動小数点数または整数で指定します。startSeconds に値を指定すると、指定した時間に最も近いキーフレームから動画が再生されます。この値には浮動小数点数も指定できます。
+		 * 
+		 */
+		public function loadVideoByUrl(mediaContentUrl:String, startSeconds:Number=0):void
+		{
+			player.loadVideoByUrl(mediaContentUrl, startSeconds);
+		}
 		
 		
 		//--------------------------------------
