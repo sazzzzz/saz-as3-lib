@@ -5,8 +5,9 @@ package saz.external.youtube3
 
 	/**
 	 * YouTube用ユーティリティクラス。
-	 * @author saz
 	 * 
+	 * @author saz
+	 * @see	https://developers.google.com/youtube/flash_api_reference?hl=ja
 	 */
 	public class YoutubeUtil
 	{

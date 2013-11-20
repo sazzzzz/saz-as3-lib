@@ -2,6 +2,12 @@ package saz.external.youtube3
 {
 	import flash.events.Event;
 	
+	/**
+	 * イベントタイプ定数を定義。
+	 * 
+	 * @author saz
+	 * @see	https://developers.google.com/youtube/flash_api_reference?hl=ja#Events
+	 */
 	public class YoutubeEvent extends Event
 	{
 		

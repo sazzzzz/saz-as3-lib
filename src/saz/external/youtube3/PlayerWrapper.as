@@ -12,6 +12,11 @@ package saz.external.youtube3
 		
 		public var player:Object;
 		
+		/**
+		 * 
+		 * @param youtubePlayer
+		 * 
+		 */
 		public function PlayerWrapper(youtubePlayer:Object=null)
 		{
 			player = youtubePlayer;
