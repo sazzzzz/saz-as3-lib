@@ -98,7 +98,7 @@
 		
 		
 		/**
-		 * URLreqeust+URLVariablesを文字列に変換。
+		 * URLreqeust+URLVariablesを、文字列に変換。
 		 * @param request
 		 * @return 
 		 * 
@@ -116,7 +116,7 @@
 		
 		
 		/**
-		 * URL文字列をURLReqeustに変換する。
+		 * クエリを含んだURL文字列をパースして、URLReqeustに変換。
 		 * @param url
 		 * @return 
 		 * 
@@ -141,6 +141,30 @@
 			return req;
 		}
 		
+		
+		/**
+		 * URLから、キャッシュ対策したURLRequestを生成する。
+		 * 
+		 * @param url
+		 * @return 
+		 * 
+		 */
+		/*public static function urlToRequestNocache(url:String, type:int=DateUtil.HOUR, date:Date=null):URLRequest*/	// type:int=DateUtil.HOURでエラー
+		public static function urlToNoCacheRequest(url:String):URLRequest
+		{
+			/*var vars:URLVariables = new URLVariables();
+			vars.nocache = DateUtil.noCacheString();
+			var req:URLRequest = new URLRequest(url);
+			req.data = vars;
+			return req;*/
+			
+			var req:URLRequest = urlToRequest(url);
+			var vars:Object = req.data || new URLVariables();
+			vars.nocache = DateUtil.noCacheString();
+			req.data = vars;
+			return req;
+		}
+
 		
 		
 	}

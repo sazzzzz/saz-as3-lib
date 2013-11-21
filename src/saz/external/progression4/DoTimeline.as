@@ -89,12 +89,12 @@ package saz.external.progression4 {
 						throw new Error("DoTimeline ラベルの順番が逆です");
 					
 					if (that.autoStop){
-						_frameAction.addAction(endLabel, function():void {
+						_frameAction.setAction(endLabel, function():void {
 							target.stop();
 							that.dispatchEvent(new Event("resume"));
 						});
 					}else{
-						_frameAction.addAction(endLabel, function():void {
+						_frameAction.setAction(endLabel, function():void {
 							//trace("completeLabel",completeLabel);
 							that.dispatchEvent(new Event("resume"));
 						});

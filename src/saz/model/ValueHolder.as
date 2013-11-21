@@ -25,6 +25,7 @@ package saz.model {
 	
 	/**
 	 * 値保持クラス. クラス名はSqueakから. 
+	 * 
 	 * @author saz
 	 * @see	http://d.hatena.ne.jp/sumim/20110513
 	 * @see	http://www.ua-labo.com/entries/pid000032.html
@@ -42,7 +43,6 @@ package saz.model {
 		public function get name():String {
 			return _name;
 		}
-		//public var name:String = "ValueHolder";
 		private var _name:String = "ValueHolder";
 		
 		
