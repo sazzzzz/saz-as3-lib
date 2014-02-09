@@ -5,9 +5,9 @@
 	 */
 	public class ObjectFormatter {
 		
-		public static function toString(target:Object, indent:String = "  "):String {
+		public static function toString(target:Object, name:String = "", indent:String = "  "):String {
 			var res:String = "";
-			res += _switchByType(target, "", 0, indent);
+			res += _switchByType(target, name, 0, indent);
 			return _cropEndComma(res);
 		}
 		
@@ -17,11 +17,11 @@
 			}else if (_isMap(target)) {
 				return _mapToString(target, name, depth, indent);
 			}
-			return _valueToString(target, name, depth, indent);
+			return _singleToString(target, name, depth, indent);
 		}
 		
 		//
-		// enumerable
+		// collection
 		//
 		
 		private static function _arrayToString(target:Object, name:String, depth:int = 0, indent:String = "  "):String {
@@ -41,10 +41,7 @@
 			for (var p:String in target) {
 				arr.push({key:p, value:target[p]});
 			}
-			// ソート
-			/*arr.sort(function(a:Object, b:Object):Number {
-				return a.key - b.key;
-			});*/
+			// ソートする
 			arr.sortOn("key");
 			
 			var res:String = "";
@@ -56,26 +53,17 @@
 			res += _makeIndent(depth, indent) + "},\n";
 			return res;
 		}
-		/*private static function _mapToString(target:Object, name:String, depth:int = 0, indent:String = "  "):String {
-			var res:String = "";
-			res += _makeIndent(depth, indent) + _formatName(name) + "{\n";
-			for (var p:String in target) {
-				res += _switchByType(target[p], p, depth + 1, indent);
-			}
-			res = _cropEndComma(res);
-			res += _makeIndent(depth, indent) + "},\n";
-			return res;
-		}*/
 		
 		//
-		// not enumerable
+		// not collection
 		//
 		
-		private static function _valueToString(target:Object, name:String, depth:int = 0, indent:String = "  "):String {
+		private static function _singleToString(target:Object, name:String, depth:int = 0, indent:String = "  "):String {
 			return [_makeIndent(depth, indent), _formatName(name), _formatValue(target), ",\n"].join("");
 		}
 		
 		// Top level class
+		// http://help.adobe.com/ja_JP/FlashPlatform/reference/actionscript/3/package-detail.html
 		// Array Boolean Class Date Function int Number Object RegExp String uint Vector XML XMLList 
 		// Error ArgumentError ...
 		
