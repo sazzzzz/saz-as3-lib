@@ -41,6 +41,8 @@
 		 */
 		public static var LF:String = String.fromCharCode(10);	//0x0A
 		
+		public static var CRLF:String = String.fromCharCode(13) + String.fromCharCode(10);	//0x0A
+		
 		
 		/**
 		 * キーコードから対応するStringを返す. とりあえずフルキーの0~9とテンキーの0~9のみ. 
