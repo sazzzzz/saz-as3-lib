@@ -263,8 +263,7 @@ class EntryItemEnumerator {
 	public function forEach(iterator:Function, thisObject:* = null):void {
 		entries.forEach(function(item:Entry, index:int, arr:Array):void
 		{
-			// FIXME:	仮実装
-			iterator(item.item, index, arr);
+			iterator.apply(thisObject, [item.item, index, arr]);
 		});
 	}
 
