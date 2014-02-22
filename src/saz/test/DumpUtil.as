@@ -4,6 +4,11 @@ package saz.test
 	
 	import flash.geom.*;
 
+	/**
+	 * デバッグ用にインスタンスを出力するユーティリティクラス。
+	 * @author saz
+	 * 
+	 */
 	public class DumpUtil
 	{
 		
@@ -14,22 +19,26 @@ package saz.test
 		// method
 		//--------------------------------------
 		
+		/**
+		 * PerspectiveProjectionをダンプ。
+		 * @param target
+		 * 
+		 */
 		public static function perspective(target:PerspectiveProjection):void
 		{
-			/*if (!isEnable()) return;
-			trace("DumpUtil.perspective(", target);
-			if (target == null) return;*/
 			if (!can("perspective", target)) return;
 			
 			member(target, "fieldOfView");
 			member(target, "projectionCenter");
 		}
 		
+		/**
+		 * Matrix3Dをダンプ。
+		 * @param target
+		 * 
+		 */
 		public static function matrix3D(target:Matrix3D):void
 		{
-			/*if (!isEnable()) return;
-			trace("DumpUtil.matrix3D(", target);
-			if (target == null) return;*/
 			if (!can("matrix3D", target)) return;
 			
 			member(target, "determinant");
