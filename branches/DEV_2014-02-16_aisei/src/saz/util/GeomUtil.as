@@ -1,5 +1,7 @@
 package saz.util {
+	import flash.display.Stage;
 	import flash.geom.*;
+
 	/**
 	 * Geomユーティリティー
 	 * @author saz
@@ -399,6 +401,38 @@ package saz.util {
 		}
 		/*public static var unionArray:Function = unionRectangles;*/
 		
+		
+		
+		
+		
+		
+		//--------------------------------------
+		// 3D
+		//--------------------------------------
+		
+		/**
+		 * PerspectiveProjection.fieldOfViewを再計算する。
+		 * 
+		 * @param baseFov	ベースとなるfieldOfViewの値。
+		 * @param baseDocWidth	ベースとなるドキュメント横幅の値。
+		 * @param stage	Stage。
+		 * @return 
+		 * 
+		 */
+		public static function calcFieldOfView(baseFov:Number, baseDocWidth:Number, stage:Stage):Number
+		{
+			// どうもfieldOfViewは、横幅基準で決まるっぽい。
+			// 122.4	@1920x1080	<--orginal
+			// 91.3		@1080x1080
+			// 88.2		@1024x1080
+			// 84.5		@ 960x1080
+			// 62.4		@ 640x 360
+			
+			/*var dis:Number = (baseDocWidth / 2) / Math.tan(MathUtil.degreeToRadian(baseFov / 2));
+			var rad:Number = Math.atan2(stage.stageWidth / 2, dis);
+			return MathUtil.radianToDegree(rad) * 2;*/
+			return MathUtil.radianToDegree(Math.atan2(stage.stageWidth / 2, (baseDocWidth / 2) / Math.tan(MathUtil.degreeToRadian(baseFov / 2)))) * 2
+		}
 		
 		
 		
