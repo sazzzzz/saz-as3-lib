@@ -194,14 +194,21 @@
 		 * @return
 		 */
 		public static function nonBreak(target:String):String {
-			/*var res:String = "";
-			for (var i:int = 0, n:int = target.length, l:String; i < n; i++) {
-				l = target.substr(i, 1);
-				if (l != "\n") res += l;
-			}
-			return res;*/
 			// 置換の際はグローバルスイッチ「g」がないと、1回しかしてくれない
 			return target.replace(/\n/g, "");
+		}
+		
+		/**
+		 * 改行コードをLFに統一。
+		 * @param target
+		 * @return 
+		 */
+		public static function formatLineEndToLF(target:String):String
+		{
+			// まずCRLFをLFに
+			var res:String = replace(target, CRLF, LF);
+			// CRをLFに
+			return replace(res, CR, LF);
 		}
 		
 		
@@ -263,7 +270,6 @@
 		 * @param	value	対象とする数字
 		 * @return	String
 		 */
-		//public static function zeroSuppress(target:String):String {
 		public static function zeroSuppress(value:Object):String {
 			return parseInt(value.toString(), 10).toFixed();
 		}
@@ -274,7 +280,6 @@
 		 * @param	digit	桁数。ただし30以下であること。0なら単にStringにして返す。
 		 * @return	String
 		 */
-		//public static function zeroPadding(value:String, digit:int):String {
 		public static function zeroPadding(value:Object, digit:int):String {
 			if (digit > 30) throw new Error("桁数が大きすぎる");
 			// Math.pow(10, 2) = 100 ただし20桁まで。"1e+21"になっちゃう。
@@ -357,17 +362,6 @@
 			return DateUtil.dateToString(date, sep, isYear, isMonth, isDate, isHour, isMinute, isSecond, isMillisecound);
 		}
 			
-		//public static function dateToString(date:Date, sep:String="", isYear:Boolean = true, isMonth:Boolean = true, isDate:Boolean = true, isHour:Boolean = true, isMinute:Boolean = true, isSecond:Boolean = true, isMillisecound:Boolean = false):String {
-			//var res:/*String*/Array = new Array();
-			//if (isYear) res.push( zeroPadding(String(date.getFullYear()), 4));
-			//if (isMonth) res.push( zeroPadding(String(date.getMonth()), 2));
-			//if (isDate) res.push( zeroPadding(String(date.getDate()), 2));
-			//if (isHour) res.push( zeroPadding(String(date.getHours()), 2));
-			//if (isMinute) res.push( zeroPadding(String(date.getMinutes()), 2));
-			//if (isSecond) res.push( zeroPadding(String(date.getSeconds()), 2));
-			//if (isMillisecound) res.push( zeroPadding(String(date.getMilliseconds()), 3));
-			//return res.join(sep);
-		//}
 		
 	}
 	
