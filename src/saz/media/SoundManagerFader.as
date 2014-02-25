@@ -20,10 +20,15 @@ package saz.media
 		
 		public function fadeIn(name:String, second:Number=1.0, callback:Function=null):void
 		{
-			if (manager.valid(name)) return;
+			if (!manager.valid(name)) return;
 			
 			var dat:Object = manager.getData(name);
-			SoundFacadeFader.tweenVolume(manager.getFacade(name), dat.volume, second, {onComplete:callback});
+			//SoundFacadeFader.tweenVolume(manager.getFacade(name), dat.volume, second, {onComplete:callback});
+			SoundFacadeFader.tweenVolume(
+				manager.getFacade(name), 0.0, second, {
+					transition:"easeOutSine"				// こっちは未検証
+					,onComplete:callback
+				});
 		}
 		
 		public function playFadein(name:String, second:Number=1.0, callback:Function=null):void
@@ -36,10 +41,13 @@ package saz.media
 		
 		public function fadeOut(name:String, second:Number=1.0, callback:Function=null):void
 		{
-			if (manager.valid(name)) return;
+			if (!manager.valid(name)) return;
 			
-			var dat:Object = manager.getData(name);
-			SoundFacadeFader.tweenVolume(manager.getFacade(name), dat.volume, second, {onComplete:callback});
+			SoundFacadeFader.tweenVolume(
+				manager.getFacade(name), 0.0, second, {
+					transition:"easeInSine"				// linearよりこっちの方が自然
+					,onComplete:callback
+				});
 		}
 		
 		public function fadeOutStop(name:String, second:Number=1.0, callback:Function=null):void
@@ -47,7 +55,7 @@ package saz.media
 			fadeOut(name, second, function():void
 			{
 				manager.stop(name);
-				callback();
+				if (callback != null) callback();
 			});
 		}
 		
