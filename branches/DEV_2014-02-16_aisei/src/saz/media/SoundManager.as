@@ -26,6 +26,31 @@ package saz.media
 		private var _datas:Object = {};
 		
 		
+		
+		/**
+		 * 存在チェック。
+		 * @param name
+		 * @return 
+		 * 
+		 */
+		public function having(name:String):Boolean
+		{
+			return _getEntiry(name) != null;
+		}
+		
+		/**
+		 * nameが有効かどうか。
+		 * @param name
+		 * @return 
+		 * 
+		 */
+		public function valid(name:*):Boolean
+		{
+			return name != null && name != "" && having(name);
+		}
+		
+		
+		
 		/**
 		 * 
 		 * @param data	name, loops, volume, pan, sound
@@ -61,28 +86,9 @@ package saz.media
 			});
 		}
 		
-		
-		/**
-		 * 存在チェック。
-		 * @param name
-		 * @return 
-		 * 
-		 */
-		public function having(name:String):Boolean
+		public function getData(name:String):Object
 		{
-			return _getEntiry(name) != null;
-		}
-		
-		
-		/**
-		 * nameが有効かどうか。
-		 * @param name
-		 * @return 
-		 * 
-		 */
-		public function valid(name:*):Boolean
-		{
-			return name != null && name != "" && having(name);
+			return _datas[name];
 		}
 		
 		
@@ -95,11 +101,6 @@ package saz.media
 				return null;
 			}
 			return _getEntiry(name).facade;
-		}
-		
-		public function getData(name:String):Object
-		{
-			return _datas[name];
 		}
 		
 		
@@ -127,6 +128,43 @@ package saz.media
 			fac.stop();
 			return fac;
 		}
+		
+
+		//--------------------------------------
+		// volume
+		//--------------------------------------
+		
+		// ボリュームの扱いがめんどくさい。maxVolumeを指定して、0.0～1.0で指定できるようにしてもいいかも。
+		
+		/**
+		 * データで指定したvolumeの値を1.0とした相対的な値で、ボリュームの値を取得。
+		 * @param name
+		 * @return 
+		 * 
+		 */
+		public function getRelVolume(name:String):Number
+		{
+			if (!valid(name)) return -1.0;
+			
+			return getFacade(name).volume / getData(name).volume;
+		}
+		
+		/**
+		 * データで指定したvolumeの値を1.0とした相対的な値で、ボリュームの値を設定。
+		 * @param name
+		 * @param value
+		 * 
+		 */
+		public function setRelVolume(name:String, value:Number):void
+		{
+			if (!valid(name)) return;
+			
+			getFacade(name).volume = getData(name).volume * value;
+		}
+		
+		
+		
+		
 		
 		
 		
