@@ -11,7 +11,7 @@ package saz.media
 	{
 		
 
-		public function get playable():Boolean
+		/*public function get playable():Boolean
 		{
 			return _playable;
 		}
@@ -19,7 +19,7 @@ package saz.media
 		{
 			_playable = value;
 		}
-		private var _playable:Boolean = true;
+		private var _playable:Boolean = true;*/
 
 		
 		private var _facs:Object = {};
@@ -37,7 +37,7 @@ package saz.media
 			if (data.sounds)
 			{
 				fac = new MultipleSoundFacade();
-				MultipleSoundFacade(fac).setDetectCallback(makeMultiCallback());
+				MultipleSoundFacade(fac).setDetectCallback(_makeMultiCallback());
 				data.sounds.forEach(function(item:Sound, index:int, arr:Array):void
 				{
 					MultipleSoundFacade(fac).addFacade(new SoundFacade(item));
@@ -74,6 +74,18 @@ package saz.media
 		}
 		
 		
+		/**
+		 * nameが有効かどうか。
+		 * @param name
+		 * @return 
+		 * 
+		 */
+		public function valid(name:*):Boolean
+		{
+			return name != null && name != "" && having(name);
+		}
+		
+		
 		// 名前に別名をつけられるといいんじゃね？
 		public function getFacade(name:String):ISoundFacade
 		{
@@ -90,13 +102,17 @@ package saz.media
 			return _datas[name];
 		}
 		
+		
+		
+		//--------------------------------------
+		// play controll
+		//--------------------------------------
+		
 		public function play(name:String):ISoundFacade
 		{
-			if (!playable || name == "") return null;
+			if (!valid(name)) return null;
 			
 			var fac:ISoundFacade = getFacade(name);
-			if (fac == null) return null;
-			
 			var dat:Object = getData(name);
 			fac.play(0, dat.loops);
 			return fac;
@@ -105,12 +121,15 @@ package saz.media
 		
 		public function stop(name:String):ISoundFacade
 		{
-			var fac:ISoundFacade = getFacade(name);
-			if (fac == null) return null;
+			if (!valid(name)) return null;
 			
+			var fac:ISoundFacade = getFacade(name);
 			fac.stop();
 			return fac;
 		}
+		
+		
+		
 		
 		public function attachSound(name:String, dispatcher:IEventDispatcher, eventType:String):void
 		{
@@ -135,7 +154,16 @@ package saz.media
 		
 		
 		
-		private function makeMultiCallback():Function
+		
+		
+		
+		
+		//--------------------------------------
+		// private
+		//--------------------------------------
+		
+		
+		private function _makeMultiCallback():Function
 		{
 			var prev:int = -1;
 			return function _defaultDetector(facades:Array):SoundFacade
