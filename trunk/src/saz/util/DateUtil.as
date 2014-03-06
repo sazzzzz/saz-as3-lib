@@ -232,7 +232,8 @@ package saz.util {
 		 * ミリ秒から日にち部分だけ取り出す。
 		 * @param time
 		 * @return 
-		 * 
+		 *
+		 * @see http://d.hatena.ne.jp/sippu/20080306/1204788817 ～ミリ秒から秒、分、時間、日を割り出す方法～
 		 */
 		public static function dateFromTime(time:Number):Number
 		{
