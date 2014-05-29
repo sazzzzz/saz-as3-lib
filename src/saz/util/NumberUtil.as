@@ -22,7 +22,8 @@ package saz.util {
 		 * @return 
 		 * 
 		 */
-		public static function clamp(num:Number, min:Number=Number.MIN_VALUE, max:Number=Number.MAX_VALUE):Number
+//		public static function clamp(num:Number, min:Number=Number.MIN_VALUE, max:Number=Number.MAX_VALUE):Number
+		public static function clamp(num:Number, min:Number, max:Number):Number
 		{
 			return clip(num, min, max);
 		}
