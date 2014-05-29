@@ -23,9 +23,8 @@ package saz.media
 			if (!manager.valid(name)) return;
 			
 			var dat:Object = manager.getData(name);
-			//SoundFacadeFader.tweenVolume(manager.getFacade(name), dat.volume, second, {onComplete:callback});
 			SoundFacadeFader.tweenVolume(
-				manager.getFacade(name), 0.0, second, {
+				manager.getFacade(name), dat.volume, second, {
 					transition:"easeOutSine"				// こっちは未検証
 					,onComplete:callback
 				});
