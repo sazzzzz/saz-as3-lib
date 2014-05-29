@@ -11,7 +11,7 @@ package saz.media
 	{
 		
 
-		public function get playable():Boolean
+		/*public function get playable():Boolean
 		{
 			return _playable;
 		}
@@ -19,11 +19,36 @@ package saz.media
 		{
 			_playable = value;
 		}
-		private var _playable:Boolean = true;
+		private var _playable:Boolean = true;*/
 
 		
 		private var _facs:Object = {};
 		private var _datas:Object = {};
+		
+		
+		
+		/**
+		 * 存在チェック。
+		 * @param name
+		 * @return 
+		 * 
+		 */
+		public function having(name:String):Boolean
+		{
+			return _getEntiry(name) != null;
+		}
+		
+		/**
+		 * nameが有効かどうか。
+		 * @param name
+		 * @return 
+		 * 
+		 */
+		public function valid(name:*):Boolean
+		{
+			return name != null && name != "" && having(name);
+		}
+		
 		
 		
 		/**
@@ -37,7 +62,7 @@ package saz.media
 			if (data.sounds)
 			{
 				fac = new MultipleSoundFacade();
-				MultipleSoundFacade(fac).setDetectCallback(makeMultiCallback());
+				MultipleSoundFacade(fac).setDetectCallback(_makeMultiCallback());
 				data.sounds.forEach(function(item:Sound, index:int, arr:Array):void
 				{
 					MultipleSoundFacade(fac).addFacade(new SoundFacade(item));
@@ -61,16 +86,9 @@ package saz.media
 			});
 		}
 		
-		
-		/**
-		 * 存在チェック。
-		 * @param name
-		 * @return 
-		 * 
-		 */
-		public function having(name:String):Boolean
+		public function getData(name:String):Object
 		{
-			return _getEntiry(name) != null;
+			return _datas[name];
 		}
 		
 		
@@ -85,18 +103,17 @@ package saz.media
 			return _getEntiry(name).facade;
 		}
 		
-		public function getData(name:String):Object
-		{
-			return _datas[name];
-		}
+		
+		
+		//--------------------------------------
+		// play controll
+		//--------------------------------------
 		
 		public function play(name:String):ISoundFacade
 		{
-			if (!playable || name == "") return null;
+			if (!valid(name)) return null;
 			
 			var fac:ISoundFacade = getFacade(name);
-			if (fac == null) return null;
-			
 			var dat:Object = getData(name);
 			fac.play(0, dat.loops);
 			return fac;
@@ -105,12 +122,52 @@ package saz.media
 		
 		public function stop(name:String):ISoundFacade
 		{
-			var fac:ISoundFacade = getFacade(name);
-			if (fac == null) return null;
+			if (!valid(name)) return null;
 			
+			var fac:ISoundFacade = getFacade(name);
 			fac.stop();
 			return fac;
 		}
+		
+
+		//--------------------------------------
+		// volume
+		//--------------------------------------
+		
+		// ボリュームの扱いがめんどくさい。maxVolumeを指定して、0.0～1.0で指定できるようにしてもいいかも。
+		
+		/**
+		 * データで指定したvolumeの値を1.0とした相対的な値で、ボリュームの値を取得。
+		 * @param name
+		 * @return 
+		 * 
+		 */
+		public function getRelVolume(name:String):Number
+		{
+			if (!valid(name)) return -1.0;
+			
+			return getFacade(name).volume / getData(name).volume;
+		}
+		
+		/**
+		 * データで指定したvolumeの値を1.0とした相対的な値で、ボリュームの値を設定。
+		 * @param name
+		 * @param value
+		 * 
+		 */
+		public function setRelVolume(name:String, value:Number):void
+		{
+			if (!valid(name)) return;
+			
+			getFacade(name).volume = getData(name).volume * value;
+		}
+		
+		
+		
+		
+		
+		
+		
 		
 		public function attachSound(name:String, dispatcher:IEventDispatcher, eventType:String):void
 		{
@@ -135,7 +192,16 @@ package saz.media
 		
 		
 		
-		private function makeMultiCallback():Function
+		
+		
+		
+		
+		//--------------------------------------
+		// private
+		//--------------------------------------
+		
+		
+		private function _makeMultiCallback():Function
 		{
 			var prev:int = -1;
 			return function _defaultDetector(facades:Array):SoundFacade
