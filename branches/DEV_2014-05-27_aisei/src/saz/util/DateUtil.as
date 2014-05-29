@@ -215,6 +215,51 @@ package saz.util {
 			return res.join(sep);
 		}
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//--------------------------------------
+		// time
+		//--------------------------------------
+		
+		/**
+		 * ミリ秒から日にち部分だけ取り出す。
+		 * @param time
+		 * @return 
+		 *
+		 * @see http://d.hatena.ne.jp/sippu/20080306/1204788817 ～ミリ秒から秒、分、時間、日を割り出す方法～
+		 */
+		public static function dateFromTime(time:Number):Number
+		{
+			return Math.floor(time / (24*60*60*1000));
+		}
+		
+		public static function hourFromTime(time:Number):Number
+		{
+			return Math.floor(time / (60*60*1000) % 24);
+		}
+		
+		public static function minuteFromTime(time:Number):Number
+		{
+			return Math.floor(time / (60*1000) % 60);
+		}
+		
+		public static function secondFromTime(time:Number):Number
+		{
+			return Math.floor(time / 1000) % 60;
+		}
+		
+		public static function millisecondFromTime(time:Number):Number
+		{
+			return time % 1000;
+		}
+		
 	}
 
 }

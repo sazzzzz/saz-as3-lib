@@ -2,7 +2,6 @@ package saz.collections
 {
 	
 	import saz.collections.enumerator.*;
-	import saz.util.ArrayUtil;
 	import saz.util.ObjectUtil;
 	
 	public class ArrayContainerHelper
@@ -16,21 +15,26 @@ package saz.collections
 			return _entries.length;
 		}
 		
-		
-		/*public function get collection():Array
-		{
-			return _entries;
-		}*/
-		private var _entries:Array = [];
-		
 		/**
-		 * Enumerable
+		 * アイテムに対するEnumerable。
 		 */
 		public function get enumerable():Enumerable {
-			enum ||= new Enumerable(_entries);
-			return enum;
+			_itemEnum ||= new Enumerable(new EntryItemEnumerator(_entries));
+			return _itemEnum;
 		}
-		private var enum:Enumerable;
+		private var _itemEnum:Enumerable;
+		
+		
+		/**
+		 * EntryのEnumerable
+		 */
+		private function get entryEnumerable():Enumerable {
+			_enum ||= new Enumerable(_entries);
+			return _enum;
+		}
+		private var _enum:Enumerable;
+		
+		private var _entries:Array = [];
 		
 		
 		public function ArrayContainerHelper()
@@ -129,10 +133,6 @@ package saz.collections
 		 */
 		public function contains(item:Object):Boolean
 		{
-			/*return enumerable.any(function(entry:Object, index:int):Boolean
-			{
-				return entry.item == item;
-			});*/
 			return (indexOf(item) > -1)
 		}
 		
@@ -145,7 +145,7 @@ package saz.collections
 		 */
 		public function indexOf(item:Object):int
 		{
-			var entry:Object;
+			var entry:Entry;
 			for (var i:int = 0, n:int = _entries.length; i < n; i++) 
 			{
 				entry = _getEntryAt(i);
@@ -175,20 +175,14 @@ package saz.collections
 		// private
 		//--------------------------------------
 		
-		private function _getEntryAt(index:int):Object
+		private function _getEntryAt(index:int):Entry
 		{
-			return _entries[index];
+			return _entries[index] as Entry;
 		}
 		
 		private function _getIndexByName(name:String):int
 		{
-			/*var res:int = -1;
-			_entries.forEach(function(item:Object, index:int, arr:Array):void
-			{
-				if (item.name == name) res = index;
-			});*/
-			
-			var entry:Object;
+			var entry:Entry;
 			for (var i:int = 0, n:int = _entries.length; i < n; i++) 
 			{
 				entry = _getEntryAt(i);
@@ -203,18 +197,15 @@ package saz.collections
 		
 		private function _getEntryByName(name:String):Object
 		{
-			return enumerable.detect(function(entry:Object, index:int):Boolean
+			return entryEnumerable.detect(function(entry:Entry, index:int):Boolean
 			{
 				return entry.name == name;
 			});
 		}
 		
-		private function _createEntry(item:Object, name:String):Object
+		private function _createEntry(item:Object, name:String):Entry
 		{
-			return {
-				item:item
-				,name:name
-			};
+			return new Entry(item, name);
 		}
 		
 		private function throwNotImplement():void
@@ -229,4 +220,50 @@ package saz.collections
 		
 		
 	}
+}
+
+
+/**
+ * エントリ。
+ * @author saz
+ * 
+ */
+class Entry {
+	
+	public var item:Object;
+	public var name:String = "";
+	
+	public function Entry(entryItem:Object, entryName:String)
+	{
+		item = entryItem;
+		name = entryName;
+	}
+	
+	public function toString():String
+	{
+		return ["[Entry", "item="+item, "name="+name].join(" ") + "]";
+	}
+}
+
+/**
+ * エントリのitemをイテレートするためのクラス。
+ * @author saz
+ * 
+ */
+class EntryItemEnumerator {
+
+	public var entries:Array;
+	
+	public function EntryItemEnumerator(entrieArray:Array)
+	{
+		entries = entrieArray;
+	}
+
+	public function forEach(iterator:Function, thisObject:* = null):void {
+		entries.forEach(function(item:Entry, index:int, arr:Array):void
+		{
+			iterator.apply(thisObject, [item.item, index, arr]);
+		});
+	}
+
 }

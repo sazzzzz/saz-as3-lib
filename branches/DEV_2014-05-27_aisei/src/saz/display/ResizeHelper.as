@@ -139,7 +139,7 @@ package saz.display
 		public function layout():void
 		{
 			var d:Object;
-			_positions.enumerable.forEach(function(entry:Object, index:int, arr:Array):void
+			_positions.enumerable.forEach(function(entry:Object, index:int):void
 			{
 				d = entry.data;
 				_layoutPosition(entry.item, d.base, d.align, d.diffx, d.diffy);
