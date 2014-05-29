@@ -67,6 +67,8 @@
 		 * @see	http://asdoc.progression.jp/4.0/jp/nium/utils/ObjectUtil.html#setProperties()
 		 */
 		public static function setProperties(target:Object, params:Object):void {
+			if (params == null) return;
+			
 			for (var p:String in params) {
 				target[p] = params[p];
 			}

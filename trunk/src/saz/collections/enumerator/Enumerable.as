@@ -164,11 +164,16 @@ package saz.collections.enumerator {
 		// なんかの役に立つかと思って、これ自身もIEnumerator型にしてみる。
 		/**
 		 * 配列内の各アイテムについて関数を実行します。
-		 * @param	iterator
+		 * @param	iterator	function(item:*, index:int):void
 		 * @param	thisObject = null
 		 */
 		public function forEach(iterator:Function, thisObject:* = null):void {
-			$each(iterator, thisObject);
+//			$each(iterator, thisObject);
+			
+			// iteratorの引数を他と合わせる
+			$each.apply($target, [function(item:*, index:int, collection:Object):void {
+				iterator(item, index);
+			}]);
 		}
 		
 		/**
