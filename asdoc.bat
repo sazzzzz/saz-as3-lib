@@ -1,7 +1,7 @@
 @ECHO OFF
 
 REM 64bit
-"C:\ols\flex_sdk_3.5\bin\asdoc.exe" -main-title "saz Lib AS3" -title "saz Lib AS3" -window-title "saz Lib AS3" -output "E:\_saz\LIB\as3\doc" -doc-sources "E:\_saz\LIB\as3\work\src\saz" -source-path "E:\_saz\LIB\as3\work\src" -library-path "C:\Program Files (x86)\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP10" -library-path "E:\_saz\LIB\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false
+"C:\ols\_FLASH\flex_sdk_4.5\bin\asdoc.exe" -main-title "saz Lib AS3" -title "saz Lib AS3" -window-title "saz Lib AS3" -output "E:\_saz\LIB\as3\doc" -doc-sources "E:\_saz\LIB\as3\work\src\saz" -source-path "E:\_saz\LIB\as3\work\src" -library-path "C:\Program Files (x86)\Adobe\Adobe Flash CS5.5\Common\Configuration\ActionScript 3.0\FP10" -library-path "E:\_saz\LIB\as3\work\swc" -compiler.strict=false -compiler.show-actionscript-warnings=false
 
 REM Flex4のasdocはエラーチェックが厳しいらしい…
 REM 　〃　はコメント中のHTMLタグにエラーを出す。http://kcw-diary.blogspot.com/2011/01/asdoc.html
